@@ -39,7 +39,6 @@ function floodFill(e){\n\
 	var rtarget=d[4*w*e.offsetY+4*e.offsetX]\n\
 	var gtarget=d[4*w*e.offsetY+4*e.offsetX+1]\n\
 	var btarget=d[4*w*e.offsetY+4*e.offsetX+2]\n\
-	var colorTarget=new RGBColor(d[4*w*e.offsetY+4*e.offsetX],d[4*w*e.offsetY+4*e.offsetX+1],d[4*w*e.offsetY+4*e.offsetX+2])\n\
 	var c=parseInt(drawApp.context.strokeStyle.substr(1,6),16)\n\
 	var r=(c>>16)&255\n\
 	var g=(c>>8)&255\n\
@@ -119,9 +118,6 @@ function RGBColor(r,g,b) {\n\
 	this.r=r;\n\
 	this.g=g;\n\
 	this.b=b;\n\
-	function equals(color) {\n\
-		return (this.r===color.r && this.g===color.g && this.b===color.b)\n\
-	}\n\
 }\n\
 "
 var js=document.createElement("script")
