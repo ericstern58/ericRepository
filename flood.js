@@ -59,7 +59,11 @@ function floodFill(e){\n\
 		var yqueue = []\n\
 		xqueue.push(xinitial)\n\
 		yqueue.push(yinitial)\n\
-		for(var x=xqueue.shift(),var y=yqueue.shift(); xqueue.length>0; x=xqueue.shift(),y=yqueue.shift()) {\n\
+		var x = 0\n\
+		var y = 0\n\
+		while(xqueue.length>0) {\n\
+			x=xqueue.shift()\n\
+			y=yqueue.shift()\n\
 			if(x>=0 && y>=0 && x<w && y<h && l(rtarget,d[4*w*y+4*x]) && l(gtarget,d[4*w*y+4*x+1]) && l(btarget,d[4*w*y+4*x+2])){\n\
 				colorPixel(d,w,x,y,r,g,b);\n\
 				xqueue.push(x-1);\n\
