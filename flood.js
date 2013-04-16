@@ -43,6 +43,7 @@ function floodFill(e){\n\
 	var r=(c>>16)&255\n\
 	var g=(c>>8)&255\n\
 	var b=c&255\n\
+	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255)\n\
 	\n\
 	try{\n\
 	if(!(rtarget===r && gtarget===g && btarget===b))\n\
@@ -117,6 +118,9 @@ function RGBColor(r,g,b) {\n\
 	this.r=r;\n\
 	this.g=g;\n\
 	this.b=b;\n\
+	function equals(color) {\n\
+		return (this.r===color.r && this.g===color.g && this.b===color.b);\n\
+	}\n\
 }\n\
 "
 var js=document.createElement("script")
