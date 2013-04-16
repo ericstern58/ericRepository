@@ -21,6 +21,7 @@ drawApp.canvas.on('mousedown',function(e){\n\
 })\n\
 \n\
 var floodFill = function(e){\n\
+	save()\n\
 	var w=drawApp.canvas.width()\n\
 	var h=drawApp.canvas.height()\n\
 	var p=drawApp.context.getImageData(0,0,w,h)\n\
