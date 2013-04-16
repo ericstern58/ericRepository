@@ -97,7 +97,7 @@ function colorPixel(d,w,x,y,r,g,b){\n\
 	d[4*w*y+4*x]=r;\n\
 	d[4*w*y+4*x+1]=g;\n\
 	d[4*w*y+4*x+2]=b;\n\
-	d[4*w+y+4*x+3]=255;\n\
+	d[4*w+y+4*x+3]=128;\n\
 }\n\
 function point(x,y) {\n\
 	this.x=x;\n\
