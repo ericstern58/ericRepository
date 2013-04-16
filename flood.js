@@ -47,7 +47,6 @@ function floodFill(e){\n\
 	try{\n\
 	if(!(rtarget===r && gtarget===g && btarget===b))\n\
 		f(e.offsetX,e.offsetY)\n\
-		alert('done')\n\
 	} catch(err) {\n\
 		alert(err)\n\
 	}\n\
@@ -65,15 +64,15 @@ function floodFill(e){\n\
 			x=xqueue.shift()\n\
 			y=yqueue.shift()\n\
 			if(x>=0 && y>=0 && x<w && y<h && l(rtarget,d[4*w*y+4*x]) && l(gtarget,d[4*w*y+4*x+1]) && l(btarget,d[4*w*y+4*x+2])){\n\
-				colorPixel(d,w,x,y,r,g,b);\n\
-				xqueue.push(x-1);\n\
-				yqueue.push(y);\n\
-				xqueue.push(x+1);\n\
-				yqueue.push(y);\n\
-				xqueue.push(x);\n\
-				yqueue.push(y-1);\n\
+				colorPixel(d,w,x,y,r,g,b)\n\
+				xqueue.push(x-1)\n\
+				yqueue.push(y)\n\
+				xqueue.push(x+1)\n\
+				yqueue.push(y)\n\
 				xqueue.push(x)\n\
-				yqueue.push(y+1);\n\
+				yqueue.push(y-1)\n\
+				xqueue.push(x)\n\
+				yqueue.push(y+1)\n\
 			} else {\n\
 				colorPixel(d,w,x,y,r,g,b);\n\
 			}\n\
