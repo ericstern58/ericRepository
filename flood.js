@@ -54,25 +54,20 @@ function floodFill(e){\n\
 	drawApp.context.putImageData(p,0,0)\n\
 	function l(a,b){return a===b}\n\
 	function f(xinitial,yinitial){\n\
-		var xqueue = []\n\
-		var yqueue = []\n\
-		xqueue.push(xinitial)\n\
-		yqueue.push(yinitial)\n\
+		var queue = []\n\
+		queue.push(new Point(xinitial,yinitial))\n\
 		var x = 0\n\
 		var y = 0\n\
-		while(xqueue.length>0) {\n\
-			x=xqueue.shift()\n\
-			y=yqueue.shift()\n\
+		while(queue.length>0) {\n\
+			var point=queue.shift()\n\
+			x=point.x\n\
+			y=point.y\n\
 			if(x>=0 && y>=0 && x<w && y<h && l(rtarget,d[4*w*y+4*x]) && l(gtarget,d[4*w*y+4*x+1]) && l(btarget,d[4*w*y+4*x+2])){\n\
 				colorPixel(d,w,x,y,r,g,b)\n\
-				xqueue.push(x-1)\n\
-				yqueue.push(y)\n\
-				xqueue.push(x+1)\n\
-				yqueue.push(y)\n\
-				xqueue.push(x)\n\
-				yqueue.push(y-1)\n\
-				xqueue.push(x)\n\
-				yqueue.push(y+1)\n\
+				queue.push(new Point(x-1,y))\n\
+				queue.push(new Point(x+1,y))\n\
+				queue.push(new Point(x,y-1))\n\
+				queue.push(new Point(x,y+1))\n\
 			} else if(x>=0 && y>=0 && x<w && y<h){\n\
 				colorPixel(d,w,x,y,r,g,b)\n\
 				/*\
