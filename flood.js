@@ -43,7 +43,6 @@ function floodFill(e){\n\
 	var r=(c>>16)&255\n\
 	var g=(c>>8)&255\n\
 	var b=c&255\n\
-	var color=new RBGColor((c>>16)&255,(c>>8)&255,c&255)\n\
 	\n\
 	try{\n\
 	if(!(rtarget===r && gtarget===g && btarget===b))\n\
