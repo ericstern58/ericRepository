@@ -94,11 +94,11 @@ function imgTest(){\n\
 	var d2=p2.data\n\
 	\n\
 }\n\
-function colorPixel(d,w,x,y,r,g,b){\n\
-	d[4*w*y+4*x]=r;\n\
-	d[4*w*y+4*x+1]=g;\n\
-	d[4*w*y+4*x+2]=b;\n\
-	d[4*w+y+4*x+3]=255;\n\
+function colorPixel(d,w,point,r,g,b){\n\
+	d[4*w*point.y+4*point.x]=r;\n\
+	d[4*w*point.y+4*point.x+1]=g;\n\
+	d[4*w*point.y+4*point.x+2]=b;\n\
+	d[4*w+point.y+4*point.x+3]=255;\n\
 }\n\
 function colorPixelBlend(d,w,x,y,r1,g1,b1,r2,g2,b2){\n\
 	var r=Math.ceil(0.5*r1 + 0.5*r2)\n\
