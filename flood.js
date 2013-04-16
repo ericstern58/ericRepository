@@ -32,7 +32,7 @@ var floodFill = function(e){\n\
 	var r=(c>>16)&255\n\
 	var g=(c>>8)&255\n\
 	var b=c&255\n\
-	var l=function(a,b){return a===b}\n\
+	var l=function(a,b){return Math.abs(a-b)<3}\n\
 	var colorPixel = function(x,y,r,g,b){\n\
 		d[4*w*y+4*x]=r;\n\
 		d[4*w*y+4*x+1]=g;\n\
