@@ -7,14 +7,6 @@ fillButton.className='brushPicker'\n\
 fillButton.innerHTML='Fill'\n\
 fillButton.onclick=function(){drawApp.setSize('fill')}\n\
 \n\
-var testButton=document.createElement('a')\n\
-document.getElementById('drawingCanvas').parentNode.appendChild(testButton)\n\
-testButton.href='#'\n\
-testButton.id='brush-img'\n\
-testButton.className='brushPicker'\n\
-testButton.innerHTML='Img'\n\
-testButton.onclick=function(){drawApp.setSize('img')}\n\
-\n\
 var md=drawApp.onCanvasMouseDown()\n\
 // hey, that was clever, but unfortunately not enough\n\
 drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
