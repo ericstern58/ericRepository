@@ -44,21 +44,15 @@ var floodFill = function(e){\n\
 	var g=(c>>8)&255\n\
 	var b=c&255\n\
 	var l=function(a,b){return a===b}\n\
-	function colorPixel(w,x,y,r,g,b){\n\
-		d[4*w*y+4*x]=r;\n\
-		d[4*w*y+4*x+1]=g;\n\
-		d[4*w*y+4*x+2]=b;\n\
-		d[4*w+y+4*x+3]=255;\n\
-	}\n\
 	var f = function(x,y){\n\
 		if(x>=0 && y>=0 && x<w && y<h && l(rtarget,d[4*w*y+4*x]) && l(gtarget,d[4*w*y+4*x+1]) && l(btarget,d[4*w*y+4*x+2])){\n\
-			colorPixel(w,x,y,r,g,b);\n\
+			colorPixel(d,w,x,y,r,g,b);\n\
 			f(x-1,y);\n\
 			f(x+1,y);\n\
 			f(x,y-1);\n\
 			f(x,y+1)\n\
 		} else {\n\
-			colorPixel(w,x,y,r,g,b);\n\
+			colorPixel(d,w,x,y,r,g,b);\n\
 		}\n\
 	}\n\
 	if(!(rtarget===r && gtarget===g && btarget===b))\n\
@@ -91,6 +85,12 @@ var imgTest = function(e){\n\
 			}\n\
 		}\n\
 	}\n\
+}\n\
+function colorPixel(d,w,x,y,r,g,b){\n\
+	d[4*w*y+4*x]=r;\n\
+	d[4*w*y+4*x+1]=g;\n\
+	d[4*w*y+4*x+2]=b;\n\
+	d[4*w+y+4*x+3]=255;\n\
 }\n\
 "
 var js=document.createElement("script")
