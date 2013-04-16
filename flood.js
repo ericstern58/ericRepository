@@ -13,7 +13,7 @@ testButton.href='#'\n\
 testButton.id='brush-img'\n\
 testButton.className='brushPicker'\n\
 testButton.innerHTML='Img'\n\
-fillButton.onclick=function(){drawApp.setSize('img')}\n\
+testButton.onclick=function(){drawApp.setSize('img')}\n\
 \n\
 var md=drawApp.onCanvasMouseDown()\n\
 // hey, that was clever, but unfortunately not enough\n\
