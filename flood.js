@@ -2,15 +2,15 @@ var code="\n\
 var fillButton=document.createElement('a')\n\
 document.getElementById('drawingCanvas').parentNode.appendChild(fillButton)\n\
 fillButton.href='#'\n\
-fillButton.id='brush-flood'\n\
+fillButton.id='brush-fill'\n\
 fillButton.className='brushPicker'\n\
 fillButton.innerHTML='fill'\n\
-fillButton.onclick=function(){drawApp.setSize('flood')}\n\
+fillButton.onclick=function(){drawApp.setSize('fill')}\n\
 \n\
 var testButton=document.createElement('a')\n\
 document.getElementById('drawingCanvas').parentNode.appendChild(testButton)\n\
 testButton.href='#'\n\
-testButton.id='brush-flood'\n\
+testButton.id='brush-fill'\n\
 testButton.className='brushPicker'\n\
 testButton.innerHTML='fill'\n\
 \n\
@@ -20,7 +20,7 @@ drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
 drawApp.canvas.off('mousedown')\n\
 \n\
 drawApp.canvas.on('mousedown',function(e){\n\
-	if($('#brush-flood').hasClass('selected')){\n\
+	if($('#brush-fill').hasClass('selected')){\n\
         floodFill(e)\n\
 	}else{\n\
 		md(e)\n\
