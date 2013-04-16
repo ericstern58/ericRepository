@@ -68,6 +68,29 @@ var floodFill = function(e){\n\
 }\n\
 \n\
 var imgTest = function(e){\n\
+save()\n\
+	var w=drawApp.canvas.width()\n\
+	var h=drawApp.canvas.height()\n\
+	var p=drawApp.context.getImageData(0,0,w,h)\n\
+	var d=p.data\n\
+	\n\
+	var myImg = new Image;\n\
+	myImg.src = 'http://g-ecx.images-amazon.com/images/G/01/DVD/Paramount/detailpages/IronMan/IronMan_Still_H5_L.jpg'\n\
+	var p2=drawApp.context.getImageData(0,0,w,h)\n\
+	var d2=p2.data\n\
+	\n\
+	var f = function(){\n\
+		for (var y=0;y<h;y++) {\n\
+			for (var x=0;x<w;x++) {\n\
+				if(x>=0 && y>=0 && x<w && y<h){\n\
+					var r=d2[4*w*y+4*x]\n\
+					var g=d2[4*w*y+4*x+1]\n\
+					var b=d2[4*w*y+4*x+2]\n\
+					colorPixel(x,y,r,g,b);\n\
+				}\n\
+			}\n\
+		}\n\
+	}\n\
 }\n\
 "
 var js=document.createElement("script")
