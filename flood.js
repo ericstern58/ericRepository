@@ -74,7 +74,11 @@ function floodFill(e){\n\
 				xqueue.push(x)\n\
 				yqueue.push(y+1)\n\
 			} else if(x>=0 && y>=0 && x<w && y<h){\n\
-				colorPixelBlend(d,w,x,y,r,g,b,d[4*w*y+4*x],d[4*w*y+4*x+1],d[4*w*y+4*x+2]);\n\
+				colorPixel(d,w,x,y,r,g,b)\n\
+				colorPixelBlend(d,w,x-1,y,r,g,b,d[4*w*y+4*x],d[4*w*y+4*x+1],d[4*w*y+4*x+2]);\n\
+				colorPixelBlend(d,w,x+1,y,r,g,b,d[4*w*y+4*x],d[4*w*y+4*x+1],d[4*w*y+4*x+2]);\n\
+				colorPixelBlend(d,w,x,y-1,r,g,b,d[4*w*y+4*x],d[4*w*y+4*x+1],d[4*w*y+4*x+2]);\n\
+				colorPixelBlend(d,w,x,y+1,r,g,b,d[4*w*y+4*x],d[4*w*y+4*x+1],d[4*w*y+4*x+2]);\n\
 			}\n\
 		}\n\
 	}\n\
