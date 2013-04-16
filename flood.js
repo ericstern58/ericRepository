@@ -63,13 +63,13 @@ function floodFill(e){\n\
 			x=point.x\n\
 			y=point.y\n\
 			if(x>=0 && y>=0 && x<w && y<h && l(rtarget,d[4*w*y+4*x]) && l(gtarget,d[4*w*y+4*x+1]) && l(btarget,d[4*w*y+4*x+2])){\n\
-				colorPixel(d,w,x,y,r,g,b)\n\
+				colorPixel(d,w,point,r,g,b)\n\
 				queue.push(new Point(x-1,y))\n\
 				queue.push(new Point(x+1,y))\n\
 				queue.push(new Point(x,y-1))\n\
 				queue.push(new Point(x,y+1))\n\
 			} else if(x>=0 && y>=0 && x<w && y<h){\n\
-				colorPixel(d,w,x,y,r,g,b)\n\
+				colorPixel(d,w,point,r,g,b)\n\
 				/*\
 				colorPixelBlend(d,w,x-1,y,r,g,b,d[4*w*y+4*(x-1)],d[4*w*y+4*(x-1)+1],d[4*w*y+4*(x-1)+2]);\n\
 				colorPixelBlend(d,w,x+1,y,r,g,b,d[4*w*y+4*(x+1)],d[4*w*y+4*(x+1)+1],d[4*w*y+4*(x+1)+2]);\n\
