@@ -73,8 +73,8 @@ function floodFill(e){\n\
 				yqueue.push(y-1)\n\
 				xqueue.push(x)\n\
 				yqueue.push(y+1)\n\
-			} else {\n\
-				//colorPixel(d,w,x,y,r,g,b);\n\
+			} else if(x>=0 && y>=0 && x<w && y<h){\n\
+				colorPixel(d,w,x,y,r,g,b);\n\
 			}\n\
 		}\n\
 	}\n\
