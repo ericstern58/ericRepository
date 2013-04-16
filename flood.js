@@ -2,7 +2,7 @@ var code="\n\
 var btn=document.createElement('a')\n\
 document.getElementById('drawingCanvas').parentNode.appendChild(btn)\n\
 btn.href='#'\n\
-btn.id='floodFillButton'\n\
+btn.id='brush-flood'\n\
 btn.className='brushPicker'\n\
 btn.innerHTML='fill'\n\
 btn.onclick=function(){drawApp.setSize('flood')}\n\
@@ -13,7 +13,7 @@ drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
 drawApp.canvas.off('mousedown')\n\
 \n\
 drawApp.canvas.on('mousedown',function(e){\n\
-	if($('#floodFillButton').hasClass('selected')){\n\
+	if($('#brush-flood').hasClass('selected')){\n\
         floodFill(e)\n\
 	}else{\n\
 		md(e)\n\
