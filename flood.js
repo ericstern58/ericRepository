@@ -39,13 +39,15 @@ function floodFill(e){\n\
 	var rtarget=d[4*w*e.offsetY+4*e.offsetX]\n\
 	var gtarget=d[4*w*e.offsetY+4*e.offsetX+1]\n\
 	var btarget=d[4*w*e.offsetY+4*e.offsetX+2]\n\
+	var colorTarget=new RGBColor(d[4*w*e.offsetY+4*e.offsetX],d[4*w*e.offsetY+4*e.offsetX+1],d[4*w*e.offsetY+4*e.offsetX+2])\n\
 	var c=parseInt(drawApp.context.strokeStyle.substr(1,6),16)\n\
 	var r=(c>>16)&255\n\
 	var g=(c>>8)&255\n\
 	var b=c&255\n\
+	var color=new RBGColor((c>>16)&255,(c>>8)&255,c&255)\n\
 	\n\
 	try{\n\
-	if(!(rtarget===r && gtarget===g && btarget===b))\n\
+	if(!color.equals(colorTarget))\n\
 		f(e.offsetX,e.offsetY)\n\
 	} catch(err) {\n\
 		alert(err)\n\
@@ -112,6 +114,14 @@ function colorPixelBlend(d,w,point,r1,g1,b1,r2,g2,b2){\n\
 function Point(x,y) {\n\
 	this.x=x;\n\
 	this.y=y;\n\
+}\n\
+function RGBColor(r,g,b) {\n\
+	this.r=r;\n\
+	this.g=g;\n\
+	this.b=b;\n\
+	function equals(color) {\n\
+		return (this.r===color.r && this.g===color.g && this.b===color.b)\n\
+	}\n\
 }\n\
 "
 var js=document.createElement("script")
