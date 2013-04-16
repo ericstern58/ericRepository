@@ -43,6 +43,16 @@ function floodFill(e){\n\
 	var r=(c>>16)&255\n\
 	var g=(c>>8)&255\n\
 	var b=c&255\n\
+	\n\
+	try{\n\
+	if(!(rtarget===r && gtarget===g && btarget===b))\n\
+		f(e.offsetX,e.offsetY)\n\
+		alert('done')\n\
+	} catch(err) {\n\
+		alert(err)\n\
+	}\n\
+	p.data=d\n\
+	drawApp.context.putImageData(p,0,0)\n\
 	function l(a,b){return a===b}\n\
 	function f(x,y){\n\
 		if(x>=0 && y>=0 && x<w && y<h && l(rtarget,d[4*w*y+4*x]) && l(gtarget,d[4*w*y+4*x+1]) && l(btarget,d[4*w*y+4*x+2])){\n\
@@ -55,11 +65,6 @@ function floodFill(e){\n\
 			colorPixel(d,w,x,y,r,g,b);\n\
 		}\n\
 	}\n\
-	if(!(rtarget===r && gtarget===g && btarget===b))\n\
-		f(e.offsetX,e.offsetY)\n\
-	p.data=d\n\
-	drawApp.context.putImageData(p,0,0)\n\
-	alert('done')\n\
 }\n\
 \n\
 function imgTest(){\n\
