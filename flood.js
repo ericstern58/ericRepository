@@ -30,7 +30,7 @@ drawApp.canvas.on('mousedown',function(e){\n\
 	}\n\
 })\n\
 \n\
-var floodFill = function(e){\n\
+function floodFill(e){\n\
 	save()\n\
 	var w=drawApp.canvas.width()\n\
 	var h=drawApp.canvas.height()\n\
@@ -61,7 +61,7 @@ var floodFill = function(e){\n\
 	drawApp.context.putImageData(p,0,0)\n\
 }\n\
 \n\
-var imgTest = function(e){\n\
+function imgTest(){\n\
 	save()\n\
 	var w=drawApp.canvas.width()\n\
 	var h=drawApp.canvas.height()\n\
