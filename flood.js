@@ -85,6 +85,12 @@ function imgTest(){\n\
 			}\n\
 		}\n\
 	}\n\
+	myImg.onload = function () {\n\
+		var t = document.getElementById("drawingCanvas").getContext("2d")\n\
+		t.globalCompositeOperation = "copy"\n\
+		t.drawImage(myImg, 0, 0)\n\
+		$("#tool-eraser").hasClass("selected") == 1 ? t.globalCompositeOperation = "destination-out" : t.globalCompositeOperation = "source-over"\n\
+	}\n\
 }\n\
 function colorPixel(d,w,x,y,r,g,b){\n\
 	d[4*w*y+4*x]=r;\n\
