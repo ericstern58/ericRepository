@@ -100,14 +100,14 @@ function colorPixel(d,w,point,r,g,b){\n\
 	d[4*w*point.y+4*point.x+2]=b;\n\
 	d[4*w+point.y+4*point.x+3]=255;\n\
 }\n\
-function colorPixelBlend(d,w,x,y,r1,g1,b1,r2,g2,b2){\n\
+function colorPixelBlend(d,w,point,r1,g1,b1,r2,g2,b2){\n\
 	var r=Math.ceil(0.5*r1 + 0.5*r2)\n\
 	var g=Math.ceil(0.5*g1 + 0.5*g2)\n\
 	var b=Math.ceil(0.5*b1 + 0.5*b2)\n\
-	d[4*w*y+4*x]=r;\n\
-	d[4*w*y+4*x+1]=g;\n\
-	d[4*w*y+4*x+2]=b;\n\
-	d[4*w+y+4*x+3]=255;\n\
+	d[4*w*point.y+4*point.x]=r;\n\
+	d[4*w*point.y+4*point.x+1]=g;\n\
+	d[4*w*point.y+4*point.x+2]=b;\n\
+	d[4*w+point.y+4*point.x+3]=255;\n\
 }\n\
 function Point(x,y) {\n\
 	this.x=x;\n\
