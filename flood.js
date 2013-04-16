@@ -23,6 +23,8 @@ drawApp.canvas.off('mousedown')\n\
 drawApp.canvas.on('mousedown',function(e){\n\
 	if($('#brush-fill').hasClass('selected')){\n\
         floodFill(e)\n\
+	} else if($('#brush-img').hasClass('selected')) { \n\
+		imgTest()\n\
 	} else{\n\
 		md(e)\n\
 	}\n\
