@@ -44,7 +44,7 @@ function floodFill(e){\n\
 	var g=(c>>8)&255\n\
 	var b=c&255\n\
 	var l=function(a,b){return a===b}\n\
-	var f = function(x,y){\n\
+	function f(x,y){\n\
 		if(x>=0 && y>=0 && x<w && y<h && l(rtarget,d[4*w*y+4*x]) && l(gtarget,d[4*w*y+4*x+1]) && l(btarget,d[4*w*y+4*x+2])){\n\
 			colorPixel(d,w,x,y,r,g,b);\n\
 			f(x-1,y);\n\
@@ -84,12 +84,6 @@ function imgTest(){\n\
 				}\n\
 			}\n\
 		}\n\
-	}\n\
-	myImg.onload = function () {\n\
-		var t = document.getElementById("drawingCanvas").getContext("2d")\n\
-		t.globalCompositeOperation = "copy"\n\
-		t.drawImage(myImg, 0, 0)\n\
-		$("#tool-eraser").hasClass("selected") == 1 ? t.globalCompositeOperation = "destination-out" : t.globalCompositeOperation = "source-over"\n\
 	}\n\
 }\n\
 function colorPixel(d,w,x,y,r,g,b){\n\
