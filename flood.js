@@ -14,7 +14,14 @@ drawApp.canvas.off('mousedown')\n\
 \n\
 drawApp.canvas.on('mousedown',function(e){\n\
 	if($('#brush-flood').hasClass('selected')){\n\
-        var w=drawApp.canvas.width()\n\
+        floodFill(e)\n\
+    }else{\n\
+		md(e)\n\
+    }\n\
+})\n\
+\n\
+function floodFill(e) {\n\
+var w=drawApp.canvas.width()\n\
         var h=drawApp.canvas.height()\n\
         var p=drawApp.context.getImageData(0,0,w,h)\n\
         var d=p.data\n\
@@ -47,11 +54,7 @@ drawApp.canvas.on('mousedown',function(e){\n\
             f(e.offsetX,e.offsetY)\n\
         p.data=d\n\
         drawApp.context.putImageData(p,0,0)\n\
-    }else{\n\
-		md(e)\n\
-    }\n\
-})\n\
-\n\
+}\n\
 "
 var js=document.createElement("script")
 js.text=code
