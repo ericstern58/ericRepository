@@ -1,11 +1,18 @@
 var code="\n\
-var btn=document.createElement('a')\n\
-document.getElementById('drawingCanvas').parentNode.appendChild(btn)\n\
-btn.href='#'\n\
-btn.id='brush-flood'\n\
-btn.className='brushPicker'\n\
-btn.innerHTML='fill'\n\
-btn.onclick=function(){drawApp.setSize('flood')}\n\
+var fillButton=document.createElement('a')\n\
+document.getElementById('drawingCanvas').parentNode.appendChild(fillButton)\n\
+fillButton.href='#'\n\
+fillButton.id='brush-flood'\n\
+fillButton.className='brushPicker'\n\
+fillButton.innerHTML='fill'\n\
+fillButton.onclick=function(){drawApp.setSize('flood')}\n\
+\n\
+var testButton=document.createElement('a')\n\
+document.getElementById('drawingCanvas').parentNode.appendChild(testButton)\n\
+testButton.href='#'\n\
+testButton.id='brush-flood'\n\
+testButton.className='brushPicker'\n\
+testButton.innerHTML='fill'\n\
 \n\
 var md=drawApp.onCanvasMouseDown()\n\
 // hey, that was clever, but unfortunately not enough\n\
