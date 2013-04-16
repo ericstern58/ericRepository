@@ -43,7 +43,7 @@ function floodFill(e){\n\
 	var r=(c>>16)&255\n\
 	var g=(c>>8)&255\n\
 	var b=c&255\n\
-	var l=function(a,b){return a===b}\n\
+	function l(a,b){return a===b}\n\
 	function f(x,y){\n\
 		if(x>=0 && y>=0 && x<w && y<h && l(rtarget,d[4*w*y+4*x]) && l(gtarget,d[4*w*y+4*x+1]) && l(btarget,d[4*w*y+4*x+2])){\n\
 			colorPixel(d,w,x,y,r,g,b);\n\
