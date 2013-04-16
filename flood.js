@@ -4,15 +4,16 @@ document.getElementById('drawingCanvas').parentNode.appendChild(fillButton)\n\
 fillButton.href='#'\n\
 fillButton.id='brush-fill'\n\
 fillButton.className='brushPicker'\n\
-fillButton.innerHTML='fill'\n\
+fillButton.innerHTML='Fill'\n\
 fillButton.onclick=function(){drawApp.setSize('fill')}\n\
 \n\
 var testButton=document.createElement('a')\n\
 document.getElementById('drawingCanvas').parentNode.appendChild(testButton)\n\
 testButton.href='#'\n\
-testButton.id='brush-fill'\n\
+testButton.id='brush-img'\n\
 testButton.className='brushPicker'\n\
-testButton.innerHTML='fill'\n\
+testButton.innerHTML='Img'\n\
+fillButton.onclick=function(){drawApp.setSize('img')}\n\
 \n\
 var md=drawApp.onCanvasMouseDown()\n\
 // hey, that was clever, but unfortunately not enough\n\
@@ -22,6 +23,8 @@ drawApp.canvas.off('mousedown')\n\
 drawApp.canvas.on('mousedown',function(e){\n\
 	if($('#brush-fill').hasClass('selected')){\n\
         floodFill(e)\n\
+	} else if($('#brush-img').hasClass('selected')) { \n\
+		imgTest()\n\
 	}else{\n\
 		md(e)\n\
 	}\n\
@@ -62,6 +65,45 @@ var floodFill = function(e){\n\
 		f(e.offsetX,e.offsetY)\n\
 	p.data=d\n\
 	drawApp.context.putImageData(p,0,0)\n\
+}\
+\
+var imgTest = function(e){\n\
+	save()\n\
+	var w=drawApp.canvas.width()\n\
+	var h=drawApp.canvas.height()\n\
+	var p=drawApp.context.getImageData(0,0,w,h)\n\
+	var d=p.data\n\
+	\
+	var myImg = new Image;\n\
+	myImg.src = 'http://g-ecx.images-amazon.com/images/G/01/DVD/Paramount/detailpages/IronMan/IronMan_Still_H5_L.jpg'\n\
+	var p2=drawApp.context.getImageData(0,0,w,h)\n\
+	var d2=p2.data\n\
+	\
+	var colorPixel = function(x,y,r,g,b){\n\
+		d[4*w*y+4*x]=r;\n\
+		d[4*w*y+4*x+1]=g;\n\
+		d[4*w*y+4*x+2]=b;\n\
+		d[4*w+y+4*x+3]=255;\n\
+	}\n\
+	var f = function(){\n\
+		for (var y=0;y<h;y++) {\n\
+			for (var x=0;x<w;x++) {\n\
+				if(x>=0 && y>=0 && x<w && y<h){\n\
+					var r=d2[4*w*y+4*x]\n\
+					var g=d2[4*w*y+4*x+1]\n\
+					var b=d2[4*w*y+4*x+2]\n\
+					colorPixel(x,y,r,g,b);\n\
+				}\n\
+			}\n\
+		}\n\
+	}\n\
+	\
+    myImg.onload = function () {\n\
+		var t = document.getElementById("drawingCanvas").getContext("2d")\n\
+		t.globalCompositeOperation = "copy"\n\
+		t.drawImage(myImg, 0, 0)\n\
+		$("#tool-eraser").hasClass("selected") == 1 ? t.globalCompositeOperation = "destination-out" : t.globalCompositeOperation = "source-over"\n\
+	}\n\
 }\n\
 "
 var js=document.createElement("script")
