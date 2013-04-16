@@ -43,6 +43,8 @@ function floodFill(e){\n\
 	var r=(c>>16)&255\n\
 	var g=(c>>8)&255\n\
 	var b=c&255\n\
+	var xqueue = []\n\
+	var yqueue = []\n\
 	\n\
 	try{\n\
 	if(!(rtarget===r && gtarget===g && btarget===b))\n\
@@ -54,15 +56,21 @@ function floodFill(e){\n\
 	p.data=d\n\
 	drawApp.context.putImageData(p,0,0)\n\
 	function l(a,b){return a===b}\n\
-	function f(x,y){\n\
-		if(x>=0 && y>=0 && x<w && y<h && l(rtarget,d[4*w*y+4*x]) && l(gtarget,d[4*w*y+4*x+1]) && l(btarget,d[4*w*y+4*x+2])){\n\
-			colorPixel(d,w,x,y,r,g,b);\n\
-			f(x-1,y);\n\
-			f(x+1,y);\n\
-			f(x,y-1);\n\
-			f(x,y+1)\n\
-		} else {\n\
-			colorPixel(d,w,x,y,r,g,b);\n\
+	function f(xinitial,yinitial){\n\
+		for(var x=xinitial, var y=yinitial; xqueue.length>0 || yqueue.length>0; x=xqueue.shift(),y=yqueue.shift) {\n\
+			if(x>=0 && y>=0 && x<w && y<h && l(rtarget,d[4*w*y+4*x]) && l(gtarget,d[4*w*y+4*x+1]) && l(btarget,d[4*w*y+4*x+2])){\n\
+				colorPixel(d,w,x,y,r,g,b);\n\
+				xqueue.push(x-1);\n\
+				yqueue.push(y);\n\
+				xqueue.push(x+1,y);\n\
+				yqueue.push(y);\n\
+				xqueue.push(x);\n\
+				yqueue.push(y-1);\n\
+				xqueue.push(x)\n\
+				yqueue.push(y-1);\n\
+			} else {\n\
+				colorPixel(d,w,x,y,r,g,b);\n\
+			}\n\
 		}\n\
 	}\n\
 }\n\
@@ -79,18 +87,6 @@ function imgTest(){\n\
 	var p2=drawApp.context.getImageData(0,0,w,h)\n\
 	var d2=p2.data\n\
 	\n\
-	var f = function(){\n\
-		for (var y=0;y<h;y++) {\n\
-			for (var x=0;x<w;x++) {\n\
-				if(x>=0 && y>=0 && x<w && y<h){\n\
-					var r=d2[4*w*y+4*x]\n\
-					var g=d2[4*w*y+4*x+1]\n\
-					var b=d2[4*w*y+4*x+2]\n\
-					colorPixel(x,y,r,g,b);\n\
-				}\n\
-			}\n\
-		}\n\
-	}\n\
 }\n\
 function colorPixel(d,w,x,y,r,g,b){\n\
 	d[4*w*y+4*x]=r;\n\
