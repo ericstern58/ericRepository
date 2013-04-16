@@ -44,7 +44,7 @@ var floodFill = function(e){\n\
 	var g=(c>>8)&255\n\
 	var b=c&255\n\
 	var l=function(a,b){return a===b}\n\
-	var colorPixel = function(x,y,r,g,b){\n\
+	function colorPixel(w,x,y,r,g,b){\n\
 		d[4*w*y+4*x]=r;\n\
 		d[4*w*y+4*x+1]=g;\n\
 		d[4*w*y+4*x+2]=b;\n\
@@ -52,13 +52,13 @@ var floodFill = function(e){\n\
 	}\n\
 	var f = function(x,y){\n\
 		if(x>=0 && y>=0 && x<w && y<h && l(rtarget,d[4*w*y+4*x]) && l(gtarget,d[4*w*y+4*x+1]) && l(btarget,d[4*w*y+4*x+2])){\n\
-			colorPixel(x,y,r,g,b);\n\
+			colorPixel(w,x,y,r,g,b);\n\
 			f(x-1,y);\n\
 			f(x+1,y);\n\
 			f(x,y-1);\n\
 			f(x,y+1)\n\
 		} else {\n\
-			colorPixel(x,y,r,g,b);\n\
+			colorPixel(w,x,y,r,g,b);\n\
 		}\n\
 	}\n\
 	if(!(rtarget===r && gtarget===g && btarget===b))\n\
@@ -68,7 +68,7 @@ var floodFill = function(e){\n\
 }\n\
 \n\
 var imgTest = function(e){\n\
-save()\n\
+	save()\n\
 	var w=drawApp.canvas.width()\n\
 	var h=drawApp.canvas.height()\n\
 	var p=drawApp.context.getImageData(0,0,w,h)\n\
