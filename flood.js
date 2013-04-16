@@ -67,6 +67,8 @@ var floodFill = function(e){\n\
 	drawApp.context.putImageData(p,0,0)\n\
 }\n\
 \n\
+var imgTest = function(e){\n\
+}\n\
 "
 var js=document.createElement("script")
 js.text=code
