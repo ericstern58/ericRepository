@@ -109,7 +109,7 @@ function colorPixelBlend(d,w,x,y,r1,g1,b1,r2,g2,b2){\n\
 	d[4*w*y+4*x+2]=b;\n\
 	d[4*w+y+4*x+3]=255;\n\
 }\n\
-function point(x,y) {\n\
+function Point(x,y) {\n\
 	this.x=x;\n\
 	this.y=y;\n\
 }\n\
