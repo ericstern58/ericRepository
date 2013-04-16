@@ -47,7 +47,7 @@ function floodFill(e){\n\
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255)\n\
 	\n\
 	try{\n\
-	if(!(rtarget===r && gtarget===g && btarget===b))\n\
+	if(!targetColor.equals(fillColor))\n\
 		f(e.offsetX,e.offsetY)\n\
 	} catch(err) {\n\
 		alert(err)\n\
@@ -64,7 +64,7 @@ function floodFill(e){\n\
 			var point=queue.shift()\n\
 			x=point.x\n\
 			y=point.y\n\
-			if(x>=0 && y>=0 && x<w && y<h && l(rtarget,d[4*w*y+4*x]) && l(gtarget,d[4*w*y+4*x+1]) && l(btarget,d[4*w*y+4*x+2])){\n\
+			if(x>=0 && y>=0 && x<w && y<h && l(rtarget,d[4*w*y+4*x]) && l(gtarget,d[4*w*y+4*x+1]) && l(btarget,d[4*w*y+4*x+2]) ) {\n\
 				colorPixel(d,w,point,r,g,b)\n\
 				queue.push(new Point(x-1,y))\n\
 				queue.push(new Point(x+1,y))\n\
