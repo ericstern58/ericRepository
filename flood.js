@@ -54,6 +54,8 @@ function floodFill(e){\n\
 		} else {\n\
 			colorPixel(d,w,x,y,r,g,b);\n\
 		}\n\
+		p.data=d\n\
+		drawApp.context.putImageData(p,0,0)\n\
 	}\n\
 	if(!(rtarget===r && gtarget===g && btarget===b))\n\
 		f(e.offsetX,e.offsetY)\n\
