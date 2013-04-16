@@ -47,7 +47,7 @@ function floodFill(e){\n\
 	var color=new RBGColor((c>>16)&255,(c>>8)&255,c&255)\n\
 	\n\
 	try{\n\
-	if(!color.equals(colorTarget))\n\
+	if(!(rtarget===r && gtarget===g && btarget===b))\n\
 		f(e.offsetX,e.offsetY)\n\
 	} catch(err) {\n\
 		alert(err)\n\
