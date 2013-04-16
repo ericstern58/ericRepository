@@ -7,11 +7,25 @@ fillButton.className='brushPicker'\n\
 fillButton.innerHTML='Fill'\n\
 fillButton.onclick=function(){drawApp.setSize('fill')}\n\
 \n\
+var testButton=document.createElement('a')\n\
+document.getElementById('drawingCanvas').parentNode.appendChild(testButton)\n\
+testButton.href='#'\n\
+testButton.id='brush-img'\n\
+testButton.className='brushPicker'\n\
+testButton.innerHTML='Img'\n\
+testButton.onclick=function(){drawApp.setSize('img')}\n\
+\n\
 var md=drawApp.onCanvasMouseDown()\n\
 // hey, that was clever, but unfortunately not enough\n\
 drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
 drawApp.canvas.off('mousedown')\n\
 \n\
+var colorPixel = function(x,y,r,g,b){\n\
+	d[4*w*y+4*x]=r;\n\
+	d[4*w*y+4*x+1]=g;\n\
+	d[4*w*y+4*x+2]=b;\n\
+	d[4*w+y+4*x+3]=255;\n\
+}\n\
 drawApp.canvas.on('mousedown',function(e){\n\
 	if($('#brush-fill').hasClass('selected')){\n\
         floodFill(e)\n\
@@ -21,13 +35,6 @@ drawApp.canvas.on('mousedown',function(e){\n\
 		md(e)\n\
 	}\n\
 })\n\
-\n\
-var colorPixel = function(x,y,r,g,b){\n\
-	d[4*w*y+4*x]=r;\n\
-	d[4*w*y+4*x+1]=g;\n\
-	d[4*w*y+4*x+2]=b;\n\
-	d[4*w+y+4*x+3]=255;\n\
-}\n\
 \n\
 var floodFill = function(e){\n\
 	save()\n\
