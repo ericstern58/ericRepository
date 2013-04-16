@@ -7,6 +7,14 @@ fillButton.className='brushPicker'\n\
 fillButton.innerHTML='Fill'\n\
 fillButton.onclick=function(){drawApp.setSize('fill')}\n\
 \n\
+var testButton=document.createElement('a')\n\
+document.getElementById('drawingCanvas').parentNode.appendChild(testButton)\n\
+testButton.href='#'\n\
+testButton.id='brush-img'\n\
+testButton.className='brushPicker'\n\
+testButton.innerHTML='Img'\n\
+testButton.onclick=function(){drawApp.setSize('img')}\n\
+\n\
 var md=drawApp.onCanvasMouseDown()\n\
 // hey, that was clever, but unfortunately not enough\n\
 drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
@@ -22,6 +30,13 @@ drawApp.canvas.on('mousedown',function(e){\n\
 	}\n\
 })\n\
 \n\
+var colorPixel = function(x,y,r,g,b){\n\
+	d[4*w*y+4*x]=r;\n\
+	d[4*w*y+4*x+1]=g;\n\
+	d[4*w*y+4*x+2]=b;\n\
+	d[4*w+y+4*x+3]=255;\n\
+}\n\
+\n\
 var floodFill = function(e){\n\
 	save()\n\
 	var w=drawApp.canvas.width()\n\
@@ -36,12 +51,6 @@ var floodFill = function(e){\n\
 	var g=(c>>8)&255\n\
 	var b=c&255\n\
 	var l=function(a,b){return a===b}\n\
-	var colorPixel = function(x,y,r,g,b){\n\
-		d[4*w*y+4*x]=r;\n\
-		d[4*w*y+4*x+1]=g;\n\
-		d[4*w*y+4*x+2]=b;\n\
-		d[4*w+y+4*x+3]=255;\n\
-	}\n\
 	var f = function(x,y){\n\
 		if(x>=0 && y>=0 && x<w && y<h && l(rtarget,d[4*w*y+4*x]) && l(gtarget,d[4*w*y+4*x+1]) && l(btarget,d[4*w*y+4*x+2])){\n\
 			colorPixel(x,y,r,g,b);\n\
@@ -57,25 +66,20 @@ var floodFill = function(e){\n\
 		f(e.offsetX,e.offsetY)\n\
 	p.data=d\n\
 	drawApp.context.putImageData(p,0,0)\n\
-}\
+}\n\
+\n\
 var imgTest = function(e){\n\
 	save()\n\
 	var w=drawApp.canvas.width()\n\
 	var h=drawApp.canvas.height()\n\
 	var p=drawApp.context.getImageData(0,0,w,h)\n\
 	var d=p.data\n\
-	\
+	\n\
 	var myImg = new Image;\n\
 	myImg.src = 'http://g-ecx.images-amazon.com/images/G/01/DVD/Paramount/detailpages/IronMan/IronMan_Still_H5_L.jpg'\n\
 	var p2=drawApp.context.getImageData(0,0,w,h)\n\
 	var d2=p2.data\n\
-	\
-	var colorPixel = function(x,y,r,g,b){\n\
-		d[4*w*y+4*x]=r;\n\
-		d[4*w*y+4*x+1]=g;\n\
-		d[4*w*y+4*x+2]=b;\n\
-		d[4*w+y+4*x+3]=255;\n\
-	}\n\
+	\n\
 	var f = function(){\n\
 		for (var y=0;y<h;y++) {\n\
 			for (var x=0;x<w;x++) {\n\
