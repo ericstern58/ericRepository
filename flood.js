@@ -74,7 +74,7 @@ function floodFill(e){\n\
 				xqueue.push(x)\n\
 				yqueue.push(y+1)\n\
 			} else if(x>=0 && y>=0 && x<w && y<h){\n\
-				colorPixel(d,w,x,y,r,g,b);\n\
+				colorPixelBlend(d,w,x,y,r,g,b,d[4*w*y+4*x],d[4*w*y+4*x+1],d[4*w*y+4*x+2]);\n\
 			}\n\
 		}\n\
 	}\n\
@@ -97,7 +97,16 @@ function colorPixel(d,w,x,y,r,g,b){\n\
 	d[4*w*y+4*x]=r;\n\
 	d[4*w*y+4*x+1]=g;\n\
 	d[4*w*y+4*x+2]=b;\n\
-	d[4*w+y+4*x+3]=128;\n\
+	d[4*w+y+4*x+3]=255;\n\
+}\n\
+function colorPixelBlend(d,w,x,y,r1,g1,b1,r2,g2,b2){\n\
+	var r=Math.ceil(0.5*r1 + 0.5*r2)\n\
+	var g=Math.ceil(0.5*g1 + 0.5*g2)\n\
+	var b=Math.ceil(0.5*b1 + 0.5*b2)\n\
+	d[4*w*y+4*x]=r;\n\
+	d[4*w*y+4*x+1]=g;\n\
+	d[4*w*y+4*x+2]=b;\n\
+	d[4*w+y+4*x+3]=255;\n\
 }\n\
 function point(x,y) {\n\
 	this.x=x;\n\
