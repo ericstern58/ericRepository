@@ -10,7 +10,11 @@ drawApp.canvas.on('mousedown',function(e){\n\
 	if($('#'+fillButton.id).hasClass('selected')){\n\
         floodFill(e)\n\
 	} else if($('#'+lineButton.id).hasClass('selected')) { \n\
-		makeLine(new Point(100,100),new Point(200,200))\n\
+		try{\n\
+			makeLine(new Point(100,100),new Point(200,200))\n\
+		} catch(err) {\n\
+			alert(err)\n\
+		}\n\
 	} else if($('#'+testButton.id).hasClass('selected')) { \n\
 		imgTest()\n\
 	} else{\n\
@@ -29,16 +33,12 @@ function makeLine(start,finish){\n\
 	var c=parseInt(drawApp.context.strokeStyle.substr(1,6),16)\n\
 	var lineColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255)\n\
 	\n\
-	try{\n\
-		context.beginPath()\n\
-		context.moveTo(start.x,start.y)\n\
-		context.lineTo(finish.x,finish.y)\n\
-		context.stroke()\n\
-	} catch(err) {\n\
-		alert(err)\n\
-	}\n\
+	context.beginPath()\n\
+	context.moveTo(start.x,start.y)\n\
+	context.lineTo(finish.x,finish.y)\n\
+	context.stroke()\n\
 	//p.data=d\n\
-	drawApp.context.putImageData(p,0,0)\n\
+	//drawApp.context.putImageData(p,0,0)\n\
 }\n\
 \n\
 function floodFill(e){\n\
