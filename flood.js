@@ -1,10 +1,5 @@
 var code="\n\
-var fillButton=document.createElement('a')\n\
-document.getElementById('drawingCanvas').parentNode.appendChild(fillButton)\n\
-fillButton.id='brush-fill'\n\
-fillButton.className='brushPicker'\n\
-fillButton.innerHTML='Fill'\n\
-fillButton.onclick=function(){drawApp.setSize('fill')}\n\
+createTool('fill')\n\
 \n\
 var testButton=document.createElement('a')\n\
 document.getElementById('drawingCanvas').parentNode.appendChild(testButton)\n\
@@ -13,7 +8,6 @@ testButton.className='brushPicker'\n\
 testButton.innerHTML='Img'\n\
 testButton.onclick=function(){drawApp.setSize('img')}\n\
 \n\
-createTool('fill2')\n\
 \n\
 var md=drawApp.onCanvasMouseDown()\n\
 // hey, that was clever, but unfortunately not enough\n\
