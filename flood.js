@@ -2,6 +2,7 @@ var code="\n\
 var fillButton=createTool('fill')\n\
 var testButton=createTool('img')\n\
 \n\
+drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
 drawApp.canvas.off('mousedown')\n\
 \n\
 drawApp.canvas.on('mousedown',function(e){\n\
@@ -32,7 +33,7 @@ function floodFill(e){\n\
 		alert(err)\n\
 	}\n\
 	//p.data=d\n\
-	CanvasRenderingContext2D.prototype.putImageData(p,0,0)\n\
+	drawApp.context.putImageData(p,0,0)\n\
 	\n\
 	function f(xinitial,yinitial){\n\
 		var queue = [new Point(xinitial,yinitial)]\n\
