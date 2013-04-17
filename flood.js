@@ -1,15 +1,7 @@
 var code="\n\
-fillButton=createTool('fill')\n\
+var fillButton=createTool('fill')\n\
+var testButton=createTool('img')\n\
 \n\
-var testButton=document.createElement('a')\n\
-document.getElementById('drawingCanvas').parentNode.appendChild(testButton)\n\
-testButton.id='brush-img'\n\
-testButton.className='brushPicker'\n\
-testButton.innerHTML='Img'\n\
-testButton.onclick=function(){drawApp.setSize('img')}\n\
-\n\
-\n\
-var md=drawApp.onCanvasMouseDown()\n\
 // hey, that was clever, but unfortunately not enough\n\
 drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
 drawApp.canvas.off('mousedown')\n\
@@ -17,9 +9,10 @@ drawApp.canvas.off('mousedown')\n\
 drawApp.canvas.on('mousedown',function(e){\n\
 	if($('#'+fillButton.id).hasClass('selected')){\n\
         floodFill(e)\n\
-	} else if($('#brush-img').hasClass('selected')) { \n\
+	} else if($('#'+testButton.id).hasClass('selected')) { \n\
 		imgTest()\n\
 	} else{\n\
+		var md=drawApp.onCanvasMouseDown()\n\
 		md(e)\n\
 	}\n\
 })\n\
