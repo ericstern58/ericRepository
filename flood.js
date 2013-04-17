@@ -125,6 +125,41 @@ function RGBColor(r,g,b) {\n\
 		return (this.r===color.r && this.g===color.g && this.b===color.b);\n\
 	}\n\
 }\n\
+/*\
+canvas.addEventListener('mousedown', function(e) {\n\
+	var mouse = myState.getMouse(e)\n\
+	var mx = mouse.x\n\
+	var my = mouse.y\n\
+	var shapes = myState.shapes\n\
+	var l = shapes.length\n\
+	for (var i = l-1; i >= 0; i--) {\n\
+		if (shapes[i].contains(mx, my)) {\n\
+			var mySel = shapes[i]\n\
+			// Keep track of where in the object we clicked\n\
+			// so we can move it smoothly (see mousemove)\n\
+			myState.dragoffx = mx - mySel.x\n\
+			myState.dragoffy = my - mySel.y\n\
+			myState.dragging = true\n\
+			myState.selection = mySel\n\
+			myState.valid = false\n\
+			return\n\
+		}\n\
+	}\n\
+	// havent returned means we have failed to select anything.\n\
+	// If there was an object selected, we deselect it\n\
+	if (myState.selection) {\n\
+		myState.selection = null\n\
+		myState.valid = false; // Need to clear the old selection border\n\
+	}\n\
+}, true)\n\
+*/\
+function CanvasState(canvas) {\n\
+	this.valid = false\n\
+	this.dragging = false\n\
+	this.selection = null\n\
+	this.dragx = 0\n\
+	this.dragy = 0\n\
+}\n\
 //Element creation methods \n\
 function createTool(name){\n\
 	var button=document.createElement('a')\n\
