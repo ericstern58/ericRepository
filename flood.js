@@ -1,7 +1,7 @@
 var code="\n\
 var fillButton=document.createElement('a')\n\
 document.getElementById('drawingCanvas').parentNode.appendChild(fillButton)\n\
-fillButton.href='#'\n\
+fillButton.href=''\n\
 fillButton.id='brush-fill'\n\
 fillButton.className='brushPicker'\n\
 fillButton.innerHTML='Fill'\n\
@@ -9,7 +9,7 @@ fillButton.onclick=function(){drawApp.setSize('fill')}\n\
 \n\
 var testButton=document.createElement('a')\n\
 document.getElementById('drawingCanvas').parentNode.appendChild(testButton)\n\
-testButton.href='#'\n\
+testButton.href=''\n\
 testButton.id='brush-img'\n\
 testButton.className='brushPicker'\n\
 testButton.innerHTML='Img'\n\
@@ -73,10 +73,10 @@ function floodFill(e){\n\
 			} else if(x>=0 && y>=0 && x<w && y<h){\n\
 				colorPixel(d,w,point,r,g,b)\n\
 				/*\
-				colorPixelBlend(d,w,x-1,y,fillColor,d[4*w*y+4*(x-1)],d[4*w*y+4*(x-1)+1],d[4*w*y+4*(x-1)+2]);\n\
-				colorPixelBlend(d,w,x+1,y,fillColor,d[4*w*y+4*(x+1)],d[4*w*y+4*(x+1)+1],d[4*w*y+4*(x+1)+2]);\n\
-				colorPixelBlend(d,w,x,y-1,fillColor,d[4*w*(y-1)+4*x],d[4*w*(y-1)+4*x+1],d[4*w*(y-1)+4*x+2]);\n\
-				colorPixelBlend(d,w,x,y+1,fillColor,d[4*w*(y+1)+4*x],d[4*w*(y+1)+4*x+1],d[4*w*(y+1)+4*x+2]);\n\
+				colorPixelBlend(d,w,x-1,y,fillColor,new RGBColor(d[4*w*y+4*(x-1)],d[4*w*y+4*(x-1)+1],d[4*w*y+4*(x-1)+2]));\n\
+				colorPixelBlend(d,w,x+1,y,fillColor,new RGBColor(d[4*w*y+4*(x+1)],d[4*w*y+4*(x+1)+1],d[4*w*y+4*(x+1)+2]));\n\
+				colorPixelBlend(d,w,x,y-1,fillColor,new RGBColor(d[4*w*(y-1)+4*x],d[4*w*(y-1)+4*x+1],d[4*w*(y-1)+4*x+2]));\n\
+				colorPixelBlend(d,w,x,y+1,fillColor,new RGBColor(d[4*w*(y+1)+4*x],d[4*w*(y+1)+4*x+1],d[4*w*(y+1)+4*x+2]));\n\
 				*/\
 			}\n\
 		}\n\
