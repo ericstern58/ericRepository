@@ -56,10 +56,7 @@ function floodFill(e){\n\
 	function f(xinitial,yinitial){\n\
 		var queue = []\n\
 		queue.push(new Point(xinitial,yinitial))\n\
-		var x = 0\n\
-		var y = 0\n\
-		while(queue.length>0) {\n\
-			var point=queue.shift()\n\
+		for(var point, var x, var y; queue.length>0; point=queue.shift()) {\n\
 			x=point.x\n\
 			y=point.y\n\
 			if(x>=0 && y>=0 && x<w && y<h && targetColor.equals(new RGBColor(d[4*w*y+4*x],d[4*w*y+4*x+1],d[4*w*y+4*x+2])) ) {\n\
