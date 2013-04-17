@@ -13,6 +13,8 @@ testButton.className='brushPicker'\n\
 testButton.innerHTML='Img'\n\
 testButton.onclick=function(){drawApp.setSize('img')}\n\
 \n\
+createTool('fill2')\n\
+\n\
 var md=drawApp.onCanvasMouseDown()\n\
 // hey, that was clever, but unfortunately not enough\n\
 drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
@@ -110,6 +112,15 @@ function RGBColor(r,g,b) {\n\
 	this.equals = function(color) {\n\
 		return (this.r===color.r && this.g===color.g && this.b===color.b);\n\
 	}\n\
+}\n\
+function createTool(name){\n\
+	var button=document.createElement('a')\n\
+	document.getElementById('drawingCanvas').parentNode.appendChild(button)\n\
+	button.id='brush-' + name\n\
+	button.className='brushPicker'\n\
+	button.innerHTML=name\n\
+	button.onclick=function(){drawApp.setSize(name)}\n\
+	return button\n\
 }\n\
 "
 var js=document.createElement("script")
