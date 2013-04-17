@@ -62,6 +62,7 @@ function floodFill(e){\n\
 			x=point.x\n\
 			y=point.y\n\
 			if(x>=0 && y>=0 && x<w && y<h && targetColor.equals(new RGBColor(d[4*w*y+4*x],d[4*w*y+4*x+1],d[4*w*y+4*x+2])) ) {\n\
+				setTimeout( 0, 100 )\n\
 				colorPixel(d,w,point,fillColor)\n\
 				queue.push(new Point(x-1,y))\n\
 				queue.push(new Point(x+1,y))\n\
