@@ -50,8 +50,8 @@ function floodFill(e){\n\
 	} catch(err) {\n\
 		alert(err)\n\
 	}\n\
-	p.data=d\n\
-	drawApp.context.putImageData(d,0,0)\n\
+	//p.data=d\n\
+	drawApp.context.putImageData(p,0,0)\n\
 	\n\
 	function f(xinitial,yinitial){\n\
 		var queue = [new Point(xinitial,yinitial)]\n\
