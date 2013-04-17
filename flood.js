@@ -54,8 +54,7 @@ function floodFill(e){\n\
 	drawApp.context.putImageData(p,0,0)\n\
 	\n\
 	function f(xinitial,yinitial){\n\
-		var queue = []\n\
-		queue.push(new Point(xinitial,yinitial))\n\
+		var queue = [new Point(xinitial,yinitial)]\n\
 		var x = 0\n\
 		var y = 0\n\
 		while(queue.length>0) {\n\
