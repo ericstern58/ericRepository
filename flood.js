@@ -54,7 +54,7 @@ function floodFill(e){\n\
 	}\n\
 	p.data=d\n\
 	drawApp.context.putImageData(p,0,0)\n\
-	function l(a,b){return a===b}\n\
+	\n\
 	function f(xinitial,yinitial){\n\
 		var queue = []\n\
 		queue.push(new Point(xinitial,yinitial))\n\
@@ -96,10 +96,10 @@ function imgTest(){\n\
 	var d2=p2.data\n\
 	\n\
 }\n\
-function colorPixel(d,w,point,r,g,b){\n\
-	d[4*w*point.y+4*point.x]=r;\n\
-	d[4*w*point.y+4*point.x+1]=g;\n\
-	d[4*w*point.y+4*point.x+2]=b;\n\
+function colorPixel(d,w,point,color){\n\
+	d[4*w*point.y+4*point.x]=color.r;\n\
+	d[4*w*point.y+4*point.x+1]=color.g;\n\
+	d[4*w*point.y+4*point.x+2]=color.b;\n\
 	d[4*w+point.y+4*point.x+3]=255;\n\
 }\n\
 function colorPixelBlend(d,w,point,r1,g1,b1,r2,g2,b2){\n\
