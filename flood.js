@@ -1,7 +1,6 @@
 var code="\n\
 var fillButton=document.createElement('a')\n\
 document.getElementById('drawingCanvas').parentNode.appendChild(fillButton)\n\
-fillButton.href=''\n\
 fillButton.id='brush-fill'\n\
 fillButton.className='brushPicker'\n\
 fillButton.innerHTML='Fill'\n\
@@ -9,7 +8,6 @@ fillButton.onclick=function(){drawApp.setSize('fill')}\n\
 \n\
 var testButton=document.createElement('a')\n\
 document.getElementById('drawingCanvas').parentNode.appendChild(testButton)\n\
-testButton.href=''\n\
 testButton.id='brush-img'\n\
 testButton.className='brushPicker'\n\
 testButton.innerHTML='Img'\n\
