@@ -120,6 +120,9 @@ function RGBColor(r,g,b) {\n\
 	this.g=g;\n\
 	this.b=b;\n\
 }\n\
+function equals(color) {\n\
+	return (this.r===color.r && this.g===color.g && this.b===color.b);\n\
+}\n\
 "
 var js=document.createElement("script")
 js.text=code
