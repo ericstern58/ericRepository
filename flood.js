@@ -11,7 +11,8 @@ drawApp.canvas.on('mousedown',function(e){\n\
         floodFill(e)\n\
 	} else if($('#'+lineButton.id).hasClass('selected')) { \n\
 		try{\n\
-			makeLine(new Point(100,100),new Point(200,200))\n\
+			virtualLine(e)\n\
+			//makeLine(new Point(100,100),new Point(200,200))\n\
 		} catch(err) {\n\
 			alert(err)\n\
 		}\n\
@@ -22,6 +23,27 @@ drawApp.canvas.on('mousedown',function(e){\n\
 		md(e)\n\
 	}\n\
 })\n\
+\n\
+function virtualLine(e){\n\
+	var canvas = document.getElementById('drawingCanvas')\n\
+	var myState = new CanvasState(canvas)\n\
+	var mouseIsDown = true\n\
+	startx=e.offsetX\n\
+	starty=e.offsetY\n\
+	canvas.addEventListener('mouseup', function(e) {\n\
+		mouseIsDown = false\n\
+		this.removeEventListener('mouseup',arguments.callee,false)\n\
+	}, true)\n\
+	while(mouseIsDown) {\n\
+		setTimeout( updateLine(), 300 )\n\
+	}\n\
+	function updateLine(){\n\
+		var mouse = myState.getMouse(e)\n\
+		var mx = mouse.x\n\
+		var my = mouse.y\n\
+		makeLine(new Point(e.offsetX,e.offsetY),new Point(mx,my))\n\
+	}\n\
+}\n\
 \n\
 function makeLine(start,finish){\n\
 	save()\n\
@@ -125,40 +147,20 @@ function RGBColor(r,g,b) {\n\
 		return (this.r===color.r && this.g===color.g && this.b===color.b);\n\
 	}\n\
 }\n\
-/*\
-canvas.addEventListener('mousedown', function(e) {\n\
-	var mouse = myState.getMouse(e)\n\
-	var mx = mouse.x\n\
-	var my = mouse.y\n\
-	var shapes = myState.shapes\n\
-	var l = shapes.length\n\
-	for (var i = l-1; i >= 0; i--) {\n\
-		if (shapes[i].contains(mx, my)) {\n\
-			var mySel = shapes[i]\n\
-			// Keep track of where in the object we clicked\n\
-			// so we can move it smoothly (see mousemove)\n\
-			myState.dragoffx = mx - mySel.x\n\
-			myState.dragoffy = my - mySel.y\n\
-			myState.dragging = true\n\
-			myState.selection = mySel\n\
-			myState.valid = false\n\
-			return\n\
-		}\n\
-	}\n\
-	// havent returned means we have failed to select anything.\n\
-	// If there was an object selected, we deselect it\n\
-	if (myState.selection) {\n\
-		myState.selection = null\n\
-		myState.valid = false; // Need to clear the old selection border\n\
-	}\n\
-}, true)\n\
-*/\
+function Shape(x, y, w, h, fill) {\n\
+	this.x = x\n\
+	this.y = y\n\
+	this.w = w\n\
+	this.h = h\n\
+}\n\
 function CanvasState(canvas) {\n\
 	this.valid = false\n\
+	this.shapes = []\n\
 	this.dragging = false\n\
 	this.selection = null\n\
 	this.dragx = 0\n\
 	this.dragy = 0\n\
+	\n\
 }\n\
 //Element creation methods \n\
 function createTool(name){\n\
