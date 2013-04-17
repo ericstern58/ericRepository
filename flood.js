@@ -119,9 +119,9 @@ function RGBColor(r,g,b) {\n\
 	this.r=r;\n\
 	this.g=g;\n\
 	this.b=b;\n\
-	function equals(color) {\n\
-		return (this.r===color.r && this.g===color.g && this.b===color.b);\n\
-	}\n\
+}\n\
+function.prototype.equals(color) {\n\
+	return (this.r===color.r && this.g===color.g && this.b===color.b);\n\
 }\n\
 "
 var js=document.createElement("script")
