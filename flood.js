@@ -68,7 +68,7 @@ function floodFill(e){\n\
 				queue.push(new Point(x,y-1))\n\
 				queue.push(new Point(x,y+1))\n\
 			} else if(x>=0 && y>=0 && x<w && y<h){\n\
-				colorPixel(d,w,point,fillColor)\n\
+				//colorPixel(d,w,point,fillColor)\n\
 				/*\
 				colorPixelBlend(d,w,x-1,y,fillColor,new RGBColor(d[4*w*y+4*(x-1)],d[4*w*y+4*(x-1)+1],d[4*w*y+4*(x-1)+2]));\n\
 				colorPixelBlend(d,w,x+1,y,fillColor,new RGBColor(d[4*w*y+4*(x+1)],d[4*w*y+4*(x+1)+1],d[4*w*y+4*(x+1)+2]));\n\
