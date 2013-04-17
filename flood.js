@@ -1,5 +1,5 @@
 var code="\n\
-createTool('fill')\n\
+fillButton=createTool('fill')\n\
 \n\
 var testButton=document.createElement('a')\n\
 document.getElementById('drawingCanvas').parentNode.appendChild(testButton)\n\
@@ -15,7 +15,7 @@ drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
 drawApp.canvas.off('mousedown')\n\
 \n\
 drawApp.canvas.on('mousedown',function(e){\n\
-	if($('#brush-fill').hasClass('selected')){\n\
+	if($(fillButton.id).hasClass('selected')){\n\
         floodFill(e)\n\
 	} else if($('#brush-img').hasClass('selected')) { \n\
 		imgTest()\n\
