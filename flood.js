@@ -34,14 +34,8 @@ function floodFill(e){\n\
 	var h=drawApp.canvas.height()\n\
 	var p=drawApp.context.getImageData(0,0,w,h)\n\
 	var d=p.data\n\
-	var rtarget=d[4*w*e.offsetY+4*e.offsetX]\n\
-	var gtarget=d[4*w*e.offsetY+4*e.offsetX+1]\n\
-	var btarget=d[4*w*e.offsetY+4*e.offsetX+2]\n\
 	var targetColor = new RGBColor(d[4*w*e.offsetY+4*e.offsetX],d[4*w*e.offsetY+4*e.offsetX+1],d[4*w*e.offsetY+4*e.offsetX+2])\n\
 	var c=parseInt(drawApp.context.strokeStyle.substr(1,6),16)\n\
-	var r=(c>>16)&255\n\
-	var g=(c>>8)&255\n\
-	var b=c&255\n\
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255)\n\
 	\n\
 	try{\n\
@@ -62,7 +56,6 @@ function floodFill(e){\n\
 			x=point.x\n\
 			y=point.y\n\
 			if(x>=0 && y>=0 && x<w && y<h && targetColor.equals(new RGBColor(d[4*w*y+4*x],d[4*w*y+4*x+1],d[4*w*y+4*x+2])) ) {\n\
-				setTimeout( 0, 100 )\n\
 				colorPixel(d,w,point,fillColor)\n\
 				queue.push(new Point(x-1,y))\n\
 				queue.push(new Point(x+1,y))\n\
