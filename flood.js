@@ -63,13 +63,13 @@ function floodFill(e){\n\
 			x=point.x\n\
 			y=point.y\n\
 			if(x>=0 && y>=0 && x<w && y<h && targetColor.equals(new RGBColor(d[4*w*y+4*x],d[4*w*y+4*x+1],d[4*w*y+4*x+2])) ) {\n\
-				colorPixel(d,w,point,r,g,b)\n\
+				colorPixel(d,w,point,fillColor)\n\
 				queue.push(new Point(x-1,y))\n\
 				queue.push(new Point(x+1,y))\n\
 				queue.push(new Point(x,y-1))\n\
 				queue.push(new Point(x,y+1))\n\
 			} else if(x>=0 && y>=0 && x<w && y<h){\n\
-				colorPixel(d,w,point,r,g,b)\n\
+				colorPixel(d,w,point,fillColor)\n\
 				/*\
 				colorPixelBlend(d,w,x-1,y,fillColor,new RGBColor(d[4*w*y+4*(x-1)],d[4*w*y+4*(x-1)+1],d[4*w*y+4*(x-1)+2]));\n\
 				colorPixelBlend(d,w,x+1,y,fillColor,new RGBColor(d[4*w*y+4*(x+1)],d[4*w*y+4*(x+1)+1],d[4*w*y+4*(x+1)+2]));\n\
@@ -104,10 +104,7 @@ function colorPixelBlend(d,w,point,color1,color2){\n\
 	var r=Math.ceil(0.5*color1.r + 0.5*r2)\n\
 	var g=Math.ceil(0.5*color1.g + 0.5*g2)\n\
 	var b=Math.ceil(0.5*color1.b + 0.5*b2)\n\
-	d[4*w*point.y+4*point.x]=color2.r;\n\
-	d[4*w*point.y+4*point.x+1]=color2.g;\n\
-	d[4*w*point.y+4*point.x+2]=color2.b;\n\
-	d[4*w+point.y+4*point.x+3]=255;\n\
+	colorPixel(d,w,point,new Color(r,g,b))\n\
 }\n\
 function Point(x,y) {\n\
 	this.x=x;\n\
