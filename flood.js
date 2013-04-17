@@ -15,7 +15,7 @@ drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
 drawApp.canvas.off('mousedown')\n\
 \n\
 drawApp.canvas.on('mousedown',function(e){\n\
-	if($(fillButton.id).hasClass('selected')){\n\
+	if($('#'+fillButton.id).hasClass('selected')){\n\
         floodFill(e)\n\
 	} else if($('#brush-img').hasClass('selected')) { \n\
 		imgTest()\n\
