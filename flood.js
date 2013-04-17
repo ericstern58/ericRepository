@@ -73,10 +73,10 @@ function floodFill(e){\n\
 			} else if(x>=0 && y>=0 && x<w && y<h){\n\
 				colorPixel(d,w,point,r,g,b)\n\
 				/*\
-				colorPixelBlend(d,w,x-1,y,r,g,b,d[4*w*y+4*(x-1)],d[4*w*y+4*(x-1)+1],d[4*w*y+4*(x-1)+2]);\n\
-				colorPixelBlend(d,w,x+1,y,r,g,b,d[4*w*y+4*(x+1)],d[4*w*y+4*(x+1)+1],d[4*w*y+4*(x+1)+2]);\n\
-				colorPixelBlend(d,w,x,y-1,r,g,b,d[4*w*(y-1)+4*x],d[4*w*(y-1)+4*x+1],d[4*w*(y-1)+4*x+2]);\n\
-				colorPixelBlend(d,w,x,y+1,r,g,b,d[4*w*(y+1)+4*x],d[4*w*(y+1)+4*x+1],d[4*w*(y+1)+4*x+2]);\n\
+				colorPixelBlend(d,w,x-1,y,fillColor,d[4*w*y+4*(x-1)],d[4*w*y+4*(x-1)+1],d[4*w*y+4*(x-1)+2]);\n\
+				colorPixelBlend(d,w,x+1,y,fillColor,d[4*w*y+4*(x+1)],d[4*w*y+4*(x+1)+1],d[4*w*y+4*(x+1)+2]);\n\
+				colorPixelBlend(d,w,x,y-1,fillColor,d[4*w*(y-1)+4*x],d[4*w*(y-1)+4*x+1],d[4*w*(y-1)+4*x+2]);\n\
+				colorPixelBlend(d,w,x,y+1,fillColor,d[4*w*(y+1)+4*x],d[4*w*(y+1)+4*x+1],d[4*w*(y+1)+4*x+2]);\n\
 				*/\
 			}\n\
 		}\n\
@@ -102,13 +102,13 @@ function colorPixel(d,w,point,color){\n\
 	d[4*w*point.y+4*point.x+2]=color.b;\n\
 	d[4*w+point.y+4*point.x+3]=255;\n\
 }\n\
-function colorPixelBlend(d,w,point,r1,g1,b1,r2,g2,b2){\n\
-	var r=Math.ceil(0.5*r1 + 0.5*r2)\n\
-	var g=Math.ceil(0.5*g1 + 0.5*g2)\n\
-	var b=Math.ceil(0.5*b1 + 0.5*b2)\n\
-	d[4*w*point.y+4*point.x]=r;\n\
-	d[4*w*point.y+4*point.x+1]=g;\n\
-	d[4*w*point.y+4*point.x+2]=b;\n\
+function colorPixelBlend(d,w,point,color1,color2){\n\
+	var r=Math.ceil(0.5*color1.r + 0.5*r2)\n\
+	var g=Math.ceil(0.5*color1.g + 0.5*g2)\n\
+	var b=Math.ceil(0.5*color1.b + 0.5*b2)\n\
+	d[4*w*point.y+4*point.x]=color2.r;\n\
+	d[4*w*point.y+4*point.x+1]=color2.g;\n\
+	d[4*w*point.y+4*point.x+2]=color2.b;\n\
 	d[4*w+point.y+4*point.x+3]=255;\n\
 }\n\
 function Point(x,y) {\n\
