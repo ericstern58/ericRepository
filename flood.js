@@ -10,8 +10,11 @@ drawApp.canvas.on('mousedown',function(e){\n\
 	if($('#'+fillButton.id).hasClass('selected')){\n\
         floodFill(e)\n\
 	} else if($('#'+lineButton.id).hasClass('selected')) { \n\
-			virtualLine(e)\n\
-			//makeLine(new Point(100,100),new Point(200,200))\n\
+		try{\n\
+			makeLine(new Point(100,100),new Point(200,200))\n\
+		} catch(err) {\n\
+			alert(err)\n\
+		}\n\
 	} else if($('#'+testButton.id).hasClass('selected')) { \n\
 		imgTest()\n\
 	} else{\n\
@@ -20,6 +23,9 @@ drawApp.canvas.on('mousedown',function(e){\n\
 	}\n\
 })\n\
 \n\
+function virtualLine(){\n\
+	\n\
+}\n\
 \n\
 function makeLine(start,finish){\n\
 	save()\n\
@@ -149,11 +155,6 @@ function createTool(name){\n\
 	return button\n\
 }\n\
 "
-try{
 var js=document.createElement("script")
 js.text=code
 document.body.appendChild(js)
-
-		} catch(err) {\n\
-			alert(err)\n\
-		}\n\
