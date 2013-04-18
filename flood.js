@@ -41,15 +41,15 @@ function virtualLine(e){\n\
 	var start = new Point(e.offsetX,e.offsetY)\n\
 	canvas.addEventListener('mousemove', update, false)\n\
 	canvas.addEventListener('mouseup', function() {\n\
-		alert('e.page('+e.pageX+','+e.pageY+')'+' mouse('+mouse.x+','+mouse.y)\n\
-		//'offsetleft'+canvas.offsetLeft+' offsetTop'+canvas.offsetTop\n\
-		makeLine(start,new Point(mouse.x,mouse.y))\n\
+		alert('e.page('+start.x+','+start.y+')'+' mouse('+mouse.x+','+mouse.y)\n\
+		//'+e.pageX+','+e.pageY+')'+'offsetleft'+canvas.offsetLeft+' offsetTop'+canvas.offsetTop\n\
+		makeLine(start,mouse)\n\
 		canvas.removeEventListener('mousemove', update, false)\n\
 		canvas.removeEventListener('mouseup', arguments.callee, false)\n\
 	}, false)\n\
 	function update(){\n\
-		mouse.x = e.pageX - canvas.offsetLeft\n\
-		mouse.y = e.pageY - canvas.offsetTop\n\
+		mouse.x = e.pageX// - canvas.offsetLeft\n\
+		mouse.y = e.pageY// - canvas.offsetTop\n\
 	}\n\
 }\n\
 \n\
