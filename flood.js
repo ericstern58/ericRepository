@@ -43,7 +43,8 @@ function virtualLine(e){\n\
 	canvas.addEventListener('mouseup', function() {\n\
 		alert(canvas.clientLeft + ',' + canvas.clientTop)\n\
 		//'+e.pageX+','+e.pageY+')'+'offsetleft'+canvas.offsetLeft+' offsetTop'+canvas.offsetTop\n\
-		makeLine(start,new Point(e.pageX-canvas.clientLeft,e.pageY-canvas.clientTop))\n\
+		var pos = getElementAbsolutePos(canvas)\n\
+		makeLine(start,new Point(e.pageX-pos.x,e.pageY-pos.y))\n\
 		canvas.removeEventListener('mousemove', update, false)\n\
 		canvas.removeEventListener('mouseup', arguments.callee, false)\n\
 	}, false)\n\
@@ -145,20 +146,19 @@ function RGBColor(r,g,b) {\n\
 		return (this.r===color.r && this.g===color.g && this.b===color.b);\n\
 	}\n\
 }\n\
-function Shape(x, y, w, h, fill) {\n\
-	this.x = x\n\
-	this.y = y\n\
-	this.w = w\n\
-	this.h = h\n\
-}\n\
-function CanvasState(canvas) {\n\
-	this.valid = false\n\
-	this.shapes = []\n\
-	this.dragging = false\n\
-	this.selection = null\n\
-	this.dragx = 0\n\
-	this.dragy = 0\n\
-	\n\
+function getElementAbsolutePos(element) {\n\
+	var res = new Point(0,0)\n\
+	if (element !== null) { \n\
+		if (element.getBoundingClientRect) {\n\
+			var viewportElement = document.documentElement\n\
+ 	        var box = element.getBoundingClientRect()\n\
+		    var scrollLeft = viewportElement.scrollLeft\n\
+ 		    var scrollTop = viewportElement.scrollTop\n\
+		    res.x = box.left + scrollLeft\n\
+		    res.y = box.top + scrollTop\n\
+		}\n\
+	}\n\
+    return res\n\
 }\n\
 //Element creation methods \n\
 function createTool(name){\n\
