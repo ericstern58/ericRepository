@@ -37,7 +37,6 @@ drawApp.canvas.on('mousedown',function(e){\n\
 })\n\
 \n\
 function virtualLine(e){\n\
-	save()\n\
 	var w=drawApp.canvas.width()\n\
 	var h=drawApp.canvas.height()\n\
 	makeLine(new Point(50,50),new Point(mouse.x,mouse.y))\n\
@@ -46,20 +45,11 @@ function virtualLine(e){\n\
 \n\
 function makeLine(start,finish){\n\
 	save()\n\
-	var w=drawApp.canvas.width()\n\
-	var h=drawApp.canvas.height()\n\
 	var context=drawApp.context\n\
-	var p=drawApp.context.getImageData(0,0,w,h)\n\
-	var d=p.data\n\
-	var c=parseInt(drawApp.context.strokeStyle.substr(1,6),16)\n\
-	var lineColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255)\n\
-	\n\
 	context.beginPath()\n\
 	context.moveTo(start.x,start.y)\n\
 	context.lineTo(finish.x,finish.y)\n\
 	context.stroke()\n\
-	//p.data=d\n\
-	//drawApp.context.putImageData(p,0,0)\n\
 }\n\
 \n\
 function floodFill(e){\n\
