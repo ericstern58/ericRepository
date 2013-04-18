@@ -15,7 +15,8 @@ drawApp.canvas.on('mousedown',function(e){\n\
 		}\n\
 	} else if($('#'+lineButton.id).hasClass('selected')) { \n\
 		try{\n\
-			makeLine(new Point(100,100),new Point(200,200))\n\
+			virtualLine(e)\n\
+			//makeLine(new Point(100,100),new Point(200,200))\n\
 		} catch(err) {\n\
 			alert(err)\n\
 		}\n\
@@ -27,7 +28,7 @@ drawApp.canvas.on('mousedown',function(e){\n\
 	}\n\
 })\n\
 \n\
-function virtualLine(){\n\
+function virtualLine(e){\n\
 	\n\
 }\n\
 \n\
