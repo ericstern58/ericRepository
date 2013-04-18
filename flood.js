@@ -56,9 +56,8 @@ function virtualLine(e){\n\
 		canvas.removeEventListener('mouseup', arguments.callee, false)\n\
 	}\n\
 	function update(){\n\
-		mouse.x = e.pageX// - canvas.offsetLeft\n\
-		mouse.y = e.pageY// - canvas.offsetTop\n\
-		label58.innerHTML=mouse.x+','+mouse.y\n\
+		mouse.x = e.pageX\n\
+		mouse.y = e.pageY\n\
 		var tempx=mouse.x-pos.x\n\
 		var tempy=mouse.y-pos.y\n\
 		label58.innerHTML=tempx+','+tempy\n\
