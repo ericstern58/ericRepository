@@ -40,7 +40,8 @@ drawApp.canvas.on('mousedown',function(e){\n\
 function virtualLine(e){\n\
 	var start = new Point(e.offsetX,e.offsetY)\n\
 	canvas.addEventListener('mousemove', update, false)\n\
-	canvas.addEventListener('mouseup', function() {\n\
+	canvas.addEventListener('mouseup', conclude, false)\n\
+	function conclude() {\n\
 		var pos = getElementAbsolutePos(canvas)\n\
 		var end = new Point(mouse.x-pos.x,mouse.y-pos.y)\n\
 		alert('start(' + start.x + ',' + start.y + ') end('+end.x+','+end.y+')' + ' pos('+pos.x+','+pos.y+')')\n\
@@ -48,7 +49,7 @@ function virtualLine(e){\n\
 		makeLine(start,end)\n\
 		canvas.removeEventListener('mousemove', update, false)\n\
 		canvas.removeEventListener('mouseup', arguments.callee, false)\n\
-	}, false)\n\
+	}\n\
 	function update(){\n\
 		mouse.x = e.pageX// - canvas.offsetLeft\n\
 		mouse.y = e.pageY// - canvas.offsetTop\n\
