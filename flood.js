@@ -41,7 +41,7 @@ function virtualLine(e){\n\
 	var start = new Point(e.offsetX,e.offsetY)\n\
 	canvas.addEventListener('mousemove', update, false)\n\
 	canvas.addEventListener('mouseup', function() {\n\
-		//alert('e.page('+start.x+','+start.y+')'+' mouse('+mouse.x+','+mouse.y)\n\
+		alert(this.offsetLeft + ' and ' + this.offsetTop)\n\
 		//'+e.pageX+','+e.pageY+')'+'offsetleft'+canvas.offsetLeft+' offsetTop'+canvas.offsetTop\n\
 		makeLine(start,new Point(e.pageX,e.pageY))\n\
 		canvas.removeEventListener('mousemove', update, false)\n\
