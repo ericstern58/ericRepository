@@ -8,7 +8,11 @@ drawApp.canvas.off('mousedown')\n\
 \n\
 drawApp.canvas.on('mousedown',function(e){\n\
 	if($('#'+fillButton.id).hasClass('selected')){\n\
-        floodFill(e)\n\
+		try{\n\
+			floodFill(e)\n\
+		} catch(err) {\n\
+			alert(err)\n\
+		}\n\
 	} else if($('#'+lineButton.id).hasClass('selected')) { \n\
 		try{\n\
 			makeLine(new Point(100,100),new Point(200,200))\n\
