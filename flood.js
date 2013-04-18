@@ -2,7 +2,14 @@ var code="\n\
 var fillButton=createTool('fill')\n\
 var lineButton=createTool('line')\n\
 var testButton=createTool('img')\n\
-lineButton.onclick=function(){virtualLine(e)}\n\
+\n\
+var mouse = {x: 0, y: 0}\n\
+/* Mouse Capturing Work */\n\
+var canvas = document.getElementById('drawingCanvas')\n\
+canvas.addEventListener('mousemove', function(e) {\n\
+  mouse.x = e.pageX - this.offsetLeft\n\
+  mouse.y = e.pageY - this.offsetTop\n\
+}, false)\n\
 \n\
 drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
 drawApp.canvas.off('mousedown')\n\
@@ -16,7 +23,7 @@ drawApp.canvas.on('mousedown',function(e){\n\
 		}\n\
 	} else if($('#'+lineButton.id).hasClass('selected')) { \n\
 		try{\n\
-			//virtualLine(e)\n\
+			virtualLine(e)\n\
 			//makeLine(new Point(100,100),new Point(200,200))\n\
 		} catch(err) {\n\
 			alert(err)\n\
@@ -33,8 +40,7 @@ function virtualLine(e){\n\
 	save()\n\
 	var w=drawApp.canvas.width()\n\
 	var h=drawApp.canvas.height()\n\
-	var canvas = document.getElementById('drawingCanvas')\n\
-	canvas.onmousemove=function(){makeLine(new Point(50,50),new Point(e.pageX-w,e.pageY-h))}\n\
+	makeLine(new Point(50,50),new Point(mouse.x,mouse.y))\n\
 	//alert('e.page('+e.pageX+','+e.pageY+')'+'offsetleft'+canvas.offsetLeft+' offsetTop'+canvas.offsetTop)\n\
 }\n\
 \n\
