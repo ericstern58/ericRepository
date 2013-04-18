@@ -31,7 +31,7 @@ drawApp.canvas.on('mousedown',function(e){\n\
 function virtualLine(e){\n\
 	save()\n\
 	var canvas = document.getElementById('drawingCanvas')\n\
-	object.onmousemove=function(){makeLine(new Point(50,50),new Point(e.offsetX,e.offsetY))}\n\
+	canvas.onmousemove=function(){makeLine(new Point(50,50),new Point(e.offsetX,e.offsetY))}\n\
 }\n\
 \n\
 function makeLine(start,finish){\n\
