@@ -2,6 +2,7 @@ var code="\n\
 var fillButton=createTool('fill')\n\
 var lineButton=createTool('line')\n\
 var testButton=createTool('img')\n\
+lineButton.onclick=function(){virtualLine(e)}\n\
 \n\
 drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
 drawApp.canvas.off('mousedown')\n\
@@ -15,7 +16,7 @@ drawApp.canvas.on('mousedown',function(e){\n\
 		}\n\
 	} else if($('#'+lineButton.id).hasClass('selected')) { \n\
 		try{\n\
-			virtualLine(e)\n\
+			//virtualLine(e)\n\
 			//makeLine(new Point(100,100),new Point(200,200))\n\
 		} catch(err) {\n\
 			alert(err)\n\
@@ -34,6 +35,7 @@ function virtualLine(e){\n\
 	var h=drawApp.canvas.height()\n\
 	var canvas = document.getElementById('drawingCanvas')\n\
 	canvas.onmousemove=function(){makeLine(new Point(50,50),new Point(e.pageX-w,e.pageY-h))}\n\
+	//alert('e.page('+e.pageX+','+e.pageY+')'+'offsetleft'+canvas.offsetLeft+' offsetTop'+canvas.offsetTop)\n\
 }\n\
 \n\
 function makeLine(start,finish){\n\
