@@ -45,8 +45,8 @@ function virtualLine(e){\n\
 		canvas.removeEventListener('mouseup', arguments.callee, false)\n\
 	}, false)\n\
 	function update(){\n\
-		mouse.x = e.pageX - this.offsetLeft\n\
-		mouse.y = e.pageY - this.offsetTop\n\
+		mouse.x = e.pageX - canvas.offsetLeft\n\
+		mouse.y = e.pageY - canvas.offsetTop\n\
 	}\n\
 	//alert('e.page('+e.pageX+','+e.pageY+')'+'offsetleft'+canvas.offsetLeft+' offsetTop'+canvas.offsetTop)\n\
 }\n\
