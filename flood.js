@@ -13,6 +13,7 @@ var canvas=context.canvas\n\
 var mouse = {x: 0, y: 0}\n\
 /* Mouse Capturing Work */\n\
 canvas.addEventListener('mousemove', update, false)\n\
+alert('hi')\n\
 function update(){\n\
 	mouse.x = e.pageX\n\
 	mouse.y = e.pageY\n\
