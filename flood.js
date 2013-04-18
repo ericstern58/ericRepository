@@ -58,7 +58,9 @@ function virtualLine(e){\n\
 	function update(){\n\
 		mouse.x = e.pageX// - canvas.offsetLeft\n\
 		mouse.y = e.pageY// - canvas.offsetTop\n\
-		label58.innerHTML=(mouse.x-pos.x)+','+(mouse.y-pos.y)\n\
+		var tempx=mouse.x-pos.x\n\
+		var tempy=mouse.y-pos.y\n\
+		label58.innerHTML=tempx+','+tempy\n\
 	}\n\
 }\n\
 \n\
