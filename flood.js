@@ -11,7 +11,7 @@ drawApp.canvas.on('mousedown',function(e){\n\
         floodFill(e)\n\
 	} else if($('#'+lineButton.id).hasClass('selected')) { \n\
 		try{\n\
-			virtualLine(e)\n\
+			//virtualLine(e)\n\
 			//makeLine(new Point(100,100),new Point(200,200))\n\
 		} catch(err) {\n\
 			alert(err)\n\
