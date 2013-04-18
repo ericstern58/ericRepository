@@ -38,9 +38,11 @@ drawApp.canvas.on('mousedown',function(e){\n\
 })\n\
 \n\
 function virtualLine(e){\n\
+	var start = new Point(e.offsetX,e.offsetY)\n\
 	canvas.addEventListener('mousemove', update, false)\n\
 	canvas.addEventListener('mouseup', function() {\n\
-		makeLine(new Point(e.offsetX,e.offsetY),new Point(mouse.x,mouse.y))\n\
+		alert('e.page('+e.pageX+','+e.pageY+')'+'offsetleft'+canvas.offsetLeft+' offsetTop'+canvas.offsetTop)\n\
+		makeLine(start,new Point(mouse.x,mouse.y))\n\
 		canvas.removeEventListener('mousemove', update, false)\n\
 		canvas.removeEventListener('mouseup', arguments.callee, false)\n\
 	}, false)\n\
@@ -48,7 +50,6 @@ function virtualLine(e){\n\
 		mouse.x = e.pageX - canvas.offsetLeft\n\
 		mouse.y = e.pageY - canvas.offsetTop\n\
 	}\n\
-	//alert('e.page('+e.pageX+','+e.pageY+')'+'offsetleft'+canvas.offsetLeft+' offsetTop'+canvas.offsetTop)\n\
 }\n\
 \n\
 function makeLine(start,finish){\n\
