@@ -28,20 +28,28 @@ function virtualLine(e){\n\
 	var canvas = document.getElementById('drawingCanvas')\n\
 	var myState = new CanvasState(canvas)\n\
 	var mouseIsDown = true\n\
-	startx=e.offsetX\n\
-	starty=e.offsetY\n\
+	var startx=e.offsetX\n\
+	var starty=e.offsetY\n\
+	var endx=0\n\
+	var endy=0\n\
 	canvas.addEventListener('mouseup', function(e) {\n\
 		mouseIsDown = false\n\
 		this.removeEventListener('mouseup',arguments.callee,false)\n\
 	}, true)\n\
-	while(mouseIsDown) {\n\
-		setTimeout( updateLine(), 300 )\n\
-	}\n\
+	canvas.addEventListener('mousemove, function(e) {\n\
+		if(mouseIsDown) {\n\
+			endx=e.offsetX\n\
+			endy=e.offsetY\n\
+			updateLine()\n\
+		} else {\n\
+			this.removeEventListener('mousemove',arguments.callee,false)\n\
+		}\n\
+	}, true)\n\
+	//while(mouseIsDown) {\n\
+	//	setTimeout( updateLine(), 300 )\n\
+	//}\n\
 	function updateLine(){\n\
-		var mouse = myState.getMouse(e)\n\
-		var mx = mouse.x\n\
-		var my = mouse.y\n\
-		makeLine(new Point(e.offsetX,e.offsetY),new Point(mx,my))\n\
+		makeLine(new Point(e.offsetX,e.offsetY),new Point(endx,endy))\n\
 	}\n\
 }\n\
 \n\
