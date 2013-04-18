@@ -2,6 +2,11 @@ var code="\n\
 var fillButton=createTool('fill')\n\
 var lineButton=createTool('line')\n\
 var testButton=createTool('img')\n\
+var label58=document.createElement('a')\n\
+	document.getElementById('drawingCanvas').parentNode.appendChild(label58)\n\
+	label58.id='label58'\n\
+	label58.className='brushPicker'\n\
+	label58.innerHTML='labal'\n\
 \n\
 var context=drawApp.context\n\
 var canvas=context.canvas\n\
@@ -53,6 +58,7 @@ function virtualLine(e){\n\
 	function update(){\n\
 		mouse.x = e.pageX// - canvas.offsetLeft\n\
 		mouse.y = e.pageY// - canvas.offsetTop\n\
+		label58.innerHTML=mouse.x+','+mouse.y\n\
 	}\n\
 }\n\
 \n\
