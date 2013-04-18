@@ -10,8 +10,8 @@ drawApp.canvas.on('mousedown',function(e){\n\
 	if($('#'+fillButton.id).hasClass('selected')){\n\
         floodFill(e)\n\
 	} else if($('#'+lineButton.id).hasClass('selected')) { \n\
-		virtualLine(e)\n\
-		//makeLine(new Point(100,100),new Point(200,200))\n\
+			virtualLine(e)\n\
+			//makeLine(new Point(100,100),new Point(200,200))\n\
 	} else if($('#'+testButton.id).hasClass('selected')) { \n\
 		imgTest()\n\
 	} else{\n\
@@ -20,34 +20,6 @@ drawApp.canvas.on('mousedown',function(e){\n\
 	}\n\
 })\n\
 \n\
-function virtualLine(e){\n\
-	var canvas = document.getElementById('drawingCanvas')\n\
-	var myState = new CanvasState(canvas)\n\
-	var mouseIsDown = true\n\
-	var startx=e.offsetX\n\
-	var starty=e.offsetY\n\
-	var endx=0\n\
-	var endy=0\n\
-	canvas.addEventListener('mouseup', function(e) {\n\
-		mouseIsDown = false\n\
-		this.removeEventListener('mouseup',arguments.callee,false)\n\
-	}, true)\n\
-	canvas.addEventListener('mousemove, function(e) {\n\
-		if(mouseIsDown) {\n\
-			endx=e.offsetX\n\
-			endy=e.offsetY\n\
-			updateLine()\n\
-		} else {\n\
-			this.removeEventListener('mousemove',arguments.callee,false)\n\
-		}\n\
-	}, true)\n\
-	//while(mouseIsDown) {\n\
-	//	setTimeout( updateLine(), 300 )\n\
-	//}\n\
-	function updateLine(){\n\
-		makeLine(new Point(e.offsetX,e.offsetY),new Point(endx,endy))\n\
-	}\n\
-}\n\
 \n\
 function makeLine(start,finish){\n\
 	save()\n\
