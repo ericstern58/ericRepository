@@ -30,8 +30,10 @@ drawApp.canvas.on('mousedown',function(e){\n\
 \n\
 function virtualLine(e){\n\
 	save()\n\
+	var w=drawApp.canvas.width()\n\
+	var h=drawApp.canvas.height()\n\
 	var canvas = document.getElementById('drawingCanvas')\n\
-	canvas.onmousemove=function(){makeLine(new Point(50,50),new Point(e.pageX-canvas.offsetLeft,e.pageY-canvas.offsetTop))}\n\
+	canvas.onmousemove=function(){makeLine(new Point(50,50),new Point(e.pageX-w,e.pageY-h))}\n\
 	alert('e.page('+e.pageX+','+e.pageY+')'+'offsetleft'+canvas.offsetLeft+' offsetTop'+canvas.offsetTop)\n\
 }\n\
 \n\
