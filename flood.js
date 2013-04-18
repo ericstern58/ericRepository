@@ -12,13 +12,14 @@ var context=drawApp.context\n\
 var canvas=context.canvas\n\
 var mouse = {x: 0, y: 0}\n\
 /* Mouse Capturing Work */\n\
-canvas.addEventListener('mousemove', function(e) {\n\
+canvas.addEventListener('mousemove', update, false)\n\
+function update(){\n\
 	mouse.x = e.pageX\n\
 	mouse.y = e.pageY\n\
 	var tempx=mouse.x-pos.x\n\
 	var tempy=mouse.y-pos.y\n\
 	label58.innerHTML=tempx+','+tempy\n\
-}, false)\n\
+}\n\
 \n\
 drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
 drawApp.canvas.off('mousedown')\n\
