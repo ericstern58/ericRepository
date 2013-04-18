@@ -12,10 +12,13 @@ var context=drawApp.context\n\
 var canvas=context.canvas\n\
 var mouse = {x: 0, y: 0}\n\
 /* Mouse Capturing Work */\n\
-//canvas.addEventListener('mousemove', function(e) {\n\
-//  mouse.x = e.pageX - this.offsetLeft\n\
-//  mouse.y = e.pageY - this.offsetTop\n\
-//}, false)\n\
+canvas.addEventListener('mousemove', function(e) {\n\
+	mouse.x = e.pageX\n\
+	mouse.y = e.pageY\n\
+	var tempx=mouse.x-pos.x\n\
+	var tempy=mouse.y-pos.y\n\
+	label58.innerHTML=tempx+','+tempy\n\
+}, false)\n\
 \n\
 drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
 drawApp.canvas.off('mousedown')\n\
@@ -45,14 +48,14 @@ drawApp.canvas.on('mousedown',function(e){\n\
 function virtualLine(e){\n\
 	var start = new Point(e.offsetX,e.offsetY)\n\
 	var pos = getElementAbsolutePos(canvas)\n\
-	canvas.addEventListener('mousemove', update, false)\n\
+	//canvas.addEventListener('mousemove', update, false)\n\
 	canvas.addEventListener('mouseup', conclude, false)\n\
 	function conclude() {\n\
 		var end = new Point(mouse.x-pos.x,mouse.y-pos.y)\n\
 		alert('start(' + start.x + ',' + start.y + ') end('+end.x+','+end.y+')' + ' pos('+pos.x+','+pos.y+')')\n\
 		//'+e.pageX+','+e.pageY+')'+'offsetleft'+canvas.offsetLeft+' offsetTop'+canvas.offsetTop\n\
 		makeLine(start,end)\n\
-		canvas.removeEventListener('mousemove', update, false)\n\
+		//canvas.removeEventListener('mousemove', update, false)\n\
 		canvas.removeEventListener('mouseup', arguments.callee, false)\n\
 	}\n\
 	function update(){\n\
