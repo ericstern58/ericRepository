@@ -34,7 +34,6 @@ function virtualLine(e){\n\
 	var h=drawApp.canvas.height()\n\
 	var canvas = document.getElementById('drawingCanvas')\n\
 	canvas.onmousemove=function(){makeLine(new Point(50,50),new Point(e.pageX-w,e.pageY-h))}\n\
-	alert('e.page('+e.pageX+','+e.pageY+')'+'offsetleft'+canvas.offsetLeft+' offsetTop'+canvas.offsetTop)\n\
 }\n\
 \n\
 function makeLine(start,finish){\n\
