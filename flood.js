@@ -21,7 +21,7 @@ var mouse = {x: 0, y: 0}\n\
 //	label58.innerHTML=tempx+','+tempy\n\
 //}\n\
 \n\
-drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
+putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
 drawApp.canvas.off('mousedown')\n\
 \n\
 drawApp.canvas.on('mousedown',function(e){\n\
@@ -93,7 +93,7 @@ function floodFill(e){\n\
 		alert(err)\n\
 	}\n\
 	//p.data=d\n\
-	context.putImageData(p,0,0)\n\
+	putImageData(p,0,0)\n\
 	\n\
 	function f(xinitial,yinitial){\n\
 		var queue = [new Point(xinitial,yinitial)]\n\
