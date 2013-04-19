@@ -21,7 +21,7 @@ var mouse = {x: 0, y: 0}\n\
 //	label58.innerHTML=tempx+','+tempy\n\
 //}\n\
 \n\
-//drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
+drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
 drawApp.canvas.off('mousedown')\n\
 \n\
 drawApp.canvas.on('mousedown',function(e){\n\
