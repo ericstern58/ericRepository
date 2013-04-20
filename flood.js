@@ -122,16 +122,6 @@ function floodFill(e){\n\
 }\n\
 \n\
 function imgTest(){\n\
-	// save()\n\
-    // var e = new Image\n\
-    // e.onload = function () {\n\
-        // var t = document.getElementById('drawingCanvas').getContext("2d")\n\
-        // t.globalCompositeOperation = 'copy'\n\
-        // t.drawImage(e, 0, 0)\n\
-        // $('#tool-eraser').hasClass('selected') == 1 ? t.globalCompositeOperation = 'destination-out' : t.globalCompositeOperation = 'source-over'\n\
-    // };\n\
-    // e.src = 'http://media.dcentertainment.com/sites/default/files/character_bio-batman_576.jpg'\n\
-	// \n\
 }\n\
 function colorPixel(d,w,point,color){\n\
 	d[4*w*point.y+4*point.x]=color.r;\n\
