@@ -12,15 +12,14 @@ var context=drawApp.context\n\
 var canvas=context.canvas\n\
 var mouse = {x: 0, y: 0}\n\
 /* Mouse Capturing Work */\n\
-canvas.addEventListener('mousemove', update, false)\n\
-alert('hi')\n\
-function update(){\n\
-	mouse.x = e.pageX\n\
-	mouse.y = e.pageY\n\
-	var tempx=mouse.x-pos.x\n\
-	var tempy=mouse.y-pos.y\n\
-	label58.innerHTML=tempx+','+tempy\n\
-}\n\
+//canvas.addEventListener('mousemove', update, false)\n\
+//function update(){\n\
+//	mouse.x = e.pageX\n\
+//	mouse.y = e.pageY\n\
+//	var tempx=mouse.x-pos.x\n\
+//	var tempy=mouse.y-pos.y\n\
+//	label58.innerHTML=tempx+','+tempy\n\
+//}\n\
 \n\
 drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
 drawApp.canvas.off('mousedown')\n\
@@ -34,7 +33,7 @@ drawApp.canvas.on('mousedown',function(e){\n\
 		}\n\
 	} else if($('#'+lineButton.id).hasClass('selected')) { \n\
 		try{\n\
-			virtualLine(e)\n\
+			//virtualLine(e)\n\
 			//makeLine(new Point(100,100),new Point(200,200))\n\
 		} catch(err) {\n\
 			alert(err)\n\
@@ -94,7 +93,7 @@ function floodFill(e){\n\
 		alert(err)\n\
 	}\n\
 	//p.data=d\n\
-	drawApp.context.putImageData(p,0,0)\n\
+	context.putImageData(p,0,0)\n\
 	\n\
 	function f(xinitial,yinitial){\n\
 		var queue = [new Point(xinitial,yinitial)]\n\
