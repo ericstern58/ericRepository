@@ -1,25 +1,16 @@
+
 var code="\n\
 var fillButton=createTool('fill')\n\
 var lineButton=createTool('line')\n\
 var testButton=createTool('img')\n\
-var label58=document.createElement('a')\n\
-	document.getElementById('drawingCanvas').parentNode.appendChild(label58)\n\
-	label58.id='label58'\n\
-	label58.className='brushPicker'\n\
-	label58.innerHTML='labal'\n\
 \n\
-var context=drawApp.context\n\
-var canvas=context.canvas\n\
 var mouse = {x: 0, y: 0}\n\
 /* Mouse Capturing Work */\n\
-//canvas.addEventListener('mousemove', update, false)\n\
-//function update(){\n\
-//	mouse.x = e.pageX\n\
-//	mouse.y = e.pageY\n\
-//	var tempx=mouse.x-pos.x\n\
-//	var tempy=mouse.y-pos.y\n\
-//	label58.innerHTML=tempx+','+tempy\n\
-//}\n\
+var canvas = document.getElementById('drawingCanvas')\n\
+canvas.addEventListener('mousemove', function(e) {\n\
+  mouse.x = e.pageX - this.offsetLeft\n\
+  mouse.y = e.pageY - this.offsetTop\n\
+}, false)\n\
 \n\
 drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData\n\
 drawApp.canvas.off('mousedown')\n\
@@ -33,7 +24,7 @@ drawApp.canvas.on('mousedown',function(e){\n\
 		}\n\
 	} else if($('#'+lineButton.id).hasClass('selected')) { \n\
 		try{\n\
-			//virtualLine(e)\n\
+			virtualLine(e)\n\
 			//makeLine(new Point(100,100),new Point(200,200))\n\
 		} catch(err) {\n\
 			alert(err)\n\
@@ -47,33 +38,29 @@ drawApp.canvas.on('mousedown',function(e){\n\
 })\n\
 \n\
 function virtualLine(e){\n\
-	var start = new Point(e.offsetX,e.offsetY)\n\
-	var pos = getElementAbsolutePos(canvas)\n\
-	//canvas.addEventListener('mousemove', update, false)\n\
-	canvas.addEventListener('mouseup', conclude, false)\n\
-	function conclude() {\n\
-		var end = new Point(mouse.x-pos.x,mouse.y-pos.y)\n\
-		alert('start(' + start.x + ',' + start.y + ') end('+end.x+','+end.y+')' + ' pos('+pos.x+','+pos.y+')')\n\
-		//'+e.pageX+','+e.pageY+')'+'offsetleft'+canvas.offsetLeft+' offsetTop'+canvas.offsetTop\n\
-		makeLine(start,end)\n\
-		//canvas.removeEventListener('mousemove', update, false)\n\
-		canvas.removeEventListener('mouseup', arguments.callee, false)\n\
-	}\n\
-	function update(){\n\
-		mouse.x = e.pageX\n\
-		mouse.y = e.pageY\n\
-		var tempx=mouse.x-pos.x\n\
-		var tempy=mouse.y-pos.y\n\
-		label58.innerHTML=tempx+','+tempy\n\
-	}\n\
+	save()\n\
+	var w=drawApp.canvas.width()\n\
+	var h=drawApp.canvas.height()\n\
+	makeLine(new Point(50,50),new Point(mouse.x,mouse.y))\n\
+	//alert('e.page('+e.pageX+','+e.pageY+')'+'offsetleft'+canvas.offsetLeft+' offsetTop'+canvas.offsetTop)\n\
 }\n\
 \n\
 function makeLine(start,finish){\n\
 	save()\n\
+	var w=drawApp.canvas.width()\n\
+	var h=drawApp.canvas.height()\n\
+	var context=drawApp.context\n\
+	var p=drawApp.context.getImageData(0,0,w,h)\n\
+	var d=p.data\n\
+	var c=parseInt(drawApp.context.strokeStyle.substr(1,6),16)\n\
+	var lineColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255)\n\
+	\n\
 	context.beginPath()\n\
 	context.moveTo(start.x,start.y)\n\
 	context.lineTo(finish.x,finish.y)\n\
 	context.stroke()\n\
+	//p.data=d\n\
+	//drawApp.context.putImageData(p,0,0)\n\
 }\n\
 \n\
 function floodFill(e){\n\
@@ -93,7 +80,7 @@ function floodFill(e){\n\
 		alert(err)\n\
 	}\n\
 	//p.data=d\n\
-	context.putImageData(p,0,0)\n\
+	drawApp.context.putImageData(p,0,0)\n\
 	\n\
 	function f(xinitial,yinitial){\n\
 		var queue = [new Point(xinitial,yinitial)]\n\
@@ -160,19 +147,20 @@ function RGBColor(r,g,b) {\n\
 		return (this.r===color.r && this.g===color.g && this.b===color.b);\n\
 	}\n\
 }\n\
-function getElementAbsolutePos(element) {\n\
-	var res = new Point(0,0)\n\
-	if (element !== null) { \n\
-		if (element.getBoundingClientRect) {\n\
-			var viewportElement = document.documentElement\n\
- 	        var box = element.getBoundingClientRect()\n\
-		    var scrollLeft = viewportElement.scrollLeft\n\
- 		    var scrollTop = viewportElement.scrollTop\n\
-		    res.x = box.left + scrollLeft\n\
-		    res.y = box.top + scrollTop\n\
-		}\n\
-	}\n\
-    return res\n\
+function Shape(x, y, w, h, fill) {\n\
+	this.x = x\n\
+	this.y = y\n\
+	this.w = w\n\
+	this.h = h\n\
+}\n\
+function CanvasState(canvas) {\n\
+	this.valid = false\n\
+	this.shapes = []\n\
+	this.dragging = false\n\
+	this.selection = null\n\
+	this.dragx = 0\n\
+	this.dragy = 0\n\
+	\n\
 }\n\
 //Element creation methods \n\
 function createTool(name){\n\
