@@ -33,7 +33,7 @@ drawApp.canvas.on('mousedown',function(e){\n\
 		}\n\
 	} else if($('#'+lineButton.id).hasClass('selected')) { \n\
 		try{\n\
-			virtualLine(e)\n\
+			//virtualLine(e)\n\
 			//makeLine(new Point(100,100),new Point(200,200))\n\
 		} catch(err) {\n\
 			alert(err)\n\
@@ -92,7 +92,6 @@ function floodFill(e){\n\
 	} catch(err) {\n\
 		alert(err)\n\
 	}\n\
-	//p.data=d\n\
 	context.putImageData(p,0,0)\n\
 	\n\
 	function f(xinitial,yinitial){\n\
@@ -124,15 +123,14 @@ function floodFill(e){\n\
 \n\
 function imgTest(){\n\
 	save()\n\
-	var w=drawApp.canvas.width()\n\
-	var h=drawApp.canvas.height()\n\
-	var p=drawApp.context.getImageData(0,0,w,h)\n\
-	var d=p.data\n\
-	\n\
-	var myImg = new Image;\n\
-	myImg.src = 'http://g-ecx.images-amazon.com/images/G/01/DVD/Paramount/detailpages/IronMan/IronMan_Still_H5_L.jpg'\n\
-	var p2=drawApp.context.getImageData(0,0,w,h)\n\
-	var d2=p2.data\n\
+    var e = new Image\n\
+    e.onload = function () {\n\
+        var t = document.getElementById('drawingCanvas').getContext("2d")\n\
+        t.globalCompositeOperation = 'copy'\n\
+        t.drawImage(e, 0, 0)\n\
+        $('#tool-eraser').hasClass('selected') == 1 ? t.globalCompositeOperation = 'destination-out' : t.globalCompositeOperation = 'source-over'\n\
+    };\n\
+    e.src = 'http://media.dcentertainment.com/sites/default/files/character_bio-batman_576.jpg'\n\
 	\n\
 }\n\
 function colorPixel(d,w,point,color){\n\
