@@ -4,7 +4,7 @@ injectCSS();
 //Create DIV in which DrawTools will be placed in
 var drawToolsDiv = document.createElement('div');
 drawToolsDiv.id = 'drawTools';
-drawToolsDiv.className = 'btn-group';
+drawToolsDiv.className = 'btnTool-group';
 //drawToolsDiv.setAttribute("data-toggle","buttons"); 
 document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToolsDiv);
 
@@ -216,8 +216,14 @@ function injectCSS() {
 	sheet.innerHTML = "\n\
 		#icon-fill {width:15px;height:15px;background:black;margin:0px 0 0 15px;border-bottom-right-radius:3px;border-bottom-left-radius:3px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
 		#icon-fill:before{content:'';width:0;height:0;border-bottom:6px solid black;border-left:10px solid transparent;border-right:10px solid transparent;display:block;position:absolute;top:-7px;left:-8px;}\n\
-		.btnTool{display:inline-block;padding:6px 12px;margin-bottom:0;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border:1px solid transparent;border-radius:4px;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;}\n\
 		\n\
+		.btnTool-group,{position:relative;display:inline-block;vertical-align:middle;}\n\
+		.btnTool-group>.btnTool{position:relative;float:left;}\n\
+		.btnTool-group>.btnTool:hover,.btnTool-group>.btnTool:focus,.btnTool-group>.btnTool:active,.btnTool-group>.btnTool.active{z-index: 2;}\n\
+		.btnTool-group>.btnTool:focus{outline:none;}\n\
+		.btnTool-group .btnTool+.btnTool,.btnTool-group .btnTool + .btnTool-group,.btnTool-group .btnTool-group+.btnTool,.btnTool-group .btnTool-group+.btnTool-group{margin-left:-1px;}\n\
+		\n\
+		.btnTool{display:inline-block;padding:6px 12px;margin-bottom:0;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border:1px solid transparent;border-radius:4px;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;}\n\
 		.btnTool:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}\n\
 		.btnTool:hover,.btnTool:focus{color:#333333;text-decoration:none;}\n\
 		.btnTool:active,.btnTool.active{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
