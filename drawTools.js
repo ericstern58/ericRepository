@@ -10,13 +10,15 @@ var fillButton = createToolButton("Fill");
 var lineButton = createToolButton("Line");
 var polygonButton = createToolButton("Poly");
 var testButton = createToolButton("test");
-//Debug mouse coords text label
-var mouseCoordsLabel = createMouseCoordsLabel();
 
 //Setup Canvas Tools
 var context=drawApp.context;
 var canvas=context.canvas;
+
+/*
 //Mouse Listening
+//Debug mouse coords text label
+var mouseCoordsLabel = createMouseCoordsLabel();
 var mouse = {x: 0, y: 0};
 canvas.addEventListener('mousemove', update, false);
 function update(){
@@ -25,7 +27,7 @@ function update(){
 	var tempx=mouse.x-pos.x;
 	var tempy=mouse.y-pos.y;
 	//label58.innerHTML=tempx+','+tempy;
-}
+}*/
 
 drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData;
 drawApp.canvas.off('mousedown');
