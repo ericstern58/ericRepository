@@ -155,8 +155,6 @@ function RGBColor(r,g,b) {
 /*--------------------- Element Creation/Manipulation ---------------------*/
 //Creates Tool Buttons (with icon)
 function createToolButtonWithIcon(name){
-	//create label
-	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = createToolButton(name);
 	
 	//Place element inside it( text or image )
@@ -169,11 +167,9 @@ function createToolButtonWithIcon(name){
 }
 //Creates Tool Buttons (without icon)
 function createToolButtonWithLabel(name, label){
-	//create label
-	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = createToolButton(name);
 	
-	//Place element inside it( text or image )
+	//Place element inside it( text )
 	button.innerHTML = label;
 	
 	return button;
@@ -214,8 +210,8 @@ function createMouseCoordsLabel() {
 function injectCSS() {
 	var sheet = document.createElement('style');
 	sheet.innerHTML = "\n\
-		#icon-fill {width:15px;height:15px;background:black;margin:0px 0 0 15px;border-bottom-right-radius:3px;border-bottom-left-radius:3px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
-		#icon-fill:before{content:'';width:0;height:0;border-bottom:6px solid black;border-left:10px solid transparent;border-right:10px solid transparent;display:block;position:absolute;top:-7px;left:-8px;}\n\
+		#tool-fill {width:12px;height:12px;background:black;margin:0px 0 0 15px;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
+		#tool-fill:before{content:'';border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;}\n\
 		\n\
 		.btnTool-group,{position:relative;display:inline-block;vertical-align:middle;}\n\
 		.btnTool-group>.btnTool{position:relative;float:left;}\n\
