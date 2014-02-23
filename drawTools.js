@@ -1,7 +1,8 @@
+document.getElementById('drawingCanvas').style.backgroundColor = "#000000";
 document.body.style.backgroundColor = "#AA4930";
-createTool("blue")
+createTool("blue");
 
-function createTool(name){\n\
+function createTool(name){
 	var button=document.createElement('a');
 	document.getElementById('drawingCanvas').parentNode.appendChild(button);
 	button.id='brush-' + name;
