@@ -15,7 +15,7 @@ var testButton = createToolButton("test");
 var context=drawApp.context;
 var canvas=context.canvas;
 
-
+/*
 //Mouse Listening
 //Debug mouse coords text label
 var mouseCoordsLabel = createMouseCoordsLabel();
@@ -27,7 +27,7 @@ function update(){
 	var tempx=mouse.x-pos.x;
 	var tempy=mouse.y-pos.y;
 	mouseCoordsLabel.innerHTML=tempx+','+tempy;
-}
+}*/
 
 drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData;
 drawApp.canvas.off('mousedown');
@@ -35,7 +35,7 @@ drawApp.canvas.off('mousedown');
 //Setup Listener
 drawApp.canvas.on('mousedown',function(e){
 	alert("in mousedown custom function");
-	if($('#'+fillButton.id).hasClass('selected')){
+	if(context.lineWidth == 'drawTool-Fill';){
 		try{
 			floodFill(e);
 			alert("used floodfill");
@@ -147,11 +147,11 @@ function RGBColor(r,g,b) {
 /*--------------------- Element Creation ---------------------*/
 //Creates Tool Buttons
 function createToolButton(name){
-	var button=document.createElement('a');
-	button.id='brush-' + name;
-	button.className='btn btn-yellow btn-drawtool';
-	button.innerHTML=name;
-	button.onclick=function(){drawApp.setSize(name)};
+	var button = document.createElement('a');
+	button.id = 'drawTool-' + name;
+	button.className = 'btn btn-yellow btn-drawtool';
+	button.innerHTML = name;
+	button.onclick = function(){drawApp.setSize(name)};
 	drawToolsDiv.appendChild(button);
 	return button;
 }
