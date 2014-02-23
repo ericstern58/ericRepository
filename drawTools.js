@@ -9,10 +9,10 @@ document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToo
 var toolButtons = new Array();
 
 // Create Tool Buttons
-toolButtons.push(createToolButton("Fill")) ;
-toolButtons.push(createToolButton("Line")) ;
-toolButtons.push(createToolButton("Poly")) ;
-toolButtons.push(createToolButton("test")) ;
+toolButtons.push(createToolButton("Fill", "")) ;
+toolButtons.push(createToolButton("Line",)) ;
+toolButtons.push(createToolButton("Poly",)) ;
+toolButtons.push(createToolButton("Test",)) ;
 
 // Setup Canvas Tools
 var context=drawApp.context;
@@ -156,7 +156,7 @@ function createToolButton(name){
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
 	button.id = 'tool-' + name;
-	button.className = 'btn btn-yellow btn-drawtool'; //use whatever className drawception uses
+	button.className = 'btn btn-yellow btn-drawtool demoSpan1'; //use whatever className drawception uses
 	button.onclick = function(){drawApp.setSize(60);selectTool(name)};
 	drawToolsDiv.appendChild(button);
 	
@@ -176,7 +176,7 @@ function selectTool(name){
 function createMouseCoordsLabel() {
 	var label=document.createElement('a');
 	label.id='mouseCoordsLabel';
-	label.className='btn btn-yellow btn-drawtool demoSpan1';
+	label.className='btn btn-yellow btn-drawtool';
 	label.innerHTML='label';
 	drawToolsDiv.appendChild(label);
 	return label;
