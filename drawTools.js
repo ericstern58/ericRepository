@@ -163,6 +163,11 @@ function createToolButtonWithIcon(name){
 	button.onclick = function(){drawApp.setSize(60);selectTool(name)};
 	drawToolsDiv.appendChild(button);
 	
+	//Place element inside it( text or image )
+	var icon = document.createElement('label');
+	button.id = 'icon-' + name;
+	icon.setAttribute("height","20"); 
+	icon.setAttribute("width","20"); 
 	
 	return button;
 }
@@ -205,8 +210,7 @@ function createMouseCoordsLabel() {
 function injectCSS() {
 	var sheet = document.createElement('style');
 	sheet.innerHTML = "\n\
-		#drawTools {height:34px;}\n\
-		#tool-fill {width:15px;height:15px;background:black;margin:0px 0 0 15px;border-bottom-right-radius:3px;border-bottom-left-radius:3px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}#tool-fill:before{content:'';width:0;height:0;border-bottom:6px solid black;border-left:10px solid transparent;border-right:10px solid transparent;display:block;position:absolute;top:-7px;left:-8px;}\n\
+		#icon-fill {width:15px;height:15px;background:black;margin:0px 0 0 15px;border-bottom-right-radius:3px;border-bottom-left-radius:3px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}#tool-fill:before{content:'';width:0;height:0;border-bottom:6px solid black;border-left:10px solid transparent;border-right:10px solid transparent;display:block;position:absolute;top:-7px;left:-8px;}\n\
 		\n\
 		";
 	document.body.appendChild(sheet);
