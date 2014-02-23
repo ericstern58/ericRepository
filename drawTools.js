@@ -8,10 +8,48 @@ document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToo
 var fillButton = createToolButton("Fill");
 var lineButton = createToolButton("Line");
 var polygonButton = createToolButton("Poly");
-var fillButton = createToolButton("Line");
+var testButton = createToolButton("test");
 
+//Setup Canvas Tools
+var context=drawApp.context;
+var canvas=context.canvas;
+
+drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData;
+drawApp.canvas.off('mousedown');
+
+//Setup Listener
+drawApp.canvas.on('mousedown',function(e){
+	if($('#'+fillButton.id).hasClass('selected')){
+		try{
+			floodFill(e);
+		} catch(err) {
+			alert(err);
+		}
+	} else if($('#'+lineButton.id).hasClass('selected')) {
+		try{
+			//virtualLine(e);
+			//makeLine(new Point(100,100),new Point(200,200));
+		} catch(err) {
+			alert(err);
+		}
+	} else if($('#'+polygon.id).hasClass('selected')) {
+		//imgTest();
+	} else{
+		//Else do the rest of default behaviors
+		var md=drawApp.onCanvasMouseDown();
+		md(e);
+	}
+})
 
 /*--------------------- Button Methods ----------------------*/
+function drawLine(start,finish){
+	save();
+	context.beginPath();
+	context.moveTo(start.x,start.y);
+	context.lineTo(finish.x,finish.y);
+	context.stroke();
+}
+
 function floodFill(e){
 	save();
 	var w = drawApp.canvas.width();
