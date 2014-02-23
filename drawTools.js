@@ -14,12 +14,12 @@ var fillButton = createToolButton("Line");
 /*--------------------- Button Methods ----------------------*/
 function floodFill(e){
 	save();
-	var w=drawApp.canvas.width();
-	var h=drawApp.canvas.height();
-	var p=drawApp.context.getImageData(0,0,w,h);
-	var d=p.data;
+	var w = drawApp.canvas.width();
+	var h = drawApp.canvas.height();
+	var p = drawApp.context.getImageData(0,0,w,h);
+	var d = p.data;
 	var targetColor = new RGBColor(d[4*w*e.offsetY+4*e.offsetX],d[4*w*e.offsetY+4*e.offsetX+1],d[4*w*e.offsetY+4*e.offsetX+2]);
-	var c=parseInt(drawApp.context.strokeStyle.substr(1,6),16);
+	var c = parseInt(drawApp.context.strokeStyle.substr(1,6),16);
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255);
 	
 	try{
@@ -59,19 +59,19 @@ function floodFill(e){
 
 /*---------------------- Color Methods ----------------------*/
 //Colors a pixel with a given color
-function colorPixel(d,w,point,color){\n\
-	d[4*w*point.y+4*point.x]=color.r;\n\
-	d[4*w*point.y+4*point.x+1]=color.g;\n\
-	d[4*w*point.y+4*point.x+2]=color.b;\n\
-	d[4*w+point.y+4*point.x+3]=255;\n\
-}\n\
+function colorPixel(d,w,point,color){
+	d[4*w*point.y+4*point.x]=color.r;
+	d[4*w*point.y+4*point.x+1]=color.g;
+	d[4*w*point.y+4*point.x+2]=color.b;
+	d[4*w+point.y+4*point.x+3]=255;
+}
 //Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
-function colorPixelBlend(d,w,point,color1,color2){\n\
-	var r=Math.ceil(0.5*color1.r + 0.5*r2)\n\
-	var g=Math.ceil(0.5*color1.g + 0.5*g2)\n\
-	var b=Math.ceil(0.5*color1.b + 0.5*b2)\n\
-	colorPixel(d,w,point,new Color(r,g,b))\n\
-}\n\
+function colorPixelBlend(d,w,point,color1,color2){
+	var r=Math.ceil(0.5*color1.r + 0.5*r2);
+	var g=Math.ceil(0.5*color1.g + 0.5*g2);
+	var b=Math.ceil(0.5*color1.b + 0.5*b2);
+	colorPixel(d,w,point,new Color(r,g,b));
+}
 
 /*---------------------- Custom Objects ----------------------*/
 //Point Object
