@@ -12,10 +12,10 @@ document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToo
 var toolButtons = new Array();
 
 // Create Tool Buttons
-toolButtons.push(createToolButton("fill"));
-toolButtons.push(createToolButton("line"));
-toolButtons.push(createToolButton("poly"));
-toolButtons.push(createToolButton("test")) 
+toolButtons.push(createToolButtonWithIcon("fill"));
+toolButtons.push(createToolButtonWithLabel("line", "Line"));
+toolButtons.push(createToolButtonWithLabel("poly", "Poly"));
+toolButtons.push(createToolButtonWithLabel("test", "Test"));
 
 // Setup Canvas Tools
 var context=drawApp.context;
@@ -153,8 +153,21 @@ function RGBColor(r,g,b) {
 }
 
 /*--------------------- Element Creation/Manipulation ---------------------*/
-//Creates Tool Buttons
-function createToolButton(name){
+//Creates Tool Buttons (with icon)
+function createToolButtonWithIcon(name){
+	//create label
+	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
+	var button = document.createElement('label');
+	button.id = 'tool-' + name;
+	button.className = 'btn btn-yellow btn-drawtool'; //use whatever className drawception uses
+	button.onclick = function(){drawApp.setSize(60);selectTool(name)};
+	drawToolsDiv.appendChild(button);
+	
+	
+	return button;
+}
+//Creates Tool Buttons (without icon)
+function createToolButtonWithLabel(name, label){
 	//create label
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
@@ -164,7 +177,7 @@ function createToolButton(name){
 	drawToolsDiv.appendChild(button);
 	
 	//Place element inside it( text or image )
-	button.innerHTML = name;
+	button.innerHTML = label;
 	
 	return button;
 }
