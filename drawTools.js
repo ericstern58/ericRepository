@@ -1,1 +1,1 @@
-(function(){document.body.style.backgroundColor = "#AA4930";})();
+document.body.style.backgroundColor = "#AA4930";
