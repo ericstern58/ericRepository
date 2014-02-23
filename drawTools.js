@@ -177,7 +177,7 @@ function createToolButtonWithLabel(name, label){
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
 	button.id = 'tool-' + name;
-	button.className = 'btn btn-yellow btn-drawtool'; //use whatever className drawception uses
+	button.className = 'btnTool btn-yellow btn-drawtool'; //use whatever className drawception uses
 	button.onclick = function(){drawApp.setSize(60);selectTool(name)};
 	drawToolsDiv.appendChild(button);
 	
@@ -212,6 +212,12 @@ function injectCSS() {
 	sheet.innerHTML = "\n\
 		#icon-fill {width:15px;height:15px;background:black;margin:0px 0 0 15px;border-bottom-right-radius:3px;border-bottom-left-radius:3px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
 		#icon-fill:before{content:'';width:0;height:0;border-bottom:6px solid black;border-left:10px solid transparent;border-right:10px solid transparent;display:block;position:absolute;top:-7px;left:-8px;}\n\
+		.btn{display:inline-block;padding:6px 12px;margin-bottom:0;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border:1px solid transparent;border-radius:4px;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;}\n\
+		\n\
+		.btnTool:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}\n\
+		.btnTool:hover,.btnTool:focus{color:#333333;text-decoration:none;}\n\
+		.btnTool:active,.btnTool.active{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
+		.btnTool.disabled,.btnTool[disabled],fieldset[disabled] .btnTool{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}\n\
 		\n\
 		";
 	document.body.appendChild(sheet);
