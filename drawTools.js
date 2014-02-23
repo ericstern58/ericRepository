@@ -198,7 +198,7 @@ function selectTool(name){
 function createMouseCoordsLabel() {
 	var label=document.createElement('a');
 	label.id='mouseCoordsLabel';
-	label.className='btn btn-yellow btn-drawtool';
+	label.className='btn btnTool-yellow btnTool-drawtool';
 	label.innerHTML='label';
 	drawToolsDiv.appendChild(label);
 	return label;
@@ -218,6 +218,9 @@ function injectCSS() {
 		.btnTool:hover,.btnTool:focus{color:#333333;text-decoration:none;}\n\
 		.btnTool:active,.btnTool.active{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
 		.btnTool.disabled,.btnTool[disabled],fieldset[disabled] .btnTool{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}\n\
+		.btnTool-drawtool{margin-top: 2px;}\n\
+		.btnTool-yellow{background-color:#fffb8d;}\n\
+		.btnTool-yellow:hover{background-color:#f6f166;}\n\
 		\n\
 		";
 	document.body.appendChild(sheet);
