@@ -5,20 +5,24 @@ drawToolsDiv.className = 'btn-group';
 drawToolsDiv.setAttribute("data-toggle","buttons"); 
 document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToolsDiv);
 
-//Create Tool Buttons
-var fillButton = createToolButton("Fill");
-var lineButton = createToolButton("Line");
-var polygonButton = createToolButton("Poly");
-var testButton = createToolButton("test");
+// Create Tool Button Array
+var toolButtons = new Array();
 
-//Setup Canvas Tools
+// Create Tool Buttons
+toolButtons.push(createToolButton("Fill")) ;
+toolButtons.push(createToolButton("Line")) ;
+toolButtons.push(createToolButton("Poly")) ;
+toolButtons.push(createToolButton("test")) ;
+
+// Setup Canvas Tools
 var context=drawApp.context;
 var canvas=context.canvas;
 
 
-//Mouse Listening
-//Debug mouse coords text label
+// Mouse Listening
+// Debug mouse coords text label
 var mouseCoordsLabel = createMouseCoordsLabel();
+toolButtons.push(mouseCoordsLabel);
 /*
 var mouse = {x: 0, y: 0};
 canvas.addEventListener('mousemove', update, false);
@@ -145,7 +149,7 @@ function RGBColor(r,g,b) {
 	}
 }
 
-/*--------------------- Element Creation ---------------------*/
+/*--------------------- Element Creation/Manipulation ---------------------*/
 //Creates Tool Buttons
 function createToolButton(name){
 	//create label
@@ -154,7 +158,7 @@ function createToolButton(name){
 	//button.id = 'drawTool-' + name;
 	button.className = 'btn btn-yellow btn-drawtool'; //use whatever className drawception uses
 	button.innerHTML = name;
-	button.onclick = function(){drawApp.setSize(60)};
+	button.onclick = function(){drawApp.setSize(60);selectTool(name)};
 	drawToolsDiv.appendChild(button);
 	
 	// create radio input type tag. 
@@ -167,6 +171,12 @@ function createToolButton(name){
 	
 	return button;
 }
+function selectTool(name){
+	
+	
+	
+}
+// Debug Label
 function createMouseCoordsLabel() {
 	var label=document.createElement('a');
 	label.id='mouseCoordsLabel';
