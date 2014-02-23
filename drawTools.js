@@ -1,17 +1,12 @@
 document.body.style.backgroundColor = "#AA4930";
-createButton("blue")
+createTool("blue")
 
-function changeblue(){
-	document.body.style.backgroundColor = "#0713dd";
-}
-
-
-function createButton(name){
+function createTool(name){\n\
 	var button=document.createElement('a');
-	document.getElementById('buttonSpace').parentNode.appendChild(button);
+	document.getElementById('drawingCanvas').parentNode.appendChild(button);
 	button.id='brush-' + name;
 	button.className='brushPicker';
 	button.innerHTML=name;
-	button.onclick=function(){changeblue()};
+	button.onclick=function(){drawApp.setSize(name)};
 	return button;
 }
