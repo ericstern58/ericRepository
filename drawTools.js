@@ -2,6 +2,7 @@
 var drawToolsDiv = document.createElement('div');
 drawToolsDiv.id = 'drawTools';
 drawToolsDiv.className = 'btn-group';
+drawToolsDiv.setAttribute("data-toggle","buttons"); 
 document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToolsDiv);
 
 //Create Tool Buttons
