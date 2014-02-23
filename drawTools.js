@@ -156,7 +156,7 @@ function createToolButton(name){
 }
 function createMouseCoordsLabel() {
 	var label=document.createElement('a');
-	label.id='mouseCoordsLabel'\n\
+	label.id='mouseCoordsLabel';
 	label.className='btn btn-yellow btn-drawtool';
 	label.innerHTML='label';
 	drawToolsDiv.appendChild(label);
