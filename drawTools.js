@@ -5,7 +5,7 @@ drawToolsDiv.className = 'btn-group';
 document.getElementById('redo-button').parentNode.appendChild(drawToolsDiv);
 
 //Create Tool Buttons
-createTool("blue");
+createTool("Blu");
 
 function createTool(name){
 	var button=document.createElement('a');
