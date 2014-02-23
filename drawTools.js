@@ -26,7 +26,7 @@ function update(){
 	mouse.y = e.pageY;
 	var tempx=mouse.x-pos.x;
 	var tempy=mouse.y-pos.y;
-	//label58.innerHTML=tempx+','+tempy;
+	mouseCoordsLabel.innerHTML=tempx+','+tempy;
 }
 
 drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData;
