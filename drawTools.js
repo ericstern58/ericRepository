@@ -34,7 +34,6 @@ drawApp.canvas.off('mousedown');
 
 //Setup Listener
 drawApp.canvas.on('mousedown',function(e){
-	alert("in mousedown custom function");
 	if(context.lineWidth == 'drawTool-Fill'){
 		try{
 			floodFill(e);
