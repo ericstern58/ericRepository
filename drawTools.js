@@ -2,7 +2,7 @@
 var drawToolsDiv = document.createElement('div');
 drawToolsDiv.id = 'drawTools';
 drawToolsDiv.className = 'btn-group';
-drawToolsDiv.setAttribute("data-toggle","buttons"); 
+//drawToolsDiv.setAttribute("data-toggle","buttons"); 
 document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToolsDiv);
 
 // Create Tool Button Array
@@ -172,7 +172,9 @@ function createToolButton(name){
 	return button;
 }
 function selectTool(name){
-	
+	for (var i=0;i<toolButtons.length;i++) {
+		//document.write(cars[i] + "<br>");
+	}
 	
 	
 }
