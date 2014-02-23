@@ -4,7 +4,7 @@ createTool("blue");
 
 function createTool(name){
 	var button=document.createElement('a');
-	document.getElementById('drawingCanvas').parentNode.appendChild(button);
+	document.getElementById('redo-button').parentNode.appendChild(button);
 	button.id='brush-' + name;
 	button.className='brushPicker';
 	button.innerHTML=name;
