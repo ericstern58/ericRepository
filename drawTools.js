@@ -12,10 +12,10 @@ document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToo
 var toolButtons = new Array();
 
 // Create Tool Buttons
-toolButtons.push(createToolButton("Fill"));
-toolButtons.push(createToolButton("Line"));
-toolButtons.push(createToolButton("Poly"));
-toolButtons.push(createToolButton("Test")) 
+toolButtons.push(createToolButton("fill"));
+toolButtons.push(createToolButton("line"));
+toolButtons.push(createToolButton("poly"));
+toolButtons.push(createToolButton("test")) 
 
 // Setup Canvas Tools
 var context=drawApp.context;
@@ -192,12 +192,7 @@ function createMouseCoordsLabel() {
 function injectCSS() {
 	var sheet = document.createElement('style')
 	sheet.innerHTML = "\n\
-		span{height:40px; width:40px; display:block; position:relative;} \n\
-		\n\
-		#tool-Fill{background:#333; border-radius:20px;-webkit-border-radius:20px;-moz-border-radius:20px;}\n\
-		\n\
-		#tool-Fill:before{content:''; height:0; width:0; display:block; border:10px transparent solid; border-right-width:0; border-left-color:#fff; position:absolute; top:10px; left:20px;}\n\
-		\n\
-		#tool-Fill:after{content:''; height:20px; width:4px; display:block; background:#fff; position:absolute; top:10px; left:12px;}";
+		#tool-fill {width:15px;height:15px;background:black;margin:0px 0 0 15px;border-bottom-right-radius:3px;border-bottom-left-radius:3px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}#tool-fill:before{content:'';width:0;height:0;border-bottom:6px solid black;border-left:10px solid transparent;border-right:10px solid transparent;display:block;position:absolute;top:-7px;left:-8px;}\n\
+		\n\";
 	document.body.appendChild(sheet);
 }
