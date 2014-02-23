@@ -23,6 +23,7 @@ drawApp.canvas.on('mousedown',function(e){
 	if($('#'+fillButton.id).hasClass('selected')){
 		try{
 			floodFill(e);
+			alert("used floodfill");
 		} catch(err) {
 			alert(err);
 		}
