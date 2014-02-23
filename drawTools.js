@@ -157,11 +157,7 @@ function RGBColor(r,g,b) {
 function createToolButtonWithIcon(name){
 	//create label
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
-	var button = document.createElement('label');
-	button.id = 'tool-' + name;
-	button.className = 'btnTool btnTool-yellow btnTool-drawtool'; //use whatever className drawception uses
-	button.onclick = function(){drawApp.setSize(60);selectTool(name)};
-	drawToolsDiv.appendChild(button);
+	var button = createToolButton(name);
 	
 	//Place element inside it( text or image )
 	var icon = document.createElement('label');
@@ -175,17 +171,25 @@ function createToolButtonWithIcon(name){
 function createToolButtonWithLabel(name, label){
 	//create label
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
-	var button = document.createElement('label');
-	button.id = 'tool-' + name;
-	button.className = 'btn btn-yellow btn-drawtool'; //use whatever className drawception uses
-	button.onclick = function(){drawApp.setSize(60);selectTool(name)};
-	drawToolsDiv.appendChild(button);
+	var button = createToolButton(name);
 	
 	//Place element inside it( text or image )
 	button.innerHTML = label;
 	
 	return button;
 }
+//Creates Tool Buttons (no innerHTML)
+function createToolButton(name){
+	//create label
+	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
+	var button = document.createElement('label');
+	button.id = 'tool-' + name;
+	button.className = 'btn btn-yellow btn-drawtool'; //use whatever className drawception uses
+	button.onclick = function(){drawApp.setSize(60);selectTool(name)};
+	drawToolsDiv.appendChild(button);
+	return button;
+}
+
 function selectTool(name){
 	/*
 	for (var i=0;i<toolButtons.length;i++) {
