@@ -15,7 +15,7 @@ var testButton = createToolButton("test");
 var context=drawApp.context;
 var canvas=context.canvas;
 
-/*
+
 //Mouse Listening
 //Debug mouse coords text label
 var mouseCoordsLabel = createMouseCoordsLabel();
@@ -27,7 +27,7 @@ function update(){
 	var tempx=mouse.x-pos.x;
 	var tempy=mouse.y-pos.y;
 	//label58.innerHTML=tempx+','+tempy;
-}*/
+}
 
 drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData;
 drawApp.canvas.off('mousedown');
