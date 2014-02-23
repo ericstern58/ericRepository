@@ -9,10 +9,10 @@ document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToo
 var toolButtons = new Array();
 
 // Create Tool Buttons
-toolButtons.push(createToolButton("Fill")) ;
-toolButtons.push(createToolButton("Line")) ;
-toolButtons.push(createToolButton("Poly")) ;
-toolButtons.push(createToolButton("Test")) ;
+toolButtons.push(createToolButton("Fill"));
+toolButtons.push(createToolButton("Line"));
+toolButtons.push(createToolButton("Poly"));
+toolButtons.push(createToolButton("Test")) 
 
 // Setup Canvas Tools
 var context=drawApp.context;
