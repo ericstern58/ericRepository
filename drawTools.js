@@ -34,6 +34,7 @@ drawApp.canvas.off('mousedown');
 
 //Setup Listener
 drawApp.canvas.on('mousedown',function(e){
+	alert("in mousedown custom function");
 	if($('#'+fillButton.id).hasClass('selected')){
 		try{
 			floodFill(e);
