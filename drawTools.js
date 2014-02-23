@@ -166,10 +166,11 @@ function createToolButton(name){
 	return button;
 }
 function selectTool(name){
+	/*
 	for (var i=0;i<toolButtons.length;i++) {
 		//document.write(cars[i] + "<br>");
 	}
-	
+	*/
 	
 }
 // Debug Label
