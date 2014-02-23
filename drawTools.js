@@ -27,7 +27,7 @@ function update(){
 	var tempx=mouse.x-pos.x;
 	var tempy=mouse.y-pos.y;
 	mouseCoordsLabel.innerHTML=tempx+','+tempy;
-}*/
+}*//*blahdasd fasdfasf asd*/
 
 drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData;
 drawApp.canvas.off('mousedown');
