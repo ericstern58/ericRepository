@@ -17,8 +17,8 @@ var mouseCoordsLabel = createMouseCoordsLabel();
 var context=drawApp.context;
 var canvas=context.canvas;
 //Mouse Listening
-var mouse = {x: 0, y: 0}
-canvas.addEventListener('mousemove', update, false)
+var mouse = {x: 0, y: 0};
+canvas.addEventListener('mousemove', update, false);
 function update(){
 	mouse.x = e.pageX;
 	mouse.y = e.pageY;
