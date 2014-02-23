@@ -152,7 +152,7 @@ function createToolButton(name){
 	button.id = 'drawTool-' + name;
 	button.className = 'btn btn-yellow btn-drawtool';
 	button.innerHTML = name;
-	button.onclick = function(){drawApp.setSize(100)};
+	button.onclick = function(){drawApp.setSize(-5)};
 	drawToolsDiv.appendChild(button);
 	return button;
 }
