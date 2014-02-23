@@ -15,10 +15,11 @@ var testButton = createToolButton("test");
 var context=drawApp.context;
 var canvas=context.canvas;
 
-/*
+
 //Mouse Listening
 //Debug mouse coords text label
 var mouseCoordsLabel = createMouseCoordsLabel();
+/*
 var mouse = {x: 0, y: 0};
 canvas.addEventListener('mousemove', update, false);
 function update(){
