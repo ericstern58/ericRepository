@@ -1,3 +1,6 @@
+// Inject necessary CSS
+injectCSS();
+
 //Create DIV in which DrawTools will be placed in
 var drawToolsDiv = document.createElement('div');
 drawToolsDiv.id = 'drawTools';
@@ -156,7 +159,7 @@ function createToolButton(name){
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
 	button.id = 'tool-' + name;
-	button.className = 'btn btn-yellow btn-drawtool demoSpan1'; //use whatever className drawception uses
+	button.className = 'btn btn-yellow btn-drawtool'; //use whatever className drawception uses
 	button.onclick = function(){drawApp.setSize(60);selectTool(name)};
 	drawToolsDiv.appendChild(button);
 	
@@ -191,10 +194,10 @@ function injectCSS() {
 	sheet.innerHTML = "\n\
 		span{height:40px; width:40px; display:block; position:relative;} \n\
 		\n\
-		.demoSpan1{background:#333; border-radius:20px;-webkit-border-radius:20px;-moz-border-radius:20px;}\n\
+		#tool-Fill{background:#333; border-radius:20px;-webkit-border-radius:20px;-moz-border-radius:20px;}\n\
 		\n\
-		.demoSpan1:before{content:''; height:0; width:0; display:block; border:10px transparent solid; border-right-width:0; border-left-color:#fff; position:absolute; top:10px; left:20px;}\n\
+		#tool-Fill:before{content:''; height:0; width:0; display:block; border:10px transparent solid; border-right-width:0; border-left-color:#fff; position:absolute; top:10px; left:20px;}\n\
 		\n\
-		.demoSpan1:after{content:''; height:20px; width:4px; display:block; background:#fff; position:absolute; top:10px; left:12px;}";
+		#tool-Fill:after{content:''; height:20px; width:4px; display:block; background:#fff; position:absolute; top:10px; left:12px;}";
 	document.body.appendChild(sheet);
 }
