@@ -148,12 +148,23 @@ function RGBColor(r,g,b) {
 /*--------------------- Element Creation ---------------------*/
 //Creates Tool Buttons
 function createToolButton(name){
-	var button = document.createElement('a');
-	button.id = 'drawTool-' + name;
-	button.className = 'btn btn-yellow btn-drawtool';
+	//create label
+	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
+	var button = document.createElement('label');
+	//button.id = 'drawTool-' + name;
+	button.className = 'btn btn-yellow btn-drawtool'; //use whatever className drawception uses
 	button.innerHTML = name;
-	button.onclick = function(){drawApp.setSize(-5)};
+	button.onclick = function(){drawApp.setSize(60)};
 	drawToolsDiv.appendChild(button);
+	
+	// create radio input type tag. 
+	// Ex: <input type="radio" name="options" id="brush-5"> 
+	var intputTag = document.createElement('input');
+	intputTag.setAttribute("type","radio"); 
+	intputTag.setAttribute("name","options"); 
+	intputTag.setAttribute("id","tool-" + name); 
+	drawToolsDiv.appendChild(button);
+	
 	return button;
 }
 function createMouseCoordsLabel() {
