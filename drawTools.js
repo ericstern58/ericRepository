@@ -35,7 +35,7 @@ drawApp.canvas.off('mousedown');
 
 //Setup Listener
 drawApp.canvas.on('mousedown',function(e){
-	mouseCoordsLabel.innerHTML='hmm';//context.lineWidth
+	mouseCoordsLabel.innerHTML=context.lineWidth;//context.lineWidth
 	if(context.lineWidth == 'drawTool-Fill'){
 		try {
 			floodFill(e);
