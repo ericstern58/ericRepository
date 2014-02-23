@@ -6,7 +6,7 @@ function createTool(name){
 	var button=document.createElement('a');
 	document.getElementById('redo-button').parentNode.appendChild(button);
 	button.id='brush-' + name;
-	button.className='brushPicker';
+	button.className='btn btn-yellow btn-drawtool';
 	button.innerHTML=name;
 	button.onclick=function(){drawApp.setSize(name)};
 	return button;
