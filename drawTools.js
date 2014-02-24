@@ -168,7 +168,7 @@ function createToolButton(name){
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('div');
 	button.id = 'tool-' + name;
-	button.className = 'btnTool btnTool-yellow btnTool-drawtool'; //use whatever className drawception uses
+	button.className = 'btnTool btnTool-yellow btnTool-drawtool';
 	button.onclick = function(){drawApp.setSize(60);selectTool(this)};
 	drawToolsDiv.appendChild(button);
 	
@@ -183,6 +183,7 @@ function createToolButton(name){
 	//Create container div
 	var container = document.createElement('div');
 	container.id = 'drawToolContainer-' + name;
+	button.className = 'drawToolContainer';
 	button.appendChild(container);
 	
 	// Create icon div
@@ -234,9 +235,11 @@ function injectCSS() {
 		.btnTool-selected{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
 		.btnTool-drawtool{margin-top: 2px;}\n\
 		\n\
-		.btnTool-yellow{background-color:#fffb8d;border-bottom:1px solid #e5e17e; border:1px solid purple}\n\
+		.btnTool-yellow{background-color:#fffb8d;border-bottom:1px solid #e5e17e;}\n\
 		.btnTool-yellow:hover{background-color:#f6f166;border-bottom:1px solid #ddd85b;}\n\
 		.btnTool-yellow:active{border-bottom:1px solid #f6f166;}\n\
+		\n\
+		.drawToolContainer{ border:1px solid purple }\n\
 		\n\
 		.btnTool input{display: none;}\n\
 		.btnTool input:checked + label:before{background-color:red;}\n\
