@@ -24,7 +24,7 @@ var canvas=context.canvas;
 
 // Mouse Listening
 // Debug mouse coords text label
-var mouseCoordsLabel = createMouseCoordsLabel();
+var mouseCoordsLabel = createToolButton("label");
 toolButtons.push(mouseCoordsLabel);
 /*
 var mouse = {x: 0, y: 0};
@@ -196,7 +196,7 @@ function selectTool(name){
 function createMouseCoordsLabel() {
 	var label=document.createElement('a');
 	label.id='mouseCoordsLabel';
-	label.className='btn btnTool-yellow btnTool-drawtool';
+	label.className='btnTool btnTool-yellow btnTool-drawtool';
 	label.innerHTML='label';
 	drawToolsDiv.appendChild(label);
 	return label;
