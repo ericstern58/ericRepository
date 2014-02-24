@@ -253,10 +253,10 @@ function setupCSS() {
 
 /*--------------------- Modification of Existing Elements ---------------------*/
 function modifyExistingElements() {
-	document.getElementById('brush-2').parentNode.onclick = selectBrush;
-	document.getElementById('brush-5').parentNode.onclick = selectBrush;
-	document.getElementById('brush-12').parentNode.onclick = selectBrush;
-	document.getElementById('brush-35').parentNode.onclick = selectBrush;
+	document.getElementById('brush-2').parentNode.onclick = selectBrush(2);
+	document.getElementById('brush-5').parentNode.onclick = selectBrush(5);
+	document.getElementById('brush-12').parentNode.onclick = selectBrush(12);
+	document.getElementById('brush-35').parentNode.onclick = selectBrush(35);
 }
 function selectBrush(brushSize) {
 	// Set its default brushsize and update currentToolType
@@ -264,13 +264,7 @@ function selectBrush(brushSize) {
 	currentToolType = toolType.BRUSH;
 	
 	// Visually unselect any other tools
-	var ele = document.getElementsByName("drawToolRadio");
-   	for(var i=0;i<ele.length;i++)
-      		ele[i].checked = false;
-	
-	/*
-	var radioButtons = mouseCoordsLabel.getElementsByClassName('tool-radio');
-	for(i=0;i<radioButtons.length;i++){
-    		radioButtons[i].removeAttr('checked');
-	}*/
+	var radioButtons = document.getElementsByName("drawToolRadio");
+   	for(var i=0;i<radioButtons.length;i++)
+      		radioButtons[i].checked = false;
 }
