@@ -157,11 +157,12 @@ function RGBColor(r,g,b) {
 function createToolButtonWithIcon(name){
 	var button = createToolButton(name);
 	
+	/*
 	//Place iconContainer inside button
 	var iconContainer = document.createElement('div');
 	iconContainer.className = 'icon-tool-container';
 	button.appendChild(iconContainer);
-	
+	*/
 	//Place element inside iconContainer ( text or image )
 	var icon = document.createElement('div');
 	icon.id = 'icon-' + name;
@@ -207,7 +208,7 @@ function injectCSS() {
 	sheet.innerHTML = "\n\
 		.icon-tool-container{height:18px;}\n\
 		\n\
-		#icon-fill {width:12px;height:12px;background:black;margin:6px 0 0 15px;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
+		#icon-fill {width:12px;height:12px;background:black;margin:6px 0 0 9px;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
 		#icon-fill:before{content:'';border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;}\n\
 		\n\
 		.btnTool-group,{position:relative;display:inline-block;vertical-align:middle;}\n\
