@@ -237,7 +237,7 @@ function injectCSS() {
 		.btnToolContainer-selected{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
 		\n\
 		.btnTool input{display:none;}\n\
-		.btnTool input:checked + div{background-color:red;}\n\
+		.btnTool input:checked + div{background-color:#b4b4b4;}\n\
 		\n\
 		";
 	document.body.appendChild(sheet);
