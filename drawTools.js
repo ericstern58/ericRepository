@@ -219,7 +219,7 @@ function injectCSS() {
 		#btnToolIcon-poly{width:20px;margin:11px -3px 1px -3px;border-width:8px 4px 0;border-style:solid;border-color:black transparent;}\n\
 		#btnToolIcon-poly:before{content:'';display:block;margin:-17px 0px 0px -4px;border-width:0 10px 9px;border-style:solid;border-color:transparent transparent black;}\n\
 		\n\
-		.btnTool-group{position:relative;display:inline-block;vertical-align:middle;margin:5px 0px 0px -1px}\n\
+		.btnTool-group{position:relative;display:inline-block;vertical-align:middle;margin-top:5px;}\n\
 		.btnTool-group>.btnTool{position:relative;float:left;display:inline-block;}\n\
 		\n\
 		.btnTool-group>.btnTool:not(:first-child):not(:last-child):not(.dropdown-toggle){border-radius:0}\n\
