@@ -1,4 +1,4 @@
-// Inject necessary CSS
+// Setup necessary CSS
 setupCSS();
 
 //Create DIV in which DrawTools will be placed in
@@ -60,6 +60,7 @@ drawApp.canvas.on('mousedown',function(e){
 	} else if($('#'+polygon.id).hasClass('selected')) {
 		//imgTest();
 	} else{
+		floodFill(e);
 		//Else do the rest of default behaviors
 		var md=drawApp.onCanvasMouseDown();
 		md(e);
