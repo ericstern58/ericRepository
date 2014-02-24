@@ -235,9 +235,9 @@ function injectCSS() {
 		.btnTool-selected{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
 		.btnTool-drawtool{margin-top: 2px;}\n\
 		\n\
-		.btnTool-yellow{background-color:#fffb8d;border-bottom:1px solid #e5e17e;}\n\
-		.btnTool-yellow:hover{background-color:#f6f166;border-bottom:1px solid #ddd85b;}\n\
-		.btnTool-yellow:active{border-bottom:1px solid #f6f166;}\n\
+		.btnTool-yellow, .drawToolContainer{background-color:#fffb8d;border-bottom:1px solid #e5e17e;}\n\
+		.btnTool-yellow:hover, .drawToolContainer{background-color:#f6f166;border-bottom:1px solid #ddd85b;}\n\
+		.btnTool-yellow:active, .drawToolContainer{border-bottom:1px solid #f6f166;}\n\
 		\n\
 		.drawToolContainer{ border:1px solid purple }\n\
 		\n\
