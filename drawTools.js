@@ -16,11 +16,6 @@ toolButtons.push(createToolButtonWithIcon("fill"));
 toolButtons.push(createToolButtonWithIcon("line"));
 toolButtons.push(createToolButtonWithIcon("poly"));
 toolButtons.push(createToolButtonWithLabel("test", "Test"));
-$('.btnTool-group input:radio').click(function () {
-	$(".btnTool-group").find('option:selected').removeAttr("selected");
-	//$('input:radio').parent().removeClass('checked11');
-	$(this).parent(this).addClass('btnTool:active');
-});
 
 
 // Setup Canvas Tools
@@ -185,7 +180,7 @@ function createToolButton(name){
 	var button = document.createElement('label');
 	button.id = 'tool-' + name;
 	button.className = 'btnTool btnTool-yellow btnTool-drawtool'; //use whatever className drawception uses
-	button.onclick = function(){drawApp.setSize(60);selectTool(name)};
+	button.onclick = function(){drawApp.setSize(60);selectTool(this)};
 	drawToolsDiv.appendChild(button);
 	
 	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
@@ -198,12 +193,11 @@ function createToolButton(name){
 	return button;
 }
 
-function selectTool(name){
-	/*
+function selectTool(tool){
 	for (var i=0;i<toolButtons.length;i++) {
-		//document.write(cars[i] + "<br>");
+		toolButton.removeClass('btnTool-selected')
 	}
-	*/
+	$(this).addClass('btnTool-selected');
 	
 }
 
@@ -234,6 +228,7 @@ function injectCSS() {
 		.btnTool:hover,.btnTool:focus{color:#333333;text-decoration:none;}\n\
 		.btnTool:active,.btnTool.active{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
 		.btnTool.disabled,.btnTool[disabled],fieldset[disabled] .btnTool{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}\n\
+		.btnTool-selected{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
 		.btnTool-drawtool{margin-top: 2px;}\n\
 		\n\
 		.btnTool-yellow{background-color:#fffb8d;border-bottom:1px solid #e5e17e;}\n\
