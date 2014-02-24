@@ -220,7 +220,7 @@ function injectCSS() {
 		#btnToolIcon-poly:before{content:'';display:block;margin:-17px 0px 0px -4px;border-width:0 10px 9px;border-style:solid;border-color:transparent transparent black;}\n\
 		\n\
 		.btnTool-group,{position:relative;display:inline-block;vertical-align:middle;}\n\
-		.btnTool-group>.btnTool{position:relative;float:left;display:inline-block;}\n\
+		.btnTool-group>.btnTool{position:relative;float:left;}\n\
 		\n\
 		.btnTool-group>.btnTool:not(:first-child):not(:last-child):not(.dropdown-toggle){border-radius:0}\n\
 		.btnTool-group>.btnTool:first-child{margin-left: 0;}\n\
