@@ -267,6 +267,6 @@ function selectBrush(brushSize) {
 	// Visually unselect any other tools
 	var radioButtons = mouseCoordsLabel.getElementsByClassName('tool-radio');
 	for(i=0;i<radioButtons.length;i++){
-    		radioButtons[i].checked=false;
+    		radioButtons[i].removeAttr('checked');
 	}
 }
