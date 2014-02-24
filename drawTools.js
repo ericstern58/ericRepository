@@ -90,7 +90,7 @@ function drawLine(start,finish){
 }
 
 function floodFill(e){
-	
+	// Save-undo fix avoids issues with brush placing dot over flood fill seed area
 	save();
 	undo();
 	var w = drawApp.canvas.width();
