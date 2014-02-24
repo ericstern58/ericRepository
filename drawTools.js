@@ -157,8 +157,8 @@ function RGBColor(r,g,b) {
 function createToolButtonWithIcon(name){
 	var button = createToolButton(name);
 
-	//Place element inside iconContainer ( text or image )
-	var icon = document.createElement('div');
+	// Create container div
+	var icon = document.createElement('label');
 	icon.id = 'icon-' + name;
 	button.appendChild(icon);
 	
