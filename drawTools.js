@@ -21,7 +21,6 @@ toolButtons.push(createToolButtonWithLabel("test", "Test"));
 var context=drawApp.context;
 var canvas=context.canvas;
 
-
 // Mouse Listening
 // Debug mouse coords text label
 var mouseCoordsLabel = createToolButtonWithLabel("label", '0');
@@ -216,11 +215,6 @@ function injectCSS() {
 		.btnTool-group>.btnTool:first-child{margin-left: 0;}\n\
 		.btnTool-group>.btnTool:first-child:not(:last-child):not(.dropdown-toggle){border-bottom-right-radius: 0;border-top-right-radius: 0;}\n\
 		.btnTool-group>.btnTool:last-child:not(:first-child),.btnTool-group>.dropdown-toggle:not(:first-child){border-bottom-left-radius:0;border-top-left-radius:0;}\n\
-		.btnTool-group>.btnTool-group{float:left;}\n\
-		.btnTool-group>.btnTool-group:not(:first-child):not(:last-child)>.btnTool{border-radius: 0;}\n\
-		.btnTool-group>.btnTool-group:first-child >.btnTool:last-child,.btnTool-group>.btnTool-group:first-child>.dropdown-toggle{border-bottom-right-radius:0;border-top-right-radius:0;}\n\
-		.btnTool-group>.btnTool-group:last-child>.btnTool:first-child{border-bottom-left-radius:0;border-top-left-radius:0;}\n\
-		.btnTool-group .dropdown-toggle:active,.btnTool-group.open .dropdown-toggle{outline:0;}\n\
 		\n\
 		.btnTool{display:inline-block;padding:6px 12px;margin-bottom:0;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border:1px solid transparent;border-radius:4px;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;}\n\
 		.btnTool:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}\n\
