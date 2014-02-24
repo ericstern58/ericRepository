@@ -241,7 +241,7 @@ function injectCSS() {
 		.btnToolContainer-yellow:active{border-bottom:1px solid #f6f166;}\n\
 		\n\
 		.btnTool input{display: none;}\n\
-		.btnTool input:checked + label:before{background-color:red;}\n\
+		.btnTool input:checked + div{background-color:red;}\n\
 		\n\
 		";
 	document.body.appendChild(sheet);
