@@ -188,7 +188,6 @@ function createToolButton(type, name){
 	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
 	var radio = document.createElement('input');
 	radio.id = 'tool-radio-' + name;
-	radio.className = 'tool-radio';	// Used to find all radio btns and unselect them
 	radio.setAttribute("type","radio");
 	radio.setAttribute("name","drawToolRadio");
 	button.appendChild(radio);
@@ -265,8 +264,13 @@ function selectBrush(brushSize) {
 	currentToolType = toolType.BRUSH;
 	
 	// Visually unselect any other tools
+	var ele = document.getElementsByName("drawToolRadio");
+   	for(var i=0;i<ele.length;i++)
+      		ele[i].checked = false;
+	
+	/*
 	var radioButtons = mouseCoordsLabel.getElementsByClassName('tool-radio');
 	for(i=0;i<radioButtons.length;i++){
     		radioButtons[i].removeAttr('checked');
-	}
+	}*/
 }
