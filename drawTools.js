@@ -166,7 +166,7 @@ function createToolButtonWithIcon(name){
 	//Place element inside iconContainer ( text or image )
 	var icon = document.createElement('div');
 	icon.id = 'icon-' + name;
-	iconContainer.appendChild(icon);
+	button.appendChild(icon);
 	
 	return button;
 }
