@@ -253,10 +253,10 @@ function setupCSS() {
 
 /*--------------------- Modification of Existing Elements ---------------------*/
 function modifyExistingElements() {
-	document.getElementById('brush-2').parentNode.onclick = selectBrush;
-	document.getElementById('brush-5').parentNode.onclick = selectBrush;
-	document.getElementById('brush-12').parentNode.onclick = selectBrush;
-	document.getElementById('brush-35').parentNode.onclick = selectBrush;
+	document.getElementById('brush-2').parentNode.onclick = function(){selectBrush(2);};
+	document.getElementById('brush-5').parentNode.onclick = function(){selectBrush(5);};;
+	document.getElementById('brush-12').parentNode.onclick = function(){selectBrush(12);};;
+	document.getElementById('brush-35').parentNode.onclick = function(){selectBrush(35);};;
 }
 function selectBrush(brushSize) {
 	// Set its default brushsize and update currentToolType
