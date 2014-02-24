@@ -258,8 +258,11 @@ function setupCSS() {
 /*--------------------- Modification of Existing Elements ---------------------*/
 function modifyExistingElements() {
 	document.getElementById('brush-2').parentNode.onclick = selectBrush;
+	document.getElementById('brush-5').parentNode.onclick = selectBrush;
+	document.getElementById('brush-12').parentNode.onclick = selectBrush;
+	document.getElementById('brush-35').parentNode.onclick = selectBrush;
 }
 function selectBrush(brushSize) {
 	drawApp.setSize(brushSize);
-	var currentToolType = toolType.BRUSH;
+	currentToolType = toolType.BRUSH;
 }
