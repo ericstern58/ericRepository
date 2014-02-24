@@ -57,8 +57,7 @@ drawApp.canvas.on('mousedown',function(e){
 	mouseCoordsLabel.getElementsByTagName('div')[0].innerHTML = currentToolType;
 	if(currentToolType == toolType.BRUSH) {
 		// default behaviors
-		var md=drawApp.onCanvasMouseDown();
-		md(e);
+		drawApp.onCanvasMouseDown(e);
 	} else if(currentToolType == toolType.FILL){
 		try {
 			floodFill(e);
