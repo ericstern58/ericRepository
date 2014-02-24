@@ -7,6 +7,7 @@ var toolType = {
     TEST: 99
 };
 var currentToolType = toolType.BRUSH;
+var currentBrushSize = toolType.BRUSH;
 
 // Setup necessary CSS
 setupCSS();
@@ -81,6 +82,7 @@ drawApp.canvas.on('mousedown',function(e){
 
 /*--------------------- Button Methods ----------------------*/
 function drawLine(start,finish){
+	undo();
 	save();
 	context.beginPath();
 	context.moveTo(start.x,start.y);
