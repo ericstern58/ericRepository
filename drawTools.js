@@ -168,7 +168,7 @@ function createToolButton(name){
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('div');
 	button.id = 'tool-' + name;
-	button.className = 'btnTool btnTool-yellow btnTool-drawtool';
+	button.className = 'btnTool';
 	button.onclick = function(){drawApp.setSize(60);selectTool(this)};
 	drawToolsDiv.appendChild(button);
 	
@@ -183,7 +183,7 @@ function createToolButton(name){
 	//Create container div
 	var container = document.createElement('div');
 	container.id = 'btnToolContainer-' + name;
-	button.className = 'drawToolContainer';
+	button.className = 'drawToolContainer  drawToolContainer-yellow drawToolContainer-drawtool';
 	button.appendChild(container);
 	
 	// Create icon div
