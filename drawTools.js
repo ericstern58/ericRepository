@@ -159,7 +159,8 @@ function createToolButtonWithIcon(name){
 	
 	//Place element inside it( text or image )
 	var icon = document.createElement('div');
-	button.id = 'icon-' + name;
+	icon.id = 'icon-' + name;
+	button.appendChild(icon);
 	
 	return button;
 }
@@ -191,15 +192,6 @@ function selectTool(name){
 	}
 	*/
 	
-}
-// Debug Label
-function createMouseCoordsLabel() {
-	var label=document.createElement('a');
-	label.id='mouseCoordsLabel';
-	label.className='btnTool btnTool-yellow btnTool-drawtool';
-	label.innerHTML='label';
-	drawToolsDiv.appendChild(label);
-	return label;
 }
 
 /*--------------------- CSS Style Sheets ---------------------*/
