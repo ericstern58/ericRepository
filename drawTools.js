@@ -7,7 +7,7 @@ var toolType = {
     TEST: 99
 };
 var currentToolType = toolType.BRUSH;
-var currentBrushSize = ;
+var currentBrushSize = context.lineWidth;
 
 // Setup necessary CSS
 setupCSS();
