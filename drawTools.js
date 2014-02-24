@@ -92,8 +92,8 @@ function floodFill(e){
 	// Save-undo fix avoids issues with brush placing dot over flood fill seed area
 	save();
 	undo();
-	var w = drawApp.canvas.width();
-	var h = drawApp.canvas.height();
+	var w = drawApp.canvas.width;
+	var h = drawApp.canvas.height;
 	var p = drawApp.context.getImageData(0,0,w,h);
 	var d = p.data;
 	var targetColor = new RGBColor(d[4*w*e.offsetY+4*e.offsetX],d[4*w*e.offsetY+4*e.offsetX+1],d[4*w*e.offsetY+4*e.offsetX+2]);
