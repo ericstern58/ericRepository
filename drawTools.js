@@ -194,10 +194,14 @@ function createToolButton(name){
 }
 
 function selectTool(tool){
+	/*
 	for (var i=0;i<toolButtons.length;i++) {
 		toolButtons[i].removeClass('btnTool-selected')
 	}
-	tool.addClass('btnTool-selected');
+	tool.addClass('btnTool-selected');*/
+	
+        $('.btnTool-group .input:radio').addClass('btnTool');
+        $('.btnTool-group .input:radio:checked').removeClass('btnTool');
 	
 }
 
