@@ -12,9 +12,9 @@ document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToo
 var toolButtons = new Array();
 
 // Create Tool Buttons
-toolButtons.push(createToolButtonWithIcon("fill"));
-toolButtons.push(createToolButtonWithIcon("line"));
-toolButtons.push(createToolButtonWithIcon("poly"));
+toolButtons.push(createToolButton("fill"));
+toolButtons.push(createToolButton("line"));
+toolButtons.push(createToolButton("poly"));
 toolButtons.push(createToolButtonWithLabel("test", "Test"));
 
 
@@ -153,13 +153,6 @@ function RGBColor(r,g,b) {
 }
 
 /*--------------------- Element Creation/Manipulation ---------------------*/
-//Creates Tool Buttons (with icon)
-function createToolButtonWithIcon(name){
-	var button = createToolButton(name);
-
-	
-	return button;
-}
 //Creates Tool Buttons (without icon)
 function createToolButtonWithLabel(name, label){
 	var button = createToolButton(name);
