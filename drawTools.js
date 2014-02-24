@@ -90,8 +90,9 @@ function drawLine(start,finish){
 }
 
 function floodFill(e){
-	undo();
+	
 	save();
+	undo();
 	var w = drawApp.canvas.width();
 	var h = drawApp.canvas.height();
 	var p = drawApp.context.getImageData(0,0,w,h);
