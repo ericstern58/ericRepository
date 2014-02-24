@@ -90,7 +90,6 @@ function drawLine(start,finish){
 }
 
 function floodFill(e){
-	undo();
 	save();
 	var w = drawApp.canvas.width();
 	var h = drawApp.canvas.height();
