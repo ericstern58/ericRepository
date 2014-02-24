@@ -100,12 +100,10 @@ function floodFill(e){
 	var c = parseInt(drawApp.context.strokeStyle.substr(1,6),16);
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255);
 	
-	try{
-		if(!targetColor.equals(fillColor))
-			f(e.offsetX,e.offsetY);
-	} catch(err) {
-		alert(err);
-	}
+
+	if(!targetColor.equals(fillColor))
+		f(e.offsetX,e.offsetY);
+
 	context.putImageData(p,0,0);
 	function f(xinitial,yinitial){
 		var queue = [new Point(xinitial,yinitial)];
