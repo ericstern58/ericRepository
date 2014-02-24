@@ -76,7 +76,7 @@ drawApp.canvas.on('mousedown',function(e){
 	} else{
 		//Else it is unknown, do nothing
 	}
-})
+});
 
 /*--------------------- Button Methods ----------------------*/
 function drawLine(start,finish){
