@@ -5,7 +5,7 @@ injectCSS();
 var drawToolsDiv = document.createElement('div');
 drawToolsDiv.id = 'drawTools';
 drawToolsDiv.className = 'btnTool-group';
-//drawToolsDiv.setAttribute("data-toggle","buttons"); 
+drawToolsDiv.setAttribute("data-toggle","buttons"); 
 document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToolsDiv);
 
 // Create Tool Button Array
