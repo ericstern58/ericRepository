@@ -42,7 +42,7 @@ drawApp.canvas.off('mousedown');
 
 //Setup Listener
 drawApp.canvas.on('mousedown',function(e){
-	mouseCoordsLabel.getElementsByTagName('div')[0].innerHTML = label;
+	mouseCoordsLabel.getElementsByTagName('div')[0].innerHTML = context.lineWidth;
 	if(context.lineWidth == 'drawTool-Fill'){
 		try {
 			floodFill(e);
