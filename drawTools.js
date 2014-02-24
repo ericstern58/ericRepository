@@ -171,6 +171,11 @@ function createToolButton(name){
 	button.className = 'btnTool';
 	button.onclick = function(){drawApp.setSize(60);selectTool(this)};
 	drawToolsDiv.appendChild(button);
+		
+	//Create container div
+	var container = document.createElement('div');
+	container.className = 'btnToolContainer';
+	button.appendChild(container);
 	
 	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
 	var radio = document.createElement('input');
@@ -179,11 +184,7 @@ function createToolButton(name){
 	radio.setAttribute("name","drawToolRadio");
 	button.appendChild(radio);
 	
-	
-	//Create container div
-	var container = document.createElement('div');
-	container.className = 'btnToolContainer';
-	button.appendChild(container);
+
 	
 	
 	// Create icon div
