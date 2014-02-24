@@ -171,7 +171,7 @@ function createToolButton(name){
 	button.className = 'btnTool';
 	button.onclick = function(){drawApp.setSize(60);selectTool(this)};
 	drawToolsDiv.appendChild(button);
-	
+	/*
 	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
 	var radio = document.createElement('input');
 	button.id = 'tool-radio-' + name;
@@ -186,11 +186,12 @@ function createToolButton(name){
 	button.className = 'drawToolContainer  drawToolContainer-yellow drawToolContainer-drawtool';
 	button.appendChild(container);
 	
+	
 	// Create icon div
 	var icon = document.createElement('div');
 	icon.id = 'btnToolIcon-' + name;
 	container.appendChild(icon);
-	
+	*/
 	return button;
 }
 
@@ -227,9 +228,9 @@ function injectCSS() {
 		.btnTool-group>.btnTool:first-child:not(:last-child):not(.dropdown-toggle){border-bottom-right-radius: 0;border-top-right-radius: 0;}\n\
 		.btnTool-group>.btnTool:last-child:not(:first-child),.btnTool-group>.dropdown-toggle:not(:first-child){border-bottom-left-radius:0;border-top-left-radius:0;}\n\
 		\n\
-		.btnTool{ border:1px solid red}\n\
+		.btnTool{width:38px;height:34px;border:1px solid red}\n\
 		\n\
-		.btnToolContainer{padding:6px 12px;margin-bottom:0;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border-radius:2px;border-top:1px solid transparent;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;}\n\
+		.btnToolContainer{padding:6px 12px;margin:0;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border-radius:2px;border-top:1px solid transparent;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;}\n\
 		.btnToolContainer:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}\n\
 		.btnToolContainer:hover,.btnTool:focus{color:#333333;text-decoration:none;}\n\
 		.btnToolContainer:active,.btnToolContainer.active{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
