@@ -30,10 +30,6 @@ toolButtons.push(createToolButton(toolType.LINE, "line"));
 toolButtons.push(createToolButton(toolType.POLY, "poly"));
 toolButtons.push(createToolButtonWithLabel(toolType.TEST, "test", "Test"));
 
-
-
-
-
 // Setup Canvas Tools
 var context=drawApp.context;
 var canvas=context.canvas;
@@ -192,6 +188,7 @@ function createToolButton(type, name){
 	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
 	var radio = document.createElement('input');
 	button.id = 'tool-radio-' + name;
+	container.className = 'tool-radio';	// Used to find all radio btns and unselect them
 	radio.setAttribute("type","radio");
 	radio.setAttribute("name","drawToolRadio");
 	button.appendChild(radio);
@@ -263,6 +260,13 @@ function modifyExistingElements() {
 	document.getElementById('brush-35').parentNode.onclick = selectBrush;
 }
 function selectBrush(brushSize) {
+	// Set its default brushsize and update currentToolType
 	drawApp.setSize(brushSize);
 	currentToolType = toolType.BRUSH;
+	
+	// Visually unselect any other tools.
+	var radioButtons = mouseCoordsLabel.getElementsByTagName('tool-radio');
+	for(i=0;i<radioButtons.length;i++){
+    	document.formname.elementname[i].checked=false;
+	}
 }
