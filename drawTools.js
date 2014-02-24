@@ -263,11 +263,10 @@ function selectBrush(brushSize) {
 	// Set its default brushsize and update currentToolType
 	drawApp.setSize(brushSize);
 	currentToolType = toolType.BRUSH;
-	/*
+	
 	// Visually unselect any other tools.
 	var radioButtons = mouseCoordsLabel.getElementsByTagName('tool-radio');
 	for(i=0;i<radioButtons.length;i++){
     	document.formname.elementname[i].checked=false;
 	}
-	*/
 }
