@@ -253,18 +253,24 @@ function setupCSS() {
 
 /*--------------------- Modification of Existing Elements ---------------------*/
 function modifyExistingElements() {
-	document.getElementById('brush-2').parentNode.onclick = selectBrushSizeAux(2);
-	document.getElementById('brush-5').parentNode.onclick = selectBrushSizeAux(5);
-	document.getElementById('brush-12').parentNode.onclick = selectBrushSizeAux(12);
-	document.getElementById('brush-35').parentNode.onclick = selectBrushSizeAux(35);
+	document.getElementById('brush-2').parentNode.onclick = selectBrush;
+	document.getElementById('brush-5').parentNode.onclick = selectBrush;
+	document.getElementById('brush-12').parentNode.onclick = selectBrush;
+	document.getElementById('brush-35').parentNode.onclick = selectBrush;
 }
-function selectBrushSizeAux(brushSize) {
+function selectBrush(brushSize) {
 	// Set its default brushsize and update currentToolType
 	drawApp.setSize(brushSize);
 	currentToolType = toolType.BRUSH;
 	
 	// Visually unselect any other tools
-	var radioButtons = document.getElementsByName("drawToolRadio");
-   	for(var i=0;i<radioButtons.length;i++)
-      		radioButtons[i].checked = false;
+	var ele = document.getElementsByName("drawToolRadio");
+   	for(var i=0;i<ele.length;i++)
+      		ele[i].checked = false;
+	
+	/*
+	var radioButtons = mouseCoordsLabel.getElementsByClassName('tool-radio');
+	for(i=0;i<radioButtons.length;i++){
+    		radioButtons[i].removeAttr('checked');
+	}*/
 }
