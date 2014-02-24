@@ -166,7 +166,7 @@ function createToolButtonWithLabel(name, label){
 function createToolButton(name){
 	//create label
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
-	var button = document.createElement('label');
+	var button = document.createElement('div');
 	button.id = 'tool-' + name;
 	button.className = 'btnTool btnTool-yellow btnTool-drawtool'; //use whatever className drawception uses
 	button.onclick = function(){drawApp.setSize(60);selectTool(this)};
