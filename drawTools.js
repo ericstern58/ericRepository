@@ -264,9 +264,9 @@ function selectBrush(brushSize) {
 	drawApp.setSize(brushSize);
 	currentToolType = toolType.BRUSH;
 	
-	// Visually unselect any other tools.
-	var radioButtons = mouseCoordsLabel.getElementsByTagName('tool-radio');
+	// Visually unselect any other tools
+	var radioButtons = mouseCoordsLabel.getElementsByClassName('tool-radio');
 	for(i=0;i<radioButtons.length;i++){
-    	document.formname.elementname[i].checked=false;
+    		radioButtons[i].checked=false;
 	}
 }
