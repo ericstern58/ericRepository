@@ -216,7 +216,7 @@ function injectCSS() {
 		\n\
 		#btnToolIcon-fill{width:12px;height:12px;margin:7px -7px 1px 9px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
 		#btnToolIcon-fill:before{content:'';border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;}\n\
-		#btnToolIcon-line{width:5px;height:15px;margin:3px 5px 2px 5px;background:black;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
+		#btnToolIcon-line{width:5px;height:15px;margin:3px 5px 2px 4px;background:black;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
 		#btnToolIcon-poly{width:20px;margin:11px -3px 1px -3px;border-width:8px 4px 0;border-style:solid;border-color:black transparent;}\n\
 		#btnToolIcon-poly:before{content:'';display:block;margin:-17px 0px 0px -4px;border-width:0 10px 9px;border-style:solid;border-color:transparent transparent black;}\n\
 		\n\
