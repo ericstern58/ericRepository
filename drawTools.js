@@ -164,7 +164,7 @@ function createToolButtonWithLabel(name, label){
 }
 //Creates Tool Buttons (no innerHTML)
 function createToolButton(name){
-	//create label
+	//create button
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('div');
 	button.id = 'tool-' + name;
@@ -182,13 +182,13 @@ function createToolButton(name){
 	
 	//Create container div
 	var container = document.createElement('div');
-	container.id = 'drawToolContainer-' + name;
+	container.id = 'btnToolContainer-' + name;
 	button.className = 'drawToolContainer';
 	button.appendChild(container);
 	
 	// Create icon div
 	var icon = document.createElement('div');
-	icon.id = 'drawToolIcon-' + name;
+	icon.id = 'btnToolIcon-' + name;
 	container.appendChild(icon);
 	
 	return button;
@@ -213,11 +213,11 @@ function injectCSS() {
 	var sheet = document.createElement('style');
 	sheet.innerHTML = "\n\
 		\n\
-		#drawToolIcon-fill{width:12px;height:12px;margin:7px -6px 1px 10px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
-		#drawToolIcon-fill:before{content:'';border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;}\n\
-		#drawToolIcon-line{width:5px;height:15px;margin:3px 5px 2px 5px;background:black;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
-		#drawToolIcon-poly{width:20px;margin:11px -3px 1px -3px;border-width:8px 4px 0;border-style:solid;border-color:black transparent;}\n\
-		#drawToolIcon-poly:before{content:'';display:block;margin:-17px 0px 0px -4px;border-width:0 10px 9px;border-style:solid;border-color:transparent transparent black;}\n\
+		#btnToolIcon-fill{width:12px;height:12px;margin:7px -6px 1px 10px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
+		#btnToolIcon-fill:before{content:'';border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;}\n\
+		#btnToolIcon-line{width:5px;height:15px;margin:3px 5px 2px 5px;background:black;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
+		#btnToolIcon-poly{width:20px;margin:11px -3px 1px -3px;border-width:8px 4px 0;border-style:solid;border-color:black transparent;}\n\
+		#btnToolIcon-poly:before{content:'';display:block;margin:-17px 0px 0px -4px;border-width:0 10px 9px;border-style:solid;border-color:transparent transparent black;}\n\
 		\n\
 		.btnTool-group,{position:relative;display:inline-block;vertical-align:middle;}\n\
 		.btnTool-group>.btnTool{position:relative;float:left;display:inline-block;}\n\
@@ -227,19 +227,19 @@ function injectCSS() {
 		.btnTool-group>.btnTool:first-child:not(:last-child):not(.dropdown-toggle){border-bottom-right-radius: 0;border-top-right-radius: 0;}\n\
 		.btnTool-group>.btnTool:last-child:not(:first-child),.btnTool-group>.dropdown-toggle:not(:first-child){border-bottom-left-radius:0;border-top-left-radius:0;}\n\
 		\n\
-		.btnTool{padding:6px 12px;margin-bottom:0;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border-radius:2px;border-top:1px solid transparent;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;}\n\
-		.btnTool:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}\n\
-		.btnTool:hover,.btnTool:focus{color:#333333;text-decoration:none;}\n\
-		.btnTool:active,.btnTool.active{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
-		.btnTool.disabled,.btnTool[disabled],fieldset[disabled] .btnTool{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}\n\
-		.btnTool-selected{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
-		.btnTool-drawtool{margin-top: 2px;}\n\
+		.btnToolContainer{padding:6px 12px;margin-bottom:0;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border-radius:2px;border-top:1px solid transparent;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;}\n\
+		.btnToolContainer:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}\n\
+		.btnToolContainer:hover,.btnTool:focus{color:#333333;text-decoration:none;}\n\
+		.btnToolContainer:active,.btnToolContainer.active{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
+		.btnToolContainer.disabled,.btnToolContainer[disabled],fieldset[disabled] .btnToolContainer{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}\n\
+		.btnToolContainer-selected{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
+		.btnToolContainer-drawtool{margin-top: 2px;}\n\
 		\n\
-		.btnTool-yellow, .drawToolContainer{background-color:#fffb8d;border-bottom:1px solid #e5e17e;}\n\
-		.btnTool-yellow:hover, .drawToolContainer{background-color:#f6f166;border-bottom:1px solid #ddd85b;}\n\
-		.btnTool-yellow:active, .drawToolContainer{border-bottom:1px solid #f6f166;}\n\
+		.btnToolContainer-yellow{background-color:#fffb8d;border-bottom:1px solid #e5e17e;}\n\
+		.btnToolContainer-yellow:hover{background-color:#f6f166;border-bottom:1px solid #ddd85b;}\n\
+		.btnToolContainer-yellow:active{border-bottom:1px solid #f6f166;}\n\
 		\n\
-		.drawToolContainer{ border:1px solid purple }\n\
+		.btnToolContainer{ border:1px solid purple }\n\
 		\n\
 		.btnTool input{display: none;}\n\
 		.btnTool input:checked + label:before{background-color:red;}\n\
