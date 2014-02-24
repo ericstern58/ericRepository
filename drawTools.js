@@ -216,14 +216,14 @@ function injectCSS() {
 		\n\
 		.btnTool{display:inline-block;padding:6px 12px;margin-bottom:0;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border-radius:2px;border-top:1px solid transparent;border-bottom:1px solid #e5e17e;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;}\n\
 		.btnTool:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}\n\
-		.btnTool:hover,.btnTool:focus{color:#333333;text-decoration:none;}\n\
+		.btnTool:hover,.btnTool:focus{color:#333333;text-decoration:none;border-bottom:1px solid #ddd85b;}\n\
 		.btnTool:active,.btnTool.active{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
 		.btnTool.disabled,.btnTool[disabled],fieldset[disabled] .btnTool{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}\n\
 		.btnTool-drawtool{margin-top: 2px;}\n\
 		\n\
 		.btnTool-yellow{background-color:#fffb8d;}\n\
 		.btnTool-yellow:hover{background-color:#f6f166;}\n\
-		\n\
+		\n\                          border-bottom:1px solid #e5e17e;
 		";
 	document.body.appendChild(sheet);
 	/*remove this later*/
