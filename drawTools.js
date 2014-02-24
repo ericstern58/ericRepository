@@ -195,9 +195,9 @@ function createToolButton(name){
 
 function selectTool(tool){
 	for (var i=0;i<toolButtons.length;i++) {
-		toolButton.removeClass('btnTool-selected')
+		toolButtons[i].removeClass('btnTool-selected')
 	}
-	$(this).addClass('btnTool-selected');
+	tool.addClass('btnTool-selected');
 	
 }
 
