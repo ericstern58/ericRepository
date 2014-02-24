@@ -171,14 +171,14 @@ function createToolButton(name){
 	button.className = 'btnTool';
 	button.onclick = function(){drawApp.setSize(60);selectTool(this)};
 	drawToolsDiv.appendChild(button);
-	/*
+	
 	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
 	var radio = document.createElement('input');
 	button.id = 'tool-radio-' + name;
 	radio.setAttribute("type","radio");
 	radio.setAttribute("name","drawToolRadio");
 	button.appendChild(radio);
-	*/
+	
 	
 	//Create container div
 	var container = document.createElement('div');
@@ -186,12 +186,12 @@ function createToolButton(name){
 	container.className = 'btnToolContainer  btnToolContainer-yellow btnToolContainer-drawtool';
 	button.appendChild(container);
 	
-	/*
+	
 	// Create icon div
 	var icon = document.createElement('div');
 	icon.id = 'btnToolIcon-' + name;
 	container.appendChild(icon);
-	*/
+	
 	return button;
 }
 
