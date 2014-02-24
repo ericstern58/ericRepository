@@ -187,8 +187,8 @@ function createToolButton(type, name){
 	
 	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
 	var radio = document.createElement('input');
-	button.id = 'tool-radio-' + name;
-	container.className = 'tool-radio';	// Used to find all radio btns and unselect them
+	radio.id = 'tool-radio-' + name;
+	radio.className = 'tool-radio';	// Used to find all radio btns and unselect them
 	radio.setAttribute("type","radio");
 	radio.setAttribute("name","drawToolRadio");
 	button.appendChild(radio);
