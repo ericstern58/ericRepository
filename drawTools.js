@@ -108,7 +108,7 @@ function floodFill(e){
 	
 	function f(xinitial,yinitial){
 		var queue = [new Point(xinitial,yinitial)];
-		var outerEdgeQueue = [new Point(xinitial,yinitial)]
+		var outerEdgeQueue = [new Point(xinitial,yinitial)];
 		var x = 0;
 		var y = 0;
 		while(queue.length>0) {
