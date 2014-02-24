@@ -158,7 +158,7 @@ function createToolButtonWithLabel(name, label){
 	var button = createToolButton(name);
 	
 	//Place element inside it( text )
-	button.getElementsByTagName('div')[0] = label;
+	button.getElementsByTagName('div')[0].innerHTML = label;
 	
 	return button;
 }
