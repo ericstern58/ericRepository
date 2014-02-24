@@ -56,15 +56,18 @@ drawApp.canvas.on('mousedown',function(e){
 	//mouseCoordsLabel.getElementsByTagName('div')[0].innerHTML = context.lineWidth;
 	mouseCoordsLabel.getElementsByTagName('div')[0].innerHTML = currentToolType + ', ' + toolType.FILL;
 	if(currentToolType == toolType.BRUSH) {
+		alert('in toolType.BRUSH');
 		// default behaviors
 		drawApp.onCanvasMouseDown(e);
 	} else if(currentToolType == toolType.FILL) {
+		alert('in toolType.FILL');
 		try {
 			floodFill(e);
 		} catch(err) {
 			alert(err);
 		}
 	} else if(currentToolType == toolType.LINE) {
+		alert('in toolType.LINE');
 		try{
 			//virtualLine(e);
 			//makeLine(new Point(100,100),new Point(200,200));
@@ -72,6 +75,7 @@ drawApp.canvas.on('mousedown',function(e){
 			alert(err);
 		}
 	} else if(currentToolType == toolType.POLY) {
+		alert('in toolType.POLY');
 		//imgTest();
 	} else{
 		//Else it is unknown, do nothing
