@@ -55,7 +55,11 @@ drawApp.canvas.off('mousedown');
 drawApp.canvas.on('mousedown',function(e){
 	//mouseCoordsLabel.getElementsByTagName('div')[0].innerHTML = context.lineWidth;
 	mouseCoordsLabel.getElementsByTagName('div')[0].innerHTML = currentToolType;
-	if(currentToolType == toolType.BRUSH){
+	if(currentToolType == toolType.BRUSH) {
+		// default behaviors
+		var md=drawApp.onCanvasMouseDown();
+		md(e);
+	} else if(currentToolType == toolType.FILL){
 		try {
 			floodFill(e);
 		} catch(err) {
@@ -71,9 +75,7 @@ drawApp.canvas.on('mousedown',function(e){
 	} else if(currentToolType == toolType.POLY) {
 		//imgTest();
 	} else{
-		//Else do the rest of default behaviors
-		var md=drawApp.onCanvasMouseDown();
-		md(e);
+		//Else it is unknown, do nothing
 	}
 })
 
