@@ -245,6 +245,4 @@ function injectCSS() {
 		\n\
 		";
 	document.body.appendChild(sheet);
-	/*remove this later*/
-	return 0;
 }
