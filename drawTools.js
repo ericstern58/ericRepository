@@ -7,7 +7,6 @@ var toolType = {
     TEST: 99
 };
 var currentToolType = toolType.BRUSH;
-var currentBrushSize = context.lineWidth;
 
 // Setup necessary CSS
 setupCSS();
@@ -55,7 +54,7 @@ drawApp.canvas.off('mousedown');
 //Setup Listener
 drawApp.canvas.on('mousedown',function(e){
 	//mouseCoordsLabel.getElementsByTagName('div')[0].innerHTML = context.lineWidth;
-	mouseCoordsLabel.getElementsByTagName('div')[0].innerHTML = currentToolType;
+	mouseCoordsLabel.getElementsByTagName('div')[0].innerHTML = currentToolType + ', ' + toolType.FILL;
 	if(currentToolType == toolType.BRUSH) {
 		// default behaviors
 		drawApp.onCanvasMouseDown(e);
@@ -249,10 +248,9 @@ function modifyExistingElements() {
 	document.getElementById('brush-35').parentNode.onclick = function(){selectBrushAUX(35);};
 }
 function selectBrushAUX(brushSize) {
-	// Set its default brushsize and update currentToolType, currentBrushSize
+	// Set its default brushsize and update currentToolType
 	drawApp.setSize(brushSize);
 	currentToolType = toolType.BRUSH;
-	currentBrushSize = context.lineWidth;
 	
 	// Visually unselect any other tools
 	var ele = document.getElementsByName("drawToolRadio");
