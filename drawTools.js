@@ -157,10 +157,6 @@ function RGBColor(r,g,b) {
 function createToolButtonWithIcon(name){
 	var button = createToolButton(name);
 
-	// Create container div
-	var icon = document.createElement('label');
-	icon.id = 'drawToolContainer-' + name;
-	button.appendChild(icon);
 	
 	return button;
 }
@@ -189,6 +185,11 @@ function createToolButton(name){
 	radio.setAttribute("type","radio");
 	radio.setAttribute("name","drawToolRadio");
 	button.appendChild(radio);
+	
+	// Create container div
+	var icon = document.createElement('div');
+	icon.id = 'drawToolContainer-' + name;
+	button.appendChild(icon);
 	
 	return button;
 }
