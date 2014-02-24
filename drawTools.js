@@ -183,7 +183,7 @@ function createToolButton(name){
 	//Create container div
 	var container = document.createElement('div');
 	container.id = 'btnToolContainer-' + name;
-	container.className = 'drawToolContainer  drawToolContainer-yellow drawToolContainer-drawtool';
+	container.className = 'btnToolContainer  btnToolContainer-yellow btnToolContainer-drawtool';
 	button.appendChild(container);
 	
 	/*
