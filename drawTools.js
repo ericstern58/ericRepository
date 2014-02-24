@@ -190,6 +190,7 @@ function createToolButton(name){
 	// Create icon div
 	var icon = document.createElement('div');
 	icon.id = 'btnToolIcon-' + name;
+	icon.className = 'btnToolIcon';
 	container.appendChild(icon);
 	
 	return button;
@@ -213,6 +214,7 @@ function selectTool(tool){
 function injectCSS() {
 	var sheet = document.createElement('style');
 	sheet.innerHTML = "\n\
+		.btnToolIcon{width:38px;}\n\
 		\n\
 		#btnToolIcon-fill{width:12px;height:12px;margin:7px -6px 1px 10px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
 		#btnToolIcon-fill:before{content:'';border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;}\n\
