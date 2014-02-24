@@ -233,4 +233,5 @@ function injectCSS() {
 		\n\
 		";
 	document.body.appendChild(sheet);
+	return 0;
 }
