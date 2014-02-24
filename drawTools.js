@@ -223,7 +223,7 @@ function injectCSS() {
 		\n\
 		.btnTool-yellow{background-color:#fffb8d;border-bottom:1px solid #e5e17e;}\n\
 		.btnTool-yellow:hover{background-color:#f6f166;border-bottom:1px solid #ddd85b;}\n\
-		.btnTool-yellow:active{border-bottom:1px solid #transparent;}\n\
+		.btnTool-yellow:active{border-bottom:1px solid #f6f166;}\n\
 		\n\
 		";
 	document.body.appendChild(sheet);
