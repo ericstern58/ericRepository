@@ -205,7 +205,7 @@ function selectTool(name){
 function injectCSS() {
 	var sheet = document.createElement('style');
 	sheet.innerHTML = "\n\
-		.icon-tool-container{height:20px;}\n\
+		.icon-tool-container{height:19px;}\n\
 		\n\
 		#icon-fill {width:12px;height:12px;background:black;margin:6px 0 0 15px;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
 		#icon-fill:before{content:'';border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;}\n\
