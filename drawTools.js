@@ -178,7 +178,7 @@ function createToolButton(name){
 	radio.setAttribute("type","radio");
 	radio.setAttribute("name","drawToolRadio");
 	button.appendChild(radio);
-	
+	*/
 	
 	//Create container div
 	var container = document.createElement('div');
@@ -186,7 +186,7 @@ function createToolButton(name){
 	button.className = 'drawToolContainer  drawToolContainer-yellow drawToolContainer-drawtool';
 	button.appendChild(container);
 	
-	
+	/*
 	// Create icon div
 	var icon = document.createElement('div');
 	icon.id = 'btnToolIcon-' + name;
