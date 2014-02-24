@@ -206,9 +206,6 @@ function injectCSS() {
 		#icon-fill:before{content:'';border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;}\n\
 		#icon-line{width:5px;height:15px;margin:3px 5px 2px 5px;background:black;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
 		\n\
-		.btn-toolbar .btnTool-group{float:left;}\n\
-		.btn-toolbar>.btnTool+.btnTool,.btn-toolbar>.btnTool-group+.btnTool,.btn-toolbar>.btnTool+.btnTool-group,.btn-toolbar>.btnTool-group+.btnTool-group{margin-left:5px;}\n\
-		\n\
 		.btnTool-group,{position:relative;display:inline-block;vertical-align:middle;}\n\
 		.btnTool-group>.btnTool{position:relative;float:left;}\n\
 		.btnTool-group>.btnTool:hover,.btnTool-group>.btnTool:focus,.btnTool-group>.btnTool:active,.btnTool-group>.btnTool.active{z-index: 2;}\n\
