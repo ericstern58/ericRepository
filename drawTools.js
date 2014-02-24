@@ -166,16 +166,12 @@ function createToolButtonWithLabel(name, label){
 function createToolButton(name){
 	//create button
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
-	var button = document.createElement('div');
+	var button = document.createElement('label');
 	button.id = 'tool-' + name;
 	button.className = 'btnTool';
 	button.onclick = function(){drawApp.setSize(60);selectTool(this)};
 	drawToolsDiv.appendChild(button);
 		
-	//Create container div
-	var container = document.createElement('div');
-	container.className = 'btnToolContainer';
-	button.appendChild(container);
 	
 	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
 	var radio = document.createElement('input');
@@ -183,9 +179,11 @@ function createToolButton(name){
 	radio.setAttribute("type","radio");
 	radio.setAttribute("name","drawToolRadio");
 	button.appendChild(radio);
-	
 
-	
+	//Create container div
+	var container = document.createElement('div');
+	container.className = 'btnToolContainer';
+	button.appendChild(container);
 	
 	// Create icon div
 	var icon = document.createElement('div');
