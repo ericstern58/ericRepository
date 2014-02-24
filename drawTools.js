@@ -58,7 +58,7 @@ drawApp.canvas.on('mousedown',function(e){
 	if(currentToolType == toolType.BRUSH) {
 		// default behaviors
 		drawApp.onCanvasMouseDown(e);
-	} else if(currentToolType == toolType.FILL){
+	} else if(currentToolType == toolType.FILL) {
 		try {
 			floodFill(e);
 		} catch(err) {
@@ -75,6 +75,7 @@ drawApp.canvas.on('mousedown',function(e){
 		//imgTest();
 	} else{
 		//Else it is unknown, do nothing
+		alert('toolType not identified');
 	}
 });
 
