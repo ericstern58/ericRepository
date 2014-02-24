@@ -200,8 +200,8 @@ function selectTool(tool){
 	}
 	tool.addClass('btnTool-selected');*/
 	
-        $('.btnTool-group .input:radio').addClass('btnTool');
-        $('.btnTool-group .input:radio:checked').removeClass('btnTool');
+        //$('.btnTool-group .input:radio').addClass('btnTool');
+        //$('.btnTool-group .input:radio:checked').removeClass('btnTool');
 	
 }
 
@@ -238,6 +238,9 @@ function injectCSS() {
 		.btnTool-yellow{background-color:#fffb8d;border-bottom:1px solid #e5e17e;}\n\
 		.btnTool-yellow:hover{background-color:#f6f166;border-bottom:1px solid #ddd85b;}\n\
 		.btnTool-yellow:active{border-bottom:1px solid #f6f166;}\n\
+		\n\
+		.btnTool input{display: none;}\n\
+		.btnTool input:checked{background-color:red;}\n\
 		\n\
 		";
 	document.body.appendChild(sheet);
