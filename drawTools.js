@@ -253,12 +253,12 @@ function setupCSS() {
 
 /*--------------------- Modification of Existing Elements ---------------------*/
 function modifyExistingElements() {
-	document.getElementById('brush-2').parentNode.onclick = selectBrush(2);
-	document.getElementById('brush-5').parentNode.onclick = selectBrush(5);
-	document.getElementById('brush-12').parentNode.onclick = selectBrush(12);
-	document.getElementById('brush-35').parentNode.onclick = selectBrush(35);
+	document.getElementById('brush-2').parentNode.onclick = selectBrushSizeAux(2);
+	document.getElementById('brush-5').parentNode.onclick = selectBrushSizeAux(5);
+	document.getElementById('brush-12').parentNode.onclick = selectBrushSizeAux(12);
+	document.getElementById('brush-35').parentNode.onclick = selectBrushSizeAux(35);
 }
-function selectBrush(brushSize) {
+function selectBrushSizeAux(brushSize) {
 	// Set its default brushsize and update currentToolType
 	drawApp.setSize(brushSize);
 	currentToolType = toolType.BRUSH;
