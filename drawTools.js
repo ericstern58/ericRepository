@@ -158,7 +158,7 @@ function createToolButtonWithIcon(name){
 	var button = createToolButton(name);
 
 	// Create container div
-	var icon = document.createElement('div');
+	var icon = document.createElement('label');
 	icon.id = 'drawToolContainer-' + name;
 	button.appendChild(icon);
 	
