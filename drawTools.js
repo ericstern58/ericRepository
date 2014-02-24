@@ -191,6 +191,7 @@ function createToolButton(name){
 	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
 	var radio = document.createElement('input');
 	button.id = 'tool-radio-' + name;
+	radio.setAttribute("type","radio");
 	radio.setAttribute("name","drawToolRadio");
 	button.appendChild(radio);
 	
