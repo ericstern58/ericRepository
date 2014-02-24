@@ -43,7 +43,7 @@ drawApp.canvas.off('mousedown');
 //Setup Listener
 drawApp.canvas.on('mousedown',function(e){
 	mouseCoordsLabel.getElementsByTagName('div')[0].innerHTML = context.lineWidth;
-	if(context.lineWidth == 'drawTool-Fill'){
+	if(context.lineWidth == 1){
 		try {
 			floodFill(e);
 			alert("used floodfill");
@@ -60,7 +60,6 @@ drawApp.canvas.on('mousedown',function(e){
 	} else if($('#'+polygon.id).hasClass('selected')) {
 		//imgTest();
 	} else{
-		floodFill(e);
 		//Else do the rest of default behaviors
 		var md=drawApp.onCanvasMouseDown();
 		md(e);
@@ -170,7 +169,7 @@ function createToolButton(name){
 	var button = document.createElement('label');
 	button.id = 'tool-' + name;
 	button.className = 'btnTool';
-	button.onclick = function(){drawApp.setSize(60);selectTool(this)};
+	button.onclick = function(){drawApp.setSize(1);selectTool(this)};
 	drawToolsDiv.appendChild(button);
 		
 	
