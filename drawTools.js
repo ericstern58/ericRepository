@@ -82,7 +82,6 @@ drawApp.canvas.on('mousedown',function(e){
 
 /*--------------------- Button Methods ----------------------*/
 function drawLine(start,finish){
-	undo();
 	save();
 	context.beginPath();
 	context.moveTo(start.x,start.y);
@@ -91,6 +90,7 @@ function drawLine(start,finish){
 }
 
 function floodFill(e){
+	undo();
 	save();
 	var w = drawApp.canvas.width();
 	var h = drawApp.canvas.height();
