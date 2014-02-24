@@ -5,7 +5,7 @@ injectCSS();
 var drawToolsDiv = document.createElement('div');
 drawToolsDiv.id = 'drawTools';
 drawToolsDiv.className = 'btnTool-group';
-drawToolsDiv.setAttribute("data-toggle","buttons"); 
+//drawToolsDiv.setAttribute("data-toggle","buttons"); 
 document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToolsDiv);
 
 // Create Tool Button Array
@@ -16,6 +16,12 @@ toolButtons.push(createToolButtonWithIcon("fill"));
 toolButtons.push(createToolButtonWithIcon("line"));
 toolButtons.push(createToolButtonWithIcon("poly"));
 toolButtons.push(createToolButtonWithLabel("test", "Test"));
+$('.btnTool-group input:radio').click(function () {
+	$(".btnTool-group").find('option:selected').removeAttr("selected");
+	//$('input:radio').parent().removeClass('checked11');
+	$(this).parent(this).addClass('btnTool:active');
+});
+
 
 // Setup Canvas Tools
 var context=drawApp.context;
@@ -181,6 +187,13 @@ function createToolButton(name){
 	button.className = 'btnTool btnTool-yellow btnTool-drawtool'; //use whatever className drawception uses
 	button.onclick = function(){drawApp.setSize(60);selectTool(name)};
 	drawToolsDiv.appendChild(button);
+	
+	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
+	var radio = document.createElement('input');
+	button.id = 'tool-radio-' + name;
+	radio.setAttribute("name","drawToolRadio");
+	button.appendChild(radio);
+	
 	return button;
 }
 
