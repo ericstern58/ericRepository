@@ -235,7 +235,6 @@ function injectCSS() {
 		.btnToolContainer:active,.btnToolContainer.active{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
 		.btnToolContainer.disabled,.btnToolContainer[disabled],fieldset[disabled] .btnToolContainer{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}\n\
 		.btnToolContainer-selected{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
-		.btnToolContainer-drawtool{margin-top: 2px;}\n\
 		\n\
 		.btnToolContainer-yellow{background-color:#fffb8d;border-bottom:1px solid #e5e17e;}\n\
 		.btnToolContainer-yellow:hover{background-color:#f6f166;border-bottom:1px solid #ddd85b;}\n\
