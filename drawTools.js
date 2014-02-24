@@ -18,7 +18,6 @@ modifyExistingElements();
 var drawToolsDiv = document.createElement('div');
 drawToolsDiv.id = 'drawTools';
 drawToolsDiv.className = 'btnTool-group';
-//drawToolsDiv.setAttribute("data-toggle","buttons"); 
 document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToolsDiv);
 
 // Create Tool Button Array
@@ -56,20 +55,20 @@ drawApp.canvas.off('mousedown');
 drawApp.canvas.on('mousedown',function(e){
 	//mouseCoordsLabel.getElementsByTagName('div')[0].innerHTML = context.lineWidth;
 	mouseCoordsLabel.getElementsByTagName('div')[0].innerHTML = currentToolType;
-	if(context.lineWidth == 1){
+	if(currentToolType == toolType.BRUSH){
 		try {
 			floodFill(e);
 		} catch(err) {
 			alert(err);
 		}
-	} else if($('#'+lineButton.id).hasClass('selected')) {
+	} else if(currentToolType == toolType.LINE) {
 		try{
 			//virtualLine(e);
 			//makeLine(new Point(100,100),new Point(200,200));
 		} catch(err) {
 			alert(err);
 		}
-	} else if($('#'+polygon.id).hasClass('selected')) {
+	} else if(currentToolType == toolType.POLY) {
 		//imgTest();
 	} else{
 		//Else do the rest of default behaviors
@@ -205,18 +204,6 @@ function createToolButton(type, name){
 	return button;
 }
 
-function selectTool(tool){
-	/*
-	for (var i=0;i<toolButtons.length;i++) {
-		toolButtons[i].removeClass('btnTool-selected')
-	}
-	tool.addClass('btnTool-selected');*/
-	
-        //$('.btnTool-group .input:radio').addClass('btnTool');
-        //$('.btnTool-group .input:radio:checked').removeClass('btnTool');
-	
-}
-
 /*--------------------- CSS Style Sheets ---------------------*/
 //sheet.insertRule("header { float: left; opacity: 0.8; }", 1);
 
@@ -253,12 +240,12 @@ function setupCSS() {
 
 /*--------------------- Modification of Existing Elements ---------------------*/
 function modifyExistingElements() {
-	document.getElementById('brush-2').parentNode.onclick = function(){selectBrush(2);};
-	document.getElementById('brush-5').parentNode.onclick = function(){selectBrush(5);};;
-	document.getElementById('brush-12').parentNode.onclick = function(){selectBrush(12);};;
-	document.getElementById('brush-35').parentNode.onclick = function(){selectBrush(35);};;
+	document.getElementById('brush-2').parentNode.onclick = function(){selectBrushAUX(2);};
+	document.getElementById('brush-5').parentNode.onclick = function(){selectBrushAUX(5);};
+	document.getElementById('brush-12').parentNode.onclick = function(){selectBrushAUX(12);};
+	document.getElementById('brush-35').parentNode.onclick = function(){selectBrushAUX(35);};
 }
-function selectBrush(brushSize) {
+function selectBrushAUX(brushSize) {
 	// Set its default brushsize and update currentToolType
 	drawApp.setSize(brushSize);
 	currentToolType = toolType.BRUSH;
@@ -267,10 +254,4 @@ function selectBrush(brushSize) {
 	var ele = document.getElementsByName("drawToolRadio");
    	for(var i=0;i<ele.length;i++)
       		ele[i].checked = false;
-	
-	/*
-	var radioButtons = mouseCoordsLabel.getElementsByClassName('tool-radio');
-	for(i=0;i<radioButtons.length;i++){
-    		radioButtons[i].removeAttr('checked');
-	}*/
 }
