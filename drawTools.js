@@ -182,7 +182,7 @@ function createToolButton(name){
 	
 	//Create container div
 	var container = document.createElement('div');
-	container.className = 'btnToolContainer  btnToolContainer-yellow btnToolContainer-drawtool';
+	container.className = 'btnToolContainer  btnToolContainer-yellow';
 	button.appendChild(container);
 	
 	
@@ -232,7 +232,7 @@ function injectCSS() {
 		.btnToolContainer{height:34px;padding:6px 12px;margin:0px;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border-radius:inherit;border-top:1px solid transparent;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;}\n\
 		.btnToolContainer:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}\n\
 		.btnToolContainer:hover,.btnTool:focus{color:#333333;text-decoration:none;}\n\
-		.btnToolContainer:active,.btnToolContainer.active{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
+		.btnToolContainer:active,.btnToolContainer.active,.btnTool input:focus+div{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
 		.btnToolContainer.disabled,.btnToolContainer[disabled],fieldset[disabled] .btnToolContainer{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}\n\
 		.btnToolContainer-selected{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
 		\n\
@@ -240,7 +240,7 @@ function injectCSS() {
 		.btnToolContainer-yellow:hover{background-color:#f6f166;border-bottom:1px solid #ddd85b;}\n\
 		.btnToolContainer-yellow:active{border-bottom:1px solid #f6f166;}\n\
 		\n\
-		.btnTool input{display: none;}\n\
+		.btnTool input{display:none;}\n\
 		.btnTool input:checked + div{background-color:red;}\n\
 		\n\
 		";
