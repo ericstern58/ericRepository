@@ -205,11 +205,6 @@ function injectCSS() {
 		#icon-fill:before{content:'';border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;}\n\
 		#icon-line{width:5px;height:15px;margin:3px 5px 2px 5px;background:black;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
 		\n\
-		.btnTool-group,{position:relative;display:inline-block;vertical-align:middle;}\n\
-		.btnTool-group>.btnTool{position:relative;float:left;}\n\
-		.btnTool-group>.btnTool:hover,.btnTool-group>.btnTool:focus,.btnTool-group>.btnTool:active,.btnTool-group>.btnTool.active{z-index: 2;}\n\
-		.btnTool-group>.btnTool:focus{outline:none;}\n\
-		.btnTool-group .btnTool+.btnTool,.btnTool-group .btnTool + .btnTool-group,.btnTool-group .btnTool-group+.btnTool,.btnTool-group .btnTool-group+.btnTool-group{margin-left:-1px;}\n\
 		\n\
 		.btnTool-group>.btnTool:not(:first-child):not(:last-child):not(.dropdown-toggle){border-radius:0}\n\
 		.btnTool-group>.btnTool:first-child{margin-left: 0;}\n\
@@ -222,6 +217,7 @@ function injectCSS() {
 		.btnTool:active,.btnTool.active{outline:0;background-image:none;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
 		.btnTool.disabled,.btnTool[disabled],fieldset[disabled] .btnTool{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}\n\
 		.btnTool-drawtool{margin-top: 2px;}\n\
+		\n\
 		.btnTool-yellow{background-color:#fffb8d;}\n\
 		.btnTool-yellow:hover{background-color:#f6f166;}\n\
 		\n\
