@@ -7,7 +7,6 @@ var toolType = {
     TEST: 99
 };
 var currentToolType = toolType.BRUSH;
-var currentBrushSize = toolType.BRUSH;
 
 // Setup necessary CSS
 setupCSS();
