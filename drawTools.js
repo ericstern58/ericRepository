@@ -168,7 +168,7 @@ function createToolButton(name){
 	var button = document.createElement('label');
 	button.id = 'tool-' + name;
 	button.className = 'btnTool';
-	button.onclick = function(){drawApp.setSize(1);selectTool(this)};
+	button.onclick = function(){drawApp.setSize(0);selectTool(this)};
 	drawToolsDiv.appendChild(button);
 		
 	
