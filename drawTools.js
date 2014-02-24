@@ -1,5 +1,16 @@
+// Setup Some State Variables
+var toolType = {
+    BRUSH: 0,
+    FILL: 1,
+    LINE: 2
+};
+var currentToolType = toolType.BRUSH;
+
 // Setup necessary CSS
 setupCSS();
+
+// Make Necessary Modifications to Existing Elements
+modifyExistingElements();
 
 //Create DIV in which DrawTools will be placed in
 var drawToolsDiv = document.createElement('div');
@@ -16,6 +27,9 @@ toolButtons.push(createToolButton("fill"));
 toolButtons.push(createToolButton("line"));
 toolButtons.push(createToolButton("poly"));
 toolButtons.push(createToolButtonWithLabel("test", "Test"));
+
+
+
 
 
 // Setup Canvas Tools
@@ -168,7 +182,7 @@ function createToolButton(name){
 	var button = document.createElement('label');
 	button.id = 'tool-' + name;
 	button.className = 'btnTool';
-	button.onclick = function(){drawApp.setSize(0);selectTool(this)};
+	button.onclick = function(){drawApp.setSize(0);};//selectTool(this)
 	drawToolsDiv.appendChild(button);
 		
 	
@@ -236,4 +250,13 @@ function setupCSS() {
 		\n\
 		";
 	document.body.appendChild(sheet);
+}
+
+/*--------------------- Modification of Existing Elements ---------------------*/
+function modifyExistingElements() {
+	document.getElementById('brush-2').parentNode.onclick = selectBrush;
+}
+function selectBrush(brushSize) {
+	drawApp.setSize(brushSize);
+	var currentToolType = toolType.BRUSH;
 }
