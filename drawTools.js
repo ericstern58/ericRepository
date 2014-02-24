@@ -46,7 +46,6 @@ drawApp.canvas.on('mousedown',function(e){
 	if(context.lineWidth == 1){
 		try {
 			floodFill(e);
-			alert("used floodfill");
 		} catch(err) {
 			alert(err);
 		}
