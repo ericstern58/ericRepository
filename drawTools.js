@@ -211,6 +211,9 @@ function injectCSS() {
 		#icon-fill {width:12px;height:12px;background:black;margin:7px -4px 1px 12px;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
 		#icon-fill:before{content:'';border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;}\n\
 		\n\
+		.btn-toolbar .btnTool-group{float:left;}\n\
+		.btn-toolbar>.btnTool+.btnTool,.btn-toolbar>.btnTool-group+.btnTool,.btn-toolbar>.btnTool+.btnTool-group,.btn-toolbar>.btnTool-group+.btnTool-group{margin-left:5px;}\n\
+		\n\
 		.btnTool-group,{position:relative;display:inline-block;vertical-align:middle;}\n\
 		.btnTool-group>.btnTool{position:relative;float:left;}\n\
 		.btnTool-group>.btnTool:hover,.btnTool-group>.btnTool:focus,.btnTool-group>.btnTool:active,.btnTool-group>.btnTool.active{z-index: 2;}\n\
@@ -226,6 +229,9 @@ function injectCSS() {
 		.btnTool-group>.btnTool-group:first-child >.btnTool:last-child,.btnTool-group>.btnTool-group:first-child>.dropdown-toggle{border-bottom-right-radius:0;border-top-right-radius:0;}\n\
 		.btnTool-group>.btnTool-group:last-child>.btnTool:first-child{border-bottom-left-radius:0;border-top-left-radius:0;}\n\
 		.btnTool-group .dropdown-toggle:active,.btnTool-group.open .dropdown-toggle{outline:0;}\n\
+		\n\
+		.btnTool-group>.btnTool+.dropdown-toggle{padding-left:8px;padding-right:8px;}\n\
+		.btnTool-group.open .dropdown-toggle {-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
 		\n\
 		.btnTool{display:inline-block;padding:6px 12px;margin-bottom:0;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border:1px solid transparent;border-radius:4px;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;}\n\
 		.btnTool:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}\n\
