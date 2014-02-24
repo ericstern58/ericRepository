@@ -13,7 +13,7 @@ var toolButtons = new Array();
 
 // Create Tool Buttons
 toolButtons.push(createToolButtonWithIcon("fill"));
-toolButtons.push(createToolButtonWithLabel("line", "Line"));
+toolButtons.push(createToolButtonWithIcon("line"));
 toolButtons.push(createToolButtonWithLabel("poly", "Poly"));
 toolButtons.push(createToolButtonWithLabel("test", "Test"));
 
@@ -24,7 +24,7 @@ var canvas=context.canvas;
 
 // Mouse Listening
 // Debug mouse coords text label
-var mouseCoordsLabel = createToolButton("label");
+var mouseCoordsLabel = createToolButtonWithLabel("label", '0');
 toolButtons.push(mouseCoordsLabel);
 /*
 var mouse = {x: 0, y: 0};
@@ -204,6 +204,7 @@ function injectCSS() {
 		\n\
 		#icon-fill {width:12px;height:12px;background:black;margin:7px -4px 1px 12px;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
 		#icon-fill:before{content:'';border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;}\n\
+		#icon-line {width:5px;height:15px;margin:0px 0px 0px 0px;background:black;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
 		\n\
 		.btn-toolbar .btnTool-group{float:left;}\n\
 		.btn-toolbar>.btnTool+.btnTool,.btn-toolbar>.btnTool-group+.btnTool,.btn-toolbar>.btnTool+.btnTool-group,.btn-toolbar>.btnTool-group+.btnTool-group{margin-left:5px;}\n\
