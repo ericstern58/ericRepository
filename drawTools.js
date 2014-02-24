@@ -204,8 +204,8 @@ function injectCSS() {
 		#icon-fill{width:12px;height:12px;margin:7px -6px 1px 10px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
 		#icon-fill:before{content:'';border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;}\n\
 		#icon-line{width:5px;height:15px;margin:3px 5px 2px 5px;background:black;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
-		#icon-poly{width:12px;margin:10px 0px 0px 0px;border-width:10px 5px 0;border-style:solid;border-color:black transparent;}\n\
-		#icon-poly:before{content:'';display:block;margin:-22px 0px 0px -5px;border-width:0 11px 12px;border-style:solid;border-color:transparent transparent black;}\n\
+		#icon-poly{width:10px;margin:10px 0px 0px 0px;border-width:7px 6px 0;border-style:solid;border-color:black transparent;}\n\
+		#icon-poly:before{content:'';display:block;margin:-17px 0px 0px -6px;border-width:0 11px 10px;border-style:solid;border-color:transparent transparent black;}\n\
 		\n\
 		.btnTool-group,{position:relative;display:inline-block;vertical-align:middle;}\n\
 		.btnTool-group>.btnTool{position:relative;float:left;}\n\
