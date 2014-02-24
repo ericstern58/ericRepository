@@ -1,5 +1,5 @@
 // Inject necessary CSS
-injectCSS();
+setupCSS();
 
 //Create DIV in which DrawTools will be placed in
 var drawToolsDiv = document.createElement('div');
@@ -208,7 +208,7 @@ function selectTool(tool){
 /*--------------------- CSS Style Sheets ---------------------*/
 //sheet.insertRule("header { float: left; opacity: 0.8; }", 1);
 
-function injectCSS() {
+function setupCSS() {
 	var sheet = document.createElement('style');
 	sheet.innerHTML = "\n\
 		\n\
