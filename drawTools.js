@@ -226,7 +226,7 @@ function injectCSS() {
 		.btnTool-group>.btnTool:first-child:not(:last-child):not(.dropdown-toggle){border-bottom-right-radius: 0;border-top-right-radius: 0;}\n\
 		.btnTool-group>.btnTool:last-child:not(:first-child),.btnTool-group>.dropdown-toggle:not(:first-child){border-bottom-left-radius:0;border-top-left-radius:0;}\n\
 		\n\
-		.btnTool{height:34px;padding:0px;border-radius:2px;margin-top:5px;}\n\
+		.btnTool{height:34px;padding:0px;border-radius:2px;}\n\
 		\n\
 		.btnToolContainer{background-color:#fffb8d;border-bottom:1px solid #e5e17e;height:34px;padding:6px 12px;margin:0px;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border-radius:inherit;border-top:1px solid transparent;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;}\n\
 		.btnToolContainer:focus	{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}\n\
