@@ -136,15 +136,15 @@ function floodFill(e){
 				queue.push(new Point(x-1,y));
 				queue.push(new Point(x+1,y));
 				queue.push(new Point(x,y-1));
-				queue.push(new Point(x,y+1));
+				queue.push(new Point(x,y+1(x,y+1));
 			} else if(point.isWithinBounds && !(fillColor.equals(getColorFromPoint(point)))){
 				// If inside this block, current pixel is an edge pixel
 				colorPixel(point,fillColor);
 				 //Experimental
-				//colorPixelBlend(point,fillColor,getColorFromCoords(x-1,y));
-				//colorPixelBlend(point,fillColor,getColorFromCoords(x+1,y));
-				//colorPixelBlend(point,fillColor,getColorFromCoords(x,y-1));
-				//colorPixelBlend(point,fillColor,getColorFromCoords(x,y+1));
+				colorPixelBlend(new Point(x-1,y),fillColor,getColorFromCoords(x-1,y));
+				colorPixelBlend(new Point(x+1,y),fillColor,getColorFromCoords(x+1,y));
+				colorPixelBlend(new Point(x,y-1),fillColor,getColorFromCoords(x,y-1));
+				colorPixelBlend(new Point(x,y+1),fillColor,getColorFromCoords(x,y+1));
 			}
 		}
 	}
