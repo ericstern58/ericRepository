@@ -36,6 +36,7 @@ var toolType={BRUSH: 0,FILL: 1,LINE: 2,POLY: 3,TEST: 99};
 // Setup Some State Variables
 var currentToolType = toolType.BRUSH;
 var mouse = {x: 0, y: 0};
+var canvasOffset = getCanvasOffset();
 
 setupCSS();					// Setup necessary CSS for DrawTools
 modifyExistingElements();	// Make Necessary Modifications to Existing Elements
@@ -90,7 +91,7 @@ document.onmousemove = function(e) {
 	}
  	// e.layerX   vs   e.pageX   vs e.offsetX
  	//outputDebug(drawApp.lastMousePoint.x + ', ' + drawApp.lastMousePoint.x);
- 	outputDebug(e.pageX + ', ' + e.pageY);
+ 	outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
 	if(currentToolType == toolType.BRUSH) {
 		// default behaviors
 		drawApp.onCanvasMouseMove(e);
@@ -209,6 +210,13 @@ function floodFill(e){
 		var i = (x + y * w) * 4;
 		return new RGBColor(d[i],d[i+1],d[i+2]);
 	}
+}
+
+  /*-----------------------------------------------------------------------------*/
+ /*--------------------------- Auxiliary Functions -----------------------------*/
+/*-----------------------------------------------------------------------------*/
+function getCanvasOffset() {
+	return $('#drawingCanvas').offset();
 }
 
   /*-----------------------------------------------------------------------------*/
