@@ -38,6 +38,9 @@ var currentToolType = toolType.BRUSH;
 var mouse = {x: 0, y: 0};
 var canvasOffset = getCanvasOffset();
 
+// Setup tool state/event variables
+var lineStart =  {x: 0, y: 0};
+
 setupCSS();					// Setup necessary CSS for DrawTools
 modifyExistingElements();	// Make Necessary Modifications to Existing Elements
 createDrawToolsElements();	// Create Draw Tools Elements and Interface
@@ -55,11 +58,12 @@ drawApp.canvas.on('mousedown',function(e){
 	if(currentToolType == toolType.BRUSH) {
 		drawApp.onCanvasMouseDown(e);	// default behaviors
 	} else if(currentToolType == toolType.FILL) {
-		try{floodFill(e);drawApp.onCanvasMouseUp(e);}catch(err){alert(err);}
+		try{floodFill(e);}catch(err){alert(err);}
 	} else if(currentToolType == toolType.LINE) {
 		try{
+			lineStart.x = e.offsetX;
+			lineStart.y = e.offsetY;
 			//virtualLine(e);
-			//drawLine(new Point(100,100),new Point(200,200));
 		} catch(err) {
 			alert(err);
 		}
@@ -96,7 +100,8 @@ document.onmouseup = function(e) {
 	} else if(currentToolType == toolType.FILL) {
 		// Do nothing
 	} else if(currentToolType == toolType.LINE) {
-		
+		try{drawLine(new Point(lineStart.x,lineStart.y),new Point((e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top)));}
+		catch(err){alert(err);}
 	} else if(currentToolType == toolType.POLY) {
 		//imgTest();
 	} else{
