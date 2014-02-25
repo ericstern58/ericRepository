@@ -2,7 +2,30 @@
 var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
 
-
+  /*-----------------------------------------------------------------------------*/
+ /*--------------------- Custom Objects/Structures/ENUMS -----------------------*/
+/*-----------------------------------------------------------------------------*/
+//Point Object
+function Point(x,y) {
+	this.x=x;
+	this.y=y;
+	// Returns wether a point is within canvas bounds
+	// w = canvas width, h = canvas height
+	this.isWithinBounds = function(w,h) {
+		return (this.x>=0 && this.y>=0 && this.x<w && this.y<h);
+	}
+}
+//----- BEGIN ----- Color Object --------------------------------------------
+function RGBColor(r,g,b) {
+	this.r=r;
+	this.g=g;
+	this.b=b;
+	this.equals = function(color) {
+		return (this.r===color.r && this.g===color.g && this.b===color.b);
+	}
+}
+//-----  END  ----- Color Object --------------------------------------------
+var toolType={BRUSH: 0,FILL: 1,LINE: 2,POLY: 3,TEST: 99};
 
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
@@ -147,31 +170,7 @@ function floodFill(e){
 		return new RGBColor(d[i],d[i+1],d[i+2]);
 	}
 }
-  /*-----------------------------------------------------------------------------*/
- /*--------------------- Custom Objects/Structures/ENUMS -----------------------*/
-/*-----------------------------------------------------------------------------*/
-//Point Object
-function Point(x,y) {
-	this.x=x;
-	this.y=y;
-	// Returns wether a point is within canvas bounds
-	// w = canvas width, h = canvas height
-	this.isWithinBounds = function(w,h) {
-		return (this.x>=0 && this.y>=0 && this.x<w && this.y<h);
-	}
-}
-//----- BEGIN ----- Color Object --------------------------------------------
-function RGBColor(r,g,b) {
-	this.r=r;
-	this.g=g;
-	this.b=b;
-	this.equals = function(color) {
-		return (this.r===color.r && this.g===color.g && this.b===color.b);
-	}
-}
-//-----  END  ----- Color Object --------------------------------------------
 
-var toolType={BRUSH: 0,FILL: 1,LINE: 2,POLY: 3,TEST: 99};
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
 /*-----------------------------------------------------------------------------*/
