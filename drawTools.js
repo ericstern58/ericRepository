@@ -94,7 +94,7 @@ document.onmousemove = function(e) {
  	outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
 	if(currentToolType == toolType.BRUSH) {
 		// default behaviors
-		drawApp.onCanvasMouseMove(e);
+		//drawApp.onCanvasMouseMove(e);
 	} else if(currentToolType == toolType.FILL) {
 		
 	} else if(currentToolType == toolType.LINE) {
