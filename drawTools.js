@@ -8,7 +8,7 @@ setupCSS();
 
 // Make Necessary Modifications to Existing Elements
 modifyExistingElements();
-
+createDrawToolsElements();
 
 // Setup Canvas Tools
 var context=drawApp.context;
