@@ -163,7 +163,7 @@ function floodFill(e){
 		var r=Math.ceil(0.5*color1.r + 0.5*color2.r);
 		var g=Math.ceil(0.5*color1.g + 0.5*color2.g);
 		var b=Math.ceil(0.5*color1.b + 0.5*color2.b);
-		colorPixel(point,new Color(r,g,b));
+		colorPixel(point,new RGBColor(r,g,b));
 	}
 	function getColorFromPoint(point){
 		return getColorFromCoords(point.x,point.y);
