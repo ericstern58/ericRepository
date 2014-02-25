@@ -74,7 +74,7 @@ drawApp.canvas.on('mousedown',function(e){
 	} else if(currentToolType == toolType.LINE) {
 		try{
 			//virtualLine(e);
-			//makeLine(new Point(100,100),new Point(200,200));
+			drawLine(new Point(100,100),new Point(200,200));
 		} catch(err) {
 			alert(err);
 		}
@@ -91,6 +91,7 @@ drawApp.canvas.on('mousedown',function(e){
 /*-----------------------------------------------------------------------------*/
 function drawLine(start,finish){
 	save();
+	undo();
 	context.beginPath();
 	context.moveTo(start.x,start.y);
 	context.lineTo(finish.x,finish.y);
