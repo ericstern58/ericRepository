@@ -2,6 +2,13 @@
 var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
 
+// Setup Some Global Variables
+var context=drawApp.context;
+var canvas=context.canvas;
+
+context.putImageData=CanvasRenderingContext2D.prototype.putImageData;
+canvas.off('mousedown');
+
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/ENUMS -----------------------*/
 /*-----------------------------------------------------------------------------*/
@@ -12,7 +19,7 @@ function Point(x,y) {
 	// Returns wether a point is within canvas bounds
 	// w = canvas width, h = canvas height
 	this.isWithinBounds = function(w,h) {
-		return (this.x>=0 && this.y>=0 && this.x<w && this.y<h);
+		return (this.x>=0 && this.y>=0 && this.x<canvas.width && this.y<canvas.height);
 	}
 }
 //----- BEGIN ----- Color Object --------------------------------------------
@@ -39,11 +46,7 @@ modifyExistingElements();	// Make Necessary Modifications to Existing Elements
 createDrawToolsElements();	// Create Draw Tools Elements and Interface
 
 // Setup Canvas Tools
-var context=drawApp.context;
-var canvas=context.canvas;
 
-context.putImageData=CanvasRenderingContext2D.prototype.putImageData;
-drawApp.canvas.off('mousedown');
 
 // Mouse Listening
 // Debug mouse coords text label
