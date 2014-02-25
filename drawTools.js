@@ -149,6 +149,8 @@ function floodFill(e){
 			point=edgeQueue.shift();
 			x=point.x;
 			y=point.y;
+			
+			if(point.isWithinBounds) {
 			colorPixel(point,fillColor);
 			/*
 			colorPixelBlend(new Point(x-1,y),fillColor,getColorFromCoords(x-1,y));
@@ -160,6 +162,7 @@ function floodFill(e){
 			colorPixel(new Point(x+1,y),redColor);
 			colorPixel(new Point(x,y-1),redColor);
 			colorPixel(new Point(x,y+1),redColor);
+			}
 		}
 	}
 	
