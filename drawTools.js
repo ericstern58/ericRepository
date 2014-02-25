@@ -160,9 +160,9 @@ function floodFill(e){
 	}
 	//Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
 	function colorPixelBlend(point,color1,color2){
-		var r=Math.ceil(0.5*color1.r + 0.5*r2);
-		var g=Math.ceil(0.5*color1.g + 0.5*g2);
-		var b=Math.ceil(0.5*color1.b + 0.5*b2);
+		var r=Math.ceil(0.5*color1.r + 0.5*color2.r);
+		var g=Math.ceil(0.5*color1.g + 0.5*color2.g);
+		var b=Math.ceil(0.5*color1.b + 0.5*color2.b);
 		colorPixel(point,new Color(r,g,b));
 	}
 	function getColorFromPoint(point){
