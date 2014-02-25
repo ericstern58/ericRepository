@@ -51,7 +51,7 @@ function outputDebug(outputString){
 // Setup Mousemove Listener
 var mouse = {x: 0, y: 0};
 
-//canvas.addEventListener('mousemove', update, false);
+canvas.addEventListener('mousemove', update, false);
 
 function update(){
 	mouse.x = e.pageX;
@@ -63,7 +63,7 @@ function update(){
 
 // Setup Mousedown Listener
 drawApp.canvas.on('mousedown',function(e){
-	outputDebug(canvas.width + ', ' + canvas.height);
+	//outputDebug(canvas.width + ', ' + canvas.height);
 	if(currentToolType == toolType.BRUSH) {
 		// default behaviors
 		drawApp.onCanvasMouseDown(e);
