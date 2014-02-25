@@ -10,9 +10,9 @@ context.putImageData=CanvasRenderingContext2D.prototype.putImageData;
 drawApp.canvas.off('mousedown');
 
   /*-----------------------------------------------------------------------------*/
- /*--------------------- Custom Objects/Structures/ENUMS -----------------------*/
+ /*--------------------- Custom Objects/Structures/enums -----------------------*/
 /*-----------------------------------------------------------------------------*/
-//Point Object
+// Point Object
 function Point(x,y) {
 	this.x=x;
 	this.y=y;
@@ -22,7 +22,7 @@ function Point(x,y) {
 		return (this.x>=0 && this.y>=0 && this.x<canvas.width && this.y<canvas.height);
 	}
 }
-//----- BEGIN ----- Color Object --------------------------------------------
+// Color Object
 function RGBColor(r,g,b) {
 	this.r=r;
 	this.g=g;
@@ -31,7 +31,7 @@ function RGBColor(r,g,b) {
 		return (this.r===color.r && this.g===color.g && this.b===color.b);
 	}
 }
-//-----  END  ----- Color Object --------------------------------------------
+// Tool type enum
 var toolType={BRUSH: 0,FILL: 1,LINE: 2,POLY: 3,TEST: 99};
 
   /*-----------------------------------------------------------------------------*/
@@ -50,7 +50,10 @@ createDrawToolsElements();	// Create Draw Tools Elements and Interface
 
 // Mouse Listening
 // Debug mouse coords text label
-var mouseCoordsLabel = createToolButtonWithLabel("label", '0');
+var debugLabel = createToolButtonWithLabel("label", '0');
+
+
+/*---------------------- Setup Listeners ----------------------*/
 /*
 var mouse = {x: 0, y: 0};
 canvas.addEventListener('mousemove', update, false);
@@ -59,14 +62,14 @@ function update(){
 	mouse.y = e.pageY;
 	var tempx=mouse.x-pos.x;
 	var tempy=mouse.y-pos.y;
-	mouseCoordsLabel.innerHTML=tempx+','+tempy;
+	debugLabel.innerHTML=tempx+','+tempy;
 }*/
 
 
 //Setup Mousedown Listener
 drawApp.canvas.on('mousedown',function(e){
-	//mouseCoordsLabel.getElementsByTagName('div')[0].innerHTML = context.lineWidth;
-	mouseCoordsLabel.getElementsByTagName('div')[0].innerHTML = currentToolType;
+	//debugLabel.getElementsByTagName('div')[0].innerHTML = context.lineWidth;
+	debugLabel.getElementsByTagName('div')[0].innerHTML = currentToolType;
 	if(currentToolType == toolType.BRUSH) {
 		// default behaviors
 		drawApp.onCanvasMouseDown(e);
