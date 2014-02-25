@@ -140,11 +140,11 @@ function floodFill(e){
 			} else if(point.isWithinBounds && !(fillColor.equals(getColorFromPoint(point)))){
 				// If inside this block, current pixel is an edge pixel
 				colorPixel(point,fillColor);
-				 //Experimental
+				/* //Experimental
 				colorPixelBlend(new Point(x-1,y),fillColor,getColorFromCoords(x-1,y));
 				colorPixelBlend(new Point(x+1,y),fillColor,getColorFromCoords(x+1,y));
 				colorPixelBlend(new Point(x,y-1),fillColor,getColorFromCoords(x,y-1));
-				colorPixelBlend(new Point(x,y+1),fillColor,getColorFromCoords(x,y+1));
+				colorPixelBlend(new Point(x,y+1),fillColor,getColorFromCoords(x,y+1));*/
 			}
 		}
 	}
