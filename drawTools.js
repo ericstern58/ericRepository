@@ -100,7 +100,8 @@ function floodFill(e){
 	var c = parseInt(drawApp.context.strokeStyle.substr(1,6),16);
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255);
 	
-
+	// Note: target color must be different to execute function f
+	// If something is already colored the fill color, nothing needs to be done
 	if(!targetColor.equals(fillColor))
 		f(e.offsetX,e.offsetY);
 
@@ -122,15 +123,6 @@ function floodFill(e){
 				queue.push(new Point(x+1,y));
 				queue.push(new Point(x,y-1));
 				queue.push(new Point(x,y+1));
-				/*
-				queue.push(new Point(x-1,y-1));
-				queue.push(new Point(x-1,y+1));
-				queue.push(new Point(x-2,y));
-				queue.push(new Point(x+1,y-1));
-				queue.push(new Point(x+1,y+1));
-				queue.push(new Point(x+2,y));
-				queue.push(new Point(x,y-2));
-				queue.push(new Point(x,y+2));*/
 			} else if(x>=0 && y>=0 && x<w && y<h){
 				//colorPixel(d,w,point,fillColor)
 				/*
@@ -140,15 +132,7 @@ function floodFill(e){
 				colorPixelBlend(d,w,x,y+1,fillColor,new RGBColor(d[4*w*(y+1)+4*x],d[4*w*(y+1)+4*x+1],d[4*w*(y+1)+4*x+2]));
 				*/
 			}
-		}/*
-		while(outerEdgeQueue.length>0) {
-			point=queue.shift();
-			x=point.x;
-			y=point.y;
-			if(x>=0 && y>=0 && x<w && y<h && targetColor.equals(new RGBColor(d[4*w*y+4*x],d[4*w*y+4*x+1],d[4*w*y+4*x+2])) ) {
-				colorPixel(d,w,point,fillColor)
-			}
-		}*/
+		}
 	}
 }
 
