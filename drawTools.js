@@ -153,18 +153,6 @@ function floodFill(e){
 
 			colorPixel(point,fillColor);
 			
-			var point2 = new Point(x-1,y);
-			if(point2.isWithinBounds)
-				colorPixelBlend(point2,fillColor,getColorFromCoords(x-1,y));
-			point2 = new Point(x+1,y);
-			if(point2.isWithinBounds)
-				colorPixelBlend(point2,fillColor,getColorFromCoords(x+1,y));
-			point2 = new Point(x,y-1));
-			if(point2.isWithinBounds)
-				colorPixelBlend(point2,fillColor,getColorFromCoords(x,y-1));
-			point2 = new Point(x,y+1);
-			if(point2.isWithinBounds)
-				colorPixelBlend(point2,fillColor,getColorFromCoords(x,y+1));
 		}
 	}
 	
