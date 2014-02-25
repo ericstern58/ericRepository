@@ -2,8 +2,37 @@
 var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
 
-// Setup Some State Variables
+  /*-----------------------------------------------------------------------------*/
+ /*--------------------- Custom Objects/Structures/ENUMS -----------------------*/
+/*-----------------------------------------------------------------------------*/
+//Point Object
+function Point(x,y) {
+	this.x=x;
+	this.y=y;
+}
+//----- BEGIN ----- Color Object --------------------------------------------
+function RGBColor(r,g,b) {
+	this.r=r;
+	this.g=g;
+	this.b=b;
+}
+RGBColor.prototype.equals = function(color) {
+	return (this.r===color.r && this.g===color.g && this.b===color.b);
+}
+// Returns wether a point is within canvas bounds
+// w = canvas width, h = canvas height
+RGBColor.prototype.isWithinBounds = function(w,h) {
+	return (this.x>=0 && this.y>=0 && this.x<w && this.y<h);
+}
+//-----  END  ----- Color Object --------------------------------------------
+
 var toolType={BRUSH: 0,FILL: 1,LINE: 2,POLY: 3,TEST: 99};
+
+  /*-----------------------------------------------------------------------------*/
+ /*----------------------------------- Main ------------------------------------*/
+/*-----------------------------------------------------------------------------*/
+
+// Setup Some State Variables
 var currentToolType = toolType.BRUSH;
 
 setupCSS();			// Setup necessary CSS for DrawTools
@@ -142,30 +171,6 @@ function floodFill(e){
 		return new RGBColor(d[i],d[i+1],d[i+2]);
 	}
 }
-
-  /*-----------------------------------------------------------------------------*/
- /*------------------------------ Custom Objects -------------------------------*/
-/*-----------------------------------------------------------------------------*/
-//Point Object
-function Point(x,y) {
-	this.x=x;
-	this.y=y;
-}
-//----- BEGIN ----- Color Object --------------------------------------------
-function RGBColor(r,g,b) {
-	this.r=r;
-	this.g=g;
-	this.b=b;
-}
-RGBColor.prototype.equals = function(color) {
-	return (this.r===color.r && this.g===color.g && this.b===color.b);
-}
-// Returns wether a point is within canvas bounds
-// w = canvas width, h = canvas height
-RGBColor.prototype.isWithinBounds = function(w,h) {
-	return (this.x>=0 && this.y>=0 && this.x<w && this.y<h);
-}
-//-----  END  ----- Color Object --------------------------------------------
 
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
