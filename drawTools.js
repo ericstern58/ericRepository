@@ -140,10 +140,10 @@ function floodFill(e){
 			} else if(x>=0 && y>=0 && x<w && y<h){
 				//colorPixel(d,w,point,fillColor)
 				
-				colorPixelBlend(d,w,x-1,y,fillColor,new RGBColor(d[4*w*y+4*(x-1)],d[4*w*y+4*(x-1)+1],d[4*w*y+4*(x-1)+2]));
-				colorPixelBlend(d,w,x+1,y,fillColor,new RGBColor(d[4*w*y+4*(x+1)],d[4*w*y+4*(x+1)+1],d[4*w*y+4*(x+1)+2]));
-				colorPixelBlend(d,w,x,y-1,fillColor,new RGBColor(d[4*w*(y-1)+4*x],d[4*w*(y-1)+4*x+1],d[4*w*(y-1)+4*x+2]));
-				colorPixelBlend(d,w,x,y+1,fillColor,new RGBColor(d[4*w*(y+1)+4*x],d[4*w*(y+1)+4*x+1],d[4*w*(y+1)+4*x+2]));
+				colorPixelBlend(x-1,y,fillColor,new RGBColor(d[4*w*y+4*(x-1)],d[4*w*y+4*(x-1)+1],d[4*w*y+4*(x-1)+2]));
+				colorPixelBlend(x+1,y,fillColor,new RGBColor(d[4*w*y+4*(x+1)],d[4*w*y+4*(x+1)+1],d[4*w*y+4*(x+1)+2]));
+				colorPixelBlend(x,y-1,fillColor,new RGBColor(d[4*w*(y-1)+4*x],d[4*w*(y-1)+4*x+1],d[4*w*(y-1)+4*x+2]));
+				colorPixelBlend(x,y+1,fillColor,new RGBColor(d[4*w*(y+1)+4*x],d[4*w*(y+1)+4*x+1],d[4*w*(y+1)+4*x+2]));
 				
 			}
 		}
@@ -164,6 +164,13 @@ function floodFill(e){
 		var g=Math.ceil(0.5*color1.g + 0.5*color2.g);
 		var b=Math.ceil(0.5*color1.b + 0.5*color2.b);
 		colorPixel(point,new RGBColor(r,g,b));
+	}
+	//Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
+	function colorPixelBlend(x,y,color1,color2){
+		var r=Math.ceil(0.5*color1.r + 0.5*color2.r);
+		var g=Math.ceil(0.5*color1.g + 0.5*color2.g);
+		var b=Math.ceil(0.5*color1.b + 0.5*color2.b);
+		colorPixel(new Point(x,y),new RGBColor(r,g,b));
 	}
 	function getColorFromPoint(point){
 		return getColorFromCoords(point.x,point.y);
