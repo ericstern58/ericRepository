@@ -70,7 +70,7 @@ $('#drawingCanvasHolder').mousemove(function(e) {
 
 // Setup Mousedown Listener
 drawApp.canvas.on('mousedown',function(e){
-	//outputDebug(canvas.width + ', ' + canvas.height);
+	outputDebug(drawApp.lastMousePoint.x + ', ' + drawApp.lastMousePoint.x);
 	if(currentToolType == toolType.BRUSH) {
 		// default behaviors
 		drawApp.onCanvasMouseDown(e);
