@@ -1,14 +1,13 @@
+// Setup Constants
+var DRAW_TOOLS_ID = 'drawTools';
+
 // Setup Some State Variables
 var toolType={BRUSH: 0,FILL: 1,LINE: 2,POLY: 3,TEST: 99};
 var currentToolType = toolType.BRUSH;
-var drawToolsID = 'drawTools';
 
-// Setup necessary CSS
-setupCSS();
-
-// Make Necessary Modifications to Existing Elements
-modifyExistingElements();
-createDrawToolsElements();
+setupCSS();			// Setup necessary CSS for DrawTools
+modifyExistingElements();	// Make Necessary Modifications to Existing Elements
+createDrawToolsElements();	// Create Draw Tools Elements and Interface
 
 // Setup Canvas Tools
 var context=drawApp.context;
@@ -161,45 +160,7 @@ function RGBColor(r,g,b) {
 	}
 }
 
-/*--------------------- Element Creation/Manipulation ---------------------*/
-//Creates Tool Buttons (without icon)
-function createToolButtonWithLabel(type, name, label){
-	var button = createToolButton(type, name);
-	
-	//Place element inside it( text )
-	button.getElementsByTagName('div')[0].innerHTML = label;
-	
-	return button;
-}
-//Creates Tool Buttons (no innerHTML)
-function createToolButton(type, name){
-	//create button
-	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
-	var button = document.createElement('label');
-	button.id = 'tool-' + name;
-	button.className = 'drawTools-btn';
-	button.onclick = function(){currentToolType=type;};//drawApp.setSize(0);selectTool(this)
-	document.getElementById(drawToolsID).appendChild(button);
-	
-	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
-	var radio = document.createElement('input');
-	radio.id = 'tool-radio-' + name;
-	radio.setAttribute("type","radio");
-	radio.setAttribute("name","drawTools-btn-radio");
-	button.appendChild(radio);
 
-	//Create container div
-	var container = document.createElement('div');
-	container.className = 'drawTools-btn-container';
-	button.appendChild(container);
-	
-	// Create icon div
-	var icon = document.createElement('div');
-	icon.id = 'drawTools-btn-Icon-' + name;
-	container.appendChild(icon);
-	
-	return button;
-}
 
 /*--------------------- CSS Style Sheets ---------------------*/
 //sheet.insertRule("header { float: left; opacity: 0.8; }", 1);
@@ -235,7 +196,7 @@ function setupCSS() {
 	document.body.appendChild(sheet);
 }
 
-/*--------------------- Modification of Existing Elements ---------------------*/
+/*--------------------- Element Creation/Manipulation ---------------------*/
 function modifyExistingElements() {
 	document.getElementById('brush-2').parentNode.onclick = function(){selectBrushAUX(2);};
 	document.getElementById('brush-5').parentNode.onclick = function(){selectBrushAUX(5);};
@@ -257,7 +218,7 @@ function modifyExistingElements() {
 function createDrawToolsElements() {
 	//Create DIV in which DrawTools will be placed in
 	var drawToolsDiv = document.createElement('div');
-	drawToolsDiv.id = drawToolsID;
+	drawToolsDiv.id = DRAW_TOOLS_ID;
 	drawToolsDiv.className = 'drawTools-btn-group';
 	document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToolsDiv);
 	
@@ -266,4 +227,43 @@ function createDrawToolsElements() {
 	createToolButton(toolType.LINE, "line");
 	createToolButton(toolType.POLY, "poly");
 	createToolButtonWithLabel(toolType.TEST, "test", "Test");
+}
+
+//Creates Tool Buttons (without icon)
+function createToolButtonWithLabel(type, name, label){
+	var button = createToolButton(type, name);
+	
+	//Place element inside it( text )
+	button.getElementsByTagName('div')[0].innerHTML = label;
+	
+	return button;
+}
+//Creates Tool Buttons (no innerHTML)
+function createToolButton(type, name){
+	//create button
+	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
+	var button = document.createElement('button');
+	button.id = 'tool-' + name;
+	button.className = 'drawTools-btn';
+	button.onclick = function(){currentToolType=type;};//drawApp.setSize(0);selectTool(this)
+	document.getElementById(DRAW_TOOLS_ID).appendChild(button);
+	
+	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
+	var radio = document.createElement('input');
+	radio.id = 'tool-radio-' + name;
+	radio.setAttribute("type","radio");
+	radio.setAttribute("name","drawTools-btn-radio");
+	button.appendChild(radio);
+
+	//Create container div
+	var container = document.createElement('div');
+	container.className = 'drawTools-btn-container';
+	button.appendChild(container);
+	
+	// Create icon div
+	var icon = document.createElement('div');
+	icon.id = 'drawTools-btn-Icon-' + name;
+	container.appendChild(icon);
+	
+	return button;
 }
