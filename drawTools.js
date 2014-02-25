@@ -117,7 +117,7 @@ function floodFill(e){
 			point=queue.shift();
 			x=point.x;
 			y=point.y;
-			if(x>=0 && y>=0 && x<w && y<h && targetColor.equals(new RGBColor(d[4*w*y+4*x],d[4*w*y+4*x+1],d[4*w*y+4*x+2])) ) {
+			if(x>=0 && y>=0 && x<w && y<h && targetColor.equals( RGBColorFromPoint(point) ) ) {
 				colorPixel(d,w,point,fillColor)
 				queue.push(new Point(x-1,y));
 				queue.push(new Point(x+1,y));
@@ -152,7 +152,13 @@ function colorPixelBlend(d,w,point,color1,color2){
 	var b=Math.ceil(0.5*color1.b + 0.5*b2);
 	colorPixel(d,w,point,new Color(r,g,b));
 }
-
+/*---------------------- Auxiliary Functions ----------------------*/
+function RGBColorFromPoint(point) {
+	return RGBColorFromCoords(point.x,point.y);
+}
+function RGBColorFromCoords(x,y) {
+	return new RGBColor(d[4*w*y+4*x],d[4*w*y+4*x+1],d[4*w*y+4*x+2])
+}
 /*---------------------- Custom Objects ----------------------*/
 //Point Object
 function Point(x,y) {
