@@ -51,22 +51,6 @@ function outputDebug(outputString){
 // Setup Mousemove Listener
 var mouse = {x: 0, y: 0};
 
-document.addEventListener('mousemove', update, false);
-function update(){
-	mouse.x = e.pageX;
-	mouse.y = e.pageY;
-	var tempx=mouse.x-pos.x;
-	var tempy=mouse.y-pos.y;
-	outputDebug(tempx+','+tempy);
-}
-/*
-$('#drawingCanvasHolder').mousemove(function(e) {
-    var pos = findPos(this);
-    var x = e.pageX - pos.x;
-    var y = e.pageY - pos.y;
-    var coord = "x=" + x + ", y=" + y;
-	outputDebug(coord);
-});*/
 
 // Setup Mousedown Listener
 drawApp.canvas.on('mousedown',function(e){
