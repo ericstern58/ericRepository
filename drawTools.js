@@ -140,11 +140,11 @@ function floodFill(e){
 			} else if(point.isWithinBounds && !(fillColor.equals(getColorFromPoint(point)))){
 				// If inside this block, current pixel is an edge pixel
 				colorPixel(point,fillColor);
-				
+				/* //Experimental
 				colorPixelBlend(point,fillColor,getColorFromCoords(x-1,y));
 				colorPixelBlend(point,fillColor,getColorFromCoords(x+1,y));
 				colorPixelBlend(point,fillColor,getColorFromCoords(x,y-1));
-				colorPixelBlend(point,fillColor,getColorFromCoords(x,y+1));
+				colorPixelBlend(point,fillColor,getColorFromCoords(x,y+1));*/
 			}
 		}
 	}
@@ -158,7 +158,7 @@ function floodFill(e){
 		d[i+2]=color.b;
 		d[i+3]=255;
 	}
-	//Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
+	// [Experimental] Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
 	function colorPixelBlend(point,color1,color2){
 		var r=Math.ceil((color1.r+color2.r)/2);
 		var g=Math.ceil((color1.g+color2.g)/2);
