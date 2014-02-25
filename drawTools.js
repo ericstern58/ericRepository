@@ -192,7 +192,7 @@ function createToolButton(type, name){
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
 	button.id = 'tool-' + name;
-	button.className = 'btnTool';
+	button.className = 'drawTools-btn';
 	button.onclick = function(){currentToolType=type;};//drawApp.setSize(0);selectTool(this)
 	document.getElementById(drawToolsID).appendChild(button);
 	
@@ -205,12 +205,12 @@ function createToolButton(type, name){
 
 	//Create container div
 	var container = document.createElement('div');
-	container.className = 'btnToolContainer';
+	container.className = 'drawTools-btn-Container';
 	button.appendChild(container);
 	
 	// Create icon div
 	var icon = document.createElement('div');
-	icon.id = 'btnToolIcon-' + name;
+	icon.id = 'drawTools-btn-Icon-' + name;
 	container.appendChild(icon);
 	
 	return button;
@@ -223,28 +223,28 @@ function setupCSS() {
 	var sheet = document.createElement('style');
 	sheet.innerHTML = "\n\
 		\n\
-		#btnToolIcon-fill{width:12px;height:12px;margin:7px -7px 1px 9px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
-		#btnToolIcon-fill:before{content:'';border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;}\n\
-		#btnToolIcon-line{width:5px;height:15px;margin:3px 5px 2px 4px;background:black;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
-		#btnToolIcon-poly{width:20px;margin:11px -3px 1px -3px;border-width:8px 4px 0;border-style:solid;border-color:black transparent;}\n\
-		#btnToolIcon-poly:before{content:'';display:block;margin:-17px 0px 0px -4px;border-width:0 10px 9px;border-style:solid;border-color:transparent transparent black;}\n\
+		#drawTools-btn-Icon-fill{width:12px;height:12px;margin:7px -7px 1px 9px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
+		#drawTools-btn-Icon-fill:before{content:'';border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;}\n\
+		#drawTools-btn-Icon-line{width:5px;height:15px;margin:3px 5px 2px 4px;background:black;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
+		#drawTools-btn-Icon-poly{width:20px;margin:11px -3px 1px -3px;border-width:8px 4px 0;border-style:solid;border-color:black transparent;}\n\
+		#drawTools-btn-Icon-poly:before{content:'';display:block;margin:-17px 0px 0px -4px;border-width:0 10px 9px;border-style:solid;border-color:transparent transparent black;}\n\
 		\n\
 		.drawTools-btn-group{position:relative;display:inline-block;vertical-align:middle;}\n\
-		.drawTools-btn-group>.btnTool{position:relative;float:left;display:inline-block;}\n\
+		.drawTools-btn-group>.drawTools-btn{position:relative;float:left;display:inline-block;}\n\
 		\n\
-		.drawTools-btn-group>.btnTool:not(:first-child):not(:last-child):not(.dropdown-toggle){border-radius:0}\n\
-		.drawTools-btn-group>.btnTool:first-child{margin-left:0;}\n\
-		.drawTools-btn-group>.btnTool:first-child:not(:last-child):not(.dropdown-toggle){border-bottom-right-radius: 0;border-top-right-radius: 0;}\n\
-		.drawTools-btn-group>.btnTool:last-child:not(:first-child),.drawTools-btn-group>.dropdown-toggle:not(:first-child){border-bottom-left-radius:0;border-top-left-radius:0;}\n\
+		.drawTools-btn-group>.drawTools-btn:not(:first-child):not(:last-child):not(.dropdown-toggle){border-radius:0}\n\
+		.drawTools-btn-group>.drawTools-btn:first-child{margin-left:0;}\n\
+		.drawTools-btn-group>.drawTools-btn:first-child:not(:last-child):not(.dropdown-toggle){border-bottom-right-radius: 0;border-top-right-radius: 0;}\n\
+		.drawTools-btn-group>.drawTools-btn:last-child:not(:first-child),.drawTools-btn-group>.dropdown-toggle:not(:first-child){border-bottom-left-radius:0;border-top-left-radius:0;}\n\
 		\n\
-		.btnTool{height:34px;padding:0px;border-radius:2px;margin-top:5px;}\n\
-		.btnTool input{display:none;}\n\
+		.drawTools-btn{height:34px;padding:0px;border-radius:2px;margin-top:5px;}\n\
+		.drawTools-btn input{display:none;}\n\
 		\n\
-		.btnToolContainer{background-color:#fffb8d;border-bottom:1px solid #e5e17e;height:34px;padding:6px 12px;margin:0px;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border-radius:inherit;border-top:1px solid transparent;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;}\n\
-		.btnToolContainer:focus	{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}\n\
-		.btnToolContainer:hover,.btnTool:focus{background-color:#f6f166;border-bottom:1px solid #ddd85b;color:#333333;text-decoration:none;}\n\
-		.btnToolContainer:active,.btnTool input:focus + div,.btnTool input:checked + div{background-color:#f6f166;border-bottom:1px solid #f6f166;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
-		.btnToolContainer.disabled,.btnToolContainer[disabled],fieldset[disabled] .btnToolContainer{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}\n\
+		.drawTools-btn-Container{background-color:#fffb8d;border-bottom:1px solid #e5e17e;height:34px;padding:6px 12px;margin:0px;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border-radius:inherit;border-top:1px solid transparent;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;}\n\
+		.drawTools-btn-Container:focus	{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}\n\
+		.drawTools-btn-Container:hover,.drawTools-btn:focus{background-color:#f6f166;border-bottom:1px solid #ddd85b;color:#333333;text-decoration:none;}\n\
+		.drawTools-btn-Container:active,.drawTools-btn input:focus + div,.drawTools-btn input:checked + div{background-color:#f6f166;border-bottom:1px solid #f6f166;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
+		.drawTools-btn-Container.disabled,.drawTools-btn-Container[disabled],fieldset[disabled] .drawTools-btn-Container{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}\n\
 		\n\
 		";
 	document.body.appendChild(sheet);
