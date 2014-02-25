@@ -14,9 +14,6 @@ drawToolsDiv.id = 'drawTools';
 drawToolsDiv.className = 'btnTool-group';
 document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToolsDiv);
 
-// Create Tool Button Array
-var toolButtons = new Array();
-
 // Create Tool Buttons
 createToolButton(toolType.FILL, "fill");
 createToolButton(toolType.LINE, "line");
