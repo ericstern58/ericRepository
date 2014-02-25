@@ -134,13 +134,13 @@ function floodFill(e){
 			point=queue.shift();
 			x=point.x;
 			y=point.y;
-			if( point.isWithinBounds && targetColor.equals(getColorFromPoint(point)) ) {
+			if( isWithinCanvasBounds(point) && targetColor.equals(getColorFromPoint(point)) ) {
 				colorPixel(point,fillColor);
 				queue.push(new Point(x-1,y));
 				queue.push(new Point(x+1,y));
 				queue.push(new Point(x,y-1));
 				queue.push(new Point(x,y+1));
-			} else if(point.isWithinBounds && !(fillColor.equals(getColorFromPoint(point)))){
+			} else if(isWithinCanvasBounds(point) && !(fillColor.equals(getColorFromPoint(point)))){
 				// If inside this block, current pixel is an edge pixel
 				edgeQueue.push(point);
 			}
@@ -154,20 +154,23 @@ function floodFill(e){
 			colorPixel(point,fillColor);
 			
 			var point2 = new Point(x-1,y);
-			if(point2.isWithinBounds)
+			if(isWithinCanvasBounds(point2))
 				colorPixelBlend(point2,fillColor,getColorFromCoords(x-1,y));
 			point2 = new Point(x+1,y);
-			if(point2.isWithinBounds)
+			if(isWithinCanvasBounds(point2))
 				colorPixelBlend(point2,fillColor,getColorFromCoords(x+1,y));
 			point2 = new Point(x,y-1);
-			if(point2.isWithinBounds)
+			if(isWithinCanvasBounds(point2))
 				colorPixelBlend(point2,fillColor,getColorFromCoords(x,y-1));
 			point2 = new Point(x,y+1);
-			if(point2.isWithinBounds)
+			if(isWithinCanvasBounds(point2))
 				colorPixelBlend(point2,fillColor,getColorFromCoords(x,y+1));
 		}
 	}
-	
+	function isWithinCanvasBounds(point){
+		
+		return (point.x>=25 && point.y>=25 && point.x<(canvas.width-10) && point.y<(canvas.height-10))
+	}
 	/*---------------------- Color Methods ----------------------*/
 	//Colors a pixel with a given color
 	function colorPixel(point,color) {
