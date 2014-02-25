@@ -122,7 +122,7 @@ function floodFill(e){
 				queue.push(new Point(x+1,y));
 				queue.push(new Point(x,y-1));
 				queue.push(new Point(x,y+1));
-				
+				/*
 				queue.push(new Point(x-1,y-1));
 				queue.push(new Point(x-1,y+1));
 				queue.push(new Point(x-2,y));
@@ -130,7 +130,7 @@ function floodFill(e){
 				queue.push(new Point(x+1,y+1));
 				queue.push(new Point(x+2,y));
 				queue.push(new Point(x,y-2));
-				queue.push(new Point(x,y+2));
+				queue.push(new Point(x,y+2));*/
 			} else if(x>=0 && y>=0 && x<w && y<h){
 				//colorPixel(d,w,point,fillColor)
 				/*
