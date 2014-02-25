@@ -14,6 +14,9 @@ createDrawToolsElements();	// Create Draw Tools Elements and Interface
 var context=drawApp.context;
 var canvas=context.canvas;
 
+context.putImageData=CanvasRenderingContext2D.prototype.putImageData;
+drawApp.canvas.off('mousedown');
+
 // Mouse Listening
 // Debug mouse coords text label
 var mouseCoordsLabel = createToolButtonWithLabel("label", '0');
@@ -28,10 +31,8 @@ function update(){
 	mouseCoordsLabel.innerHTML=tempx+','+tempy;
 }*/
 
-drawApp.context.putImageData=CanvasRenderingContext2D.prototype.putImageData;
-drawApp.canvas.off('mousedown');
 
-//Setup Listener
+//Setup Mousedown Listener
 drawApp.canvas.on('mousedown',function(e){
 	//mouseCoordsLabel.getElementsByTagName('div')[0].innerHTML = context.lineWidth;
 	mouseCoordsLabel.getElementsByTagName('div')[0].innerHTML = currentToolType;
@@ -99,14 +100,12 @@ function floodFill(e){
 			point=queue.shift();
 			x=point.x;
 			y=point.y;
-			if(x>=0 && y>=0 && x<w && y<h && targetColor.equals(getColorFromPoint(point)) ) {
+			if( point.isWithinBounds(w,h) && targetColor.equals(getColorFromPoint(point)) ) {
 				colorPixel(point,fillColor)
 				queue.push(new Point(x-1,y));
 				queue.push(new Point(x+1,y));
 				queue.push(new Point(x,y-1));
 				queue.push(new Point(x,y+1));
-				
-				
 			} else if(x>=0 && y>=0 && x<w && y<h){
 				//colorPixel(d,w,point,fillColor)
 				/*
@@ -160,9 +159,12 @@ function RGBColor(r,g,b) {
 	this.equals = function(color) {
 		return (this.r===color.r && this.g===color.g && this.b===color.b);
 	}
+	// Returns wether a point is within canvas bounds
+	// w = canvas width, h = canvas height
+	this.isWithinBounds = function(w,h) {
+		return (this.x>=0 && this.y>=0 && this.x<w && this.y<h);
+	}
 }
-
-
 
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
