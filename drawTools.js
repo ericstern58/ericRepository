@@ -52,10 +52,9 @@ function outputDebug(outputString){
 
 // Setup Mousedown Listener
 drawApp.canvas.on('mousedown',function(e){
-	outputDebug(drawApp.lastMousePoint.x + ', ' + drawApp.lastMousePoint.x);
+	//outputDebug(drawApp.lastMousePoint.x + ', ' + drawApp.lastMousePoint.x);
 	if(currentToolType == toolType.BRUSH) {
-		// default behaviors
-		//drawApp.onCanvasMouseDown(e);
+		drawApp.onCanvasMouseDown(e);	// default behaviors
 	} else if(currentToolType == toolType.FILL) {
 		try {
 			floodFill(e);
@@ -79,13 +78,28 @@ drawApp.canvas.on('mousedown',function(e){
 // Setup Mousemove Listener
 document.onmousemove = function(e) {
  	// e.layerX   vs   e.pageX   vs e.offsetX
- 	//outputDebug(drawApp.lastMousePoint.x + ', ' + drawApp.lastMousePoint.x);
+ 	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
+	if(currentToolType == toolType.BRUSH) {
+		drawApp.onCanvasMouseMove(e);	// default behaviors
+	} else if(currentToolType == toolType.FILL) {
+		// Do nothing
+	} else if(currentToolType == toolType.LINE) {
+		
+	} else if(currentToolType == toolType.POLY) {
+		//imgTest();
+	} else{
+		//Else it is unknown, do nothing
+		alert('toolType not identified');
+	}
+};
+// Setup Mouseup Listener
+document.onmouseup = function(e) {
+ 	// e.layerX   vs   e.pageX   vs e.offsetX
  	outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
 	if(currentToolType == toolType.BRUSH) {
-		// default behaviors
-		//drawApp.onCanvasMouseMove(e);
+		drawApp.onCanvasMouseUp(e);	// default behaviors
 	} else if(currentToolType == toolType.FILL) {
-		
+		// Do nothing
 	} else if(currentToolType == toolType.LINE) {
 		
 	} else if(currentToolType == toolType.POLY) {
