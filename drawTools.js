@@ -94,7 +94,23 @@ drawApp.canvas.on('mousedown',function(e){
 		alert('toolType not identified');
 	}
 });
-
+document.onmousemove = function(e) {
+ 	outputDebug(drawApp.lastMousePoint.x + ', ' + drawApp.lastMousePoint.x);
+	if(currentToolType == toolType.BRUSH) {
+		// default behaviors
+		drawApp.onCanvasMouseMove(e);
+	} else if(currentToolType == toolType.FILL) {
+		
+	} else if(currentToolType == toolType.LINE) {
+		
+	} else if(currentToolType == toolType.POLY) {
+		//imgTest();
+	} else{
+		//Else it is unknown, do nothing
+		alert('toolType not identified');
+	}
+};
+/*
 // Setup Mousemove Listener
 document.on('mousemove',function(e){
 	outputDebug(drawApp.lastMousePoint.x + ', ' + drawApp.lastMousePoint.x);
@@ -105,6 +121,32 @@ document.on('mousemove',function(e){
 		
 	} else if(currentToolType == toolType.LINE) {
 		
+	} else if(currentToolType == toolType.POLY) {
+		//imgTest();
+	} else{
+		//Else it is unknown, do nothing
+		alert('toolType not identified');
+	}
+});*/
+// Setup Mouseup Listener
+drawApp.canvas.on('mousedown',function(e){
+	outputDebug(drawApp.lastMousePoint.x + ', ' + drawApp.lastMousePoint.x);
+	if(currentToolType == toolType.BRUSH) {
+		// default behaviors
+		drawApp.onCanvasMouseDown(e);
+	} else if(currentToolType == toolType.FILL) {
+		try {
+			floodFill(e);
+		} catch(err) {
+			alert(err);
+		}
+	} else if(currentToolType == toolType.LINE) {
+		try{
+			//virtualLine(e);
+			//drawLine(new Point(100,100),new Point(200,200));
+		} catch(err) {
+			alert(err);
+		}
 	} else if(currentToolType == toolType.POLY) {
 		//imgTest();
 	} else{
