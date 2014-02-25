@@ -112,9 +112,8 @@ function floodFill(e){
 		var outerEdgeQueue = [new Point(xinitial,yinitial)];
 		var x = 0;
 		var y = 0;
-		var point;
 		while(queue.length>0) {
-			point=queue.shift();
+			var point=queue.shift();
 			x=point.x;
 			y=point.y;
 			if(x>=0 && y>=0 && x<w && y<h && targetColor.equals( RGBColorFromPoint(point) ) ) {
@@ -134,31 +133,33 @@ function floodFill(e){
 			}
 		}
 	}
+	/*---------------------- Color Methods ----------------------*/
+	//Colors a pixel with a given color
+	function colorPixel(point,color){
+		d[4*w*point.y+4*point.x]=color.r;
+		d[4*w*point.y+4*point.x+1]=color.g;
+		d[4*w*point.y+4*point.x+2]=color.b;
+		d[4*w+point.y+4*point.x+3]=255;
+	}
+	//Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
+	function colorPixelBlend(point,color1,color2){
+		var r=Math.ceil(0.5*color1.r + 0.5*r2);
+		var g=Math.ceil(0.5*color1.g + 0.5*g2);
+		var b=Math.ceil(0.5*color1.b + 0.5*b2);
+		colorPixel(d,w,point,new Color(r,g,b));
+	}
+	function RGBColorFromPoint(point) {
+		return RGBColorFromCoords(point.x,point.y);
+	}
+	function RGBColorFromCoords(x,y) {
+		return new RGBColor(d[4*w*y+4*x],d[4*w*y+4*x+1],d[4*w*y+4*x+2])
+	}
 }
 
 
-/*---------------------- Color Methods ----------------------*/
-//Colors a pixel with a given color
-function colorPixel(d,w,point,color){
-	d[4*w*point.y+4*point.x]=color.r;
-	d[4*w*point.y+4*point.x+1]=color.g;
-	d[4*w*point.y+4*point.x+2]=color.b;
-	d[4*w+point.y+4*point.x+3]=255;
-}
-//Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
-function colorPixelBlend(d,w,point,color1,color2){
-	var r=Math.ceil(0.5*color1.r + 0.5*r2);
-	var g=Math.ceil(0.5*color1.g + 0.5*g2);
-	var b=Math.ceil(0.5*color1.b + 0.5*b2);
-	colorPixel(d,w,point,new Color(r,g,b));
-}
+
 /*---------------------- Auxiliary Functions ----------------------*/
-function RGBColorFromPoint(point) {
-	return RGBColorFromCoords(point.x,point.y);
-}
-function RGBColorFromCoords(x,y) {
-	return new RGBColor(d[4*w*y+4*x],d[4*w*y+4*x+1],d[4*w*y+4*x+2])
-}
+
 /*---------------------- Custom Objects ----------------------*/
 //Point Object
 function Point(x,y) {
