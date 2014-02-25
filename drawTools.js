@@ -47,17 +47,19 @@ function outputDebug(outputString){
 }
 
 /*---------------------- Setup Listeners ----------------------*/
-/*
+
 // Setup Mousemove Listener
 var mouse = {x: 0, y: 0};
-canvas.addEventListener('mousemove', update, false);
+
+//canvas.addEventListener('mousemove', update, false);
+
 function update(){
 	mouse.x = e.pageX;
 	mouse.y = e.pageY;
 	var tempx=mouse.x-pos.x;
 	var tempy=mouse.y-pos.y;
 	outputDebug(tempx+','+tempy);
-}*/
+}
 
 // Setup Mousedown Listener
 drawApp.canvas.on('mousedown',function(e){
@@ -74,7 +76,7 @@ drawApp.canvas.on('mousedown',function(e){
 	} else if(currentToolType == toolType.LINE) {
 		try{
 			//virtualLine(e);
-			drawLine(new Point(100,100),new Point(200,200));
+			//drawLine(new Point(100,100),new Point(200,200));
 		} catch(err) {
 			alert(err);
 		}
