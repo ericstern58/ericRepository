@@ -1,5 +1,6 @@
 // Setup Constants
 var DRAW_TOOLS_ID = 'drawTools';
+var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
 
 // Setup Some State Variables
 var toolType={BRUSH: 0,FILL: 1,LINE: 2,POLY: 3,TEST: 99};
@@ -220,7 +221,7 @@ function createDrawToolsElements() {
 	var drawToolsDiv = document.createElement('div');
 	drawToolsDiv.id = DRAW_TOOLS_ID;
 	drawToolsDiv.className = 'drawTools-btn-group';
-	document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToolsDiv);
+	DRAWCEPTION_TOOLBAR.appendChild(drawToolsDiv);
 	
 	// Create Tool Buttons
 	createToolButton(toolType.FILL, "fill");
@@ -229,7 +230,7 @@ function createDrawToolsElements() {
 	createToolButtonWithLabel(toolType.TEST, "test", "Test");
 }
 
-//Creates Tool Buttons (without icon)
+//Creates Tool Buttons (wit a label)
 function createToolButtonWithLabel(type, name, label){
 	var button = createToolButton(type, name);
 	
