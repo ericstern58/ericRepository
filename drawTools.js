@@ -125,10 +125,6 @@ function floodFill(e){
 				queue.push(new Point(x,y+1));
 				
 				
-				queue.push(new Point(x-2,y));
-				queue.push(new Point(x+2,y));
-				queue.push(new Point(x,y-2));
-				queue.push(new Point(x,y+2));
 			} else if(x>=0 && y>=0 && x<w && y<h){
 				//colorPixel(d,w,point,fillColor)
 				/*
@@ -140,6 +136,17 @@ function floodFill(e){
 			}
 		}
 	}
+	var Stack = [];
+
+	function floodFill(x, y){
+		fillPixel(x, y);
+	
+		while(Stack.length>0){
+			toFill = Stack.pop();
+			fillPixel(toFill[0], toFill[1]);
+		}
+	}
+	
 	/*---------------------- Color Methods ----------------------*/
 	//Colors a pixel with a given color
 	function colorPixel(point,color) {
