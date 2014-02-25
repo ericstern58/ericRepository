@@ -256,14 +256,15 @@ function modifyExistingElements() {
 	document.getElementById('brush-5').parentNode.onclick = function(){selectBrushAUX(5);};
 	document.getElementById('brush-12').parentNode.onclick = function(){selectBrushAUX(12);};
 	document.getElementById('brush-35').parentNode.onclick = function(){selectBrushAUX(35);};
-}
-function selectBrushAUX(brushSize) {
-	// Set its default brushsize and update currentToolType
-	drawApp.setSize(brushSize);
-	currentToolType = toolType.BRUSH;
-	
-	// Visually unselect any other tools
-	var ele = document.getElementsByName("drawToolRadio");
-   	for(var i=0;i<ele.length;i++)
-      		ele[i].checked = false;
+
+	function selectBrushAUX(brushSize) {
+		// Set its default brushsize and update currentToolType
+		drawApp.setSize(brushSize);
+		currentToolType = toolType.BRUSH;
+		
+		// Visually unselect any other tools
+		var ele = document.getElementsByName("drawToolRadio");
+	   	for(var i=0;i<ele.length;i++)
+	      		ele[i].checked = false;
+	}
 }
