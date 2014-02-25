@@ -54,7 +54,7 @@ function outputDebug(outputString){
 /*---------------------- Setup Listeners ----------------------*/
 
 // Setup Mousedown Listener
-drawApp.canvas.removeEventListener(drawApp.mouseDownEvent, drawApp.onCanvasMouseDown());
+//drawApp.canvas.removeEventListener(drawApp.mouseDownEvent, drawApp.onCanvasMouseDown());
 drawApp.canvas.on('mousedown',function(e){
 	if(currentToolType == toolType.BRUSH) {
 		//drawApp.onCanvasMouseDown(e);	// default behaviors
