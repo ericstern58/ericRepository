@@ -35,6 +35,7 @@ var toolType={BRUSH: 0,FILL: 1,LINE: 2,POLY: 3,TEST: 99};
 
 // Setup Some State Variables
 var currentToolType = toolType.BRUSH;
+var mouse = {x: 0, y: 0};
 
 setupCSS();					// Setup necessary CSS for DrawTools
 modifyExistingElements();	// Make Necessary Modifications to Existing Elements
@@ -48,8 +49,6 @@ function outputDebug(outputString){
 
 /*---------------------- Setup Listeners ----------------------*/
 
-// Setup Mousemove Listener
-var mouse = {x: 0, y: 0};
 
 
 // Setup Mousedown Listener
@@ -78,6 +77,7 @@ drawApp.canvas.on('mousedown',function(e){
 		alert('toolType not identified');
 	}
 });
+// Setup Mousemove Listener
 document.onmousemove = function(e) {
  	var mouseX;
  	var mouseY;
@@ -88,9 +88,9 @@ document.onmousemove = function(e) {
 		mouseX = e.layerX;
 		mouseY = e.layerY;
 	}
- 	
+ 	// e.layerX   vs   e.pageX   vs e.offsetX
  	//outputDebug(drawApp.lastMousePoint.x + ', ' + drawApp.lastMousePoint.x);
- 	outputDebug(e.offsetX + ', ' + e.offsetY);
+ 	outputDebug(e.pageX + ', ' + e.pageY);
 	if(currentToolType == toolType.BRUSH) {
 		// default behaviors
 		drawApp.onCanvasMouseMove(e);
