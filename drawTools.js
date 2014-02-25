@@ -18,8 +18,8 @@ function Point(x,y) {
 	this.y=y;
 	// Returns wether a point is within canvas bounds
 	// w = canvas width, h = canvas height
-	this.isWithinBounds = function(w,h) {
-		return (this.x>=0 && this.y>=0 && this.x<w && this.y<h);
+	this.isWithinBounds = function() {
+		return (this.x>=0 && this.y>=0 && this.x<canvas.width && this.y<canvas.height);
 	}
 }
 //----- BEGIN ----- Color Object --------------------------------------------
@@ -131,7 +131,7 @@ function floodFill(e){
 			point=queue.shift();
 			x=point.x;
 			y=point.y;
-			if( point.isWithinBounds(w,h) && targetColor.equals(getColorFromPoint(point)) ) {
+			if( point.isWithinBounds() && targetColor.equals(getColorFromPoint(point)) ) {
 				colorPixel(point,fillColor)
 				queue.push(new Point(x-1,y));
 				queue.push(new Point(x+1,y));
