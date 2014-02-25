@@ -95,6 +95,24 @@ drawApp.canvas.on('mousedown',function(e){
 	}
 });
 
+// Setup Mousemove Listener
+document.on('mousemove',function(e){
+	outputDebug(drawApp.lastMousePoint.x + ', ' + drawApp.lastMousePoint.x);
+	if(currentToolType == toolType.BRUSH) {
+		// default behaviors
+		drawApp.onCanvasMouseMove(e);
+	} else if(currentToolType == toolType.FILL) {
+		
+	} else if(currentToolType == toolType.LINE) {
+		
+	} else if(currentToolType == toolType.POLY) {
+		//imgTest();
+	} else{
+		//Else it is unknown, do nothing
+		alert('toolType not identified');
+	}
+});
+
   /*-----------------------------------------------------------------------------*/
  /*------------------------------ Button Methods -------------------------------*/
 /*-----------------------------------------------------------------------------*/
