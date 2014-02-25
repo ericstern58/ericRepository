@@ -19,7 +19,7 @@ function Point(x,y) {
 	// Returns wether a point is within canvas bounds
 	// w = canvas width, h = canvas height
 	this.isWithinBounds = function() {
-		return (this.x>0 && this.y>0 && this.x<canvas.width && this.y<canvas.height);
+		return (this.x>=5 && this.y>=5 && this.x<canvas.width && this.y<canvas.height);
 	}
 }
 // Color Object
