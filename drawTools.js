@@ -15,14 +15,14 @@ function RGBColor(r,g,b) {
 	this.r=r;
 	this.g=g;
 	this.b=b;
-}
-RGBColor.prototype.equals = function(color) {
-	return (this.r===color.r && this.g===color.g && this.b===color.b);
-}
-// Returns wether a point is within canvas bounds
-// w = canvas width, h = canvas height
-RGBColor.prototype.isWithinBounds = function(w,h) {
-	return (this.x>=0 && this.y>=0 && this.x<w && this.y<h);
+	this.equals = function(color) {
+		return (this.r===color.r && this.g===color.g && this.b===color.b);
+	}
+	// Returns wether a point is within canvas bounds
+	// w = canvas width, h = canvas height
+	this.isWithinBounds = function(w,h) {
+		return (this.x>=0 && this.y>=0 && this.x<w && this.y<h);
+	}
 }
 //-----  END  ----- Color Object --------------------------------------------
 
