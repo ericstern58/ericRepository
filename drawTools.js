@@ -12,7 +12,7 @@ modifyExistingElements();
 //Create DIV in which DrawTools will be placed in
 var drawToolsDiv = document.createElement('div');
 drawToolsDiv.id = drawToolsID;
-drawToolsDiv.className = 'btnTool-group';
+drawToolsDiv.className = 'drawTools-btn-group';
 document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToolsDiv);
 
 // Create Tool Button Array
@@ -229,13 +229,13 @@ function setupCSS() {
 		#btnToolIcon-poly{width:20px;margin:11px -3px 1px -3px;border-width:8px 4px 0;border-style:solid;border-color:black transparent;}\n\
 		#btnToolIcon-poly:before{content:'';display:block;margin:-17px 0px 0px -4px;border-width:0 10px 9px;border-style:solid;border-color:transparent transparent black;}\n\
 		\n\
-		.btnTool-group{position:relative;display:inline-block;vertical-align:middle;}\n\
-		.btnTool-group>.btnTool{position:relative;float:left;display:inline-block;}\n\
+		.drawTools-btn-group{position:relative;display:inline-block;vertical-align:middle;}\n\
+		.drawTools-btn-group>.btnTool{position:relative;float:left;display:inline-block;}\n\
 		\n\
-		.btnTool-group>.btnTool:not(:first-child):not(:last-child):not(.dropdown-toggle){border-radius:0}\n\
-		.btnTool-group>.btnTool:first-child{margin-left:0;}\n\
-		.btnTool-group>.btnTool:first-child:not(:last-child):not(.dropdown-toggle){border-bottom-right-radius: 0;border-top-right-radius: 0;}\n\
-		.btnTool-group>.btnTool:last-child:not(:first-child),.btnTool-group>.dropdown-toggle:not(:first-child){border-bottom-left-radius:0;border-top-left-radius:0;}\n\
+		.drawTools-btn-group>.btnTool:not(:first-child):not(:last-child):not(.dropdown-toggle){border-radius:0}\n\
+		.drawTools-btn-group>.btnTool:first-child{margin-left:0;}\n\
+		.drawTools-btn-group>.btnTool:first-child:not(:last-child):not(.dropdown-toggle){border-bottom-right-radius: 0;border-top-right-radius: 0;}\n\
+		.drawTools-btn-group>.btnTool:last-child:not(:first-child),.drawTools-btn-group>.dropdown-toggle:not(:first-child){border-bottom-left-radius:0;border-top-left-radius:0;}\n\
 		\n\
 		.btnTool{height:34px;padding:0px;border-radius:2px;margin-top:5px;}\n\
 		.btnTool input{display:none;}\n\
