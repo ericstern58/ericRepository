@@ -15,14 +15,11 @@ drawToolsDiv.id = drawToolsID;
 drawToolsDiv.className = 'drawTools-btn-group';
 document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToolsDiv);
 
-// Create Tool Button Array
-var toolButtons = new Array();
-
 // Create Tool Buttons
-toolButtons.push(createToolButton(toolType.FILL, "fill"));
-toolButtons.push(createToolButton(toolType.LINE, "line"));
-toolButtons.push(createToolButton(toolType.POLY, "poly"));
-toolButtons.push(createToolButtonWithLabel(toolType.TEST, "test", "Test"));
+createToolButton(toolType.FILL, "fill");
+createToolButton(toolType.LINE, "line");
+createToolButton(toolType.POLY, "poly");
+createToolButtonWithLabel(toolType.TEST, "test", "Test");
 
 // Setup Canvas Tools
 var context=drawApp.context;
@@ -31,7 +28,6 @@ var canvas=context.canvas;
 // Mouse Listening
 // Debug mouse coords text label
 var mouseCoordsLabel = createToolButtonWithLabel("label", '0');
-toolButtons.push(mouseCoordsLabel);
 /*
 var mouse = {x: 0, y: 0};
 canvas.addEventListener('mousemove', update, false);
