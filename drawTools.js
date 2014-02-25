@@ -96,7 +96,7 @@ function floodFill(e){
 	var h = drawApp.canvas.height();
 	var p = drawApp.context.getImageData(0,0,w,h);
 	var d = p.data;
-	var targetColor = new RGBColor(d[4*w*e.offsetY+4*e.offsetX],d[4*w*e.offsetY+4*e.offsetX+1],d[4*w*e.offsetY+4*e.offsetX+2]);
+	var targetColor = getColorFromCoords(e.offsetX,e.offsetY);
 	var c = parseInt(drawApp.context.strokeStyle.substr(1,6),16);
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255);
 	
