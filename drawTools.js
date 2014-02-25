@@ -81,7 +81,7 @@ document.onmousemove = function(e) {
  	// e.layerX   vs   e.pageX   vs e.offsetX
  	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
 	if(currentToolType == toolType.BRUSH) {
-		drawApp.onCanvasMouseMove(e);	// default behaviors
+		//drawApp.onCanvasMouseMove(e);	// default behaviors
 	} else if(currentToolType == toolType.FILL) {
 		// Do nothing
 	} else if(currentToolType == toolType.LINE) {
@@ -99,7 +99,7 @@ document.onmouseup = function(e) {
  	// e.layerX   vs   e.pageX   vs e.offsetX
  	outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
 	if(currentToolType == toolType.BRUSH) {
-		drawApp.onCanvasMouseUp(e);	// default behaviors
+		//drawApp.onCanvasMouseUp(e);	// default behaviors
 	} else if(currentToolType == toolType.FILL) {
 		// Do nothing
 	} else if(currentToolType == toolType.LINE) {
