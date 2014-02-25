@@ -1,4 +1,5 @@
 // Setup Some State Variables
+var toolType={BRUSH: 0,FILL: 1,LINE: 2,POLY: 3,TEST: 99};
 var currentToolType = toolType.BRUSH;
 
 // Setup necessary CSS
@@ -173,7 +174,6 @@ function RGBColor(r,g,b) {
 		return (this.r===color.r && this.g===color.g && this.b===color.b);
 	}
 }
-var toolType={BRUSH: 0,FILL: 1,LINE: 2,POLY: 3,TEST: 99};
 
 /*--------------------- Element Creation/Manipulation ---------------------*/
 //Creates Tool Buttons (without icon)
