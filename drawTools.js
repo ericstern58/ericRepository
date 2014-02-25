@@ -200,12 +200,12 @@ function createToolButton(type, name){
 	var radio = document.createElement('input');
 	radio.id = 'tool-radio-' + name;
 	radio.setAttribute("type","radio");
-	radio.setAttribute("name","drawToolRadio");
+	radio.setAttribute("name","drawTools-btn-radio");
 	button.appendChild(radio);
 
 	//Create container div
 	var container = document.createElement('div');
-	container.className = 'drawTools-btn-Container';
+	container.className = 'drawTools-btn-container';
 	button.appendChild(container);
 	
 	// Create icon div
@@ -222,7 +222,7 @@ function createToolButton(type, name){
 function setupCSS() {
 	var sheet = document.createElement('style');
 	sheet.innerHTML = "\n\
-		\n\
+		/*These drawTools-btn-Icon are css only icons*/\n\
 		#drawTools-btn-Icon-fill{width:12px;height:12px;margin:7px -7px 1px 9px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
 		#drawTools-btn-Icon-fill:before{content:'';border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;}\n\
 		#drawTools-btn-Icon-line{width:5px;height:15px;margin:3px 5px 2px 4px;background:black;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
@@ -240,11 +240,11 @@ function setupCSS() {
 		.drawTools-btn{height:34px;padding:0px;border-radius:2px;margin-top:5px;}\n\
 		.drawTools-btn input{display:none;}\n\
 		\n\
-		.drawTools-btn-Container{background-color:#fffb8d;border-bottom:1px solid #e5e17e;height:34px;padding:6px 12px;margin:0px;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border-radius:inherit;border-top:1px solid transparent;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;}\n\
-		.drawTools-btn-Container:focus	{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}\n\
-		.drawTools-btn-Container:hover,.drawTools-btn:focus{background-color:#f6f166;border-bottom:1px solid #ddd85b;color:#333333;text-decoration:none;}\n\
-		.drawTools-btn-Container:active,.drawTools-btn input:focus + div,.drawTools-btn input:checked + div{background-color:#f6f166;border-bottom:1px solid #f6f166;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
-		.drawTools-btn-Container.disabled,.drawTools-btn-Container[disabled],fieldset[disabled] .drawTools-btn-Container{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}\n\
+		.drawTools-btn-container{background-color:#fffb8d;border-bottom:1px solid #e5e17e;height:34px;padding:6px 12px;margin:0px;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border-radius:inherit;border-top:1px solid transparent;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;}\n\
+		.drawTools-btn-container:focus	{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}\n\
+		.drawTools-btn-container:hover,.drawTools-btn:focus{background-color:#f6f166;border-bottom:1px solid #ddd85b;color:#333333;text-decoration:none;}\n\
+		.drawTools-btn-container:active,.drawTools-btn input:focus + div,.drawTools-btn input:checked + div{background-color:#f6f166;border-bottom:1px solid #f6f166;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
+		.drawTools-btn-container.disabled,.drawTools-btn-container[disabled],fieldset[disabled] .drawTools-btn-container{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}\n\
 		\n\
 		";
 	document.body.appendChild(sheet);
@@ -263,7 +263,7 @@ function modifyExistingElements() {
 		currentToolType = toolType.BRUSH;
 		
 		// Visually unselect any other tools
-		var ele = document.getElementsByName("drawToolRadio");
+		var ele = document.getElementsByName("drawTools-btn-radio");
 	   	for(var i=0;i<ele.length;i++)
 	      		ele[i].checked = false;
 	}
