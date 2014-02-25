@@ -8,20 +8,7 @@ setupCSS();
 // Make Necessary Modifications to Existing Elements
 modifyExistingElements();
 
-//Create DIV in which DrawTools will be placed in
-var drawToolsDiv = document.createElement('div');
-drawToolsDiv.id = 'drawTools';
-drawToolsDiv.className = 'btnTool-group';
-document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToolsDiv);
 
-// Create Tool Button Array
-var toolButtons = new Array();
-
-// Create Tool Buttons
-toolButtons.push(createToolButton(toolType.FILL, "fill"));
-toolButtons.push(createToolButton(toolType.LINE, "line"));
-toolButtons.push(createToolButton(toolType.POLY, "poly"));
-toolButtons.push(createToolButtonWithLabel(toolType.TEST, "test", "Test"));
 
 // Setup Canvas Tools
 var context=drawApp.context;
@@ -267,4 +254,20 @@ function modifyExistingElements() {
 	   	for(var i=0;i<ele.length;i++)
 	      		ele[i].checked = false;
 	}
+}
+function createDrawToolElements() {
+	//Create DIV in which DrawTools will be placed in
+	var drawToolsDiv = document.createElement('div');
+	drawToolsDiv.id = 'drawTools';
+	drawToolsDiv.className = 'btnTool-group';
+	document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToolsDiv);
+	
+	// Create Tool Button Array
+	var toolButtons = new Array();
+	
+	// Create Tool Buttons
+	toolButtons.push(createToolButton(toolType.FILL, "fill"));
+	toolButtons.push(createToolButton(toolType.LINE, "line"));
+	toolButtons.push(createToolButton(toolType.POLY, "poly"));
+	toolButtons.push(createToolButtonWithLabel(toolType.TEST, "test", "Test"));
 }
