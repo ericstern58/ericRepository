@@ -95,7 +95,18 @@ drawApp.canvas.on('mousedown',function(e){
 	}
 });
 document.onmousemove = function(e) {
- 	outputDebug(drawApp.lastMousePoint.x + ', ' + drawApp.lastMousePoint.x);
+ 	var mouseX;
+ 	var mouseY;
+ 	if (e.offsetX) {
+ 		mouseX = e.offsetX;
+		mouseY = e.offsetY;
+	} else if (e.layerX) {
+		mouseX = e.layerX;
+		mouseY = e.layerY;
+	}
+ 	
+ 	//outputDebug(drawApp.lastMousePoint.x + ', ' + drawApp.lastMousePoint.x);
+ 	outputDebug(mouseX + ', ' + mouseY);
 	if(currentToolType == toolType.BRUSH) {
 		// default behaviors
 		drawApp.onCanvasMouseMove(e);
