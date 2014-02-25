@@ -17,7 +17,6 @@ var canvas=context.canvas;
 // Mouse Listening
 // Debug mouse coords text label
 var mouseCoordsLabel = createToolButtonWithLabel("label", '0');
-toolButtons.push(mouseCoordsLabel);
 /*
 var mouse = {x: 0, y: 0};
 canvas.addEventListener('mousemove', update, false);
