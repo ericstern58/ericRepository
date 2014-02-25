@@ -1,6 +1,7 @@
 // Setup Some State Variables
 var toolType={BRUSH: 0,FILL: 1,LINE: 2,POLY: 3,TEST: 99};
 var currentToolType = toolType.BRUSH;
+var drawToolsID = 'drawTools';
 
 // Setup necessary CSS
 setupCSS();
@@ -10,7 +11,7 @@ modifyExistingElements();
 
 //Create DIV in which DrawTools will be placed in
 var drawToolsDiv = document.createElement('div');
-drawToolsDiv.id = 'drawTools';
+drawToolsDiv.id = drawToolsID;
 drawToolsDiv.className = 'btnTool-group';
 document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToolsDiv);
 
@@ -193,7 +194,7 @@ function createToolButton(type, name){
 	button.id = 'tool-' + name;
 	button.className = 'btnTool';
 	button.onclick = function(){currentToolType=type;};//drawApp.setSize(0);selectTool(this)
-	document.getElementById("drawTools").appendChild(button);
+	document.getElementById(drawToolsID).appendChild(button);
 	
 	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
 	var radio = document.createElement('input');
