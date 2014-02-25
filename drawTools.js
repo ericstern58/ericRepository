@@ -136,16 +136,6 @@ function floodFill(e){
 			}
 		}
 	}
-	var Stack = [];
-
-	function floodFill(x, y){
-		fillPixel(x, y);
-	
-		while(Stack.length>0){
-			toFill = Stack.pop();
-			fillPixel(toFill[0], toFill[1]);
-		}
-	}
 	
 	/*---------------------- Color Methods ----------------------*/
 	//Colors a pixel with a given color
