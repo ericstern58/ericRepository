@@ -59,15 +59,12 @@ function update(){
 	var tempy=mouse.y-pos.y;
 	outputDebug(tempx+','+tempy);
 }*/
-$('#drawingCanvas').mousemove(function(e) {
+
+$('#drawingCanvasHolder').mousemove(function(e) {
     var pos = findPos(this);
     var x = e.pageX - pos.x;
     var y = e.pageY - pos.y;
     var coord = "x=" + x + ", y=" + y;
-    var c = this.getContext('2d');
-    var p = c.getImageData(x, y, 1, 1).data; 
-    var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
-    $('#status').html(coord + "<br>" + hex);
 	outputDebug(coord);
 });
 
