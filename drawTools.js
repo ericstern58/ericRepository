@@ -144,7 +144,7 @@ function floodFill(e){
 				colorPixelBlend(point,fillColor,getColorFromCoords(x-1,y));
 				colorPixelBlend(point,fillColor,getColorFromCoords(x+1,y));
 				colorPixelBlend(point,fillColor,getColorFromCoords(x,y-1));
-				colorPixelBlend(point,fillColor,getColorFromCoords(x,y+1));
+				//colorPixelBlend(point,fillColor,getColorFromCoords(x,y+1));
 			}
 		}
 	}
