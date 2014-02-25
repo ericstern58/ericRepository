@@ -64,10 +64,10 @@ $('#drawingCanvas').mousemove(function(e) {
     var x = e.pageX - pos.x;
     var y = e.pageY - pos.y;
     var coord = "x=" + x + ", y=" + y;
-    //var c = this.getContext('2d');
-    //var p = c.getImageData(x, y, 1, 1).data; 
-    //var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
-    //$('#status').html(coord + "<br>" + hex);
+    var c = this.getContext('2d');
+    var p = c.getImageData(x, y, 1, 1).data; 
+    var hex = "#" + ("000000" + rgbToHex(p[0], p[1], p[2])).slice(-6);
+    $('#status').html(coord + "<br>" + hex);
 	outputDebug(coord);
 });
 
