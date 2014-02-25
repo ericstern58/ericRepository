@@ -14,14 +14,11 @@ drawToolsDiv.id = 'drawTools';
 drawToolsDiv.className = 'btnTool-group';
 document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToolsDiv);
 
-// Create Tool Button Array
-var toolButtons = new Array();
-
 // Create Tool Buttons
-toolButtons.push(createToolButton(toolType.FILL, "fill"));
-toolButtons.push(createToolButton(toolType.LINE, "line"));
-toolButtons.push(createToolButton(toolType.POLY, "poly"));
-toolButtons.push(createToolButtonWithLabel(toolType.TEST, "test", "Test"));
+createToolButton(toolType.FILL, "fill");
+createToolButton(toolType.LINE, "line");
+createToolButton(toolType.POLY, "poly");
+createToolButtonWithLabel(toolType.TEST, "test", "Test");
 
 // Setup Canvas Tools
 var context=drawApp.context;
