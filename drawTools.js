@@ -122,14 +122,15 @@ function floodFill(e){
 				queue.push(new Point(x+1,y));
 				queue.push(new Point(x,y-1));
 				queue.push(new Point(x,y+1));
-				outerEdgeQueue.push(new Point(x-1,y-1));
-				outerEdgeQueue.push(new Point(x-1,y+1));
-				outerEdgeQueue.push(new Point(x-2,y));
-				outerEdgeQueue.push(new Point(x+1,y-1));
-				outerEdgeQueue.push(new Point(x+1,y+1));
-				outerEdgeQueue.push(new Point(x+2,y));
-				outerEdgeQueue.push(new Point(x,y-2));
-				outerEdgeQueue.push(new Point(x,y+2));
+				
+				queue.push(new Point(x-1,y-1));
+				queue.push(new Point(x-1,y+1));
+				queue.push(new Point(x-2,y));
+				queue.push(new Point(x+1,y-1));
+				queue.push(new Point(x+1,y+1));
+				queue.push(new Point(x+2,y));
+				queue.push(new Point(x,y-2));
+				queue.push(new Point(x,y+2));
 			} else if(x>=0 && y>=0 && x<w && y<h){
 				//colorPixel(d,w,point,fillColor)
 				/*
@@ -139,7 +140,7 @@ function floodFill(e){
 				colorPixelBlend(d,w,x,y+1,fillColor,new RGBColor(d[4*w*(y+1)+4*x],d[4*w*(y+1)+4*x+1],d[4*w*(y+1)+4*x+2]));
 				*/
 			}
-		}
+		}/*
 		while(outerEdgeQueue.length>0) {
 			point=queue.shift();
 			x=point.x;
@@ -147,7 +148,7 @@ function floodFill(e){
 			if(x>=0 && y>=0 && x<w && y<h && targetColor.equals(new RGBColor(d[4*w*y+4*x],d[4*w*y+4*x+1],d[4*w*y+4*x+2])) ) {
 				colorPixel(d,w,point,fillColor)
 			}
-		}
+		}*/
 	}
 }
 
