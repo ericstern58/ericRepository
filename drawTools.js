@@ -141,10 +141,10 @@ function floodFill(e){
 				// If inside this block, current pixel is an edge pixel
 				colorPixel(point,fillColor);
 				 //Experimental
-				colorPixelBlend(point,fillColor,getColorFromCoords(x-1,y));
-				colorPixelBlend(point,fillColor,getColorFromCoords(x+1,y));
-				colorPixelBlend(point,fillColor,getColorFromCoords(x,y-1));
-				colorPixelBlend(point,fillColor,getColorFromCoords(x,y+1));
+				colorPixelBlend(new Point(x-1,y),fillColor,getColorFromCoords(x-1,y));
+				colorPixelBlend(new Point(x+1,y),fillColor,getColorFromCoords(x+1,y));
+				colorPixelBlend(new Point(x,y-1),fillColor,getColorFromCoords(x,y-1));
+				colorPixelBlend(new Point(x,y+1),fillColor,getColorFromCoords(x,y+1));
 			}
 		}
 	}
