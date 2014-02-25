@@ -50,7 +50,7 @@ function outputDebug(outputString){
 
 /*---------------------- Setup Listeners ----------------------*/
 
-
+var here = 3+3;
 
 // Setup Mousedown Listener
 drawApp.canvas.on('mousedown',function(e){
