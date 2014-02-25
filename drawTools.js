@@ -1,18 +1,10 @@
 // Setup Some State Variables
-var toolType = {
-    BRUSH: 0,
-    FILL: 1,
-    LINE: 2,
-    POLY: 3,
-    TEST: 99
-};
 var currentToolType = toolType.BRUSH;
 
-// Setup necessary CSS
-setupCSS();
 
-// Make Necessary Modifications to Existing Elements
-modifyExistingElements();
+setupCSS(); // Setup necessary CSS
+modifyExistingElements(); // Make Necessary Modifications to Existing Elements
+//createDrawToolElements(); // Add the new tool elements to html
 
 //Create DIV in which DrawTools will be placed in
 var drawToolsDiv = document.createElement('div');
@@ -20,14 +12,16 @@ drawToolsDiv.id = 'drawTools';
 drawToolsDiv.className = 'btnTool-group';
 document.getElementById('redo-button').parentNode.parentNode.appendChild(drawToolsDiv);
 
-// Create Tool Button Array
-var toolButtons = new Array();
 
 // Create Tool Buttons
-toolButtons.push(createToolButton(toolType.FILL, "fill"));
-toolButtons.push(createToolButton(toolType.LINE, "line"));
-toolButtons.push(createToolButton(toolType.POLY, "poly"));
-toolButtons.push(createToolButtonWithLabel(toolType.TEST, "test", "Test"));
+createToolButton(toolType.FILL, "fill");
+createToolButton(toolType.LINE, "line");
+createToolButton(toolType.POLY, "poly");
+createToolButtonWithLabel(toolType.TEST, "test", "Test");
+
+//For debug purposes
+var mouseCoordsLabel = createToolButtonWithLabel("label", '0');
+
 
 // Setup Canvas Tools
 var context=drawApp.context;
@@ -35,8 +29,6 @@ var canvas=context.canvas;
 
 // Mouse Listening
 // Debug mouse coords text label
-var mouseCoordsLabel = createToolButtonWithLabel("label", '0');
-toolButtons.push(mouseCoordsLabel);
 /*
 var mouse = {x: 0, y: 0};
 canvas.addEventListener('mousemove', update, false);
@@ -180,6 +172,8 @@ function RGBColor(r,g,b) {
 		return (this.r===color.r && this.g===color.g && this.b===color.b);
 	}
 }
+// Tool type ENUM
+var toolType = {BRUSH: 0,FILL: 1,LINE: 2,POLY: 3,TEST: 99};
 
 /*--------------------- Element Creation/Manipulation ---------------------*/
 //Creates Tool Buttons (without icon)
