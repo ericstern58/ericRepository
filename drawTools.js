@@ -150,20 +150,13 @@ function floodFill(e){
 			point=edgeQueue.shift();
 			x=point.x;
 			y=point.y;
+
+			colorPixel(point,fillColor);
 			
-			if(point.isWithinBounds) {
-			colorPixel(point,blueColor);
-			/*
 			colorPixelBlend(new Point(x-1,y),fillColor,getColorFromCoords(x-1,y));
 			colorPixelBlend(new Point(x+1,y),fillColor,getColorFromCoords(x+1,y));
 			colorPixelBlend(new Point(x,y-1),fillColor,getColorFromCoords(x,y-1));
 			colorPixelBlend(new Point(x,y+1),fillColor,getColorFromCoords(x,y+1));
-			*/
-			colorPixel(new Point(x-1,y),redColor);
-			colorPixel(new Point(x+1,y),redColor);
-			colorPixel(new Point(x,y-1),redColor);
-			colorPixel(new Point(x,y+1),redColor);
-			}
 		}
 	}
 	
