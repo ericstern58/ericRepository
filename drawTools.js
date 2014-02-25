@@ -59,7 +59,9 @@ drawApp.canvas.on('mousedown',function(e){
 	}
 });
 
-/*--------------------- Button Methods ----------------------*/
+  /*-----------------------------------------------------------------------------*/
+ /*------------------------------ Button Methods -------------------------------*/
+/*-----------------------------------------------------------------------------*/
 function drawLine(start,finish){
 	save();
 	context.beginPath();
@@ -142,10 +144,9 @@ function floodFill(e){
 	}
 }
 
-
-
-
-/*---------------------- Custom Objects ----------------------*/
+  /*-----------------------------------------------------------------------------*/
+ /*------------------------------ Custom Objects -------------------------------*/
+/*-----------------------------------------------------------------------------*/
 //Point Object
 function Point(x,y) {
 	this.x=x;
@@ -163,18 +164,20 @@ function RGBColor(r,g,b) {
 
 
 
-/*--------------------- CSS Style Sheets ---------------------*/
+  /*-----------------------------------------------------------------------------*/
+ /*----------------------------- CSS Style Sheets ------------------------------*/
+/*-----------------------------------------------------------------------------*/
 //sheet.insertRule("header { float: left; opacity: 0.8; }", 1);
 
 function setupCSS() {
 	var sheet = document.createElement('style');
 	sheet.innerHTML = "\n\
 		/*These drawTools-btn-Icon are css only icons*/\n\
-		#drawTools-btn-Icon-fill{width:12px;height:12px;margin:7px -7px 1px 9px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
-		#drawTools-btn-Icon-fill:before{content:'';border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;}\n\
-		#drawTools-btn-Icon-line{width:5px;height:15px;margin:3px 5px 2px 4px;background:black;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
-		#drawTools-btn-Icon-poly{width:20px;margin:11px -3px 1px -3px;border-width:8px 4px 0;border-style:solid;border-color:black transparent;}\n\
-		#drawTools-btn-Icon-poly:before{content:'';display:block;margin:-17px 0px 0px -4px;border-width:0 10px 9px;border-style:solid;border-color:transparent transparent black;}\n\
+		#drawTools-btn-icon-fill{width:12px;height:12px;margin:7px -7px 1px 9px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
+		#drawTools-btn-icon-fill:before{content:'';border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;}\n\
+		#drawTools-btn-icon-line{width:5px;height:15px;margin:3px 5px 2px 4px;background:black;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
+		#drawTools-btn-icon-poly{width:20px;margin:11px -3px 1px -3px;border-width:8px 4px 0;border-style:solid;border-color:black transparent;}\n\
+		#drawTools-btn-icon-poly:before{content:'';display:block;margin:-17px 0px 0px -4px;border-width:0 10px 9px;border-style:solid;border-color:transparent transparent black;}\n\
 		\n\
 		.drawTools-btn-group{position:relative;display:inline-block;vertical-align:middle;}\n\
 		.drawTools-btn-group>.drawTools-btn{position:relative;float:left;display:inline-block;}\n\
@@ -197,7 +200,9 @@ function setupCSS() {
 	document.body.appendChild(sheet);
 }
 
-/*--------------------- Element Creation/Manipulation ---------------------*/
+  /*-----------------------------------------------------------------------------*/
+ /*---------------------- Elements Creation/Manipulation -----------------------*/
+/*-----------------------------------------------------------------------------*/
 function modifyExistingElements() {
 	document.getElementById('brush-2').parentNode.onclick = function(){selectBrushAUX(2);};
 	document.getElementById('brush-5').parentNode.onclick = function(){selectBrushAUX(5);};
@@ -251,7 +256,7 @@ function createToolButton(type, name){
 	
 	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
 	var radio = document.createElement('input');
-	radio.id = 'tool-radio-' + name;
+	radio.id = 'drawTools-btn-radio-' + name;
 	radio.setAttribute("type","radio");
 	radio.setAttribute("name","drawTools-btn-radio");
 	button.appendChild(radio);
@@ -263,7 +268,7 @@ function createToolButton(type, name){
 	
 	// Create icon div
 	var icon = document.createElement('div');
-	icon.id = 'drawTools-btn-Icon-' + name;
+	icon.id = 'drawTools-btn-icon-' + name;
 	container.appendChild(icon);
 	
 	return button;
