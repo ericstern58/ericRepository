@@ -76,6 +76,7 @@ drawApp.canvas.on('mousedown',function(e){
 	}
 });
 // Setup Mousemove Listener
+document.removeEventListener(drawApp.mouseMoveEvent, drawApp.onCanvasMouseMove());
 document.onmousemove = function(e) {
  	// e.layerX   vs   e.pageX   vs e.offsetX
  	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
@@ -93,6 +94,7 @@ document.onmousemove = function(e) {
 	}
 };
 // Setup Mouseup Listener
+document.removeEventListener("pointerup", this.onCanvasMouseUp());
 document.onmouseup = function(e) {
  	// e.layerX   vs   e.pageX   vs e.offsetX
  	outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
