@@ -140,7 +140,7 @@ function floodFill(e){
 				queue.push(new Point(x,y+1));
 			} else if(point.isWithinBounds && !(fillColor.equals(getColorFromPoint(point)))){
 				// If inside this block, current pixel is an edge pixel
-				edgeQueue.push(new Point(x-1,y));
+				edgeQueue.push(point);
 			}
 		}
 		while(edgeQueue.length>0) {
