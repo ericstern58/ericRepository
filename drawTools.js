@@ -113,6 +113,7 @@ function floodFill(e){
 	var targetColor = getColorFromCoords(e.offsetX,e.offsetY);
 	var c = parseInt(drawApp.context.strokeStyle.substr(1,6),16);
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255);
+	var redColor = new RGBColor(255,0,0);
 	
 	// Note: target color must be different to execute function f
 	// If something is already colored the fill color, nothing needs to be done
@@ -143,16 +144,22 @@ function floodFill(e){
 				edgeQueue.push(point);
 			}
 		}
+		// This loop colors edge pixels and softens them with anti-aliasing
 		while(edgeQueue.length>0) {
 			point=edgeQueue.shift();
 			x=point.x;
 			y=point.y;
 			colorPixel(point,fillColor);
-			 //Experimental
+			/*
 			colorPixelBlend(new Point(x-1,y),fillColor,getColorFromCoords(x-1,y));
 			colorPixelBlend(new Point(x+1,y),fillColor,getColorFromCoords(x+1,y));
 			colorPixelBlend(new Point(x,y-1),fillColor,getColorFromCoords(x,y-1));
 			colorPixelBlend(new Point(x,y+1),fillColor,getColorFromCoords(x,y+1));
+			*/
+			colorPixel(new Point(x-1,y),fillColor);
+			colorPixel(new Point(x+1,y),redColor);
+			colorPixel(new Point(x,y-1),redColor);
+			colorPixel(new Point(x,y+1),redColor);
 		}
 	}
 	
