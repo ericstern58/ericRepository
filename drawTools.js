@@ -51,11 +51,9 @@ function outputDebug(outputString){
 	debugLabel.getElementsByTagName('div')[0].innerHTML = outputString;
 }
 
-// Mouse Listening
-
-
 /*---------------------- Setup Listeners ----------------------*/
 /*
+// Setup Mousemove Listener
 var mouse = {x: 0, y: 0};
 canvas.addEventListener('mousemove', update, false);
 function update(){
@@ -66,8 +64,7 @@ function update(){
 	outputDebug(tempx+','+tempy);
 }*/
 
-
-//Setup Mousedown Listener
+// Setup Mousedown Listener
 drawApp.canvas.on('mousedown',function(e){
 	outputDebug(currentToolType);
 	if(currentToolType == toolType.BRUSH) {
@@ -142,12 +139,12 @@ function floodFill(e){
 				queue.push(new Point(x,y+1));
 			} else if(x>=0 && y>=0 && x<w && y<h){
 				//colorPixel(d,w,point,fillColor)
-				/*
+				
 				colorPixelBlend(d,w,x-1,y,fillColor,new RGBColor(d[4*w*y+4*(x-1)],d[4*w*y+4*(x-1)+1],d[4*w*y+4*(x-1)+2]));
 				colorPixelBlend(d,w,x+1,y,fillColor,new RGBColor(d[4*w*y+4*(x+1)],d[4*w*y+4*(x+1)+1],d[4*w*y+4*(x+1)+2]));
 				colorPixelBlend(d,w,x,y-1,fillColor,new RGBColor(d[4*w*(y-1)+4*x],d[4*w*(y-1)+4*x+1],d[4*w*(y-1)+4*x+2]));
 				colorPixelBlend(d,w,x,y+1,fillColor,new RGBColor(d[4*w*(y+1)+4*x],d[4*w*(y+1)+4*x+1],d[4*w*(y+1)+4*x+2]));
-				*/
+				
 			}
 		}
 	}
