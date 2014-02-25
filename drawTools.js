@@ -193,8 +193,7 @@ function createToolButton(type, name){
 	button.id = 'tool-' + name;
 	button.className = 'btnTool';
 	button.onclick = function(){currentToolType=type;};//drawApp.setSize(0);selectTool(this)
-	drawToolsDiv.appendChild(button);
-		
+	document.getElementById("drawTools").appendChild(button);
 	
 	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
 	var radio = document.createElement('input');
