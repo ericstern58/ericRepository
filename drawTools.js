@@ -57,7 +57,7 @@ drawApp.canvas.on('mousedown',function(e){
 	outputDebug(drawApp.lastMousePoint.x + ', ' + drawApp.lastMousePoint.x);
 	if(currentToolType == toolType.BRUSH) {
 		// default behaviors
-		drawApp.onCanvasMouseDown(e);
+		//drawApp.onCanvasMouseDown(e);
 	} else if(currentToolType == toolType.FILL) {
 		try {
 			floodFill(e);
