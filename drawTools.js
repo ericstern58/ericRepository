@@ -7,7 +7,7 @@ var context=drawApp.context;
 var canvas=context.canvas;
 
 context.putImageData=CanvasRenderingContext2D.prototype.putImageData;
-drawApp.canvas.off('mousedown');
+canvas.off('mousedown');
 
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/ENUMS -----------------------*/
