@@ -136,11 +136,12 @@ function floodFill(e){
 	}
 	/*---------------------- Color Methods ----------------------*/
 	//Colors a pixel with a given color
-	function colorPixel(point,color){
-		d[4*w*point.y+4*point.x]=color.r;
-		d[4*w*point.y+4*point.x+1]=color.g;
-		d[4*w*point.y+4*point.x+2]=color.b;
-		d[4*w+point.y+4*point.x+3]=255;
+	function colorPixel(point,color) {
+		var i = (point.x + point.y * w) * 4;
+		d[i]=color.r;
+		d[i+1]=color.g;
+		d[i+2]=color.b;
+		d[i+3]=255;
 	}
 	//Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
 	function colorPixelBlend(point,color1,color2){
