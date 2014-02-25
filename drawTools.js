@@ -141,10 +141,10 @@ function floodFill(e){
 				// If inside this block, current pixel is an edge pixel
 				colorPixel(point,fillColor);
 				
-				colorPixelBlend2(point,fillColor,getColorFromCoords(x-1,y));
-				colorPixelBlend2(point,fillColor,getColorFromCoords(x+1,y));
-				colorPixelBlend2(point,fillColor,getColorFromCoords(x,y-1));
-				colorPixelBlend2(point,fillColor,getColorFromCoords(x,y+1));
+				colorPixelBlend(point,fillColor,getColorFromCoords(x-1,y));
+				colorPixelBlend(point,fillColor,getColorFromCoords(x+1,y));
+				colorPixelBlend(point,fillColor,getColorFromCoords(x,y-1));
+				colorPixelBlend(point,fillColor,getColorFromCoords(x,y+1));
 			}
 		}
 	}
@@ -159,7 +159,7 @@ function floodFill(e){
 		d[i+3]=255;
 	}
 	//Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
-	function colorPixelBlend2(point,color1,color2){
+	function colorPixelBlend(point,color1,color2){
 		var r=Math.ceil((color1.r+color2.r)/2);
 		var g=Math.ceil((color1.g+color2.g)/2);
 		var b=Math.ceil((color1.b+color2.b)/2);
