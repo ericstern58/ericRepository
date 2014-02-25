@@ -133,7 +133,6 @@ function floodFill(e){
 			y=point.y;
 			if( point.isWithinBounds && targetColor.equals(getColorFromPoint(point)) ) {
 				colorPixel(point,fillColor);
-				//colorPixelBlend(point,fillColor, targetColor);
 				queue.push(new Point(x-1,y));
 				queue.push(new Point(x+1,y));
 				queue.push(new Point(x,y-1));
@@ -160,24 +159,11 @@ function floodFill(e){
 		d[i+3]=255;
 	}
 	//Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
-	function colorPixelBlend(point,color1,color2){
-		var r=Math.ceil(0.5*color1.r /*+ 0.5*color2.r*/);
-		var g=Math.ceil(0.5*color1.g /*+ 0.5*color2.g*/);
-		var b=Math.ceil(0.5*color1.b /*+ 0.5*color2.b*/);
-		colorPixel(point,new RGBColor(r,g,b));
-	}
 	function colorPixelBlend2(point,color1,color2){
 		var r=Math.ceil((color1.r+color2.r)/2);
 		var g=Math.ceil((color1.g+color2.g)/2);
 		var b=Math.ceil((color1.b+color2.b)/2);
 		colorPixel(point,new RGBColor(r,g,b));
-	}
-	//Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
-	function colorPixelBlend(x,y,color1,color2){
-		var r=Math.ceil(0.5*color1.r + 0.5*color2.r);
-		var g=Math.ceil(0.5*color1.g + 0.5*color2.g);
-		var b=Math.ceil(0.5*color1.b + 0.5*color2.b);
-		colorPixel(new Point(x,y),new RGBColor(r,g,b));
 	}
 	function getColorFromPoint(point){
 		return getColorFromCoords(point.x,point.y);
