@@ -7,7 +7,7 @@ var context=drawApp.context;
 var canvas=context.canvas;
 
 context.putImageData=CanvasRenderingContext2D.prototype.putImageData;
-canvas.off('mousedown');
+drawApp.canvas.off('mousedown');
 
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/ENUMS -----------------------*/
@@ -19,7 +19,7 @@ function Point(x,y) {
 	// Returns wether a point is within canvas bounds
 	// w = canvas width, h = canvas height
 	this.isWithinBounds = function(w,h) {
-		return (this.x>=0 && this.y>=0 && this.x<canvas.width && this.y<canvas.height);
+		return (this.x>=0 && this.y>=0 && this.x<w && this.y<h);
 	}
 }
 //----- BEGIN ----- Color Object --------------------------------------------
