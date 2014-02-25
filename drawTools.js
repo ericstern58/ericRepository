@@ -148,13 +148,14 @@ function floodFill(e){
 		var r=Math.ceil(0.5*color1.r + 0.5*r2);
 		var g=Math.ceil(0.5*color1.g + 0.5*g2);
 		var b=Math.ceil(0.5*color1.b + 0.5*b2);
-		colorPixel(d,w,point,new Color(r,g,b));
+		colorPixel(point,new Color(r,g,b));
 	}
 	function getColorFromPoint(point){
 		return getColorFromCoords(point.x,point.y);
 	}
 	function getColorFromCoords(x,y){
-		return new RGBColor(d[4*w*y+4*x],d[4*w*y+4*x+1],d[4*w*y+4*x+2]);
+		var i = (x + y * w) * 4;
+		return new RGBColor(d[i],d[i+1],d[i+2]);
 	}
 }
 
