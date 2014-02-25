@@ -113,7 +113,6 @@ function floodFill(e){
 	var targetColor = getColorFromCoords(e.offsetX,e.offsetY);
 	var c = parseInt(drawApp.context.strokeStyle.substr(1,6),16);
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255);
-	var redColor = new RGBColor(255,0,0);
 	
 	// Note: target color must be different to execute function f
 	// If something is already colored the fill color, nothing needs to be done
@@ -140,7 +139,12 @@ function floodFill(e){
 				queue.push(new Point(x,y-1));
 				queue.push(new Point(x,y+1));
 			} else if(point.isWithinBounds && !(fillColor.equals(getColorFromPoint(point)))){
+				// If inside this block, current pixel is an edge pixel
 				colorPixel(point,fillColor);
+				colorPixelBlend2(point,fillColor,getColorFromCoords(x-1,y));
+				colorPixelBlend2(point,fillColor,getColorFromCoords(x+1,y));
+				colorPixelBlend2(point,fillColor,getColorFromCoords(x,y-1));
+				colorPixelBlend2(point,fillColor,getColorFromCoords(x,y+1));
 			}
 		}
 	}
@@ -159,6 +163,12 @@ function floodFill(e){
 		var r=Math.ceil(0.5*color1.r /*+ 0.5*color2.r*/);
 		var g=Math.ceil(0.5*color1.g /*+ 0.5*color2.g*/);
 		var b=Math.ceil(0.5*color1.b /*+ 0.5*color2.b*/);
+		colorPixel(point,new RGBColor(r,g,b));
+	}
+	function colorPixelBlend2(point,color1,color2){
+		var r=Math.ceil((color1.r+color2.r)/2);
+		var g=Math.ceil((color1.g+color2.g)/2);
+		var b=Math.ceil((color1.b+colorb.r)/2);
 		colorPixel(point,new RGBColor(r,g,b));
 	}
 	//Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
