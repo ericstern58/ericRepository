@@ -156,7 +156,7 @@ function floodFill(e){
 			colorPixelBlend(new Point(x,y-1),fillColor,getColorFromCoords(x,y-1));
 			colorPixelBlend(new Point(x,y+1),fillColor,getColorFromCoords(x,y+1));
 			*/
-			colorPixel(new Point(x-1,y),fillColor);
+			colorPixel(new Point(x-1,y),redColor);
 			colorPixel(new Point(x+1,y),redColor);
 			colorPixel(new Point(x,y-1),redColor);
 			colorPixel(new Point(x,y+1),redColor);
