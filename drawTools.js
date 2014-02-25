@@ -47,7 +47,9 @@ createDrawToolsElements();	// Create Draw Tools Elements and Interface
 
 // Setup Debug Stuff
 var debugLabel = createToolButtonWithLabel("label", '0');
-outputDebug = debugLabel.getElementsByTagName('div')[0].innerHTML;
+function outputDebug(outputString){
+	debugLabel.getElementsByTagName('div')[0].innerHTML = outputString;
+}
 
 // Mouse Listening
 
@@ -61,14 +63,13 @@ function update(){
 	mouse.y = e.pageY;
 	var tempx=mouse.x-pos.x;
 	var tempy=mouse.y-pos.y;
-	outputDebug =tempx+','+tempy;
+	outputDebug(tempx+','+tempy);
 }*/
 
 
 //Setup Mousedown Listener
 drawApp.canvas.on('mousedown',function(e){
-	//outputDebug = context.lineWidth;
-	outputDebug = currentToolType;
+	outputDebug(currentToolType);
 	if(currentToolType == toolType.BRUSH) {
 		// default behaviors
 		drawApp.onCanvasMouseDown(e);
