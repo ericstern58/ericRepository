@@ -131,7 +131,7 @@ function floodFill(e){
 			point=queue.shift();
 			x=point.x;
 			y=point.y;
-			if( point.isWithinBounds() && targetColor.equals(getColorFromPoint(point)) ) {
+			if( point.isWithinBounds && targetColor.equals(getColorFromPoint(point)) ) {
 				colorPixel(point,fillColor)
 				queue.push(new Point(x-1,y));
 				queue.push(new Point(x+1,y));
