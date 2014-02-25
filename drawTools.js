@@ -112,12 +112,13 @@ function floodFill(e){
 		var outerEdgeQueue = [new Point(xinitial,yinitial)];
 		var x = 0;
 		var y = 0;
+		var point;
 		while(queue.length>0) {
-			var point=queue.shift();
+			point=queue.shift();
 			x=point.x;
 			y=point.y;
-			if(x>=0 && y>=0 && x<w && y<h && targetColor.equals( RGBColorFromPoint(point) ) ) {
-				colorPixel(d,w,point,fillColor)
+			if(x>=0 && y>=0 && x<w && y<h && targetColor.equals(new RGBColor(d[4*w*y+4*x],d[4*w*y+4*x+1],d[4*w*y+4*x+2])) ) {
+				colorPixel(point,fillColor)
 				queue.push(new Point(x-1,y));
 				queue.push(new Point(x+1,y));
 				queue.push(new Point(x,y-1));
@@ -148,17 +149,10 @@ function floodFill(e){
 		var b=Math.ceil(0.5*color1.b + 0.5*b2);
 		colorPixel(d,w,point,new Color(r,g,b));
 	}
-	function RGBColorFromPoint(point) {
-		return RGBColorFromCoords(point.x,point.y);
-	}
-	function RGBColorFromCoords(x,y) {
-		return new RGBColor(d[4*w*y+4*x],d[4*w*y+4*x+1],d[4*w*y+4*x+2])
-	}
 }
 
 
 
-/*---------------------- Auxiliary Functions ----------------------*/
 
 /*---------------------- Custom Objects ----------------------*/
 //Point Object
