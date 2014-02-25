@@ -123,6 +123,7 @@ function floodFill(e){
 	
 	function f(xinitial,yinitial){
 		var queue = [new Point(xinitial,yinitial)];
+		var edgeQueue = [];
 		var outerEdgeQueue = [new Point(xinitial,yinitial)];
 		var x = 0;
 		var y = 0;
@@ -139,13 +140,19 @@ function floodFill(e){
 				queue.push(new Point(x,y+1));
 			} else if(point.isWithinBounds && !(fillColor.equals(getColorFromPoint(point)))){
 				// If inside this block, current pixel is an edge pixel
-				colorPixel(point,fillColor);
-				/* //Experimental
-				colorPixelBlend(new Point(x-1,y),fillColor,getColorFromCoords(x-1,y));
-				colorPixelBlend(new Point(x+1,y),fillColor,getColorFromCoords(x+1,y));
-				colorPixelBlend(new Point(x,y-1),fillColor,getColorFromCoords(x,y-1));
-				colorPixelBlend(new Point(x,y+1),fillColor,getColorFromCoords(x,y+1));*/
+				edgeQueue.push(new Point(x-1,y));
 			}
+		}
+		while(edgeQueue.length>0) {
+			point=edgeQueue.shift();
+			x=point.x;
+			y=point.y;
+			colorPixel(point,fillColor);
+			 //Experimental
+			colorPixelBlend(new Point(x-1,y),fillColor,getColorFromCoords(x-1,y));
+			colorPixelBlend(new Point(x+1,y),fillColor,getColorFromCoords(x+1,y));
+			colorPixelBlend(new Point(x,y-1),fillColor,getColorFromCoords(x,y-1));
+			colorPixelBlend(new Point(x,y+1),fillColor,getColorFromCoords(x,y+1));
 		}
 	}
 	
