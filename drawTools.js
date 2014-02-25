@@ -52,15 +52,10 @@ function outputDebug(outputString){
 
 // Setup Mousedown Listener
 drawApp.canvas.on('mousedown',function(e){
-	//outputDebug(drawApp.lastMousePoint.x + ', ' + drawApp.lastMousePoint.x);
 	if(currentToolType == toolType.BRUSH) {
 		drawApp.onCanvasMouseDown(e);	// default behaviors
 	} else if(currentToolType == toolType.FILL) {
-		try {
-			floodFill(e);
-		} catch(err) {
-			alert(err);
-		}
+		try{floodFill(e);drawApp.onCanvasMouseUp(e);}catch(err){alert(err);}
 	} else if(currentToolType == toolType.LINE) {
 		try{
 			//virtualLine(e);
