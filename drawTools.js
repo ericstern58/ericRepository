@@ -66,7 +66,7 @@ function update(){
 
 // Setup Mousedown Listener
 drawApp.canvas.on('mousedown',function(e){
-	outputDebug(currentToolType);
+	outputDebug(canvas.width + ', ' + canvas.height);
 	if(currentToolType == toolType.BRUSH) {
 		// default behaviors
 		drawApp.onCanvasMouseDown(e);
