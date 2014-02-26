@@ -107,7 +107,7 @@ document.onmousemove = function(e) {
 		drawLine(lineStart.x,lineStart.y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 	} else if(currentToolType == toolType.RECT) {
 		context.constructor.prototype.putImageData.call(context, restorePoints[restorePosition], 0, 0);
-		drawRect(lineStart.x,lineStart.y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+		drawRect(lineStart.x,lineStart.y,(e.pageX-canvasOffset.left-lineStart.x),(e.pageY-canvasOffset.top-lineStart.y));
 	} else if(currentToolType == toolType.POLY) {
 		//imgTest();
 	} else{ //Else tool type is unknown, do nothing
