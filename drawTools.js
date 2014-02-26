@@ -89,7 +89,10 @@ drawApp.canvas.on('mousedown', function(e){
 // Setup Mousemove Listener
 document.onmousemove = function(e) {
  	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
- 	outputDebug(DTBrushes[0].id);
+ 	outputDebug("{"+DTBrushes[0].id +","+DTBrushes[0].size+"}, {"
+ 			+DTBrushes[1].id +","+DTBrushes[1].size+"}, {"
+ 			+DTBrushes[2].id +","+DTBrushes[2].size+"}, {"
+ 			+DTBrushes[3].id +","+DTBrushes[3].size+"}");
  	if(currentToolType == toolType.BRUSH)
 		return;	// default behaviors
 	else if(!toolInUse)
@@ -329,7 +332,7 @@ function setupCSS() {
 function modifyExistingElements() {
 	//TODO: make array variable with brush IDs (IN TOP)
 	/*
-	for(var i=0;i<DTBrushes.length;i++)
+	for(var j=0;j<DTBrushes.length;j++)
 		document.getElementById(DTBrushes[i].id).parentNode.onclick = function(){selectBrushAUX(DTBrushes[i].size);};
 	*/
 	
