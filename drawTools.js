@@ -4,10 +4,10 @@ var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.pare
 
 // Setup Some Global Variables
 var context=drawApp.context;
-var canvas=drawApp.canvas;
+var canvas=context.canvas;
 
 context.putImageData=CanvasRenderingContext2D.prototype.putImageData;
-//drawApp.canvas.off('mousedown'); //dont think i need this
+drawApp.canvas.off('mousedown');
 
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
@@ -57,6 +57,7 @@ function outputDebug(outputString){
 // Setup Mousedown Listener
 //drawApp.canvas.removeEventListener('pointerdown', drawApp.onCanvasMouseDown(),!1);
 drawApp.canvas.on('mousedown',function(e){
+	
 	if(currentToolType == toolType.BRUSH) {
 		return;//drawApp.onCanvasMouseDown(e);	// default behaviors
 	}
