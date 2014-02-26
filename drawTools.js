@@ -85,25 +85,26 @@ drawApp.canvas.on('mousedown',function(e){
 // Setup Mousemove Listener
 //document.removeEventListener('pointermove', drawApp.onCanvasMouseMove(),!1);
 document.onmousemove = function(e) {
- 	// e.layerX   vs   e.pageX   vs e.offsetX
- 	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
-	if(currentToolType == toolType.BRUSH) {
-		//drawApp.onCanvasMouseMove(e);	// default behaviors
-	} else if(currentToolType == toolType.FILL) {
+ 	outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
+ 	if(currentToolType == toolType.BRUSH) {
+		return;//drawApp.onCanvasMouseMove(e);	// default behaviors
+	} else if(!toolInUse) {	// If no tool is in use, ignore event
+		return;
+	}
+	
+	if(currentToolType == toolType.FILL) {
 		// Do nothing
 	} else if(currentToolType == toolType.LINE) {
 		
 	} else if(currentToolType == toolType.POLY) {
 		//imgTest();
-	} else{
-		//Else it is unknown, do nothing
+	} else{ //Else tool type is unknown, do nothing
 		alert('toolType not identified');
 	}
 };
 // Setup Mouseup Listener
 //document.removeEventListener('pointerdown', drawApp.onCanvasMouseDown(),!1);
 document.onmouseup = function(e) {
- 	outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
 	if(currentToolType == toolType.BRUSH) {
 		return;//drawApp.onCanvasMouseUp(e);	// default behaviors
 	} else if(!toolInUse) {	// If no tool is in use, ignore event
@@ -117,8 +118,7 @@ document.onmouseup = function(e) {
 		catch(err){alert(err);}
 	} else if(currentToolType == toolType.POLY) {
 		//imgTest();
-	} else{
-		//Else it is unknown, do nothing
+	} else{ //Else tool type is unknown, do nothing
 		alert('toolType not identified');
 	}
 	
