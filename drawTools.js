@@ -201,7 +201,7 @@ function floodFill(e){
 		}
 	}
 	function isWithinCanvasBounds(point){
-		return (point.x>=0 && point.y>=0 && point.x<canvas.width && point.y<canvas.height
+		return (point.x>=0 && point.y>=0 && point.x<canvas.width && point.y<canvas.height)
 	}
 	/*---------------------- Color Methods ----------------------*/
 	//Colors a pixel with a given color
