@@ -53,11 +53,11 @@ function outputDebug(outputString){
 }
 
 /*---------------------- Setup Listeners ----------------------*/
-/*
+
 // Setup Mousedown Listener
 //drawApp.canvas.removeEventListener('pointerdown', drawApp.onCanvasMouseDown(),!1);
 drawApp.canvas.on('mousedown',function(e){
-	
+	alert('in mousedown event');
 	if(currentToolType == toolType.BRUSH) {
 		return;//drawApp.onCanvasMouseDown(e);	// default behaviors
 	}
@@ -125,7 +125,7 @@ document.onmouseup = function(e) {
 	toolInUse = false;
 	save();
 };
-*/
+
   /*-----------------------------------------------------------------------------*/
  /*------------------------------ Button Methods -------------------------------*/
 /*-----------------------------------------------------------------------------*/
