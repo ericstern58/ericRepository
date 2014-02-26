@@ -102,7 +102,8 @@ document.onmousemove = function(e) {
 	if(currentToolType == toolType.FILL) {
 		// Do nothing
 	} else if(currentToolType == toolType.LINE) {
-		context.clearRect(0, 0, canvasWidth, canvasHeight);
+		//context.clearRect(0, 0, canvasWidth, canvasHeight);
+		context.constructor.prototype.putImageData.call(context, restorePoints[restorePosition], 0, 0);
 		try{drawLine(new Point(lineStart.x,lineStart.y),new Point((e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top)));}
 		catch(err){alert(err);}
 	} else if(currentToolType == toolType.POLY) {
@@ -123,7 +124,7 @@ document.onmouseup = function(e) {
 	if(currentToolType == toolType.FILL) {
 		// Do nothing
 	} else if(currentToolType == toolType.LINE) {
-		context.clearRect(0, 0, canvasWidth, canvasHeight);
+		context.constructor.prototype.putImageData.call(context, restorePoints[restorePosition], 0, 0);
 		try{drawLine(new Point(lineStart.x,lineStart.y),new Point((e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top)));}
 		catch(err){alert(err);}
 	} else if(currentToolType == toolType.POLY) {
