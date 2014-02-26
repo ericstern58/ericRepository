@@ -3,24 +3,24 @@ var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
 
 // Setup Some Global Variables
-var context=drawApp.context;
+var context = drawApp.context;
 
-context.putImageData=CanvasRenderingContext2D.prototype.putImageData;
+context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
 drawApp.canvas.off('mousedown');
 
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
 /*-----------------------------------------------------------------------------*/
 // Point Object
-function Point(x,y) {
-	this.x=x;
-	this.y=y;
+function Point(x, y) {
+	this.x = x;
+	this.y = y;
 }
 // Color Object
-function RGBColor(r,g,b) {
-	this.r=r;
-	this.g=g;
-	this.b=b;
+function RGBColor(r, g, b) {
+	this.r = r;
+	this.g = g;
+	this.b = b;
 	this.equals = function(color) {
 		return (this.r===color.r && this.g===color.g && this.b===color.b);
 	}
@@ -58,10 +58,9 @@ function outputDebug(outputString){
 
 // Setup Mousedown Listener
 //drawApp.canvas.removeEventListener('pointerdown', drawApp.onCanvasMouseDown(),!1);
-drawApp.canvas.on('mousedown',function(e){
-	if(currentToolType == toolType.BRUSH) {
+drawApp.canvas.on('mousedown', function(e){
+	if(currentToolType == toolType.BRUSH)
 		return;//drawApp.onCanvasMouseDown(e);	// default behaviors
-	}
 	toolInUse = true;
 	updateCanvasStateVariables();
 	
@@ -88,11 +87,10 @@ drawApp.canvas.on('mousedown',function(e){
 // Setup Mousemove Listener
 document.onmousemove = function(e) {
  	outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
- 	if(currentToolType == toolType.BRUSH) {
+ 	if(currentToolType == toolType.BRUSH)
 		return;	// default behaviors
-	} else if(!toolInUse) {	
+	else if(!toolInUse)
 		return;	// If no tool is in use, ignore event
-	}
 	
 	if(currentToolType == toolType.FILL) {
 		// Do nothing
@@ -113,11 +111,10 @@ document.onmousemove = function(e) {
 };
 // Setup Mouseup Listener
 document.onmouseup = function(e) {
-	if(currentToolType == toolType.BRUSH) {
+	if(currentToolType == toolType.BRUSH)
 		return;
-	} else if(!toolInUse) {	// If no tool is in use, ignore event
+	else if(!toolInUse)	// If no tool is in use, ignore event
 		return;
-	}
 	
 	if(currentToolType == toolType.FILL) {
 		// Do nothing
@@ -146,41 +143,41 @@ document.onmouseup = function(e) {
 
 function drawLine(startX,startY,finishX,finishY){
 	context.beginPath();
-	context.moveTo(startX,startY);
-	context.lineTo(finishX,finishY);
+	context.moveTo( startX, startY );
+	context.lineTo( finishX, finishY);
 	context.stroke();
 }
 function drawRect(startX,startY,finishX,finishY){
 	context.beginPath();
-	context.moveTo(startX,startY);
-	context.lineTo(finishX,startY);
-	context.moveTo(finishX,startY);
-	context.lineTo(finishX,finishY);
-	context.moveTo(finishX,finishY);
-	context.lineTo(startX,finishY);
-	context.moveTo(startX,finishY);
-	context.lineTo(startX,startY);
+	context.moveTo( startX, startY );
+	context.lineTo( finishX, startY );
+	context.moveTo( finishX, startY );
+	context.lineTo( finishX, finishY );
+	context.moveTo( finishX, finishY );
+	context.lineTo( startX, finishY );
+	context.moveTo( startX, finishY );
+	context.lineTo( startX, startY );
 	context.stroke(); 
 }
 function drawEllipse(startX,startY,finishX,finishY){
 	var x = startX,
 	y = startY,
-	w = finishX-startX,
-	h = finishY-startY,
+	w = finishX - startX,
+	h = finishY - startY,
 	kappa = .5522848,
-	ox = (w / 2)*kappa, // control point offset horizontal
-	oy = (h / 2) * kappa, // control point offset vertical
-	xe = x + w,           // x-end
-	ye = y + h,           // y-end
-	xm = x + w / 2,       // x-middle
-	ym = y + h / 2;       // y-middle
+	ox = ( w / 2 ) * kappa,// control point offset horizontal
+	oy = ( h / 2 ) * kappa,// control point offset vertical
+	xe = x + w,            // x-end
+	ye = y + h,            // y-end
+	xm = x + w / 2,        // x-middle
+	ym = y + h / 2;        // y-middle
 	
 	context.beginPath();
-	context.moveTo(x,ym);
-	context.bezierCurveTo(x,ym-oy,xm-ox,y,xm,y);
-	context.bezierCurveTo(xm+ox,y,xe,ym-oy,xe,ym);
-	context.bezierCurveTo(xe,ym+oy,xm+ox,ye,xm,ye);
-	context.bezierCurveTo(xm-ox,ye,x,ym+oy,x,ym);
+	context.moveTo( x, ym );
+	context.bezierCurveTo( x, ym - oy, xm - ox, y, xm, y );
+	context.bezierCurveTo( xm + ox, y, xe, ym - oy, xe, ym );
+	context.bezierCurveTo( xe, ym + oy, xm + ox, ye, xm, ye );
+	context.bezierCurveTo( xm - ox, ye, x, ym + oy, x, ym );
 	context.closePath();
 	context.stroke();
 }
