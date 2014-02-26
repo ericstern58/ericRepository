@@ -102,7 +102,9 @@ document.onmousemove = function(e) {
 	if(currentToolType == toolType.FILL) {
 		// Do nothing
 	} else if(currentToolType == toolType.LINE) {
-		
+		context.clearRect(0, 0, canvasWidth, canvasHeight);
+		try{drawLine(new Point(lineStart.x,lineStart.y),new Point((e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top)));}
+		catch(err){alert(err);}
 	} else if(currentToolType == toolType.POLY) {
 		//imgTest();
 	} else{ //Else tool type is unknown, do nothing
@@ -121,6 +123,7 @@ document.onmouseup = function(e) {
 	if(currentToolType == toolType.FILL) {
 		// Do nothing
 	} else if(currentToolType == toolType.LINE) {
+		context.clearRect(0, 0, canvasWidth, canvasHeight);
 		try{drawLine(new Point(lineStart.x,lineStart.y),new Point((e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top)));}
 		catch(err){alert(err);}
 	} else if(currentToolType == toolType.POLY) {
