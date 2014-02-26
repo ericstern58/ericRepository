@@ -94,10 +94,6 @@ drawApp.canvas.on('mousedown', function(e){
 // Setup Mousemove Listener
 document.onmousemove = function(e) {
  	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
- 	if(DTScript){
-		outputDebug( 'DTScript is valid!' );
- 	};
- 	
 
  	if(currentToolType == toolType.BRUSH)
 		return;	// default behaviors
@@ -421,6 +417,8 @@ function DTDestroy()
 	document.getElementById(DRAW_TOOLS_ID).remove();
 	// 2. Destroy CSS
 	document.getElementById('drawToolsStyleSheet').remove();
-	// 3. Destroy JavaScript
-	//DTScript.remove();
+	// 3. Remove listeners (async)
+	
+	// 4. Destroy JavaScript
+	//document.getElementById('DTScript').remove();
 }
