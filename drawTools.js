@@ -158,10 +158,8 @@ function drawRect(startX,startY,finishX,finishY){
 	context.stroke(); 
 }
 function floodFill(e){
-	// Save-undo fix avoids issues with brush placing dot over flood fill seed area
-	//save();
-	//undo();
-	context.constructor.prototype.putImageData.call(context, restorePoints[restorePosition], 0, 0);
+	// This fix avoids issues with brush placing dot over flood fill seed area
+	restoreCanvas();
 	
 	var w = canvasWidth;
 	var h = canvasHeight;
@@ -253,8 +251,6 @@ function floodFill(e){
   /*-----------------------------------------------------------------------------*/
  /*--------------------------- Auxiliary Functions -----------------------------*/
 /*-----------------------------------------------------------------------------*/
-
-
 function updateCanvasStateVariables() {
 	canvasOffset = $('#drawingCanvas').offset();	// Update canvas offset variable
 	canvasWidth = drawApp.canvas.width();			// Update canvas width variable
@@ -267,10 +263,8 @@ function restoreCanvas() {
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
 /*-----------------------------------------------------------------------------*/
-//sheet.insertRule("header { float: left; opacity: 0.8; }", 1);
-
 function setupCSS() {
-	var sheet = document.createElement('style');
+	var sheet = document.createElement('style');	//TODO: globalize sheet for drawTools destructor
 	sheet.innerHTML = "\n\
 		/*These drawTools-btn-Icon are css only icons*/\n\
 		#drawTools-btn-icon-fill{width:12px;height:12px;margin:7px -7px 1px 9px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
@@ -305,6 +299,7 @@ function setupCSS() {
  /*---------------------- Elements Creation/Manipulation -----------------------*/
 /*-----------------------------------------------------------------------------*/
 function modifyExistingElements() {
+	//TODO: make array variable with brush IDs (IN TOP)
 	document.getElementById('brush-2').parentNode.onclick = function(){selectBrushAUX(2);};
 	document.getElementById('brush-5').parentNode.onclick = function(){selectBrushAUX(5);};
 	document.getElementById('brush-12').parentNode.onclick = function(){selectBrushAUX(12);};
