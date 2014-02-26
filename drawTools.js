@@ -333,9 +333,15 @@ function setupCSS() {
 function modifyExistingElements() {
 	//TODO: make array variable with brush IDs (IN TOP)
 	
+	document.getElementById(DTBrushes[0].id).parentNode.onclick = function(){selectBrushAUX(DTBrushes[0].size);};
+	document.getElementById(DTBrushes[1].id).parentNode.onclick = function(){selectBrushAUX(DTBrushes[1].size);};
+	document.getElementById(DTBrushes[2].id).parentNode.onclick = function(){selectBrushAUX(DTBrushes[2].size);};
+	document.getElementById(DTBrushes[3].id).parentNode.onclick = function(){selectBrushAUX(DTBrushes[3].size);};
+	
+	/*
 	for(var j=0;j<DTBrushes.length;j++)
 		document.getElementById(DTBrushes[j].id).parentNode.onclick = function(){selectBrushAUX(DTBrushes[j].size);};
-	
+	*/
 	/*
 	document.getElementById('brush-2').parentNode.onclick = function(){selectBrushAUX(2);};
 	document.getElementById('brush-5').parentNode.onclick = function(){selectBrushAUX(5);};
