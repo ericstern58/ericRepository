@@ -91,7 +91,8 @@ drawApp.canvas.on('mousedown', function(e){
 });
 // Setup Mousemove Listener
 document.onmousemove = function(e) {
- 	outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
+ 	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
+ 	outputDebug(DTBrushes[i].id);
  	if(currentToolType == toolType.BRUSH)
 		return;	// default behaviors
 	else if(!toolInUse)
