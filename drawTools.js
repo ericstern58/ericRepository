@@ -36,7 +36,6 @@ var toolType={BRUSH:0,FILL:1,LINE:2,RECT:3,POLY:6,TEST:99};
 // Setup Some State Variables
 var currentToolType = toolType.BRUSH;
 var toolInUse = false;
-var mouse = {x: 0, y: 0};
 
 var canvasOffset;
 var canvasWidth;
@@ -44,7 +43,7 @@ var canvasHeight;
 updateCanvasStateVariables();
 
 // Setup tool state/event variables
-var lineStart =  {x: 0, y: 0};
+var DTPoints = new Array();	// Will contain user input point sets for shapes/lines/etc
 
 setupCSS();					// Setup necessary CSS for DrawTools
 modifyExistingElements();	// Make Necessary Modifications to Existing Elements
@@ -75,12 +74,10 @@ drawApp.canvas.on('mousedown',function(e){
 			}catch(err){alert(err);}
 	} else if(currentToolType == toolType.LINE) {
 		painting = !1;
-		lineStart.x = e.pageX-canvasOffset.left;
-		lineStart.y = e.pageY-canvasOffset.top;
+		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top}
 	} else if(currentToolType == toolType.RECT) {
 		painting = !1;
-		lineStart.x = e.pageX-canvasOffset.left;
-		lineStart.y = e.pageY-canvasOffset.top;
+		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top}
 	} else if(currentToolType == toolType.POLY) {
 		painting = !1;
 	} else{	//Else it is unknown, do nothing
@@ -99,11 +96,11 @@ document.onmousemove = function(e) {
 	if(currentToolType == toolType.FILL) {
 		// Do nothing
 	} else if(currentToolType == toolType.LINE) {
-		context.constructor.prototype.putImageData.call(context, restorePoints[restorePosition], 0, 0);
-		drawLine(lineStart.x,lineStart.y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+		restoreCanvas();
+		drawLine(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 	} else if(currentToolType == toolType.RECT) {
-		context.constructor.prototype.putImageData.call(context, restorePoints[restorePosition], 0, 0);
-		drawRect(lineStart.x,lineStart.y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+		restoreCanvas();
+		drawRect(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 	} else if(currentToolType == toolType.POLY) {
 		//imgTest();
 	} else{ //Else tool type is unknown, do nothing
@@ -121,11 +118,11 @@ document.onmouseup = function(e) {
 	if(currentToolType == toolType.FILL) {
 		// Do nothing
 	} else if(currentToolType == toolType.LINE) {
-		context.constructor.prototype.putImageData.call(context, restorePoints[restorePosition], 0, 0);
-		drawLine(lineStart.x,lineStart.y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top) );
+		restoreCanvas();
+		drawLine(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 	} else if(currentToolType == toolType.RECT) {
-		context.constructor.prototype.putImageData.call(context, restorePoints[restorePosition], 0, 0);
-		drawRect(lineStart.x,lineStart.y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+		restoreCanvas();
+		drawRect(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 	} else if(currentToolType == toolType.POLY) {
 		//imgTest();
 	} else{ //Else tool type is unknown, do nothing
