@@ -51,12 +51,12 @@ modifyExistingElements();	// Make Necessary Modifications to Existing Elements
 createDrawToolsElements();	// Create Draw Tools Elements and Interface
 
 // Work in progess: exit button
-var exitButton = createToolButtonWithLabel(toolType.BRUSH,"deleteButton","X");
+var exitButton = createToolButtonWithLabel(toolType.TEST,"deleteButton","X");
 exitButton.onclick = function(){DTDestroy();};
 
 
 // Setup Debug Stuff
-var debugLabel = createToolButtonWithLabel("label", '0');
+var debugLabel = createToolButtonWithLabel(toolType.TEST,"label", '0');
 function outputDebug(outputString){
 	debugLabel.getElementsByTagName('div')[0].innerHTML = outputString;
 }
