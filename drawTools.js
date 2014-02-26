@@ -299,10 +299,11 @@ function restoreCanvas() {
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
 /*-----------------------------------------------------------------------------*/
-var DTSheet;	//Outside function so that destructor can access it easily
+
 function setupCSS()
 {
-	DTSheet = document.createElement('style');
+	var DTSheet = document.createElement('style');
+	DTSheet.id = 'drawToolsStyleSheet'; // Give id so destructor can find it if needed
 	DTSheet.innerHTML = "\n\
 		/*These drawTools-btn-Icon are css only icons*/\n\
 		#drawTools-btn-icon-fill{width:12px;height:12px;margin:7px -7px 1px 9px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
@@ -418,4 +419,8 @@ function DTDestroy()
 {
 	// 1. Destroy HTML
 	document.getElementById(DRAW_TOOLS_ID).remove();
+	// 2. Destroy CSS
+	document.getElementById('drawToolsStyleSheet').remove();
+	// 3. Destroy JavaScript
+	
 }
