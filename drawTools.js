@@ -151,7 +151,8 @@ function drawLine(startX,startY,finishX,finishY){
 	context.stroke();
 }
 function drawRect(startX,startY,finishX,finishY){
-	context.strokeRect(startX,startY,finishX,finishY);
+	context.rect(startX,startY,finishX,finishY);
+	context.stroke(); 
 }
 function floodFill(e){
 
