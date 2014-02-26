@@ -205,13 +205,12 @@ function floodFill(e){
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255);
 	
 	// Note: target color must be different to execute function f
-	// If seed pixel is already colored the fill color, nothing needs to be done
+	// If something is already colored the fill color, nothing needs to be done
 	if(!targetColor.equals(fillColor))
 		f(e.offsetX,e.offsetY);
-	} // Done
-	context.putImageData(p,0,0);
-	var djh = 5;
 
+	context.putImageData(p,0,0);
+	
 	function f(xinitial,yinitial){
 		var queue = [new Point(xinitial,yinitial)];
 		var edgeQueue = [];
