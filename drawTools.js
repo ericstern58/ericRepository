@@ -93,12 +93,12 @@ drawApp.canvas.on('mousedown', function(e){
 });
 // Setup Mousemove Listener
 document.onmousemove = function(e) {
- 	outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
- 	outputDebug( DTBrushes.length );
-/*	outputDebug("{"+DTBrushes[0].id +","+DTBrushes[0].size+"}, {"
- 			+DTBrushes[1].id +","+DTBrushes[1].size+"}, {"
- 			+DTBrushes[2].id +","+DTBrushes[2].size+"}, {"
- 			+DTBrushes[3].id +","+DTBrushes[3].size+"}");*/
+ 	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
+ 	if(DTScript){
+		outputDebug( 'DTScript is valid!' );
+ 	};
+ 	
+
  	if(currentToolType == toolType.BRUSH)
 		return;	// default behaviors
 	else if(!toolInUse)
@@ -422,5 +422,5 @@ function DTDestroy()
 	// 2. Destroy CSS
 	document.getElementById('drawToolsStyleSheet').remove();
 	// 3. Destroy JavaScript
-	
+	//DTScript.remove();
 }
