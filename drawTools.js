@@ -4,7 +4,7 @@ var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.pare
 
 // Setup Some Global Variables
 var context=drawApp.context;
-var canvas=context.canvas;
+var canvas=drawApp.canvas;
 
 context.putImageData=CanvasRenderingContext2D.prototype.putImageData;
 drawApp.canvas.off('mousedown');
@@ -201,7 +201,7 @@ function floodFill(e){
 		}
 	}
 	function isWithinCanvasBounds(point){
-		return (point.x>=0 && point.y>=0 && point.x<canvas.width() && point.y<canvas.height())
+		return (point.x>=0 && point.y>=0 && point.x<canvas.width && point.y<canvas.height
 	}
 	/*---------------------- Color Methods ----------------------*/
 	//Colors a pixel with a given color
