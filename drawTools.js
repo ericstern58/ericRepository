@@ -208,8 +208,8 @@ function floodFill(e){
 	// If seed pixel is already colored the fill color, nothing needs to be done
 	if(!targetColor.equals(fillColor))
 		f(e.offsetX,e.offsetY);
-		context.putImageData(p,0,0);
 	} // Done
+	context.putImageData(p,0,0);
 
 	function f(xinitial,yinitial){
 		var queue = [new Point(xinitial,yinitial)];
