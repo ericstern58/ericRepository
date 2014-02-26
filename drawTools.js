@@ -104,8 +104,7 @@ document.onmousemove = function(e) {
 	} else if(currentToolType == toolType.LINE) {
 		//context.clearRect(0, 0, canvasWidth, canvasHeight);
 		context.constructor.prototype.putImageData.call(context, restorePoints[restorePosition], 0, 0);
-		try{drawLine(new Point(lineStart.x,lineStart.y),new Point((e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top)));}
-		catch(err){alert(err);}
+		drawLine(lineStart.x,lineStart.y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 	} else if(currentToolType == toolType.POLY) {
 		//imgTest();
 	} else{ //Else tool type is unknown, do nothing
@@ -125,8 +124,7 @@ document.onmouseup = function(e) {
 		// Do nothing
 	} else if(currentToolType == toolType.LINE) {
 		context.constructor.prototype.putImageData.call(context, restorePoints[restorePosition], 0, 0);
-		try{drawLine(new Point(lineStart.x,lineStart.y),new Point((e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top)));}
-		catch(err){alert(err);}
+		drawLine(lineStart.x,lineStart.y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top) );
 	} else if(currentToolType == toolType.POLY) {
 		//imgTest();
 	} else{ //Else tool type is unknown, do nothing
@@ -140,10 +138,11 @@ document.onmouseup = function(e) {
   /*-----------------------------------------------------------------------------*/
  /*------------------------------ Button Methods -------------------------------*/
 /*-----------------------------------------------------------------------------*/
-function drawLine(start,finish){
+
+function drawLine(startX,startY,finishX,finishY){
 	context.beginPath();
-	context.moveTo(start.x,start.y);
-	context.lineTo(finish.x,finish.y);
+	context.moveTo(startX,startY);
+	context.lineTo(finishX,finishY);
 	context.stroke();
 }
 
