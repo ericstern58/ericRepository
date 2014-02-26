@@ -68,7 +68,9 @@ drawApp.canvas.on('mousedown',function(e){
 	
 	if(currentToolType == toolType.FILL) {
 		painting = !1;
-		try{floodFill(e);}catch(err){alert(err);}
+		try{
+			floodFill(e);
+			}catch(err){alert(err);}
 	} else if(currentToolType == toolType.LINE) {
 		painting = !1;
 		try{
@@ -130,11 +132,12 @@ document.onmouseup = function(e) {
  /*------------------------------ Button Methods -------------------------------*/
 /*-----------------------------------------------------------------------------*/
 function drawLine(start,finish){
-	alert('in line event');
 	context.beginPath();
 	context.moveTo(start.x,start.y);
 	context.lineTo(finish.x,finish.y);
 	context.stroke();
+	alert('in end line event');
+	
 }
 
 function floodFill(e){
