@@ -54,7 +54,11 @@ function outputDebug(outputString){
 /*---------------------- Setup Listeners ----------------------*/
 
 // Setup Mousedown Listener
+//drawApp.canvas.removeEventListener('pointerdown', drawApp.onCanvasMouseDown(),!1);
 drawApp.canvas.on('mousedown',function(e){
+	// Save-undo fix avoids issues with brush placing dot over flood fill seed area
+	save();
+	undo();
 	if(currentToolType == toolType.BRUSH) {
 		drawApp.onCanvasMouseDown(e);	// default behaviors
 	} else if(currentToolType == toolType.FILL) {
@@ -75,6 +79,7 @@ drawApp.canvas.on('mousedown',function(e){
 	}
 });
 // Setup Mousemove Listener
+//document.removeEventListener('pointermove', drawApp.onCanvasMouseMove(),!1);
 document.onmousemove = function(e) {
  	// e.layerX   vs   e.pageX   vs e.offsetX
  	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
@@ -92,6 +97,7 @@ document.onmousemove = function(e) {
 	}
 };
 // Setup Mouseup Listener
+//document.removeEventListener('pointerdown', drawApp.onCanvasMouseDown(),!1);
 document.onmouseup = function(e) {
  	// e.layerX   vs   e.pageX   vs e.offsetX
  	outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
@@ -114,8 +120,7 @@ document.onmouseup = function(e) {
  /*------------------------------ Button Methods -------------------------------*/
 /*-----------------------------------------------------------------------------*/
 function drawLine(start,finish){
-	save();
-	undo();
+
 	context.beginPath();
 	context.moveTo(start.x,start.y);
 	context.lineTo(finish.x,finish.y);
@@ -123,9 +128,7 @@ function drawLine(start,finish){
 }
 
 function floodFill(e){
-	// Save-undo fix avoids issues with brush placing dot over flood fill seed area
-	save();
-	undo();
+
 	var w = drawApp.canvas.width();
 	var h = drawApp.canvas.height();
 	var p = drawApp.context.getImageData(0,0,w,h);
