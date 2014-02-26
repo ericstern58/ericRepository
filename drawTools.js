@@ -68,7 +68,6 @@ drawApp.canvas.on('mousedown',function(e){
 	if(currentToolType == toolType.FILL) {
 		painting = !1;
 		try{floodFill(e);}catch(err){alert(err);}
-		alert('in floodfill event');
 	} else if(currentToolType == toolType.LINE) {
 		painting = !1;
 		try{
