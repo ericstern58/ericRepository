@@ -38,7 +38,10 @@ var toolsype={BRUSH: 0,FILL: 1,LINE: 2,POLY: 3,TEST: 99};
 var currentToolType = toolType.BRUSH;
 var toolInUse = false;
 var mouse = {x: 0, y: 0};
+
 var canvasOffset = getCanvasOffset();
+var canvasWidth = drawApp.canvas.width();
+var canvasHeight = drawApp.canvas.height();
 
 // Setup tool state/event variables
 var lineStart =  {x: 0, y: 0};
@@ -67,6 +70,8 @@ drawApp.canvas.on('mousedown',function(e){
 	undo();
 	toolInUse = true;
 	canvasOffset = getCanvasOffset();
+	canvasWidth = drawApp.canvas.width();
+	canvasHeight = drawApp.canvas.height();
 	
 	if(currentToolType == toolType.FILL) {
 		painting = !1;
@@ -140,8 +145,8 @@ function drawLine(start,finish){
 
 function floodFill(e){
 
-	var w = drawApp.canvas.width();
-	var h = drawApp.canvas.height();
+	var w = canvasWidth;
+	var h = canvasHeight;
 	var p = drawApp.context.getImageData(0,0,w,h);
 	var d = p.data;
 	var targetColor = getColorFromCoords(e.offsetX,e.offsetY);
@@ -202,7 +207,7 @@ function floodFill(e){
 		}
 	}
 	function isWithinCanvasBounds(point){
-		return (point.x>=0 && point.y>=0 && point.x<drawApp.canvas.width() && point.y<drawApp.canvas.height())
+		return (point.x>=0 && point.y>=0 && point.x<canvasWidth && point.y<canvasHeight)
 	}
 	/*---------------------- Color Methods ----------------------*/
 	//Colors a pixel with a given color
