@@ -67,7 +67,7 @@ function outputDebug(outputString){
 //drawApp.canvas.removeEventListener('pointerdown', drawApp.onCanvasMouseDown(),!1);
 
 //drawApp.canvas.addEventListener("mousedown",function(e){
-//drawApp.canvas.on('mousedown', function(e){
+drawApp.canvas.on('mousedown', function(e){
 	if(currentToolType == toolType.BRUSH)
 		return;//drawApp.onCanvasMouseDown(e);	// default behaviors
 	toolInUse = true;
