@@ -73,11 +73,9 @@ drawApp.canvas.on('mousedown',function(e){
 			}catch(err){alert(err);}
 	} else if(currentToolType == toolType.LINE) {
 		painting = !1;
-		try{
-			lineStart.x = e.offsetX;
-			lineStart.y = e.offsetY;
+		lineStart.x = e.pageX-canvasOffset.left;
+		lineStart.y = e.pageY-canvasOffset.top;
 			//virtualLine(e);
-		}catch(err){alert(err);}
 	} else if(currentToolType == toolType.POLY) {
 		painting = !1;
 	} else{	//Else it is unknown, do nothing
@@ -136,8 +134,6 @@ function drawLine(start,finish){
 	context.moveTo(start.x,start.y);
 	context.lineTo(finish.x,finish.y);
 	context.stroke();
-	alert('in end line event');
-	
 }
 
 function floodFill(e){
