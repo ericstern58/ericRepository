@@ -299,10 +299,11 @@ function restoreCanvas() {
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
 /*-----------------------------------------------------------------------------*/
+var DTSheet;	//Outside function so that destructor can access it easily
 function setupCSS()
 {
-	var sheet = document.createElement('style');	//TODO: globalize sheet for drawTools destructor
-	sheet.innerHTML = "\n\
+	DTSheet = document.createElement('style');
+	DTSheet.innerHTML = "\n\
 		/*These drawTools-btn-Icon are css only icons*/\n\
 		#drawTools-btn-icon-fill{width:12px;height:12px;margin:7px -7px 1px 9px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
 		#drawTools-btn-icon-fill:before{content:'';border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;}\n\
@@ -330,7 +331,7 @@ function setupCSS()
 		.drawTools-btn-container.disabled,.drawTools-btn-container[disabled],fieldset[disabled] .drawTools-btn-container{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}\n\
 		\n\
 		";
-	document.body.appendChild(sheet);
+	document.body.appendChild(DTSheet);
 }
 
   /*-----------------------------------------------------------------------------*/
