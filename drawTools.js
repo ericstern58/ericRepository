@@ -1,6 +1,11 @@
 // Setup Constants
 var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
+var DTBrushes = [
+	{brushID: 'brush-2', brushSize: 2},
+	{brushID: 'brush-5', brushSize: 5},
+	{brushID: 'brush-12', brushSize: 12},
+	{brushID: 'brush-35', brushSize: 35}];
 
 // Setup Some Global Variables
 var context = drawApp.context;
@@ -171,7 +176,6 @@ function drawEllipse(startX,startY,finishX,finishY){
 	ye = y + h,            // y-end
 	xm = x + w / 2,        // x-middle
 	ym = y + h / 2;        // y-middle
-	
 	context.beginPath();
 	context.moveTo( x, ym );
 	context.bezierCurveTo( x, ym - oy, xm - ox, y, xm, y );
@@ -326,10 +330,13 @@ function setupCSS() {
 /*-----------------------------------------------------------------------------*/
 function modifyExistingElements() {
 	//TODO: make array variable with brush IDs (IN TOP)
+	for(var i=0;i<DTBrushes.length;i++)
+		document.getElementById(DTBrushes[i].brushID).parentNode.onclick = function(){selectBrushAUX(DTBrushes[i].brushSize);};
+	      		/*
 	document.getElementById('brush-2').parentNode.onclick = function(){selectBrushAUX(2);};
 	document.getElementById('brush-5').parentNode.onclick = function(){selectBrushAUX(5);};
 	document.getElementById('brush-12').parentNode.onclick = function(){selectBrushAUX(12);};
-	document.getElementById('brush-35').parentNode.onclick = function(){selectBrushAUX(35);};
+	document.getElementById('brush-35').parentNode.onclick = function(){selectBrushAUX(35);};*/
 
 	function selectBrushAUX(brushSize) {
 		drawApp.setSize(brushSize);				// Set default brush size
@@ -338,7 +345,7 @@ function modifyExistingElements() {
 		// Visually unselect any other tools
 		var ele = document.getElementsByName("drawTools-btn-radio");
 	   	for(var i=0;i<ele.length;i++)
-	      		ele[i].checked = false;
+	      	ele[i].checked = false;
 	}
 }
 
