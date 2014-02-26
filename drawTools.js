@@ -56,6 +56,7 @@ function outputDebug(outputString){
 // Setup Mousedown Listener
 //drawApp.canvas.removeEventListener('pointerdown', drawApp.onCanvasMouseDown(),!1);
 drawApp.canvas.on('mousedown',function(e){
+	painting = !1;
 	// Save-undo fix avoids issues with brush placing dot over flood fill seed area
 	save();
 	undo();
