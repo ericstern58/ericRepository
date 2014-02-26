@@ -151,6 +151,8 @@ function drawLine(startX,startY,finishX,finishY){
 	context.stroke();
 }
 function drawRect(startX,startY,finishX,finishY){
+	
+	context.lineCap="round";
 	context.beginPath();
 	//context.rect(startX,startY,finishX,finishY);
 	context.moveTo(startX,startY);
