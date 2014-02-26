@@ -265,7 +265,7 @@ function setupCSS() {
 		#drawTools-btn-icon-line{width:5px;height:15px;margin:3px 5px 2px 4px;background:black;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
 		#drawTools-btn-icon-poly{width:20px;margin:11px -3px 1px -3px;border-width:8px 4px 0;border-style:solid;border-color:black transparent;}\n\
 		#drawTools-btn-icon-poly:before{content:'';display:block;margin:-17px 0px 0px -4px;border-width:0 10px 9px;border-style:solid;border-color:transparent transparent black;}\n\
-		#drawTools-btn-icon-rect{margin:0px 0px 0px 0px;width:22px;height:15px;background:black;}\n\
+		#drawTools-btn-icon-rect{margin:3px 0px 0px 0px;width:22px;height:15px;background:black;}\n\
 		\n\
 		.drawTools-btn-group{position:relative;display:inline-block;vertical-align:middle;}\n\
 		.drawTools-btn-group>.drawTools-btn{position:relative;float:left;display:inline-block;}\n\
