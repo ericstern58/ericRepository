@@ -64,9 +64,6 @@ drawApp.canvas.on('mousedown',function(e){
 	if(currentToolType == toolType.BRUSH) {
 		return;//drawApp.onCanvasMouseDown(e);	// default behaviors
 	}
-	// Save-undo fix avoids issues with brush placing dot over flood fill seed area
-//	save();
-	//undo();
 	toolInUse = true;
 	canvasOffset = getCanvasOffset();	// Update canvas offset variable
 	canvasWidth = drawApp.canvas.width();	// Update canvas width variable
@@ -162,7 +159,10 @@ function drawRect(startX,startY,finishX,finishY){
 	context.stroke(); 
 }
 function floodFill(e){
-
+	// Save-undo fix avoids issues with brush placing dot over flood fill seed area
+	save();
+	undo();
+	
 	var w = canvasWidth;
 	var h = canvasHeight;
 	var p = drawApp.context.getImageData(0,0,w,h);
@@ -170,8 +170,6 @@ function floodFill(e){
 	var targetColor = getColorFromCoords(e.offsetX,e.offsetY);
 	var c = parseInt(drawApp.context.strokeStyle.substr(1,6),16);
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255);
-	var redColor = new RGBColor(255,0,0);
-	var blueColor = new RGBColor(0,0,255);
 	
 	// Note: target color must be different to execute function f
 	// If something is already colored the fill color, nothing needs to be done
