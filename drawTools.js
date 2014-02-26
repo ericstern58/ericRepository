@@ -27,9 +27,8 @@ function RGBColor(r,g,b) {
 	}
 }
 // Tool type enum
-var toolType={BRUSH: 0,FILL: 1,LINE: 2,POLY: 3,TEST: 99};
+var toolType={BRUSH:0,FILL:1,LINE:2,RECT:3,POLY:6,TEST:99};
 
-var toolsype={BRUSH: 0,FILL: 1,LINE: 2,POLY: 3,TEST: 99};
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
 /*-----------------------------------------------------------------------------*/
@@ -82,7 +81,10 @@ drawApp.canvas.on('mousedown',function(e){
 		painting = !1;
 		lineStart.x = e.pageX-canvasOffset.left;
 		lineStart.y = e.pageY-canvasOffset.top;
-			//virtualLine(e);
+	} else if(currentToolType == toolType.RECT) {
+		painting = !1;
+		lineStart.x = e.pageX-canvasOffset.left;
+		lineStart.y = e.pageY-canvasOffset.top;
 	} else if(currentToolType == toolType.POLY) {
 		painting = !1;
 	} else{	//Else it is unknown, do nothing
@@ -90,7 +92,6 @@ drawApp.canvas.on('mousedown',function(e){
 	}
 });
 // Setup Mousemove Listener
-//document.removeEventListener('pointermove', drawApp.onCanvasMouseMove(),!1);
 document.onmousemove = function(e) {
  	outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
  	if(currentToolType == toolType.BRUSH) {
@@ -102,9 +103,11 @@ document.onmousemove = function(e) {
 	if(currentToolType == toolType.FILL) {
 		// Do nothing
 	} else if(currentToolType == toolType.LINE) {
-		//context.clearRect(0, 0, canvasWidth, canvasHeight);
 		context.constructor.prototype.putImageData.call(context, restorePoints[restorePosition], 0, 0);
 		drawLine(lineStart.x,lineStart.y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+	} else if(currentToolType == toolType.RECT) {
+		context.constructor.prototype.putImageData.call(context, restorePoints[restorePosition], 0, 0);
+		drawRect(lineStart.x,lineStart.y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 	} else if(currentToolType == toolType.POLY) {
 		//imgTest();
 	} else{ //Else tool type is unknown, do nothing
@@ -112,7 +115,6 @@ document.onmousemove = function(e) {
 	}
 };
 // Setup Mouseup Listener
-//document.removeEventListener('pointerdown', drawApp.onCanvasMouseDown(),!1);
 document.onmouseup = function(e) {
 	if(currentToolType == toolType.BRUSH) {
 		return;//drawApp.onCanvasMouseUp(e);	// default behaviors
@@ -125,6 +127,9 @@ document.onmouseup = function(e) {
 	} else if(currentToolType == toolType.LINE) {
 		context.constructor.prototype.putImageData.call(context, restorePoints[restorePosition], 0, 0);
 		drawLine(lineStart.x,lineStart.y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top) );
+	} else if(currentToolType == toolType.RECT) {
+		context.constructor.prototype.putImageData.call(context, restorePoints[restorePosition], 0, 0);
+		drawRect(lineStart.x,lineStart.y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 	} else if(currentToolType == toolType.POLY) {
 		//imgTest();
 	} else{ //Else tool type is unknown, do nothing
@@ -145,7 +150,9 @@ function drawLine(startX,startY,finishX,finishY){
 	context.lineTo(finishX,finishY);
 	context.stroke();
 }
-
+function drawRect(startX,startY,finishX,finishY){
+	context.strokeRect(startX,startY,finishX,finishY);
+}
 function floodFill(e){
 
 	var w = canvasWidth;
@@ -258,6 +265,7 @@ function setupCSS() {
 		#drawTools-btn-icon-line{width:5px;height:15px;margin:3px 5px 2px 4px;background:black;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
 		#drawTools-btn-icon-poly{width:20px;margin:11px -3px 1px -3px;border-width:8px 4px 0;border-style:solid;border-color:black transparent;}\n\
 		#drawTools-btn-icon-poly:before{content:'';display:block;margin:-17px 0px 0px -4px;border-width:0 10px 9px;border-style:solid;border-color:transparent transparent black;}\n\
+		#drawTools-btn-icon-rect{margin:0px 0px 0px 0px;width:22px;height:15px;background:black;}\n\
 		\n\
 		.drawTools-btn-group{position:relative;display:inline-block;vertical-align:middle;}\n\
 		.drawTools-btn-group>.drawTools-btn{position:relative;float:left;display:inline-block;}\n\
@@ -310,6 +318,7 @@ function createDrawToolsElements() {
 	// Create Tool Buttons
 	createToolButton(toolType.FILL, "fill");
 	createToolButton(toolType.LINE, "line");
+	createToolButton(toolType.RECT, "rect");
 	createToolButton(toolType.POLY, "poly");
 	createToolButtonWithLabel(toolType.TEST, "test", "Test");
 }
