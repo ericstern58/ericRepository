@@ -1,10 +1,7 @@
 // Setup Constants
 var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
-var DTBrushes = [
-	{id: 'brush-2', size: 2},
-	{id: 'brush-5', size: 5},
-	{id: 'brush-12', size: 12},
+var DTBrushes = [{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},{id: 'brush-12', size: 12},
 	{id: 'brush-35', size: 35}];
 
 // Setup Some Global Variables
@@ -92,7 +89,7 @@ drawApp.canvas.on('mousedown', function(e){
 // Setup Mousemove Listener
 document.onmousemove = function(e) {
  	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
- 	outputDebug(DTBrushes[i].id);
+ 	outputDebug(DTBrushes[0].id);
  	if(currentToolType == toolType.BRUSH)
 		return;	// default behaviors
 	else if(!toolInUse)
