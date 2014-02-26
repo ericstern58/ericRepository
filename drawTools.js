@@ -160,8 +160,9 @@ function drawRect(startX,startY,finishX,finishY){
 }
 function floodFill(e){
 	// Save-undo fix avoids issues with brush placing dot over flood fill seed area
-	save();
-	undo();
+	//save();
+	//undo();
+	context.constructor.prototype.putImageData.call(context, restorePoints[restorePosition], 0, 0);
 	
 	var w = canvasWidth;
 	var h = canvasHeight;
