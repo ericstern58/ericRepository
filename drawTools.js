@@ -38,9 +38,10 @@ var currentToolType = toolType.BRUSH;
 var toolInUse = false;
 var mouse = {x: 0, y: 0};
 
-var canvasOffset = getCanvasOffset();
-var canvasWidth = drawApp.canvas.width();
-var canvasHeight = drawApp.canvas.height();
+var canvasOffset;
+var canvasWidth;
+var canvasHeight;
+updateCanvasStateVariables();
 
 // Setup tool state/event variables
 var lineStart =  {x: 0, y: 0};
@@ -65,9 +66,7 @@ drawApp.canvas.on('mousedown',function(e){
 		return;//drawApp.onCanvasMouseDown(e);	// default behaviors
 	}
 	toolInUse = true;
-	canvasOffset = getCanvasOffset();	// Update canvas offset variable
-	canvasWidth = drawApp.canvas.width();	// Update canvas width variable
-	canvasHeight = drawApp.canvas.height(); // Update canvas width variable
+	updateCanvasStateVariables();
 	
 	if(currentToolType == toolType.FILL) {
 		painting = !1;
@@ -254,10 +253,17 @@ function floodFill(e){
   /*-----------------------------------------------------------------------------*/
  /*--------------------------- Auxiliary Functions -----------------------------*/
 /*-----------------------------------------------------------------------------*/
-function getCanvasOffset() {
-	return $('#drawingCanvas').offset();
+
+
+function updateCanvasStateVariables() {
+	canvasOffset = $('#drawingCanvas').offset();	// Update canvas offset variable
+	canvasWidth = drawApp.canvas.width();			// Update canvas width variable
+	canvasHeight = drawApp.canvas.height(); 		// Update canvas width variable
 }
 
+function restoreCanvas() {
+	context.constructor.prototype.putImageData.call(context, restorePoints[restorePosition], 0, 0);
+}
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
 /*-----------------------------------------------------------------------------*/
