@@ -93,7 +93,7 @@ drawApp.canvas.addEventListener("mousedown",function(e){
 		alert('toolType not identified');
 	}
 //});
-}, false);
+}, false)();
 // Setup Mousemove Listener
 document.onmousemove = function(e) {
  	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
