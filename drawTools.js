@@ -35,6 +35,7 @@ var toolType={BRUSH: 0,FILL: 1,LINE: 2,POLY: 3,TEST: 99};
 
 // Setup Some State Variables
 var currentToolType = toolType.BRUSH;
+var toolInUse = false;
 var mouse = {x: 0, y: 0};
 var canvasOffset = getCanvasOffset();
 
@@ -56,12 +57,16 @@ function outputDebug(outputString){
 // Setup Mousedown Listener
 //drawApp.canvas.removeEventListener('pointerdown', drawApp.onCanvasMouseDown(),!1);
 drawApp.canvas.on('mousedown',function(e){
+	
+	if(currentToolType == toolType.BRUSH) {
+		return;//drawApp.onCanvasMouseDown(e);	// default behaviors
+	}
 	// Save-undo fix avoids issues with brush placing dot over flood fill seed area
 	save();
 	undo();
-	if(currentToolType == toolType.BRUSH) {
-		//drawApp.onCanvasMouseDown(e);	// default behaviors
-	} else if(currentToolType == toolType.FILL) {
+	toolInUse = true;
+	
+	if(currentToolType == toolType.FILL) {
 		painting = !1;
 		try{floodFill(e);}catch(err){alert(err);}
 	} else if(currentToolType == toolType.LINE) {
@@ -98,11 +103,14 @@ document.onmousemove = function(e) {
 // Setup Mouseup Listener
 //document.removeEventListener('pointerdown', drawApp.onCanvasMouseDown(),!1);
 document.onmouseup = function(e) {
- 	// e.layerX   vs   e.pageX   vs e.offsetX
  	outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
 	if(currentToolType == toolType.BRUSH) {
-		//drawApp.onCanvasMouseUp(e);	// default behaviors
-	} else if(currentToolType == toolType.FILL) {
+		return;//drawApp.onCanvasMouseUp(e);	// default behaviors
+	} else if(!toolInUse) {	// If no tool is in use, ignore event
+		return;
+	}
+	
+	if(currentToolType == toolType.FILL) {
 		// Do nothing
 	} else if(currentToolType == toolType.LINE) {
 		try{drawLine(new Point(lineStart.x,lineStart.y),new Point((e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top)));}
@@ -114,9 +122,8 @@ document.onmouseup = function(e) {
 		alert('toolType not identified');
 	}
 	
-	if(currentToolType != toolType.BRUSH) {
-		save();
-	}
+	toolInUse = false;
+	save();
 };
 
   /*-----------------------------------------------------------------------------*/
