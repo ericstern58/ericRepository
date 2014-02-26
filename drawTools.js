@@ -152,7 +152,12 @@ function drawLine(startX,startY,finishX,finishY){
 }
 function drawRect(startX,startY,finishX,finishY){
 	context.beginPath();
-	context.rect(startX,startY,finishX,finishY);
+	//context.rect(startX,startY,finishX,finishY);
+	context.moveTo(startX,startY);
+	context.lineTo(finishX,startY);
+	context.lineTo(finishX,finishY);
+	context.lineTo(startX,finishY);
+	context.lineTo(startX,startY);
 	context.stroke(); 
 }
 function floodFill(e){
