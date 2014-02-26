@@ -50,6 +50,11 @@ setupCSS();					// Setup necessary CSS for DrawTools
 modifyExistingElements();	// Make Necessary Modifications to Existing Elements
 createDrawToolsElements();	// Create Draw Tools Elements and Interface
 
+// Work in progess: exit button
+var exitButton = createToolButtonWithLabel(toolType.BRUSH,"deleteButton","X");
+exitButton.onclick = function(){DTDestroy();};
+
+
 // Setup Debug Stuff
 var debugLabel = createToolButtonWithLabel("label", '0');
 function outputDebug(outputString){
@@ -294,7 +299,8 @@ function restoreCanvas() {
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
 /*-----------------------------------------------------------------------------*/
-function setupCSS() {
+function setupCSS()
+{
 	var sheet = document.createElement('style');	//TODO: globalize sheet for drawTools destructor
 	sheet.innerHTML = "\n\
 		/*These drawTools-btn-Icon are css only icons*/\n\
@@ -330,24 +336,17 @@ function setupCSS() {
   /*-----------------------------------------------------------------------------*/
  /*---------------------- Elements Creation/Manipulation -----------------------*/
 /*-----------------------------------------------------------------------------*/
-function modifyExistingElements() {
-	//TODO: make array variable with brush IDs (IN TOP)
-	
+function modifyExistingElements() 
+{
+	/*	// TODO:Figure this out. This doesn't work for some reason, so i hardcoded it.
+	for(var j=0;j<DTBrushes.length;j++)
+		document.getElementById(DTBrushes[j].id).parentNode.onclick = function(){selectBrushAUX(DTBrushes[j].size);};
+	*/
 	document.getElementById(DTBrushes[0].id).parentNode.onclick = function(){selectBrushAUX(DTBrushes[0].size);};
 	document.getElementById(DTBrushes[1].id).parentNode.onclick = function(){selectBrushAUX(DTBrushes[1].size);};
 	document.getElementById(DTBrushes[2].id).parentNode.onclick = function(){selectBrushAUX(DTBrushes[2].size);};
 	document.getElementById(DTBrushes[3].id).parentNode.onclick = function(){selectBrushAUX(DTBrushes[3].size);};
 	
-	/*
-	for(var j=0;j<DTBrushes.length;j++)
-		document.getElementById(DTBrushes[j].id).parentNode.onclick = function(){selectBrushAUX(DTBrushes[j].size);};
-	*/
-	/*
-	document.getElementById('brush-2').parentNode.onclick = function(){selectBrushAUX(2);};
-	document.getElementById('brush-5').parentNode.onclick = function(){selectBrushAUX(5);};
-	document.getElementById('brush-12').parentNode.onclick = function(){selectBrushAUX(12);};
-	document.getElementById('brush-35').parentNode.onclick = function(){selectBrushAUX(35);};
-*/
 	function selectBrushAUX(brushSize) {
 		drawApp.setSize(brushSize);				// Set default brush size
 		currentToolType = toolType.BRUSH;		// Update tool type
@@ -359,7 +358,8 @@ function modifyExistingElements() {
 	}
 }
 
-function createDrawToolsElements() {
+function createDrawToolsElements() 
+{
 	//Create DIV in which DrawTools will be placed in
 	var drawToolsDiv = document.createElement('div');
 	drawToolsDiv.id = DRAW_TOOLS_ID;
@@ -376,16 +376,15 @@ function createDrawToolsElements() {
 }
 
 //Creates Tool Buttons (wit a label)
-function createToolButtonWithLabel(type, name, label){
+function createToolButtonWithLabel(type, name, label)
+{
 	var button = createToolButton(type, name);
-	
-	//Place element inside it( text )
-	button.getElementsByTagName('div')[0].innerHTML = label;
-	
+	button.getElementsByTagName('div')[0].innerHTML = label; // Place text inside it
 	return button;
 }
 //Creates Tool Buttons (no innerHTML)
-function createToolButton(type, name){
+function createToolButton(type, name)
+{
 	//create button
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
@@ -412,4 +411,10 @@ function createToolButton(type, name){
 	container.appendChild(icon);
 	
 	return button;
+}
+// Destroys all elements, styling and javascript
+function DTDestroy() 
+{
+	// 1. Destroy HTML
+	document.getElementById(DRAW_TOOLS_ID).remove();
 }
