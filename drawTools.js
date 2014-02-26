@@ -56,26 +56,24 @@ function outputDebug(outputString){
 // Setup Mousedown Listener
 //drawApp.canvas.removeEventListener('pointerdown', drawApp.onCanvasMouseDown(),!1);
 drawApp.canvas.on('mousedown',function(e){
-	painting = !1;
 	// Save-undo fix avoids issues with brush placing dot over flood fill seed area
 	save();
 	undo();
 	if(currentToolType == toolType.BRUSH) {
 		//drawApp.onCanvasMouseDown(e);	// default behaviors
 	} else if(currentToolType == toolType.FILL) {
+		painting = !1;
 		try{floodFill(e);}catch(err){alert(err);}
 	} else if(currentToolType == toolType.LINE) {
+		painting = !1;
 		try{
 			lineStart.x = e.offsetX;
 			lineStart.y = e.offsetY;
 			//virtualLine(e);
-		} catch(err) {
-			alert(err);
-		}
+		}catch(err){alert(err);}
 	} else if(currentToolType == toolType.POLY) {
-		//imgTest();
-	} else{
-		//Else it is unknown, do nothing
+		painting = !1;
+	} else{	//Else it is unknown, do nothing
 		alert('toolType not identified');
 	}
 });
@@ -114,6 +112,10 @@ document.onmouseup = function(e) {
 	} else{
 		//Else it is unknown, do nothing
 		alert('toolType not identified');
+	}
+	
+	if(currentToolType != toolType.BRUSH) {
+		save();
 	}
 };
 
