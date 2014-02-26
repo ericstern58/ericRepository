@@ -157,8 +157,11 @@ function drawRect(startX,startY,finishX,finishY){
 	//context.rect(startX,startY,finishX,finishY);
 	context.moveTo(startX,startY);
 	context.lineTo(finishX,startY);
+	context.moveTo(finishX,startY);
 	context.lineTo(finishX,finishY);
+	context.moveTo(finishX,finishY);
 	context.lineTo(startX,finishY);
+	context.moveTo(startX,finishY);
 	context.lineTo(startX,startY);
 	context.stroke(); 
 }
