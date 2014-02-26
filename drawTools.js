@@ -57,7 +57,6 @@ function outputDebug(outputString){
 // Setup Mousedown Listener
 //drawApp.canvas.removeEventListener('pointerdown', drawApp.onCanvasMouseDown(),!1);
 drawApp.canvas.on('mousedown',function(e){
-	alert('in mousedown event');
 	if(currentToolType == toolType.BRUSH) {
 		return;//drawApp.onCanvasMouseDown(e);	// default behaviors
 	}
@@ -68,6 +67,7 @@ drawApp.canvas.on('mousedown',function(e){
 	
 	if(currentToolType == toolType.FILL) {
 		painting = !1;
+		alert('in floodfill event');
 		try{floodFill(e);}catch(err){alert(err);}
 	} else if(currentToolType == toolType.LINE) {
 		painting = !1;
