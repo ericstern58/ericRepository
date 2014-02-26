@@ -89,9 +89,9 @@ drawApp.canvas.on('mousedown',function(e){
 document.onmousemove = function(e) {
  	outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
  	if(currentToolType == toolType.BRUSH) {
-		return;//drawApp.onCanvasMouseMove(e);	// default behaviors
-	} else if(!toolInUse) {	// If no tool is in use, ignore event
-		return;
+		return;	// default behaviors
+	} else if(!toolInUse) {	
+		return;	// If no tool is in use, ignore event
 	}
 	
 	if(currentToolType == toolType.FILL) {
@@ -163,12 +163,12 @@ function drawRect(startX,startY,finishX,finishY){
 	context.stroke(); 
 }
 function drawEllipse(startX,startY,finishX,finishY){
-	var kappa = .5522848,
-	x = startX;
-	y = startY;
-	w = finishX-startX;
-	h = finishY-startY;
-	ox = (w / 2) * kappa, // control point offset horizontal
+	var x = startX,
+	y = startY,
+	w = finishX-startX,
+	h = finishY-startY,
+	kappa = .5522848,
+	ox = (w / 2)*kappa, // control point offset horizontal
 	oy = (h / 2) * kappa, // control point offset vertical
 	xe = x + w,           // x-end
 	ye = y + h,           // y-end
@@ -177,10 +177,10 @@ function drawEllipse(startX,startY,finishX,finishY){
 	
 	context.beginPath();
 	context.moveTo(x,ym);
-	context.bezierCurveTo(x, ym - oy, xm - ox, y, xm, y);
-	context.bezierCurveTo(xm + ox, y, xe, ym - oy, xe, ym);
-	context.bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye);
-	context.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
+	context.bezierCurveTo(x,ym-oy,xm-ox,y,xm,y);
+	context.bezierCurveTo(xm+ox,y,xe,ym-oy,xe,ym);
+	context.bezierCurveTo(xe,ym+oy,xm+ox,ye,xm,ye);
+	context.bezierCurveTo(xm-ox,ye,x,ym+oy,x,ym);
 	context.closePath();
 	context.stroke();
 }
