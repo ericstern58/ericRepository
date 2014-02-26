@@ -210,6 +210,7 @@ function floodFill(e){
 		f(e.offsetX,e.offsetY);
 	} // Done
 	context.putImageData(p,0,0);
+	var djh = 5;
 
 	function f(xinitial,yinitial){
 		var queue = [new Point(xinitial,yinitial)];
