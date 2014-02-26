@@ -65,6 +65,7 @@ drawApp.canvas.on('mousedown',function(e){
 	save();
 	undo();
 	toolInUse = true;
+	canvasOffset = getCanvasOffset();
 	
 	if(currentToolType == toolType.FILL) {
 		painting = !1;
@@ -282,7 +283,6 @@ function modifyExistingElements() {
 	function selectBrushAUX(brushSize) {
 		drawApp.setSize(brushSize);				// Set default brush size
 		currentToolType = toolType.BRUSH;		// Update tool type
-		var canvasOffset = getCanvasOffset();	// Update canvas offset (in case user changed zoom)
 		
 		// Visually unselect any other tools
 		var ele = document.getElementsByName("drawTools-btn-radio");
@@ -321,7 +321,7 @@ function createToolButton(type, name){
 	var button = document.createElement('label');
 	button.id = 'tool-' + name;
 	button.className = 'drawTools-btn';
-	button.onclick = function(){currentToolType=type;canvasOffset = getCanvasOffset();};
+	button.onclick = function(){currentToolType=type;};
 	document.getElementById(DRAW_TOOLS_ID).appendChild(button);
 	
 	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
