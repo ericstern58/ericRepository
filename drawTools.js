@@ -51,7 +51,7 @@ modifyExistingElements();	// Make Necessary Modifications to Existing Elements
 createDrawToolsElements();	// Create Draw Tools Elements and Interface
 
 // Work in progess: exit button
-var exitButton = createToolButtonWithLabel(toolType.TEST,"deleteButton","X");
+var exitButton = createToolButton(toolType.TEST,"exit");
 exitButton.onclick = function(){DTDestroy();};
 
 
@@ -312,6 +312,8 @@ function setupCSS()
 		#drawTools-btn-icon-poly:before{content:'';display:block;margin:-17px 0px 0px -4px;border-width:0 10px 9px;border-style:solid;border-color:transparent transparent black;}\n\
 		#drawTools-btn-icon-rect{margin:3px 0px 0px 0px;width:22px;height:15px;background:black;}\n\
 		#drawTools-btn-icon-ellipse{margin:3px 0px 0px 0px;width:22px;height:15px;background:black;-moz-border-radius:11px/8px;-webkit-border-radius:11px/8px;border-radius:11px/8px;}\n\
+		#drawTools-btn-icon-exit{width:5px;height:28px;margin:0px 0px 0px 0px;background:red;-webkit-transform:skew(43deg);-moz-transform:skew(43deg);-o-transform:skew(43deg);transform:skew(43deg);}\n\
+		#drawTools-btn-icon-exit:before{width:5px;height:28px;margin:0px;background:red;-webkit-transform:skew(-62deg);-moz-transform:skew(-62deg);-o-transform:skew(-62deg);transform:skew(-62deg);content:'';display:block;}\n\
 		\n\
 		.drawTools-btn-group{position:relative;display:inline-block;vertical-align:middle;}\n\
 		.drawTools-btn-group>.drawTools-btn{position:relative;float:left;display:inline-block;}\n\
