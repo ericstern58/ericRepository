@@ -130,6 +130,7 @@ document.onmouseup = function(e) {
  /*------------------------------ Button Methods -------------------------------*/
 /*-----------------------------------------------------------------------------*/
 function drawLine(start,finish){
+	alert('in line event');
 	context.beginPath();
 	context.moveTo(start.x,start.y);
 	context.lineTo(finish.x,finish.y);
