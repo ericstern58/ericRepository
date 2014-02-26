@@ -4,7 +4,6 @@ var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.pare
 
 // Setup Some Global Variables
 var context=drawApp.context;
-var canvas=context.canvas;
 
 context.putImageData=CanvasRenderingContext2D.prototype.putImageData;
 drawApp.canvas.off('mousedown');
@@ -27,7 +26,7 @@ function RGBColor(r,g,b) {
 	}
 }
 // Tool type enum
-var toolType={BRUSH:0,FILL:1,LINE:2,RECT:3,POLY:6,TEST:99};
+var toolType={BRUSH:0,FILL:1,LINE:2,RECT:3,ELLIPSE:4,POLY:6,TEST:99};
 
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
@@ -60,7 +59,6 @@ function outputDebug(outputString){
 // Setup Mousedown Listener
 //drawApp.canvas.removeEventListener('pointerdown', drawApp.onCanvasMouseDown(),!1);
 drawApp.canvas.on('mousedown',function(e){
-	
 	if(currentToolType == toolType.BRUSH) {
 		return;//drawApp.onCanvasMouseDown(e);	// default behaviors
 	}
@@ -76,6 +74,9 @@ drawApp.canvas.on('mousedown',function(e){
 		painting = !1;
 		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top}
 	} else if(currentToolType == toolType.RECT) {
+		painting = !1;
+		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top}
+	} else if(currentToolType == toolType.ELLIPSE) {
 		painting = !1;
 		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top}
 	} else if(currentToolType == toolType.POLY) {
@@ -101,6 +102,9 @@ document.onmousemove = function(e) {
 	} else if(currentToolType == toolType.RECT) {
 		restoreCanvas();
 		drawRect(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+	} else if(currentToolType == toolType.ELLIPSE) {
+		restoreCanvas();
+		drawEllipse(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 	} else if(currentToolType == toolType.POLY) {
 		//imgTest();
 	} else{ //Else tool type is unknown, do nothing
@@ -123,11 +127,15 @@ document.onmouseup = function(e) {
 	} else if(currentToolType == toolType.RECT) {
 		restoreCanvas();
 		drawRect(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+	} else if(currentToolType == toolType.ELLIPSE) {
+		restoreCanvas();
+		drawEllipse(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 	} else if(currentToolType == toolType.POLY) {
 		//imgTest();
 	} else{ //Else tool type is unknown, do nothing
 		alert('toolType not identified');
-}	
+	}
+	DTPoints.length = 0;
 	toolInUse = false;
 	save();
 };
@@ -154,6 +162,29 @@ function drawRect(startX,startY,finishX,finishY){
 	context.lineTo(startX,startY);
 	context.stroke(); 
 }
+function drawEllipse(startX,startY,finishX,finishY){
+	var kappa = .5522848,
+	x = startX;
+	y = startY;
+	w = finishX-startX;
+	h = finishY-startY;
+	ox = (w / 2) * kappa, // control point offset horizontal
+	oy = (h / 2) * kappa, // control point offset vertical
+	xe = x + w,           // x-end
+	ye = y + h,           // y-end
+	xm = x + w / 2,       // x-middle
+	ym = y + h / 2;       // y-middle
+	
+	context.beginPath();
+	context.moveTo(x,ym);
+	context.bezierCurveTo(x, ym - oy, xm - ox, y, xm, y);
+	context.bezierCurveTo(xm + ox, y, xe, ym - oy, xe, ym);
+	context.bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye);
+	context.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
+	context.closePath();
+	context.stroke();
+}
+
 function floodFill(e){
 	// This fix avoids issues with brush placing dot over flood fill seed area
 	restoreCanvas();
@@ -270,6 +301,7 @@ function setupCSS() {
 		#drawTools-btn-icon-poly{width:20px;margin:11px -3px 1px -3px;border-width:8px 4px 0;border-style:solid;border-color:black transparent;}\n\
 		#drawTools-btn-icon-poly:before{content:'';display:block;margin:-17px 0px 0px -4px;border-width:0 10px 9px;border-style:solid;border-color:transparent transparent black;}\n\
 		#drawTools-btn-icon-rect{margin:3px 0px 0px 0px;width:22px;height:15px;background:black;}\n\
+		#drawTools-btn-icon-ellipse{width:22px;height:15px;background:black;-moz-border-radius:11px/8px;-webkit-border-radius:11px/8px;border-radius:11px/8px;}\n\
 		\n\
 		.drawTools-btn-group{position:relative;display:inline-block;vertical-align:middle;}\n\
 		.drawTools-btn-group>.drawTools-btn{position:relative;float:left;display:inline-block;}\n\
@@ -321,11 +353,12 @@ function createDrawToolsElements() {
 	DRAWCEPTION_TOOLBAR.appendChild(drawToolsDiv);
 	
 	// Create Tool Buttons
-	createToolButton(toolType.FILL, "fill");
-	createToolButton(toolType.LINE, "line");
-	createToolButton(toolType.RECT, "rect");
-	createToolButton(toolType.POLY, "poly");
-	createToolButtonWithLabel(toolType.TEST, "test", "Test");
+	createToolButton(toolType.FILL,"fill");
+	createToolButton(toolType.LINE,"line");
+	createToolButton(toolType.RECT,"rect");
+	createToolButton(toolType.ELLIPSE,"ellipse");
+	createToolButton(toolType.POLY,"poly");
+	createToolButtonWithLabel(toolType.TEST,"test","Test");
 }
 
 //Creates Tool Buttons (wit a label)
