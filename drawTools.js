@@ -65,12 +65,12 @@ drawApp.canvas.on('mousedown',function(e){
 		return;//drawApp.onCanvasMouseDown(e);	// default behaviors
 	}
 	// Save-undo fix avoids issues with brush placing dot over flood fill seed area
-	save();
-	undo();
+//	save();
+	//undo();
 	toolInUse = true;
-	canvasOffset = getCanvasOffset();
-	canvasWidth = drawApp.canvas.width();
-	canvasHeight = drawApp.canvas.height();
+	canvasOffset = getCanvasOffset();	// Update canvas offset variable
+	canvasWidth = drawApp.canvas.width();	// Update canvas width variable
+	canvasHeight = drawApp.canvas.height(); // Update canvas width variable
 	
 	if(currentToolType == toolType.FILL) {
 		painting = !1;
@@ -117,7 +117,7 @@ document.onmousemove = function(e) {
 // Setup Mouseup Listener
 document.onmouseup = function(e) {
 	if(currentToolType == toolType.BRUSH) {
-		return;//drawApp.onCanvasMouseUp(e);	// default behaviors
+		return;
 	} else if(!toolInUse) {	// If no tool is in use, ignore event
 		return;
 	}
@@ -134,8 +134,7 @@ document.onmouseup = function(e) {
 		//imgTest();
 	} else{ //Else tool type is unknown, do nothing
 		alert('toolType not identified');
-	}
-	
+}	
 	toolInUse = false;
 	save();
 };
@@ -151,10 +150,7 @@ function drawLine(startX,startY,finishX,finishY){
 	context.stroke();
 }
 function drawRect(startX,startY,finishX,finishY){
-	
-	context.lineCap="round";
 	context.beginPath();
-	//context.rect(startX,startY,finishX,finishY);
 	context.moveTo(startX,startY);
 	context.lineTo(finishX,startY);
 	context.moveTo(finishX,startY);
