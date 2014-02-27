@@ -95,7 +95,7 @@ drawApp.canvas.on('mousedown', function(e){
 });
 //}, false);
 // Setup Mousemove Listener
-document.on('mousemove', function(e){
+document.body.on('mousemove', function(e){
 //document.onmousemove = function(e) {
  	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
 
