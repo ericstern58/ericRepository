@@ -402,7 +402,7 @@ function createDrawToolsElements()
 	debugLabel = createToolButtonWithLabel(toolType.UTIL,"label", '0');
 	
 	var optionsButton = createToolButton(toolType.UTIL,"options");
-	optionsButton.onclick = function(){};//nothing yet};
+	optionsButton.onclick = function(){toggleOptions();};//nothing yet};
 	
 	//Create DIV in which Options will be placed in
 	var optionsDiv = document.createElement('div');
@@ -467,4 +467,7 @@ function DTDestroy()
 	window.DTToolsIsCurrentlyInstalled = false;
 	// 5. Destroy JavaScript
 	document.getElementById('DTScript').remove();
+}
+function toggleOptions() {
+	$("#drawTools-options").fadeToggle();
 }
