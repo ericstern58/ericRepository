@@ -156,7 +156,6 @@ function drawLine(startX,startY,finishX,finishY){
 	context.stroke();
 }
 function drawRect(startX,startY,finishX,finishY){
-	
 	context.beginPath();
 	context.moveTo( startX, startY );
 	context.lineTo( finishX, startY );
