@@ -406,7 +406,11 @@ function createDrawToolsElements()
 	
 	var exitButton = createToolButton(toolType.UTIL,"exit");
 	exitButton.onclick = function(){DTDestroy();};
-	
+	/*
+	//Create DIV in which Options will be placed in
+	var optionsDiv = document.createElement('div');
+	optionsDiv.id = 'drawTools-options';
+	drawToolsDiv.appendChild(optionsDiv);*/
 }
 
 //Creates Tool Buttons (wit a label)
