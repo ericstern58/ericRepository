@@ -323,8 +323,8 @@ function setupCSS()
 		#drawTools-btn-icon-line{margin:0px 0px 0px 0px;width:5px;height:15px;background:black;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
 		#drawTools-btn-icon-poly{margin:0px 0px 0px 0px;width:20px;border-width:8px 4px 0;border-style:solid;border-color:black transparent;}\n\
 		#drawTools-btn-icon-poly:before{margin:-17px 0px 0px -4px;content:'';display:block;border-width:0 10px 9px;border-style:solid;border-color:transparent transparent black;}\n\
-		#drawTools-btn-icon-rect{margin:0px 0px 0px 0px;width:22px;height:15px;background:black;}\n\
-		#drawTools-btn-icon-ellipse{margin:0px 0px 0px 0px;width:22px;height:15px;background:black;-moz-border-radius:11px/8px;-webkit-border-radius:11px/8px;border-radius:11px/8px;}\n\
+		#drawTools-btn-icon-rect{margin:8px 8px 0px 8px;width:22px;height:15px;background:black;}\n\
+		#drawTools-btn-icon-ellipse{margin:8px 8px 0px 8px;width:22px;height:15px;background:black;-moz-border-radius:11px/8px;-webkit-border-radius:11px/8px;border-radius:11px/8px;}\n\
 		#drawTools-btn-icon-exit{margin:0px 0px 0px 0px;width:5px;height:21px;background:#c2c2c2;-webkit-transform:skew(43deg);-moz-transform:skew(43deg);-o-transform:skew(43deg);transform:skew(43deg);}\n\
 		#drawTools-btn-icon-exit:before{width:5px;height:21px;background:#c2c2c2;-webkit-transform:skew(-62deg);-moz-transform:skew(-62deg);-o-transform:skew(-62deg);transform:skew(-62deg);content:'';display:block;}\n\
 		#drawTools-btn-icon-options{margin:0px 0px 0px 0px;width:30px;height:5px;background:#c2c2c2;border-radius:1px;}\n\
