@@ -8,10 +8,7 @@ var DTBrushes = [{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},{id: 'brush-1
 var context = drawApp.context;
 
 context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
-drawApp.canvas.off('mousedown');
-//document.off('mousemove');
-var gjd = 4;
-var stdsa = gjd +2;
+
 
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
@@ -67,9 +64,7 @@ function outputDebug(outputString){
 /*---------------------- Setup Listeners ----------------------*/
 
 // Setup Mousedown Listener
-//drawApp.canvas.removeEventListener('pointerdown', drawApp.onCanvasMouseDown(),!1);
-
-//drawApp.canvas.addEventListener("pointerdown",function(e){
+drawApp.canvas.off('mousedown');
 drawApp.canvas.on('mousedown', function(e){
 	if(currentToolType == toolType.BRUSH)
 		return;//drawApp.onCanvasMouseDown(e);	// default behaviors
@@ -96,10 +91,9 @@ drawApp.canvas.on('mousedown', function(e){
 		alert('toolType not identified');
 	}
 });
-//}, false);
 // Setup Mousemove Listener
-document.on('mousemove', function(e){
-//document.onmousemove = function(e) {
+//document.on('mousemove', function(e){
+document.onmousemove = function(e) {
  	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
 
  	if(currentToolType == toolType.BRUSH)
@@ -123,8 +117,8 @@ document.on('mousemove', function(e){
 	} else{ //Else tool type is unknown, do nothing
 		alert('toolType not identified');
 	}
-//};
-});
+};
+//});
 // Setup Mouseup Listener
 document.onmouseup = function(e) {
 	if(currentToolType == toolType.BRUSH)
