@@ -425,4 +425,6 @@ function DTDestroy()
 	$(document).off('mouseup');
 	// 4. Destroy JavaScript
 	document.getElementById('DTScript').remove();
+	// 5. Set the state variable to reflect DTTools uninstallation
+	window.DTToolsIsCurrentlyInstalled = false;
 }
