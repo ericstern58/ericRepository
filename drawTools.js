@@ -1,4 +1,3 @@
-alert("entered script");
 // Setup Constants
 var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
