@@ -354,7 +354,7 @@ function setupCSS()
 		#drawTools-btn-exit .drawTools-btn-container:active{background-color:#a50000;border-bottom:1px solid #a50000;}\n\
 		\n\
 		#drawTools-options{margin:-150px 0px 0px 0px;background:#252525;border-bottom:1px solid #171717;width:300px;height:150px;padding:8px;position:absolute;}\n\
-		
+		\n\
 		";
 	document.body.appendChild(DTSheet);
 }
