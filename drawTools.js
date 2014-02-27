@@ -67,7 +67,7 @@ function outputDebug(outputString){
 //drawApp.canvas.removeEventListener('pointerdown', drawApp.onCanvasMouseDown(),!1);
 
 //drawApp.canvas.addEventListener("pointerdown",function(e){
-drawApp.canvas.live('mousedown', function(e){
+drawApp.canvas.on('mousedown', function(e){
 	if(currentToolType == toolType.BRUSH)
 		return;//drawApp.onCanvasMouseDown(e);	// default behaviors
 	toolInUse = true;
@@ -95,7 +95,8 @@ drawApp.canvas.live('mousedown', function(e){
 });
 //}, false);
 // Setup Mousemove Listener
-document.onmousemove = function(e) {
+document.on('mousemove', function(e){
+//document.onmousemove = function(e) {
  	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
 
  	if(currentToolType == toolType.BRUSH)
@@ -119,7 +120,8 @@ document.onmousemove = function(e) {
 	} else{ //Else tool type is unknown, do nothing
 		alert('toolType not identified');
 	}
-};
+//};
+});
 // Setup Mouseup Listener
 document.onmouseup = function(e) {
 	if(currentToolType == toolType.BRUSH)
