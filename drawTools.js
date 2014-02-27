@@ -352,7 +352,7 @@ function setupCSS()
 		#drawTools-btn-options .drawTools-btn-container{}\n\
 		#drawTools-btn-options .drawTools-btn-container{background:#252525;border-bottom:1px solid #171717;height:34px;padding:6px 12px;margin:0px;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border-radius:inherit;border-top:1px solid transparent;white-space:nowrap;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-o-user-select:none;user-select:none;}\n\
 		#drawTools-btn-options .drawTools-btn-container:focus{outline:thin dotted #fff;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}\n\
-		#drawTools-btn-options .drawTools-btn-container:hover,#drawTools-btn-options .drawTools-btn:focus{background-color:#3a3a3a;border-bottom:1px solid #0e0e0e;}\n\
+		#drawTools-btn-options .drawTools-btn-container:hover,#drawTools-btn-options .drawTools-btn:focus{background-color:#2c2c2c;border-bottom:1px solid #202020;}\n\
 		#drawTools-btn-options .drawTools-btn-container:active{background-color:#171717;border-bottom:1px solid #171717;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
 		\n\
 		#drawTools-btn-exit .drawTools-btn-container{}\n\
