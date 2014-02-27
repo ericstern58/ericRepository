@@ -328,9 +328,9 @@ function setupCSS()
 		#drawTools-btn-icon-ellipse{margin:3px 0px 0px 0px;width:22px;height:15px;background:black;-moz-border-radius:11px/8px;-webkit-border-radius:11px/8px;border-radius:11px/8px;}\n\
 		#drawTools-btn-icon-exit{width:5px;height:24px;margin:-2px 5px 0px 4px;background:red;-webkit-transform:skew(43deg);-moz-transform:skew(43deg);-o-transform:skew(43deg);transform:skew(43deg);}\n\
 		#drawTools-btn-icon-exit:before{width:5px;height:24px;margin:0px;background:red;-webkit-transform:skew(-62deg);-moz-transform:skew(-62deg);-o-transform:skew(-62deg);transform:skew(-62deg);content:'';display:block;}\n\
-		#drawTools-btn-icon-options{margin:0px 0px 0px 0px;width:30px;height:5px;background:black;border-radius:1px;}\n\
-		#drawTools-btn-icon-options:before{margin:8px 0px 0px 0px;width:30px;height:5px;background:black;border-radius:1px;content:'';display:block;position:absolute;}\n\
-		#drawTools-btn-icon-options:after{margin:16px 0px 0px 0px;width:30px;height:5px;background:black;border-radius:1px;content:'';display:block;position:absolute;}\n\
+		#drawTools-btn-icon-options{margin:0px 0px 0px 0px;width:30px;height:5px;background:#c2c2c2;border-radius:1px;}\n\
+		#drawTools-btn-icon-options:before{margin:8px 0px 0px 0px;width:30px;height:5px;background:#c2c2c2;border-radius:1px;content:'';display:block;position:absolute;}\n\
+		#drawTools-btn-icon-options:after{margin:16px 0px 0px 0px;width:30px;height:5px;background:#c2c2c2;border-radius:1px;content:'';display:block;position:absolute;}\n\
 		\n\
 		.drawTools-btn-group{position:relative;display:inline-block;vertical-align:middle;}\n\
 		.drawTools-btn-group>.drawTools-btn{position:relative;float:left;display:inline-block;}\n\
