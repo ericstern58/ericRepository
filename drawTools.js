@@ -156,7 +156,7 @@ function drawLine(startX,startY,finishX,finishY){
 	context.stroke();
 }
 function drawRect(startX,startY,finishX,finishY){
-	/*
+	
 	context.beginPath();
 	context.moveTo( startX, startY );
 	context.lineTo( finishX, startY );
@@ -166,13 +166,13 @@ function drawRect(startX,startY,finishX,finishY){
 	context.lineTo( startX, finishY );
 	context.moveTo( startX, finishY );
 	context.lineTo( startX, startY );
-	context.stroke(); */
-	
+	context.stroke(); 
+	/*
 	DTPoints[0] = {x: startX, y: startY};
 	DTPoints[1] = {x: finishX, y: startY};
 	DTPoints[2] = {x: startX, y: finishY};
 	DTPoints[3] = {x: startX, y: finishY};
-	drawPolygon(DTPoints);
+	drawPolygon(DTPoints);*/
 }
 function drawPolygon(points){
 	context.beginPath();
