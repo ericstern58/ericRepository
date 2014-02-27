@@ -360,7 +360,7 @@ function setupCSS()
 		#drawTools-btn-exit .drawTools-btn-container:focus{outline:thin dotted #fff;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}\n\
 		#drawTools-btn-exit .drawTools-btn-container:hover,#drawTools-btn-options .drawTools-btn:focus{background-color:#171717;border-bottom:1px solid #0e0e0e;}\n\
 		#drawTools-btn-exit .drawTools-btn-container:active{background-color:#171717;border-bottom:1px solid #171717;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);box-shadow:inset 0 3px 5px rgba(0,0,0,0.125);}\n\
-		
+		\n\
 		";
 	document.body.appendChild(DTSheet);
 }
