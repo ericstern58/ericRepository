@@ -119,8 +119,8 @@ document.onmousemove = function(e) {
 };
 //});
 // Setup Mouseup Listener
-document.off('mouseup');
-document.on('mouseup', function(e){
+$(document).off('mouseup');
+$(document).on('mouseup', function(e){
 //document.onmouseup = function(e) {
 	if(currentToolType == toolType.BRUSH)
 		return;
