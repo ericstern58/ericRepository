@@ -91,8 +91,9 @@ drawApp.canvas.on('mousedown', function(e){
 	}
 });
 // Setup Mousemove Listener
-//document.on('mousemove', function(e){
-document.onmousemove = function(e) {
+$(document).off('mousemove');
+$(document).on('mousemove', function(e){
+//document.onmousemove = function(e) {
  	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
 
  	if(currentToolType == toolType.BRUSH)
@@ -116,8 +117,8 @@ document.onmousemove = function(e) {
 	} else{ //Else tool type is unknown, do nothing
 		alert('toolType not identified');
 	}
-};
-//});
+//};
+});
 // Setup Mouseup Listener
 $(document).off('mouseup');
 $(document).on('mouseup', function(e){
