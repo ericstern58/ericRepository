@@ -1,4 +1,6 @@
-alert("asfa");
+var helloworldss = 'hello my world';
+alert(helloworldss);
+
 // Setup Constants
 var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
