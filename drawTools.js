@@ -402,7 +402,7 @@ function createDrawToolsElements()
 	debugLabel = createToolButtonWithLabel(toolType.UTIL,"label", '0');
 	
 	var optionsButton = createToolButton(toolType.UTIL,"options");
-	optionsButton.onclick = function(){//nothing yet};
+	optionsButton.onclick = function(){};//nothing yet};
 	
 	var exitButton = createToolButton(toolType.UTIL,"exit");
 	exitButton.onclick = function(){DTDestroy();};
