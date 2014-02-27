@@ -492,5 +492,16 @@ function DTDestroy()
 	document.getElementById('DTScript').remove();
 }
 function toggleOptions() {
-	$("#drawTools-options").fadeToggle();
+	//$("#drawTools-options").fadeToggle();
+	if($('#drawTools-options').css('opacity') == 0) {
+		$("#drawTools-options").animate({
+			height: "150px",
+			opacity: 1;
+		}, 1550, "swing");
+	} else {
+		$("#drawTools-options").animate({
+			height: "0px"
+			opacity: 0;
+		}, 1550, "swing");	
+	}
 }
