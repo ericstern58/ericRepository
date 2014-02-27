@@ -353,6 +353,8 @@ function setupCSS()
 		#drawTools-btn-exit .drawTools-btn-container:hover,#drawTools-btn-options .drawTools-btn:focus{background-color:#b90c0c;border-bottom:1px solid #980909;}\n\
 		#drawTools-btn-exit .drawTools-btn-container:active{background-color:#a50000;border-bottom:1px solid #a50000;}\n\
 		\n\
+		#drawTools-options{margin:-150px 0px 0px 0px;background:#252525;border-bottom:1px solid #171717;width:300px;height:150px;padding:8px;position:absolute;}\n\
+		
 		";
 	document.body.appendChild(DTSheet);
 }
@@ -399,13 +401,16 @@ function createDrawToolsElements()
 	
 	debugLabel = createToolButtonWithLabel(toolType.UTIL,"label", '0');
 	
-	createToolButton(toolType.OPTIONS,"options");
+	var optionsButton = createToolButton(toolType.UTIL,"options");
+	optionsButton.onclick = function(){//nothing yet};
 	
-	// Work in progess: exit button
 	var exitButton = createToolButton(toolType.UTIL,"exit");
 	exitButton.onclick = function(){DTDestroy();};
 	
-	//TODO: need a button maker that doesn't get <input field>
+	//Create DIV in which DrawTools will be placed in
+	var optionsDiv = document.createElement('div');
+	optionsDiv.id = 'drawTools-options';
+	drawToolsDiv.appendChild(optionsDiv);
 }
 
 //Creates Tool Buttons (wit a label)
