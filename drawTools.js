@@ -492,12 +492,12 @@ function DTDestroy()
 	document.getElementById('DTScript').remove();
 }
 function toggleOptions() {
-	$("#drawTools-options").fadeToggle();
-	/*
+	//$("#drawTools-options").fadeToggle();
+	
 	try{
 	if($('#drawTools-options').css('opacity') == 0) {
 		$("#drawTools-options").animate({
-			height: "150px",
+			height: "150px"
 			opacity: 1;
 		}, 1550, "swing");
 	} else {
@@ -508,5 +508,5 @@ function toggleOptions() {
 	}
 	
 	}catch(e){alert(e);}
-	*/
+	
 }
