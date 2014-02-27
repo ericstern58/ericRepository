@@ -497,13 +497,13 @@ function toggleOptions() {
 	try{
 	if($('#drawTools-options').css('opacity') == 0) {
 		$("#drawTools-options").animate({
-			height: "150px"
-			opacity: 1;
+			height: "150px",
+			opacity: "1"
 		}, 1550, "swing");
 	} else {
 		$("#drawTools-options").animate({
-			height: "0px"
-			opacity: 0;
+			height: "0px",
+			opacity: "0"
 		}, 1550, "swing");	
 	}
 	
