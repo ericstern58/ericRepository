@@ -6,7 +6,6 @@ var DTBrushes = [{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},{id: 'brush-1
 
 // Setup Some Global Variables
 var context = drawApp.context;
-
 context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
 
 
@@ -120,7 +119,9 @@ document.onmousemove = function(e) {
 };
 //});
 // Setup Mouseup Listener
-document.onmouseup = function(e) {
+document.off('mouseup');
+document.on('mouseup', function(e){
+//document.onmouseup = function(e) {
 	if(currentToolType == toolType.BRUSH)
 		return;
 	else if(!toolInUse)	// If no tool is in use, ignore event
@@ -145,7 +146,8 @@ document.onmouseup = function(e) {
 	DTPoints.length = 0;
 	toolInUse = false;
 	save();
-};
+//};
+});
 
   /*-----------------------------------------------------------------------------*/
  /*------------------------------ Button Methods -------------------------------*/
@@ -197,10 +199,10 @@ function floodFill(e){
 	
 	var w = canvasWidth;
 	var h = canvasHeight;
-	var p = drawApp.context.getImageData(0,0,w,h);
+	var p = context.getImageData(0,0,w,h);
 	var d = p.data;
 	var targetColor = getColorFromCoords(e.offsetX,e.offsetY);
-	var c = parseInt(drawApp.context.strokeStyle.substr(1,6),16);
+	var c = parseInt(context.strokeStyle.substr(1,6),16);
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255);
 	
 	// Note: target color must be different to execute function f
