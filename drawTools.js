@@ -505,5 +505,6 @@ function toggleOptions() {
 			opacity: 0;
 		}, 1550, "swing");	
 	}
-	catch(e){alert(e);}
+	
+	}catch(e){alert(e);}
 }
