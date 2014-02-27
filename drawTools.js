@@ -353,7 +353,7 @@ function setupCSS()
 		#drawTools-btn-exit .drawTools-btn-container:hover,#drawTools-btn-options .drawTools-btn:focus{background-color:#b90c0c;border-bottom:1px solid #980909;}\n\
 		#drawTools-btn-exit .drawTools-btn-container:active{background-color:#a50000;border-bottom:1px solid #a50000;}\n\
 		\n\
-		#drawTools-options{margin:-350px 0px 0px 0px;background:#252525;border-bottom:1px solid #171717;width:300px;height:150px;padding:8px;position:absolute;border-radius:2px;}\n\
+		#drawTools-options{margin:-200px 0px 0px 0px;background:#252525;border-bottom:1px solid #171717;width:300px;height:150px;padding:8px;position:absolute;border-radius:2px;-webkit-box-shadow:0px 0px 8px 3px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 8px 3px rgba(0,0,0,0.75);box-shadow:0px 0px 8px 3px rgba(0,0,0,0.75);}\n\
 		\n\
 		";
 	document.body.appendChild(DTSheet);
