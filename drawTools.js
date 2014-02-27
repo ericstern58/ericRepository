@@ -9,6 +9,7 @@ var context = drawApp.context;
 
 context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
 drawApp.canvas.off('mousedown');
+document.off('mousemove');
 
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
@@ -95,7 +96,7 @@ drawApp.canvas.on('mousedown', function(e){
 });
 //}, false);
 // Setup Mousemove Listener
-document.body.on('mousemove', function(e){
+document.on('mousemove', function(e){
 //document.onmousemove = function(e) {
  	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
 
