@@ -401,7 +401,7 @@ function createDrawToolsElements()
 	
 	debugLabel = createToolButtonWithLabel(toolType.UTIL,"label", '0');
 	
-	var optionsButton = createToolButton(toolType.UTIL,"options");
+	var optionsButton = createUtilityButton("options");
 	optionsButton.onclick = function(){toggleOptions();};//nothing yet};
 	
 	//Create DIV in which Options will be placed in
@@ -410,7 +410,7 @@ function createDrawToolsElements()
 	drawToolsDiv.appendChild(optionsDiv);
 	
 	// Exitbutton to remove DrawTools
-	var exitButton = createToolButton(toolType.UTIL,"exit");
+	var exitButton = createUtilityButton("exit");
 	exitButton.onclick = function(){DTDestroy();};
 	
 }
@@ -452,6 +452,29 @@ function createToolButton(type, name)
 	
 	return button;
 }
+//Creates Tool Buttons (no innerHTML)
+function createUtilityButton(name)
+{
+	//create button
+	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
+	var button = document.createElement('label');
+	button.id = 'drawTools-btn-' + name;
+	button.className = 'drawTools-btn';
+	document.getElementById(DRAW_TOOLS_ID).appendChild(button);
+
+	//Create container div
+	var container = document.createElement('div');
+	container.className = 'drawTools-btn-container';
+	button.appendChild(container);
+	
+	// Create icon div
+	var icon = document.createElement('div');
+	icon.id = 'drawTools-btn-icon-' + name;
+	container.appendChild(icon);
+	
+	return button;
+}
+
 // Destroys all elements, styling and javascript
 function DTDestroy() 
 {
