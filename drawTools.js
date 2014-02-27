@@ -10,6 +10,7 @@ var context = drawApp.context;
 context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
 drawApp.canvas.off('mousedown');
 //document.off('mousemove');
+var gjd = 4;
 
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
