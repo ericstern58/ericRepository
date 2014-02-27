@@ -318,10 +318,10 @@ function setupCSS()
 	DTSheet.id = 'drawToolsStyleSheet'; // Give id so destructor can find it if needed
 	DTSheet.innerHTML = "\n\
 		/*These drawTools-btn-Icon are css only icons*/\n\
-		#drawTools-btn-icon-fill{margin:11px 5px 0px 21px;width:12px;height:12px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
+		#drawTools-btn-icon-fill{margin:12px 5px 0px 21px;width:12px;height:12px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
 		#drawTools-btn-icon-fill:before{border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;content:'';}\n\
 		#drawTools-btn-icon-line{margin:8px 16px 0px 17px;width:5px;height:15px;background:black;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
-		#drawTools-btn-icon-poly{margin:17px 9px 0px 9px;width:20px;border-width:8px 4px 0;border-style:solid;border-color:black transparent;}\n\
+		#drawTools-btn-icon-poly{margin:16px 9px 0px 9px;width:20px;border-width:8px 4px 0;border-style:solid;border-color:black transparent;}\n\
 		#drawTools-btn-icon-poly:before{margin:-17px 0px 0px -4px;content:'';display:block;border-width:0 10px 9px;border-style:solid;border-color:transparent transparent black;}\n\
 		#drawTools-btn-icon-rect{margin:8px 8px 0px 8px;width:22px;height:15px;background:black;}\n\
 		#drawTools-btn-icon-ellipse{margin:8px 8px 0px 8px;width:22px;height:15px;background:black;-moz-border-radius:11px/8px;-webkit-border-radius:11px/8px;border-radius:11px/8px;}\n\
