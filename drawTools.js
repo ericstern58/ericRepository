@@ -42,23 +42,18 @@ var canvasWidth;
 var canvasHeight;
 updateCanvasStateVariables();
 
+// Setup Debug Stuff
+var debugLabel; //Go to createDrawToolsElements to find assignment
+function outputDebug(outputString){
+	debugLabel.getElementsByTagName('div')[0].innerHTML = outputString;
+}
+
 // Setup tool state/event variables
 var DTPoints = new Array();	// Will contain user input point sets for shapes/lines/etc
 
 setupCSS();					// Setup necessary CSS for DrawTools
 modifyExistingElements();	// Make Necessary Modifications to Existing Elements
 createDrawToolsElements();	// Create Draw Tools Elements and Interface
-
-// Work in progess: exit button
-var exitButton = createToolButton(toolType.UTIL,"exit");
-exitButton.onclick = function(){DTDestroy();};
-
-
-// Setup Debug Stuff
-var debugLabel = createToolButtonWithLabel(toolType.UTIL,"label", '0');
-function outputDebug(outputString){
-	debugLabel.getElementsByTagName('div')[0].innerHTML = outputString;
-}
 
 /*---------------------- Setup Listeners ----------------------*/
 
@@ -401,8 +396,14 @@ function createDrawToolsElements()
 	createToolButton(toolType.RECT,"rect");
 	createToolButton(toolType.ELLIPSE,"ellipse");
 	createToolButton(toolType.POLY,"poly");
+	
+	debugLabel = createToolButtonWithLabel(toolType.UTIL,"label", '0');
+	
 	createToolButton(toolType.OPTIONS,"options");
-	//createToolButtonWithLabel(toolType.TEST,"test","Test");
+	
+	// Work in progess: exit button
+	var exitButton = createToolButton(toolType.UTIL,"exit");
+	exitButton.onclick = function(){DTDestroy();};
 	
 	//TODO: need a button maker that doesn't get <input field>
 }
