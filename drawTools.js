@@ -5,9 +5,9 @@ var DTBrushes = [{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},{id: 'brush-1
 	{id: 'brush-35', size: 35}];
 
 // Setup Some Global Variables
+window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
 var context = drawApp.context;
 context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
-
 
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
