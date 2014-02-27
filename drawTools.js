@@ -93,9 +93,7 @@ drawApp.canvas.on('mousedown', function(e){
 // Setup Mousemove Listener
 $(document).off('mousemove');
 $(document).on('mousemove', function(e){
-//document.onmousemove = function(e) {
  	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
-
  	if(currentToolType == toolType.BRUSH)
 		return;	// default behaviors
 	else if(!toolInUse)
@@ -117,12 +115,10 @@ $(document).on('mousemove', function(e){
 	} else{ //Else tool type is unknown, do nothing
 		alert('toolType not identified');
 	}
-//};
 });
 // Setup Mouseup Listener
 $(document).off('mouseup');
 $(document).on('mouseup', function(e){
-//document.onmouseup = function(e) {
 	if(currentToolType == toolType.BRUSH)
 		return;
 	else if(!toolInUse)	// If no tool is in use, ignore event
@@ -147,7 +143,6 @@ $(document).on('mouseup', function(e){
 	DTPoints.length = 0;
 	toolInUse = false;
 	save();
-//};
 });
 
   /*-----------------------------------------------------------------------------*/
@@ -425,7 +420,9 @@ function DTDestroy()
 	// 2. Destroy CSS
 	document.getElementById('drawToolsStyleSheet').remove();
 	// 3. Remove listeners (async)
-	
+	$(document).off('mousedown');
+	$(document).off('mousemove');
+	$(document).off('mouseup');
 	// 4. Destroy JavaScript
-	//document.getElementById('DTScript').remove();
+	document.getElementById('DTScript').remove();
 }
