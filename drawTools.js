@@ -76,13 +76,13 @@ drawApp.canvas.on('mousedown', function(e){
 			}catch(err){alert(err);}
 	} else if(currentToolType === toolType.LINE) {
 		painting = !1;
-		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top}
+		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 	} else if(currentToolType === toolType.RECT) {
 		painting = !1;
-		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top}
+		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 	} else if(currentToolType === toolType.ELLIPSE) {
 		painting = !1;
-		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top}
+		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 	} else if(currentToolType === toolType.POLY) {
 		painting = !1;
 	} else if(currentToolType === toolType.UTIL) {
@@ -226,7 +226,6 @@ function floodFill(e){
 	function f(xinitial,yinitial){
 		var queue = [new Point(xinitial,yinitial)];
 		var edgeQueue = [];
-		var outerEdgeQueue = [new Point(xinitial,yinitial)];
 		var x = 0;
 		var y = 0;
 		var point;
@@ -268,7 +267,7 @@ function floodFill(e){
 		}
 	}
 	function isWithinCanvasBounds(point){
-		return (point.x>=0 && point.y>=0 && point.x<canvasWidth && point.y<canvasHeight)
+		return (point.x>=0 && point.y>=0 && point.x<canvasWidth && point.y<canvasHeight);
 	}
 	/*---------------------- Color Methods ----------------------*/
 	//Colors a pixel with a given color
@@ -299,9 +298,9 @@ function floodFill(e){
  /*--------------------------- Auxiliary Functions -----------------------------*/
 /*-----------------------------------------------------------------------------*/
 function DTUpdateCanvasStateVariables() {
-	canvasOffset = $('#drawingCanvas').offset();	// Update canvas offset variable
-	canvasWidth = drawApp.canvas.width();			// Update canvas width variable
-	canvasHeight = drawApp.canvas.height(); 		// Update canvas width variable
+	canvasOffset = $('#drawingCanvas').offset();    // Update canvas offset variable
+	canvasWidth = drawApp.canvas.width();           // Update canvas width variable
+	canvasHeight = drawApp.canvas.height();         // Update canvas width variable
 }
 
 function restoreCanvas() {
@@ -386,8 +385,8 @@ function modifyExistingElements()
 		
 		// Visually unselect any other tools
 		var ele = document.getElementsByName("drawTools-btn-radio");
-	   	for(var i=0;i<ele.length;i++)
-	      		ele[i].checked = false;
+		for(var i=0;i<ele.length;i++)
+			ele[i].checked = false;
 	}
 }
 
@@ -512,13 +511,13 @@ function toggleOptions() {
 	var h = 150;	// Height of the options div
 	var opacity = $('#drawTools-options').css('opacity');
 	
-	if(opacity == 0) {
+	if(opacity === 0) {
 		$("#drawTools-options").stop(true, true).animate({
 			height: (h + "px"),
 			marginTop: ("-=" + h + "px"),
 			opacity: "1"
 		},300, "swing");
-	} else if(opacity == 1) {
+	} else if(opacity === 1) {
 		$("#drawTools-options").stop(true, true).animate({
 			height: "0px",
 			marginTop: ("+=" + h + "px"),
