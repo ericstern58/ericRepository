@@ -40,9 +40,9 @@ var toolType={BRUSH:0,FILL:1,LINE:2,RECT:3,ELLIPSE:4,POLY:5,UTIL:99};
 var currentToolType = toolType.BRUSH;
 var toolInUse = false;
 
-var canvasOffset;
-var canvasWidth;
-var canvasHeight;
+var canvasOffset = 0;
+var canvasWidth = 0;
+var canvasHeight = 0;
 updateCanvasStateVariables();
 
 // Setup Debug Stuff
