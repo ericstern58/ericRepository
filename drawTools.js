@@ -502,7 +502,7 @@ function toggleOptions() {
 			opacity: "1"
 		},300, "swing");
 	} else {
-		$("#drawTools-options").stop(true, true);.animate({
+		$("#drawTools-options").stop(true, true).animate({
 			height: "0px",
 			marginTop: ("+=" + h + "px"),
 			opacity: "0"
