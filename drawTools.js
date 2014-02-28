@@ -315,8 +315,6 @@ function setupCSS()
 {
 	// Calculate variables used in css
 	var optionsMarginTop = canvasOffset.top + canvasHeight - $("#drawTools").offset().top;
-	alert("optionsmargintop: " + optionsMarginTop + "--");
-	//outputDebug(optionsMarginTop);
 	
 	var DTSheet = document.createElement('style');
 	DTSheet.id = 'drawToolsStyleSheet'; // Give id so destructor can find it if needed
