@@ -170,7 +170,7 @@ function drawRect(startX,startY,finishX,finishY){
 	*/
 	DTPoints[0] = {x: startX, y: startY};
 	DTPoints[1] = {x: finishX, y: startY};
-	DTPoints[2] = {x: startX, y: finishY};
+	DTPoints[2] = {x: finishX, y: finishY};
 	DTPoints[3] = {x: startX, y: finishY};
 	drawPolygon(DTPoints);
 }
