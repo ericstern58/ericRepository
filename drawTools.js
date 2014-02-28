@@ -94,10 +94,11 @@ var debugLabel; //Go to createDrawToolsElements to find assignment
 function outputDebug(outputString){
 	debugLabel.getElementsByTagName('div')[0].innerHTML = outputString;
 }
+/*
 window.onerror = function (msg, url, line) {
     alert("Error on line " + line + ":\n" + msg);
     return true; // return true to prevent browser from displaying error
-}
+}*/
 
 // Setup tool state/event variables
 var DTPoints = new Array();	// Will contain user input point sets for shapes/lines/etc
@@ -126,7 +127,6 @@ DACanvas.on('mousedown', function(e){
 		}catch(err){alert(err);}
 		stopwatch.stop();
 		stopwatch.printElapsed();
-		
 	} else if(currentToolType === toolType.LINE) {
 		painting = !1;
 		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
@@ -138,9 +138,7 @@ DACanvas.on('mousedown', function(e){
 		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 	} else if(currentToolType === toolType.POLY) {
 		painting = !1;
-	} else if(currentToolType === toolType.UTIL) {
-		// Do Nothing
-	} 
+	}
 });
 // Setup Mousemove Listener
 $(document).off('mousemove');
@@ -163,9 +161,12 @@ $(document).on('mousemove', function(e){
 		restoreCanvas();
 		drawEllipse(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 	} else if(currentToolType === toolType.POLY) {
-		restoreCanvas();
-		drawPolygon(points);
-		drawLine(DTPoints[DTPoints.length-1].x,DTPoints[DTPoints.length-1].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+		if(DTPoints.length > 0) {
+			restoreCanvas();
+			if(DTPoints.length > 1)
+				drawPolygon(points);
+			drawLine(DTPoints[DTPoints.length-1].x,DTPoints[DTPoints.length-1].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+		}
 	}
 });
 // Setup Mouseup Listener
