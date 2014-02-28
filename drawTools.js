@@ -496,7 +496,7 @@ function toggleOptions() {
 	var h = 150;
 	
 	if($('#drawTools-options').css('opacity') == 0) {
-		$("#drawTools-options").animate({
+		$("#drawTools-options").stop(true, true).animate({
 			height: (h + "px"),
 			marginTop: ("-=" + h + "px"),
 			opacity: "1"
@@ -504,7 +504,7 @@ function toggleOptions() {
 			duration: 300 
 		});
 	} else {
-		$("#drawTools-options").animate({
+		$("#drawTools-options").stop(true, true);.animate({
 			height: "0px",
 			marginTop: ("+=" + h + "px"),
 			opacity: "0"
