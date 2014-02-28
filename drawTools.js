@@ -163,7 +163,9 @@ $(document).on('mousemove', function(e){
 		restoreCanvas();
 		drawEllipse(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 	} else if(currentToolType === toolType.POLY) {
-		
+		restoreCanvas();
+		drawPolygon(points);
+		drawLine(DTPoints[DTPoints.length-1].x,DTPoints[DTPoints.length-1].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 	}
 });
 // Setup Mouseup Listener
@@ -179,40 +181,40 @@ $(document).on('mouseup', function(e){
 	} else if(currentToolType === toolType.LINE) {
 		restoreCanvas();
 		drawLine(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
-		
-		DTPoints.length = 0;
-		toolInUse = false;
-		save();
 	} else if(currentToolType === toolType.RECT) {
 		restoreCanvas();
 		drawRect(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
-		
-		DTPoints.length = 0;
-		toolInUse = false;
-		save();
 	} else if(currentToolType === toolType.ELLIPSE) {
 		restoreCanvas();
 		drawEllipse(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
-		
-		DTPoints.length = 0;
-		toolInUse = false;
-		save();
 	} else if(currentToolType === toolType.POLY) {
-		DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
+		if(e.which == 3) {	// If right mouse click, finish the polygon
+			restoreCanvas();
+			drawEllipse(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+		} else {
+			DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
+			return;
+		}
 	}
+	DTPoints.length = 0;
+	toolInUse = false;
+	save();
+	
 });
 
   /*-----------------------------------------------------------------------------*/
  /*------------------------------ Button Methods -------------------------------*/
 /*-----------------------------------------------------------------------------*/
 
-function drawLine(startX,startY,finishX,finishY){
+function drawLine(startX,startY,finishX,finishY)
+{
 	context.beginPath();
 	context.moveTo( startX, startY );
 	context.lineTo( finishX, finishY);
 	context.stroke();
 }
-function drawRect(startX,startY,finishX,finishY){
+function drawRect(startX,startY,finishX,finishY)
+{
 	DTPoints[0] = {x: startX, y: startY};
 	DTPoints[1] = {x: finishX, y: startY};
 	DTPoints[2] = {x: finishX, y: finishY};
@@ -220,23 +222,14 @@ function drawRect(startX,startY,finishX,finishY){
 	DTPoints[4] = {x: startX, y: startY};
 	drawPolygon(DTPoints);
 }
-function drawPolygon(points){
-	/*
-	context.beginPath();
-	context.moveTo( points[0].x, points[0].y );
-	for(var i=1;i<points.length;i++) {
-		context.lineTo( points[i].x, points[i].y );
-		context.moveTo( points[i].x, points[i].y );
-	}
-	context.lineTo( points[0].x, points[0].y );
-	context.stroke(); */
+function drawPolygon(points)
+{
 	context.beginPath();
 	for(var i=1;i<points.length;i++) {
 		context.moveTo( points[i-1].x, points[i-1].y );
 		context.lineTo( points[i].x, points[i].y );
 	}
 	context.stroke(); 
-	
 }
 function drawEllipse(startX,startY,finishX,finishY){
 	var x = startX,
