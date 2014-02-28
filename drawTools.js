@@ -186,7 +186,7 @@ $(document).on('mousemove', function(e){
 $(document).off('mouseup');
 $(document).on('mouseup', function(e){
 	if($('#drawTools-options').css('opacity') == 1){
-		if(isWithinToggleOptionsBounds(e.pageX, e.pageY))
+		if(!isWithinToggleOptionsBounds(e.pageX, e.pageY))
 			toggleOptions();
 		return;
 	} else if(currentToolType === toolType.BRUSH)
@@ -626,10 +626,10 @@ function toggleOptions() {
 	}
 }
 function isWithinToggleOptionsBounds(x, y){
-	var x2 = $("#drawTools-options").offset().top;
-	var y2 = $("#drawTools-options").offset().left;
+	var x2 = x - $("#drawTools-options").offset().top;
+	var y2 = y - $("#drawTools-options").offset().left;
 	var widthPoint = x2 + document.getElementById('#drawTools-options').offsetWidth;
 	var heightPoint = y2 + document.getElementById('#drawTools-options').offsetHeight;
 	
-	return (x>=x2 && y>=y2 && x<(widthPoint) && y<(heightPoint));
+	return (x2>=0 && y2>=0 && x2<(widthPoint) && y2<(heightPoint));
 }
