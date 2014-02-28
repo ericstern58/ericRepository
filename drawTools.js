@@ -187,7 +187,7 @@ $(document).off('mouseup');
 $(document).on('mouseup', function(e){
 	if($('#drawTools-options').css('opacity') == 1){
 		outputDebug("Opacity is 1, isWithinBounds: " + isWithinToggleOptionsBounds(e.pageX, e.pageY));
-		if(!isWithinToggleOptionsBounds(e.pageX, e.pageY))
+		//if(!isWithinToggleOptionsBounds(e.pageX, e.pageY))
 			toggleOptions();
 		return;
 	} else if(currentToolType === toolType.BRUSH)
