@@ -1,3 +1,6 @@
+//---- START -----------GIANT try catch
+try{
+	
 // Setup Constants
 var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
@@ -524,3 +527,6 @@ function toggleOptions() {
 		},300, "swing");
 	}
 }
+
+}catch(err){alert(err)};
+//----  END  -----------GIANT try catch
