@@ -74,7 +74,7 @@ RGBColor.prototype.equals = function(color) {
 	return (this.r===color.r && this.g===color.g && this.b===color.b);
 };
 // Tool type enum
-var toolType={BRUSH:0,FILL:1,LINE:2,RECT:3,ELLIPSE:4,POLY:5,UTIL:99};
+var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,RECT:4,ELLIPSE:5,POLY:6,UTIL:99};
 
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
@@ -130,6 +130,8 @@ DACanvas.on('mousedown', function(e){
 	} else if(currentToolType === toolType.LINE) {
 		painting = !1;
 		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
+	} else if(currentToolType === toolType.LINECHAIN) {
+		painting = !1;
 	} else if(currentToolType === toolType.RECT) {
 		painting = !1;
 		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
@@ -154,6 +156,13 @@ $(document).on('mousemove', function(e){
 	} else if(currentToolType === toolType.LINE) {
 		restoreCanvas();
 		drawLine(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+	} else if(currentToolType === toolType.LINECHAIN) {
+		if(DTPoints.length > 0) {
+			restoreCanvas();
+			if(DTPoints.length > 1)
+				drawPolygon(DTPoints);
+			drawLine(DTPoints[DTPoints.length-1].x,DTPoints[DTPoints.length-1].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+		}
 	} else if(currentToolType === toolType.RECT) {
 		restoreCanvas();
 		drawRect(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
@@ -182,6 +191,21 @@ $(document).on('mouseup', function(e){
 	} else if(currentToolType === toolType.LINE) {
 		restoreCanvas();
 		drawLine(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+	} else if(currentToolType === toolType.LINECHAIN) {
+		if(isWithinPolygonToolBounds((e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top))){
+			DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
+			if(e.which == 3) {	// If right mouse click, finish the polygon
+				restoreCanvas();
+				drawPolygon(DTPoints);
+			} else {
+				return;
+			}
+		} else {
+			restoreCanvas();
+			DTPoints.length = 0;
+			toolInUse = false;
+			return;
+		}
 	} else if(currentToolType === toolType.RECT) {
 		restoreCanvas();
 		drawRect(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
@@ -392,6 +416,9 @@ function setupCSS()
 		#drawTools-btn-icon-options{margin:5px 8px 0px 8px;width:30px;height:5px;background:#c2c2c2;border-radius:1px;}\n\
 		#drawTools-btn-icon-options:before{margin:8px 0px 0px 0px;width:30px;height:5px;background:#c2c2c2;border-radius:1px;content:'';display:block;position:absolute;}\n\
 		#drawTools-btn-icon-options:after{margin:16px 0px 0px 0px;width:30px;height:5px;background:#c2c2c2;border-radius:1px;content:'';display:block;position:absolute;}\n\
+		#drawTools-btn-icon-linechain{margin:0px 0px 0px 0px;width:3px;height:12px;background:black;border-radius:1px;}\n\
+		#drawTools-btn-icon-linechain:before{margin:1px 5px 2px 6px;width:3px;height:15px;background:black;border-radius:2px;content:'';display:block;position:absolute;-webkit-transform:rotate(65deg);-moz-transform:rotate(65deg);-o-transform:rotate(65deg);transform:rotate(65deg);}\n\
+		#drawTools-btn-icon-linechain:after{margin:-3px 0px 0px 9px;width:3px;height:11px;background:black;border-radius:2px;content:'';display:block;position:absolute;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);}\n\
 		\n\
 		#drawTools{position:relative;display:inline-block;vertical-align:middle;}\n\
 		#drawTools>.drawTools-btn{position:relative;float:left;display:inline-block;}\n\
@@ -466,6 +493,7 @@ function createDrawToolsElements()
 	// Create Tool Buttons
 	createToolButton(toolType.FILL,"fill");
 	createToolButton(toolType.LINE,"line");
+	createToolButton(toolType.LINECHAIN,"linechain");
 	createToolButton(toolType.RECT,"rect");
 	createToolButton(toolType.ELLIPSE,"ellipse");
 	createToolButton(toolType.POLY,"poly");
