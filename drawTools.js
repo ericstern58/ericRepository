@@ -160,7 +160,7 @@ $(document).on('mousemove', function(e){
 		if(DTPoints.length > 0) {
 			restoreCanvas();
 			if(DTPoints.length > 1)
-				drawPolygon(DTPoints);
+				drawLineChain(DTPoints);
 			drawLine(DTPoints[DTPoints.length-1].x,DTPoints[DTPoints.length-1].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 		}
 	} else if(currentToolType === toolType.RECT) {
@@ -173,7 +173,7 @@ $(document).on('mousemove', function(e){
 		if(DTPoints.length > 0) {
 			restoreCanvas();
 			if(DTPoints.length > 1)
-				drawPolygon(DTPoints);
+				drawLineChain(DTPoints);
 			drawLine(DTPoints[DTPoints.length-1].x,DTPoints[DTPoints.length-1].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 		}
 	}
@@ -196,7 +196,7 @@ $(document).on('mouseup', function(e){
 			DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 			if(e.which == 3) {	// If right mouse click, finish the polygon
 				restoreCanvas();
-				drawPolygon(DTPoints);
+				drawLineChain(DTPoints);
 			} else {
 				return;
 			}
@@ -217,7 +217,7 @@ $(document).on('mouseup', function(e){
 			DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 			if(e.which == 3) {	// If right mouse click, finish the polygon
 				restoreCanvas();
-				drawPolygon(DTPoints);
+				drawLineChain(DTPoints);
 			} else {
 				return;
 			}
@@ -252,9 +252,9 @@ function drawRect(startX,startY,finishX,finishY)
 	DTPoints[2] = {x: finishX, y: finishY};
 	DTPoints[3] = {x: startX, y: finishY};
 	DTPoints[4] = {x: startX, y: startY};
-	drawPolygon(DTPoints);
+	drawLineChain(DTPoints);
 }
-function drawPolygon(points)
+function drawLineChain(points)
 {
 	context.beginPath();
 	for(var i=1;i<points.length;i++) {
