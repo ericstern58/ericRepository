@@ -314,8 +314,8 @@ function restoreCanvas() {
 function setupCSS()
 {
 	// Calculate variables used in css
-	var optionsMarginTop = $("#drawTools").offset().top - canvasOffset.top + canvasHeight;
-	outputDebug(optionsMarginTop);
+	//var optionsMarginTop = $("#drawTools").offset().top - canvasOffset.top + canvasHeight;
+	//outputDebug(optionsMarginTop);
 	
 	var DTSheet = document.createElement('style');
 	DTSheet.id = 'drawToolsStyleSheet'; // Give id so destructor can find it if needed
