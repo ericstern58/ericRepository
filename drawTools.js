@@ -499,13 +499,13 @@ function toggleOptions() {
 	if($('#drawTools-options').css('opacity') == 0) {
 		$("#drawTools-options").animate({
 			height: (h + "px"),
-			marginTop: "-=" + h + "px",
+			marginTop: "196px",
 			opacity: "1"
 		}, 300, "swing");
 	} else {
 		$("#drawTools-options").animate({
 			height: "0px",
-			marginTop: "+=" + h + "px",
+			marginTop: "46px",
 			opacity: "0"
 		}, 300, "swing");	
 	}
