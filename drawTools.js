@@ -198,6 +198,7 @@ $(document).on('mouseup', function(e){
 				return;
 			}
 		} else {
+			restoreCanvas();
 			DTPoints.length = 0;
 			toolInUse = false;
 			return;
