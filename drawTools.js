@@ -493,7 +493,7 @@ function DTDestroy()
 }
 function toggleOptions() {
 	//$("#drawTools-options").fadeToggle();
-	int h = 150;
+	int h = "150";
 	
 	try{
 	if($('#drawTools-options').css('opacity') == 0) {
