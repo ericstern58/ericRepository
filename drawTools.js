@@ -8,6 +8,7 @@ var DTBrushes = [{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},{id: 'brush-1
 window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
 var context = drawApp.context;
 context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
+var DACanvas = drawApp.canvas;
 
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
@@ -63,10 +64,10 @@ createDrawToolsElements();	// Create Draw Tools Elements and Interface
 /*---------------------- Setup Listeners ----------------------*/
 
 // Setup Mousedown Listener
-drawApp.canvas.off('mousedown');
-drawApp.canvas.on('mousedown', function(e){
+DACanvas.off('mousedown');
+DACanvas.on('mousedown', function(e){
 	if(currentToolType === toolType.BRUSH)
-		return;//drawApp.onCanvasMouseDown(e);	// default behaviors
+		return;
 	toolInUse = true;
 	DTUpdateCanvasStateVariables();
 	
@@ -289,8 +290,8 @@ function floodFill(e){
 /*-----------------------------------------------------------------------------*/
 function DTUpdateCanvasStateVariables() {
 	canvasOffset = $('#drawingCanvas').offset();    // Update canvas offset variable
-	canvasWidth = drawApp.canvas.width();           // Update canvas width variable
-	canvasHeight = drawApp.canvas.height();         // Update canvas width variable
+	canvasWidth = DACanvas.width();           // Update canvas width variable
+	canvasHeight = DACanvas.height();         // Update canvas width variable
 }
 
 function restoreCanvas() {
