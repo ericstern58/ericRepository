@@ -164,7 +164,7 @@ $(document).on('mousemove', function(e){
 		if(DTPoints.length > 0) {
 			restoreCanvas();
 			if(DTPoints.length > 1)
-				drawPolygon(points);
+				drawPolygon(DTPoints);
 			drawLine(DTPoints[DTPoints.length-1].x,DTPoints[DTPoints.length-1].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 		}
 	}
@@ -191,7 +191,7 @@ $(document).on('mouseup', function(e){
 	} else if(currentToolType === toolType.POLY) {
 		if(e.which == 3) {	// If right mouse click, finish the polygon
 			restoreCanvas();
-			drawEllipse(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+			drawPolygon(DTPoints);
 		} else {
 			DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 			return;
