@@ -51,6 +51,7 @@ function outputDebug(outputString){
 // Setup tool state/event variables
 var DTPoints = new Array();	// Will contain user input point sets for shapes/lines/etc
 
+createDrawToolsContainer();	// Create Draw Tools Container
 setupCSS();					// Setup necessary CSS for DrawTools
 modifyExistingElements();	// Make Necessary Modifications to Existing Elements
 createDrawToolsElements();	// Create Draw Tools Elements and Interface
@@ -310,7 +311,8 @@ function restoreCanvas() {
 function setupCSS()
 {
 	// Calculate variables used in css
-	//var optionsMarginTop = ($("#drawTools").offset().top - canvasOffset().top) + canvasHeight;
+	//var optionsMarginTop = $("#drawTools").offset().top - canvasOffset().top + canvasHeight;
+	//outputDebug(optionsMarginTop);
 	
 	var DTSheet = document.createElement('style');
 	DTSheet.id = 'drawToolsStyleSheet'; // Give id so destructor can find it if needed
@@ -387,13 +389,17 @@ function modifyExistingElements()
 	}
 }
 
-function createDrawToolsElements() 
-{
+function createDrawToolsContainer(){
 	//Create DIV in which DrawTools will be placed in
 	var drawToolsDiv = document.createElement('div');
 	drawToolsDiv.id = DRAW_TOOLS_ID;
 	drawToolsDiv.className = 'drawTools-btn-group';
 	DRAWCEPTION_TOOLBAR.appendChild(drawToolsDiv);
+}
+
+function createDrawToolsElements() 
+{
+	var drawToolsDiv = document.getElementById(DRAW_TOOLS_ID);
 	
 	// Create Tool Buttons
 	createToolButton(toolType.FILL,"fill");
