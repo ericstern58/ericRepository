@@ -498,7 +498,7 @@ function toggleOptions() {
 	try{
 	if($('#drawTools-options').css('opacity') == 0) {
 		$("#drawTools-options").animate({
-			height: (h + "px"),
+			height: "150px",
 			marginTop: "196px",
 			opacity: "1"
 		}, 300, "swing");
