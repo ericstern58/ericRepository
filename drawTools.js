@@ -1,6 +1,3 @@
-//---- START -----------GIANT try catch
-try {
-	
 // Setup Constants
 var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
@@ -50,6 +47,11 @@ var debugLabel; //Go to createDrawToolsElements to find assignment
 function outputDebug(outputString){
 	debugLabel.getElementsByTagName('div')[0].innerHTML = outputString;
 }
+window.onerror = function (msg, url, line) {
+    alert("Error on line " + line + " in " + url + ":\n" + msg);
+    // return true to prevent browser from displaying error
+    return true;
+}
 
 // Setup tool state/event variables
 var DTPoints = new Array();	// Will contain user input point sets for shapes/lines/etc
@@ -93,7 +95,7 @@ drawApp.canvas.on('mousedown', function(e){
 $(document).off('mousemove');
 $(document).on('mousemove', function(e){
  	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
- 	if(currentToolType === toolType.BRUSH)
+	if(currentToolType === toolType.BRUSH)
 		return;	// default behaviors
 	else if(!toolInUse)
 		return;	// If no tool is in use, ignore event
@@ -526,5 +528,3 @@ function toggleOptions() {
 	}
 }
 
-} catch(err) {alert(err)};
-//----  END  -----------GIANT try catch
