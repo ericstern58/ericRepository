@@ -493,18 +493,19 @@ function DTDestroy()
 }
 function toggleOptions() {
 	//$("#drawTools-options").fadeToggle();
+	int h = 150;
 	
 	try{
 	if($('#drawTools-options').css('opacity') == 0) {
 		$("#drawTools-options").animate({
-			height: "150px",
-			marginTop: "-196px",
+			height: (h + "px"),
+			marginTop: "-=" + h + "px",
 			opacity: "1"
 		}, 300, "swing");
 	} else {
 		$("#drawTools-options").animate({
 			height: "0px",
-			marginTop: "-46px",
+			marginTop: "+=" + h + "px",
 			opacity: "0"
 		}, 300, "swing");	
 	}
