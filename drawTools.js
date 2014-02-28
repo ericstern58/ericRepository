@@ -314,7 +314,7 @@ function restoreCanvas() {
 function setupCSS()
 {
 	// Calculate variables used in css
-	var optionsMarginTop = $("#drawTools").offset().top - canvasOffset.top + canvasHeight;
+	var optionsMarginTop = $("#drawTools").offset().top - canvasOffset.top - canvasHeight;
 	alert("optionsmargintop: " + optionsMarginTop + "--");
 	//outputDebug(optionsMarginTop);
 	
