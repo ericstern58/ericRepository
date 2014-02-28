@@ -64,28 +64,28 @@ createDrawToolsElements();	// Create Draw Tools Elements and Interface
 // Setup Mousedown Listener
 drawApp.canvas.off('mousedown');
 drawApp.canvas.on('mousedown', function(e){
-	if(currentToolType == toolType.BRUSH)
+	if(currentToolType === toolType.BRUSH)
 		return;//drawApp.onCanvasMouseDown(e);	// default behaviors
 	toolInUse = true;
 	DTUpdateCanvasStateVariables();
 	
-	if(currentToolType == toolType.FILL) {
+	if(currentToolType === toolType.FILL) {
 		painting = !1;
 		try{
 			floodFill(e);
 			}catch(err){alert(err);}
-	} else if(currentToolType == toolType.LINE) {
+	} else if(currentToolType === toolType.LINE) {
 		painting = !1;
 		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top}
-	} else if(currentToolType == toolType.RECT) {
+	} else if(currentToolType === toolType.RECT) {
 		painting = !1;
 		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top}
-	} else if(currentToolType == toolType.ELLIPSE) {
+	} else if(currentToolType === toolType.ELLIPSE) {
 		painting = !1;
 		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top}
-	} else if(currentToolType == toolType.POLY) {
+	} else if(currentToolType === toolType.POLY) {
 		painting = !1;
-	} else if(currentToolType == toolType.UTIL) {
+	} else if(currentToolType === toolType.UTIL) {
 		// Do Nothing
 	} 
 });
@@ -93,23 +93,23 @@ drawApp.canvas.on('mousedown', function(e){
 $(document).off('mousemove');
 $(document).on('mousemove', function(e){
  	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
- 	if(currentToolType == toolType.BRUSH)
+ 	if(currentToolType === toolType.BRUSH)
 		return;	// default behaviors
 	else if(!toolInUse)
 		return;	// If no tool is in use, ignore event
 	
-	if(currentToolType == toolType.FILL) {
+	if(currentToolType === toolType.FILL) {
 		// Do nothing
-	} else if(currentToolType == toolType.LINE) {
+	} else if(currentToolType === toolType.LINE) {
 		restoreCanvas();
 		drawLine(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
-	} else if(currentToolType == toolType.RECT) {
+	} else if(currentToolType === toolType.RECT) {
 		restoreCanvas();
 		drawRect(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
-	} else if(currentToolType == toolType.ELLIPSE) {
+	} else if(currentToolType === toolType.ELLIPSE) {
 		restoreCanvas();
 		drawEllipse(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
-	} else if(currentToolType == toolType.POLY) {
+	} else if(currentToolType === toolType.POLY) {
 		//imgTest();
 	} else{ //Else tool type is unknown, do nothing
 		alert('toolType not identified');
@@ -118,23 +118,23 @@ $(document).on('mousemove', function(e){
 // Setup Mouseup Listener
 $(document).off('mouseup');
 $(document).on('mouseup', function(e){
-	if(currentToolType == toolType.BRUSH)
+	if(currentToolType === toolType.BRUSH)
 		return;
 	else if(!toolInUse)	// If no tool is in use, ignore event
 		return;
 	
-	if(currentToolType == toolType.FILL) {
+	if(currentToolType === toolType.FILL) {
 		// Do nothing
-	} else if(currentToolType == toolType.LINE) {
+	} else if(currentToolType === toolType.LINE) {
 		restoreCanvas();
 		drawLine(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
-	} else if(currentToolType == toolType.RECT) {
+	} else if(currentToolType === toolType.RECT) {
 		restoreCanvas();
 		drawRect(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
-	} else if(currentToolType == toolType.ELLIPSE) {
+	} else if(currentToolType === toolType.ELLIPSE) {
 		restoreCanvas();
 		drawEllipse(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
-	} else if(currentToolType == toolType.POLY) {
+	} else if(currentToolType === toolType.POLY) {
 		//imgTest();
 	} else{ //Else tool type is unknown, do nothing
 		alert('toolType not identified');
