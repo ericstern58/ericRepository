@@ -186,9 +186,6 @@ $(document).on('mousemove', function(e){
 $(document).off('mouseup');
 $(document).on('mouseup', function(e){
 	if($('#drawTools-options').css('opacity') == 1){
-		try{
-		alert("Opacity is 1, isWithinBounds: " + isWithinToggleOptionsBounds(e.pageX, e.pageY));
-		}catch(err){alert(err);}
 		if(!isWithinToggleOptionsBounds(e.pageX, e.pageY))
 			toggleOptions();
 		return;
