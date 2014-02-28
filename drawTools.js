@@ -493,15 +493,17 @@ function DTDestroy()
 }
 function toggleOptions() {
 	//$("#drawTools-options").fadeToggle();
+	var opacity = $('#drawTools-options').css('opacity');
+	
 	var h = 150;
 	
-	if($('#drawTools-options').css('opacity') == 0) {
+	if(opacity == 0) {
 		$("#drawTools-options").stop(true, true).animate({
 			height: (h + "px"),
 			marginTop: ("-=" + h + "px"),
 			opacity: "1"
 		},300, "swing");
-	} else {
+	} else if(opacity == 1) {
 		$("#drawTools-options").stop(true, true).animate({
 			height: "0px",
 			marginTop: ("+=" + h + "px"),
