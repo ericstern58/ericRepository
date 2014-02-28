@@ -628,8 +628,8 @@ function toggleOptions() {
 function isWithinToggleOptionsBounds(x, y){
 	var x2 = x - $("#drawTools-options").offset().top;
 	var y2 = y - $("#drawTools-options").offset().left;
-	var widthPoint = x2 + $('#drawTools-options').width();;
-	var heightPoint = y2 + $('#drawTools-options').height();
+	var width = $('#drawTools-options').width();;
+	var height = $('#drawTools-options').height();
 	outputDebug("[x:" + x2 + ", y:" + y2 + "]   [width:" + (widthPoint-x2) + ", height:" + (heightPoint-y2) + "]");
-	return (x2>=0 && y2>=0 && x2<(widthPoint) && y2<(heightPoint));
+	return (x2>=0 && y2>=0 && x2<width && y2<height);
 }
