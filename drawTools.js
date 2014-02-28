@@ -407,7 +407,7 @@ function createDrawToolsElements()
 	//Create DIV in which Options will be placed in
 	var optionsDiv = document.createElement('div');
 	optionsDiv.id = 'drawTools-options';
-	optionsDiv.innerHTML = "<br><br><br><br>";
+	optionsDiv.innerHTML = "<br><br><br><br>HELLO<br>";
 	drawToolsDiv.appendChild(optionsDiv);
 	
 	// Exitbutton to remove DrawTools
