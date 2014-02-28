@@ -114,6 +114,7 @@ createDrawToolsElements();	// Create Draw Tools Elements and Interface
 DACanvas.off('mousedown');
 DACanvas.on('mousedown', function(e){
 	if($('#drawTools-options').css('opacity') == 1){
+		painting = !1;
 		toggleOptions();
 		return;
 	} else if(currentToolType === toolType.BRUSH)
