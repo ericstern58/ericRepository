@@ -186,9 +186,7 @@ $(document).on('mousemove', function(e){
 $(document).off('mouseup');
 $(document).on('mouseup', function(e){
 	if($('#drawTools-options').css('opacity') == 1){
-		outputDebug("Opacity is 1, isWithinBounds: " + isWithinToggleOptionsBounds(e.pageX, e.pageY));
-		//if(!isWithinToggleOptionsBounds(e.pageX, e.pageY))
-			toggleOptions();
+		toggleOptions();
 		return;
 	} else if(currentToolType === toolType.BRUSH)
 		return;
@@ -625,12 +623,4 @@ function toggleOptions() {
 			opacity: "0"
 		},300, "swing");
 	}
-}
-function isWithinToggleOptionsBounds(x, y){
-	var x2 = x - $("#drawTools-options").offset().top;
-	var y2 = y - $("#drawTools-options").offset().left;
-	var widthPoint = x2 + document.getElementById('#drawTools-options').offsetWidth;
-	var heightPoint = y2 + document.getElementById('#drawTools-options').offsetHeight;
-	outputDebug("[x:" + x2 + ", y:" + y2 + "]   [width:" + (widthPoint-x2) + ", height:" + (heightPoint-y2) + "]");
-	return (x2>=0 && y2>=0 && x2<(widthPoint) && y2<(heightPoint));
 }
