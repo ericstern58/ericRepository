@@ -60,8 +60,9 @@ context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
 /*-----------------------------------------------------------------------------*/
 // Point Object
-function Point(xCoord, yCoord) {
-	return {x: xCoord, y: yCoord};
+function Point(x, y) {
+	this.x = x;
+	this.y = y;
 }
 // Color Object
 function RGBColor(r, g, b) {
@@ -162,9 +163,7 @@ $(document).on('mousemove', function(e){
 		restoreCanvas();
 		drawEllipse(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 	} else if(currentToolType === toolType.POLY) {
-		//imgTest();
-	} else{ //Else tool type is unknown, do nothing
-		alert('toolType not identified');
+		
 	}
 });
 // Setup Mouseup Listener
@@ -180,20 +179,27 @@ $(document).on('mouseup', function(e){
 	} else if(currentToolType === toolType.LINE) {
 		restoreCanvas();
 		drawLine(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+		
+		DTPoints.length = 0;
+		toolInUse = false;
+		save();
 	} else if(currentToolType === toolType.RECT) {
 		restoreCanvas();
 		drawRect(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+		
+		DTPoints.length = 0;
+		toolInUse = false;
+		save();
 	} else if(currentToolType === toolType.ELLIPSE) {
 		restoreCanvas();
 		drawEllipse(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+		
+		DTPoints.length = 0;
+		toolInUse = false;
+		save();
 	} else if(currentToolType === toolType.POLY) {
-		//imgTest();
-	} else{ //Else tool type is unknown, do nothing
-		alert('toolType not identified');
+		DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 	}
-	DTPoints.length = 0;
-	toolInUse = false;
-	save();
 });
 
   /*-----------------------------------------------------------------------------*/
@@ -211,9 +217,11 @@ function drawRect(startX,startY,finishX,finishY){
 	DTPoints[1] = {x: finishX, y: startY};
 	DTPoints[2] = {x: finishX, y: finishY};
 	DTPoints[3] = {x: startX, y: finishY};
+	DTPoints[4] = {x: startX, y: startY};
 	drawPolygon(DTPoints);
 }
 function drawPolygon(points){
+	/*
 	context.beginPath();
 	context.moveTo( points[0].x, points[0].y );
 	for(var i=1;i<points.length;i++) {
@@ -221,7 +229,14 @@ function drawPolygon(points){
 		context.moveTo( points[i].x, points[i].y );
 	}
 	context.lineTo( points[0].x, points[0].y );
+	context.stroke(); */
+	context.beginPath();
+	for(var i=1;i<points.length;i++) {
+		context.moveTo( points[i-1].x, points[i-1].y );
+		context.lineTo( points[i].x, points[i].y );
+	}
 	context.stroke(); 
+	
 }
 function drawEllipse(startX,startY,finishX,finishY){
 	var x = startX,
@@ -265,7 +280,7 @@ function floodFill(e){
 	context.putImageData(p,0,0);
 	
 	function f(xinitial,yinitial){
-		var queue = [Point(xinitial,yinitial)];
+		var queue = [new Point(xinitial,yinitial)];
 		var edgeQueue = [];
 		var x = 0;
 		var y = 0;
@@ -276,10 +291,10 @@ function floodFill(e){
 			y=point.y;
 			if( isWithinCanvasBounds(point) && targetColor.equals(getColorFromPoint(point)) ) {
 				colorPixel(point,fillColor);
-				queue.push(Point(x-1,y));
-				queue.push(Point(x+1,y));
-				queue.push(Point(x,y-1));
-				queue.push(Point(x,y+1));
+				queue.push(new Point(x-1,y));
+				queue.push(new Point(x+1,y));
+				queue.push(new Point(x,y-1));
+				queue.push(new Point(x,y+1));
 			} else if(isWithinCanvasBounds(point) && !(fillColor.equals(getColorFromPoint(point)))){
 				// If inside this block, current pixel is an edge pixel
 				edgeQueue.push(point);
@@ -293,16 +308,16 @@ function floodFill(e){
 
 			colorPixel(point,fillColor);
 			
-			var point2 = Point(x-1,y);
+			var point2 = new Point(x-1,y);
 			if(isWithinCanvasBounds(point2))
 				colorPixelBlend(point2,fillColor,getColorFromCoords(x-1,y));
-			point2 = Point(x+1,y);
+			point2 = new Point(x+1,y);
 			if(isWithinCanvasBounds(point2))
 				colorPixelBlend(point2,fillColor,getColorFromCoords(x+1,y));
-			point2 = Point(x,y-1);
+			point2 = new Point(x,y-1);
 			if(isWithinCanvasBounds(point2))
 				colorPixelBlend(point2,fillColor,getColorFromCoords(x,y-1));
-			point2 = Point(x,y+1);
+			point2 = new Point(x,y+1);
 			if(isWithinCanvasBounds(point2))
 				colorPixelBlend(point2,fillColor,getColorFromCoords(x,y+1));
 		}
