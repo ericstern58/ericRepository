@@ -60,9 +60,8 @@ context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
 /*-----------------------------------------------------------------------------*/
 // Point Object
-function Point(x, y) {
-	this.x = x;
-	this.y = y;
+function Point(xCoord, yCoord) {
+	return {x: xCoord, y: yCoord};
 }
 // Color Object
 function RGBColor(r, g, b) {
@@ -266,7 +265,7 @@ function floodFill(e){
 	context.putImageData(p,0,0);
 	
 	function f(xinitial,yinitial){
-		var queue = [new Point(xinitial,yinitial)];
+		var queue = [Point(xinitial,yinitial)];
 		var edgeQueue = [];
 		var x = 0;
 		var y = 0;
@@ -277,10 +276,10 @@ function floodFill(e){
 			y=point.y;
 			if( isWithinCanvasBounds(point) && targetColor.equals(getColorFromPoint(point)) ) {
 				colorPixel(point,fillColor);
-				queue.push(new Point(x-1,y));
-				queue.push(new Point(x+1,y));
-				queue.push(new Point(x,y-1));
-				queue.push(new Point(x,y+1));
+				queue.push(Point(x-1,y));
+				queue.push(Point(x+1,y));
+				queue.push(Point(x,y-1));
+				queue.push(Point(x,y+1));
 			} else if(isWithinCanvasBounds(point) && !(fillColor.equals(getColorFromPoint(point)))){
 				// If inside this block, current pixel is an edge pixel
 				edgeQueue.push(point);
@@ -294,16 +293,16 @@ function floodFill(e){
 
 			colorPixel(point,fillColor);
 			
-			var point2 = new Point(x-1,y);
+			var point2 = Point(x-1,y);
 			if(isWithinCanvasBounds(point2))
 				colorPixelBlend(point2,fillColor,getColorFromCoords(x-1,y));
-			point2 = new Point(x+1,y);
+			point2 = Point(x+1,y);
 			if(isWithinCanvasBounds(point2))
 				colorPixelBlend(point2,fillColor,getColorFromCoords(x+1,y));
-			point2 = new Point(x,y-1);
+			point2 = Point(x,y-1);
 			if(isWithinCanvasBounds(point2))
 				colorPixelBlend(point2,fillColor,getColorFromCoords(x,y-1));
-			point2 = new Point(x,y+1);
+			point2 = Point(x,y+1);
 			if(isWithinCanvasBounds(point2))
 				colorPixelBlend(point2,fillColor,getColorFromCoords(x,y+1));
 		}
