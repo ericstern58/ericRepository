@@ -333,13 +333,13 @@ function setupCSS()
 		#drawTools-btn-icon-options:before{margin:8px 0px 0px 0px;width:30px;height:5px;background:#c2c2c2;border-radius:1px;content:'';display:block;position:absolute;}\n\
 		#drawTools-btn-icon-options:after{margin:16px 0px 0px 0px;width:30px;height:5px;background:#c2c2c2;border-radius:1px;content:'';display:block;position:absolute;}\n\
 		\n\
-		.drawTools-btn-group{position:relative;display:inline-block;vertical-align:middle;}\n\
-		.drawTools-btn-group>.drawTools-btn{position:relative;float:left;display:inline-block;}\n\
+		#drawTools{position:relative;display:inline-block;vertical-align:middle;}\n\
+		#drawTools>.drawTools-btn{position:relative;float:left;display:inline-block;}\n\
 		\n\
-		.drawTools-btn-group>.drawTools-btn:not(:first-child):not(:last-child):not(.dropdown-toggle){border-radius:0}\n\
-		.drawTools-btn-group>.drawTools-btn:first-child{margin-left:0;}\n\
-		.drawTools-btn-group>.drawTools-btn:first-child:not(:last-child):not(.dropdown-toggle){border-bottom-right-radius: 0;border-top-right-radius: 0;}\n\
-		.drawTools-btn-group>.drawTools-btn:last-child:not(:first-child),.drawTools-btn-group>.dropdown-toggle:not(:first-child){border-bottom-left-radius:0;border-top-left-radius:0;}\n\
+		#drawTools>.drawTools-btn:not(:first-child):not(:last-child):not(.dropdown-toggle){border-radius:0}\n\
+		#drawTools>.drawTools-btn:first-child{margin-left:0;}\n\
+		#drawTools>.drawTools-btn:first-child:not(:last-child):not(.dropdown-toggle){border-bottom-right-radius: 0;border-top-right-radius: 0;}\n\
+		#drawTools>.drawTools-btn:last-child:not(:first-child),.#drawTools>.dropdown-toggle:not(:first-child){border-bottom-left-radius:0;border-top-left-radius:0;}\n\
 		\n\
 		.drawTools-btn{height:34px;border-radius:2px;margin-top:5px;}\n\
 		.drawTools-btn input{display:none;}\n\
@@ -395,7 +395,6 @@ function createDrawToolsContainer(){
 	//Create DIV in which DrawTools will be placed in
 	var drawToolsDiv = document.createElement('div');
 	drawToolsDiv.id = DRAW_TOOLS_ID;
-	drawToolsDiv.className = 'drawTools-btn-group';
 	DRAWCEPTION_TOOLBAR.appendChild(drawToolsDiv);
 }
 
