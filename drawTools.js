@@ -6,9 +6,11 @@ var DTBrushes = [{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},{id: 'brush-1
 
 // Setup Some Global Variables
 window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
+var DA = drawApp;
+var DACanvas = drawApp.canvas;
 var context = drawApp.context;
 context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
-var DACanvas = drawApp.canvas;
+
 
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
@@ -23,10 +25,11 @@ function RGBColor(r, g, b) {
 	this.r = r;
 	this.g = g;
 	this.b = b;
-	this.equals = function(color) {
-		return (this.r===color.r && this.g===color.g && this.b===color.b);
-	};
+	this.equals = 
 }
+RGBColor.prototype.equals = function(color) {
+		return (this.r===color.r && this.g===color.g && this.b===color.b);
+};
 // Tool type enum
 var toolType={BRUSH:0,FILL:1,LINE:2,RECT:3,ELLIPSE:4,POLY:5,UTIL:99};
 
