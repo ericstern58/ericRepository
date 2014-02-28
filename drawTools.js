@@ -48,9 +48,8 @@ function outputDebug(outputString){
 	debugLabel.getElementsByTagName('div')[0].innerHTML = outputString;
 }
 window.onerror = function (msg, url, line) {
-    //alert("Error on line " + line + ":\n" + msg);
-    //return true; // return true to prevent browser from displaying error
-    return false;
+    alert("Error on line " + line + ":\n" + msg);
+    return true; // return true to prevent browser from displaying error
 }
 
 // Setup tool state/event variables
@@ -316,7 +315,7 @@ function setupCSS()
 {
 	// Calculate variables used in css
 	var optionsMarginTop = canvasOffset.top + canvasHeight - $("#drawTools").offset().top;
-	outputDebug("test");
+	
 	var DTSheet = document.createElement('style');
 	DTSheet.id = 'drawToolsStyleSheet'; // Give id so destructor can find it if needed
 	DTSheet.innerHTML = "\n\
