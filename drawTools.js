@@ -266,7 +266,7 @@ function floodFill(e){
 	context.putImageData(p,0,0);
 	
 	function f(xinitial,yinitial){
-		var queue = [{x: xinitial, y: yinitial}];
+		var queue = [new Point(xinitial,yinitial)];
 		var edgeQueue = [];
 		var x = 0;
 		var y = 0;
@@ -277,10 +277,10 @@ function floodFill(e){
 			y=point.y;
 			if( isWithinCanvasBounds(point) && targetColor.equals(getColorFromPoint(point)) ) {
 				colorPixel(point,fillColor);
-				queue.push({x: x-1, y: y});
-				queue.push({x: x+1, y: y});
-				queue.push({x: x, y: y-1});
-				queue.push({x: x, y: y+1});
+				queue.push(new Point(x-1,y));
+				queue.push(new Point(x+1,y));
+				queue.push(new Point(x,y-1));
+				queue.push(new Point(x,y+1));
 			} else if(isWithinCanvasBounds(point) && !(fillColor.equals(getColorFromPoint(point)))){
 				// If inside this block, current pixel is an edge pixel
 				edgeQueue.push(point);
@@ -294,16 +294,16 @@ function floodFill(e){
 
 			colorPixel(point,fillColor);
 			
-			var point2 = {x: x-1, y: y};
+			var point2 = new Point(x-1,y);
 			if(isWithinCanvasBounds(point2))
 				colorPixelBlend(point2,fillColor,getColorFromCoords(x-1,y));
-			point2 = {x: x+1, y: y};
+			point2 = new Point(x+1,y);
 			if(isWithinCanvasBounds(point2))
 				colorPixelBlend(point2,fillColor,getColorFromCoords(x+1,y));
-			point2 = {x: x, y: y-1};
+			point2 = new Point(x,y-1);
 			if(isWithinCanvasBounds(point2))
 				colorPixelBlend(point2,fillColor,getColorFromCoords(x,y-1));
-			point2 = {x: x, y: y+1};
+			point2 = new Point(x,y+1);
 			if(isWithinCanvasBounds(point2))
 				colorPixelBlend(point2,fillColor,getColorFromCoords(x,y+1));
 		}
