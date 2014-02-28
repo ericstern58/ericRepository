@@ -189,11 +189,17 @@ $(document).on('mouseup', function(e){
 		restoreCanvas();
 		drawEllipse(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 	} else if(currentToolType === toolType.POLY) {
-		DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
-		if(e.which == 3) {	// If right mouse click, finish the polygon
-			restoreCanvas();
-			drawPolygon(DTPoints);
+		if(isWithinPolygonToolBounds((e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top))){
+			DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
+			if(e.which == 3) {	// If right mouse click, finish the polygon
+				restoreCanvas();
+				drawPolygon(DTPoints);
+			} else {
+				return;
+			}
 		} else {
+			DTPoints.length = 0;
+			toolInUse = false;
 			return;
 		}
 	}
@@ -355,6 +361,10 @@ function DTUpdateCanvasStateVariables() {
 
 function restoreCanvas() {
 	context.constructor.prototype.putImageData.call(context, restorePoints[restorePosition], 0, 0);
+}
+
+function isWithinPolygonToolBounds(point){
+	return (point.x>=(-12) && point.y>=(-12) && point.x<(canvasWidth+12) && point.y<(canvasHeight+12));
 }
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
