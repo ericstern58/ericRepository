@@ -27,7 +27,7 @@ function RGBColor(r, g, b) {
 	this.b = b;
 	this.equals = function(color) {
 		return (this.r===color.r && this.g===color.g && this.b===color.b);
-	}
+	};
 }
 // Tool type enum
 var toolType={BRUSH:0,FILL:1,LINE:2,RECT:3,ELLIPSE:4,POLY:5,UTIL:99};
