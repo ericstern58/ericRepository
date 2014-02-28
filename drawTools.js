@@ -314,7 +314,7 @@ function restoreCanvas() {
 function setupCSS()
 {
 	// Calculate variables used in css
-	var optionsMarginTop = $("#drawTools").offset().top - canvasOffset.top - canvasHeight;
+	var optionsMarginTop = canvasOffset.top + canvasHeight - $("#drawTools").offset().top;
 	alert("optionsmargintop: " + optionsMarginTop + "--");
 	//outputDebug(optionsMarginTop);
 	
@@ -362,7 +362,7 @@ function setupCSS()
 		#drawTools-btn-exit .drawTools-btn-container:hover,#drawTools-btn-options .drawTools-btn:focus{background-color:#b90c0c;border-bottom:1px solid #980909;}\n\
 		#drawTools-btn-exit .drawTools-btn-container:active{background-color:#a50000;border-bottom:1px solid #a50000;}\n\
 		\n\
-		#drawTools-options{margin-top:-46px;background:#252525;border-bottom:1px solid #171717;width:300px;height:0px;position:absolute;border-radius:2px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
+		#drawTools-options{margin-top:"+optionsMarginTop+"px;background:#252525;border-bottom:1px solid #171717;width:300px;height:0px;position:absolute;border-radius:2px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
 		\n\
 		";
 	document.body.appendChild(DTSheet);
