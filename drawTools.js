@@ -113,7 +113,11 @@ createDrawToolsElements();	// Create Draw Tools Elements and Interface
 // Setup Mousedown Listener
 DACanvas.off('mousedown');
 DACanvas.on('mousedown', function(e){
-	if(currentToolType === toolType.BRUSH)
+	if($('#drawTools-options').css('opacity') == 1){
+		painting = !1;
+		restoreCanvas();
+		return;
+	} else if(currentToolType === toolType.BRUSH)
 		return;
 	toolInUse = true;
 	DTUpdateCanvasStateVariables();
@@ -182,7 +186,6 @@ $(document).on('mousemove', function(e){
 $(document).off('mouseup');
 $(document).on('mouseup', function(e){
 	if($('#drawTools-options').css('opacity') == 1){
-		restoreCanvas();
 		toggleOptions();
 		return;
 	} else if(currentToolType === toolType.BRUSH)
