@@ -74,7 +74,7 @@ drawApp.canvas.on('mousedown', function(e){
 		painting = !1;
 		try{
 			floodFill(e);
-			}catch(err){alert(err);}
+		}catch(err){alert(err);}
 	} else if(currentToolType === toolType.LINE) {
 		painting = !1;
 		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
@@ -156,18 +156,6 @@ function drawLine(startX,startY,finishX,finishY){
 	context.stroke();
 }
 function drawRect(startX,startY,finishX,finishY){
-	/*
-	context.beginPath();
-	context.moveTo( startX, startY );
-	context.lineTo( finishX, startY );
-	context.moveTo( finishX, startY );
-	context.lineTo( finishX, finishY );
-	context.moveTo( finishX, finishY );
-	context.lineTo( startX, finishY );
-	context.moveTo( startX, finishY );
-	context.lineTo( startX, startY );
-	context.stroke(); 
-	*/
 	DTPoints[0] = {x: startX, y: startY};
 	DTPoints[1] = {x: finishX, y: startY};
 	DTPoints[2] = {x: finishX, y: finishY};
