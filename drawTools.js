@@ -500,12 +500,12 @@ function toggleOptions() {
 			height: (h + "px"),
 			marginTop: ("-=" + h + "px"),
 			opacity: "1"
-		}, 300, "swing");
+		}, {300, "swing"} );
 	} else {
 		$("#drawTools-options").animate({
 			height: "0px",
 			marginTop: ("+=" + h + "px"),
 			opacity: "0"
-		}, 300, "swing");	
+		}, {300, "swing"} );	
 	}
 }
