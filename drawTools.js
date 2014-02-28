@@ -1,3 +1,47 @@
+var StopWatch = function (performance) {
+    this.startTime = 0;
+    this.stopTime = 0;
+    this.running = false;
+    this.performance = performance === false ? false : !!window.performance;
+};
+
+StopWatch.prototype.currentTime = function () {
+    return this.performance ? window.performance.now() : new Date().getTime();
+};
+
+StopWatch.prototype.start = function () {
+    this.startTime = this.currentTime();
+    this.running = true;
+};
+
+StopWatch.prototype.stop = function () {
+    this.stopTime = this.currentTime();
+    this.running = false;
+};
+
+StopWatch.prototype.getElapsedMilliseconds = function () {
+    if (this.running) {
+        this.stopTime = this.currentTime();
+    }
+
+    return this.stopTime - this.startTime;
+};
+
+StopWatch.prototype.getElapsedSeconds = function () {
+    return this.getElapsedMilliseconds() / 1000;
+};
+
+StopWatch.prototype.printElapsed = function (name) {
+    var currentName = name || 'Elapsed:';
+
+    console.log(currentName, '[' + this.getElapsedMilliseconds() + 'ms]', '[' + this.getElapsedSeconds() + 's]');
+    outputDebug('[' + this.getElapsedMilliseconds() + 'ms]');
+};
+
+
+
+
+
 // Setup Constants
 var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
@@ -27,7 +71,7 @@ function RGBColor(r, g, b) {
 	this.b = b;
 }
 RGBColor.prototype.equals = function(color) {
-		return (this.r===color.r && this.g===color.g && this.b===color.b);
+	return (this.r===color.r && this.g===color.g && this.b===color.b);
 };
 // Tool type enum
 var toolType={BRUSH:0,FILL:1,LINE:2,RECT:3,ELLIPSE:4,POLY:5,UTIL:99};
@@ -74,10 +118,15 @@ DACanvas.on('mousedown', function(e){
 	DTUpdateCanvasStateVariables();
 	
 	if(currentToolType === toolType.FILL) {
+		var stopwatch = new StopWatch();
+		stopwatch.start();
 		painting = !1;
 		try{
 			floodFill(e);
 		}catch(err){alert(err);}
+		stopwatch.stop();
+		stopwatch.printElapsed();
+		
 	} else if(currentToolType === toolType.LINE) {
 		painting = !1;
 		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
@@ -518,4 +567,3 @@ function toggleOptions() {
 		},300, "swing");
 	}
 }
-
