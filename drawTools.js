@@ -500,6 +500,20 @@ function toggleOptions() {
 			height: (h + "px"),
 			marginTop: ("-=" + h + "px"),
 			opacity: "1"
+		},300, "swing");
+	} else {
+		$("#drawTools-options").stop(true, true);.animate({
+			height: "0px",
+			marginTop: ("+=" + h + "px"),
+			opacity: "0"
+		},300, "swing");
+	}
+	/*
+	if($('#drawTools-options').css('opacity') == 0) {
+		$("#drawTools-options").stop(true, true).animate({
+			height: (h + "px"),
+			marginTop: ("-=" + h + "px"),
+			opacity: "1"
 		},{	easing: "swing", 
 			duration: 300 
 		});
@@ -512,4 +526,5 @@ function toggleOptions() {
 			duration: 300 
 		});	
 	}
+	*/
 }
