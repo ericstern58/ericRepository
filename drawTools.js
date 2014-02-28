@@ -364,8 +364,8 @@ function restoreCanvas() {
 	context.constructor.prototype.putImageData.call(context, restorePoints[restorePosition], 0, 0);
 }
 
-function isWithinPolygonToolBounds(point){
-	return (point.x>=(-12) && point.y>=(-12) && point.x<(canvasWidth+12) && point.y<(canvasHeight+12));
+function isWithinPolygonToolBounds(x, y){
+	return (x>=(-12) && y>=(-12) && x<(canvasWidth+12) && y<(canvasHeight+12));
 }
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
