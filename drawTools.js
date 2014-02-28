@@ -1,5 +1,5 @@
 //---- START -----------GIANT try catch
-try{
+try {
 	
 // Setup Constants
 var DRAW_TOOLS_ID = 'drawTools';
@@ -527,5 +527,5 @@ function toggleOptions() {
 	}
 }
 
-}catch(err){alert(err)};
+} catch(err) {alert(err)};
 //----  END  -----------GIANT try catch
