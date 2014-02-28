@@ -48,9 +48,9 @@ function outputDebug(outputString){
 	debugLabel.getElementsByTagName('div')[0].innerHTML = outputString;
 }
 window.onerror = function (msg, url, line) {
-    alert("Error on line " + line + " in " + url + ":\n" + msg);
-    // return true to prevent browser from displaying error
-    return true;
+    //alert("Error on line " + line + ":\n" + msg);
+    //return true; // return true to prevent browser from displaying error
+    return false;
 }
 
 // Setup tool state/event variables
