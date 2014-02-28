@@ -175,12 +175,12 @@ function drawRect(startX,startY,finishX,finishY){
 }
 function drawPolygon(points){
 	context.beginPath();
-	context.moveTo( startX, startY );
+	context.moveTo( points[0].x, points[0].y );
 	for(var i=1;i<points.length;i++) {
 		context.lineTo( points[i].x, points[i].y );
 		context.moveTo( points[i].x, points[i].y );
 	}
-	context.lineTo( startX, startY );
+	context.lineTo( points[0].x, points[0].y );
 	context.stroke(); 
 }
 function drawEllipse(startX,startY,finishX,finishY){
