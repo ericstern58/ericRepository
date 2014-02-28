@@ -43,7 +43,7 @@ var toolInUse = false;
 var canvasOffset = 0;
 var canvasWidth = 0;
 var canvasHeight = 0;
-updateCanvasStateVariables();
+DTUpdateCanvasStateVariables();
 
 // Setup Debug Stuff
 var debugLabel; //Go to createDrawToolsElements to find assignment
@@ -67,7 +67,7 @@ drawApp.canvas.on('mousedown', function(e){
 	if(currentToolType == toolType.BRUSH)
 		return;//drawApp.onCanvasMouseDown(e);	// default behaviors
 	toolInUse = true;
-	updateCanvasStateVariables();
+	DTUpdateCanvasStateVariables();
 	
 	if(currentToolType == toolType.FILL) {
 		painting = !1;
@@ -298,7 +298,7 @@ function floodFill(e){
   /*-----------------------------------------------------------------------------*/
  /*--------------------------- Auxiliary Functions -----------------------------*/
 /*-----------------------------------------------------------------------------*/
-function updateCanvasStateVariables() {
+function DTUpdateCanvasStateVariables() {
 	canvasOffset = $('#drawingCanvas').offset();	// Update canvas offset variable
 	canvasWidth = drawApp.canvas.width();			// Update canvas width variable
 	canvasHeight = drawApp.canvas.height(); 		// Update canvas width variable
