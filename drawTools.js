@@ -624,3 +624,11 @@ function toggleOptions() {
 		},300, "swing");
 	}
 }
+function isWithinToggleOptionsBounds(x, y){
+	var x2 = x - $("#drawTools-options").offset().top;
+	var y2 = y - $("#drawTools-options").offset().left;
+	var widthPoint = x2 + document.getElementById('#drawTools-options').offsetWidth;
+	var heightPoint = y2 + document.getElementById('#drawTools-options').offsetHeight;
+	outputDebug("[x:" + x2 + ", y:" + y2 + "]   [width:" + (widthPoint-x2) + ", height:" + (heightPoint-y2) + "]");
+	return (x2>=0 && y2>=0 && x2<(widthPoint) && y2<(heightPoint));
+}
