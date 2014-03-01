@@ -202,16 +202,12 @@ $(document).on('mousemove', function(e){
 	} else if(currentToolType === toolType.LINECHAIN) {
 		if(DTPoints.length > 0) {
 			restoreCanvas();
-			//if(DTPoints.length > 1)
-				drawLineChain(DTPoints,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
-			//drawLine(DTPoints[DTPoints.length-1].x,DTPoints[DTPoints.length-1].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+			drawLineChain(DTPoints,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 		}
 	} else if(currentToolType === toolType.CURVE) {
 		if(DTPoints.length > 0) {
 			restoreCanvas();
-			if(DTPoints.length > 1)
-				drawLineChain(DTPoints);
-			drawLine(DTPoints[DTPoints.length-1].x,DTPoints[DTPoints.length-1].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+			drawLineChain(DTPoints,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 		}
 	} else if(currentToolType === toolType.RECT) {
 		restoreCanvas();
