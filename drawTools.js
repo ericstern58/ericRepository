@@ -253,7 +253,9 @@ $(document).on('mouseup', function(e){
 				//drawLineChain(DTPoints); //commented to test out drawcurve
 				//drawCurve(context, pointsToArray(DTPoints));
 				//context.drawCurve([0,0,96,200,250,106,156,23], 0.5, null, 16, false);
+				try{
 				drawSpline(context,[20,50,100,100,150,50,200,150,250,50,300,70,310,130,380,30],0.5,false);
+				}catch(err) {alert(err);}
 			} else {
 				DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 				return;
