@@ -677,7 +677,7 @@ function DTDestroy()
 }
 
 function pointsToArray(points) {
-	var arr = [];
+	var arr = new Array();
 	for(i = 0, l=points.length; i<l; i++)
 		arr.push(points.x, points.y);
 	return arr;
