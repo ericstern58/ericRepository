@@ -272,7 +272,8 @@ $(document).on('mouseup', function(e){
 				//drawCurve(context, [20,50,100,100,150,50,200,150,250,50,300,70,310,130,380,30],0.5);
 				//drawSpline(context,pointsToArray(DTPoints),0.5,false);
 				//drawCurve(context, pointsToArray(DTPoints));
-				drawCurve(context, pointsToArray(DTPoints), 0.5) 
+				drawCurve(context, pointsToArray(DTPoints), 0.5);
+				context.stroke();
 				}catch(err) {alert(err);}
 			} else {
 				DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
