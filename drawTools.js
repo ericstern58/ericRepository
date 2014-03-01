@@ -143,7 +143,7 @@ createDrawToolsElements();	// Create Draw Tools Elements and Interface
 // Setup Mousedown Listener
 DACanvas.off('mousedown');
 DACanvas.on('mousedown', function(e){
-	if($('#drawTools-options').css('opacity') == 1){
+	if(0 || $('#drawTools-options').css('opacity') == 1){
 		painting = !1;
 		restoreCanvas();
 		return;
