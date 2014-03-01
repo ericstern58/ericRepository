@@ -332,7 +332,7 @@ function drawLineChain(points, extraX, extraY)
 	}
 	if ( !((typeof extraX === 'undefined') || (typeof extraX === 'undefined'))) {
 		context.moveTo( points[points.length-1].x, points[points.length-1].y );
-		context.lineTo( extraX, extraX );
+		context.lineTo( extraX, extraY );
 	}
 	context.stroke(); 
 }
