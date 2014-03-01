@@ -207,7 +207,9 @@ $(document).on('mousemove', function(e){
 	} else if(currentToolType === toolType.CURVE) {
 		if(DTPoints.length > 0) {
 			restoreCanvas();
-			drawLineChain(DTPoints,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+			DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
+			drawCurve(context, DTPoints, 0.5, false);
+			DTPoints.length = DTPoints.length - 1;
 		}
 	} else if(currentToolType === toolType.RECT) {
 		restoreCanvas();
@@ -258,9 +260,8 @@ $(document).on('mouseup', function(e){
 		}
 	} else if(currentToolType === toolType.CURVE) {
 		if(isWithinPolygonToolBounds((e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top))){
-			if(e.which == 3) {	// If right mouse click, finish the polygon
-				restoreCanvas();
-				drawLineChain(DTPoints);
+			if(e.which == 3) {	// If right mouse click, finish the curve
+				restoreCanvas();//-------------------------------------------------------------------------
 			} else {
 				DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 				return;
@@ -668,4 +669,128 @@ function DTDestroy()
 	window.DTToolsIsCurrentlyInstalled = false;
 	// 5. Destroy JavaScript
 	document.getElementById('DTScript').remove();
+}
+
+/*	USAGE:
+ *		drawCurve(context, points, tension, isClosed, numberOfSegments, showPoints)
+ *
+ *		drawCurve(context, array)
+ *		drawCurve(content, array, float)
+ *		drawCurve(content, array, float, boolean)
+ *		drawCurve(content, array, float, boolean, integer)
+ *		drawCurve(content, array, float, boolean, integer, boolean)
+ *
+ *		context				= 2d context from canvas element
+ *		points				= array of float or integers arranged as x1,y1,x2,y1,...,xn,yn. Minimum 2 points.
+ *		tension				= 0-1, 0 = no smoothing, 0.5 = smooth (default), 1 = very smoothed
+ *		isClosed			= true = draw a closed curve, false = open ended curve (default)
+ *		numberOfSegments	= resolution of the smoothed curve. Higer number -> smoother (default 16)
+ *		showPoints			= true if you want to see the input points' location
+ *
+ *		NOTE: array must contain a minimum set of two points.
+ *		Known bugs: closed curve draws last point wrong.
+*/
+function drawCurve(context, points, tension, shouldDrawClosedCurve, numOfSegments, showPoints) 
+{
+	if(points.length < 2)
+		return;
+	showPoints	= showPoints ? showPoints : false;
+	context.beginPath();
+	curvePoints = getCurvePoints(points, tension, shouldDrawClosedCurve, numOfSegments);
+	
+	// Draw the lines
+	context.moveTo(pts[0], pts[1]);
+	for(i = 2, l = pts.length - 1; i < l; i += 2)
+		context.lineTo(pts[i], pts[i+1]);
+	/*
+	if (showPoints) {
+		context.stroke();
+		context.beginPath();
+		for(var i=0;i<pts.length-1;i+=2) context.rect(pts[i] - 2, pts[i+1] - 2, 4, 4);
+	}*/
+}
+
+/**
+ *		Uses an array of points (x,y) to return an array containing points
+ *		for a smooth curve.
+ *
+ *	USAGE:
+ *
+ *		getCurvePoints(points, tension, isClosed, numberOfSegments)
+ *
+ *		getCurvePoints(array)
+ *		getCurvePoints(array, float)
+ *		getCurvePoints(array, float, boolean)
+ *		getCurvePoints(array, float, boolean, integer)
+ *
+ *		points				= array of float or integers arranged as x1,y1,x2,y1,...,xn,yn. Minimum 2 points.
+ *		tension				= 0-1, 0 = no smoothing, 0.5 = smooth (default), 1 = very smoothed
+ *		isClosed			= true = calculate a closed curve, false = open ended curve (default)
+ *		numberOfSegments	= resolution of the smoothed curve. Higer number -> smoother (default 16)
+ *
+ *		NOTE: array must contain a minimum set of two points.
+ *		Known bugs: closed curve draws last point wrong.
+*/
+
+function getCurvePoints(ptsa, tension, isClosed, numOfSegments) 
+{
+	// use input value if provided, or use a default value	 
+	tension = typeof tension === 'number' ? tension : 0.5;
+	numOfSegments = typeof numOfSegments === 'number' ? numOfSegments : 16;
+
+	var _pts, res = [],			/// clone array
+		x, y,					/// our x,y coords
+		t1x, t2x, t1y, t2y,		/// tension vectors
+		c1, c2, c3, c4,			/// cardinal points
+		st, t, i,				/// steps based on num. of segments
+		pow3, pow2,				/// cache powers
+		pow32, pow23,
+		p0, p1, p2, p3,			/// cache points
+		pl = ptsa.length;
+
+	/// clone array so we don't change the original content
+	_pts = ptsa.concat();
+
+	_pts.unshift(ptsa[1]);					/// copy 1. point and insert at beginning
+	_pts.unshift(ptsa[0]);
+	_pts.push(ptsa[pl - 2], ptsa[pl - 1]);	/// copy last point and append
+
+	/// 1. loop goes through point array
+	/// 2. loop goes through each segment between the two points + one point before and after
+	for (i = 2; i < pl; i += 2) {
+		p0 = _pts[i];
+		p1 = _pts[i + 1];
+		p2 = _pts[i + 2];
+		p3 = _pts[i + 3];
+
+		/// calc tension vectors
+		t1x = (p2 - _pts[i - 2]) * tension;
+		t2x = (_pts[i + 4] - p0) * tension;
+		t1y = (p3 - _pts[i - 1]) * tension;
+		t2y = (_pts[i + 5] - p1) * tension;
+
+		for(t = 0; t <= numOfSegments; t++) {
+			/// calc step
+			st = t / numOfSegments;
+			
+			pow2 = Math.pow(st, 2);
+			pow3 = pow2 * st;
+			pow23 = pow2 * 3;
+			pow32 = pow3 * 2;
+
+			/// calc cardinals
+			c1 = pow32 - pow23 + 1; 
+			c2 = pow23 - pow32;
+			c3 = pow3 - 2 * pow2 + st; 
+			c4 = pow3 - pow2;
+
+			/// calc x and y cords with common control vectors
+			x = c1 * p0 + c2 * p2 + c3 * t1x + c4 * t2x;
+			y = c1 * p1 + c2 * p3 + c3 * t1y + c4 * t2y;
+		
+			/// store points in array
+			res.push(x, y);
+		}
+	}
+	return res;
 }
