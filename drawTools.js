@@ -725,12 +725,12 @@ function drawCurve(ctx, ptsa, tension, isClosed, numOfSegments, showPoints) {
 	ctx.beginPath();
 
 	drawLines(ctx, getCurvePoints(ptsa, tension, isClosed, numOfSegments));
-	
+	/*
 	if (showPoints) {
 		ctx.stroke();
 		ctx.beginPath();
 		for(var i=0;i<pts.length-1;i+=2) ctx.rect(pts[i] - 2, pts[i+1] - 2, 4, 4);
-	}
+	}*/
 }
 
 /**
