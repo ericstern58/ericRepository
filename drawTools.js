@@ -785,14 +785,14 @@ function drawSpline(ctx,pts,t,closed){
         if(!showDetails){color="#555555"}
         ctx.beginPath();
         ctx.moveTo(pts[0],pts[1]);
-        ctx.quadraticCurveTo(cp[0],cp[1],pts[2],pts[3]);
+        ctx.bezierCurveTo(cp[0],cp[1],pts[2],pts[3]);
         ctx.stroke();
         ctx.closePath();
         
         if(!showDetails){color="#555555"} 
         ctx.beginPath();
         ctx.moveTo(pts[n-2],pts[n-1]);
-        ctx.quadraticCurveTo(cp[2*n-10],cp[2*n-9],pts[n-4],pts[n-3]);
+        ctx.bezierCurveTo(cp[2*n-10],cp[2*n-9],pts[n-4],pts[n-3]);
         ctx.stroke();
         ctx.closePath();
         if(showDetails){
