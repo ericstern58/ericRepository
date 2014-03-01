@@ -271,7 +271,8 @@ $(document).on('mouseup', function(e){
 				//drawSpline(context,[20,50,100,100,150,50,200,150,250,50,300,70,310,130,380,30],0.5,false);
 				//drawCurve(context, [20,50,100,100,150,50,200,150,250,50,300,70,310,130,380,30],0.5);
 				//drawSpline(context,pointsToArray(DTPoints),0.5,false);
-				drawCurve(context, pointsToArray(DTPoints));
+				//drawCurve(context, pointsToArray(DTPoints));
+				drawCurve(context, pointsToArray(DTPoints), 0.5) 
 				}catch(err) {alert(err);}
 			} else {
 				DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
@@ -684,11 +685,131 @@ function pointsToArray(points) {
 		arr.push(points[i].x, points[i].y);
 	return arr;
 }
-function drawCurve(a,e,g,c,d,f){f=f?f:!1;a.beginPath();drawLines(a,getCurvePoints(e,g,c,d));if(f){a.stroke();a.beginPath();for(var b=0;b<pts.length-1;b+=2){a.rect(pts[b]-2,pts[b+1]-2,4,4)}}}function getCurvePoints(u,E,g,h){E=typeof E==="number"?E:0.5;h=typeof h==="number"?h:16;var a,v=[],F,G,A,C,B,D,b,c,d,e,w,z,f,r,p,s,q,j,k,m,n,o=u.length;a=u.concat();a.unshift(u[1]);a.unshift(u[0]);a.push(u[o-2],u[o-1]);for(f=2;f<o;f+=2){j=a[f];k=a[f+1];m=a[f+2];n=a[f+3];A=(m-a[f-2])*E;C=(a[f+4]-j)*E;B=(n-a[f-1])*E;D=(a[f+5]-k)*E;for(z=0;z<=h;z++){w=z/h;p=Math.pow(w,2);r=p*w;q=p*3;s=r*2;b=s-q+1;c=q-s;d=r-2*p+w;e=r-p;F=b*j+c*m+d*A+e*C;G=b*k+c*n+d*B+e*D;v.push(F,G)}}return v}function drawLines(a,b){a.moveTo(b[0],b[1]);for(i=2,l=b.length-1;i<l;i+=2){a.lineTo(b[i],b[i+1])}}if(CanvasRenderingContext2D!="undefined"){CanvasRenderingContext2D.prototype.drawCurve=function(c,e,a,b,d){drawCurve(this,c,e,a,b,d)}};
 
 
 
-//-----------------------------------------------------------------------
+
+
+
+
+function drawCurve(ctx, ptsa, tension, isClosed, numOfSegments, showPoints) {
+
+	showPoints	= showPoints ? showPoints : false;
+
+	ctx.beginPath();
+
+	drawLines(ctx, getCurvePoints(ptsa, tension, isClosed, numOfSegments));
+	
+	if (showPoints) {
+		ctx.stroke();
+		//ctx.beginPath();
+		for(var i=0;i<ptsa.length-1;i+=2) ctx.rect(ptsa[i] - 2, ptsa[i+1] - 2, 4, 4);
+	}
+}
+
+/**
+ *		Uses an array of points (x,y) to return an array containing points
+ *		for a smooth curve.
+ *
+ *	USAGE:
+ *
+ *		getCurvePoints(points, tension, isClosed, numberOfSegments)
+ *
+ *		getCurvePoints(array)
+ *		getCurvePoints(array, float)
+ *		getCurvePoints(array, float, boolean)
+ *		getCurvePoints(array, float, boolean, integer)
+ *
+ *		points				= array of float or integers arranged as x1,y1,x2,y1,...,xn,yn. Minimum 2 points.
+ *		tension				= 0-1, 0 = no smoothing, 0.5 = smooth (default), 1 = very smoothed
+ *		isClosed			= true = calculate a closed curve, false = open ended curve (default)
+ *		numberOfSegments	= resolution of the smoothed curve. Higer number -> smoother (default 16)
+ *
+ *		NOTE: array must contain a minimum set of two points.
+ *		Known bugs: closed curve draws last point wrong.
+ */
+function getCurvePoints(ptsa, tension, numOfSegments) {
+
+	// use input value if provided, or use a default value	 
+	tension 		=	(tension != 'undefined') ? tension : 0.5;
+	numOfSegments 	=	numOfSegments	? numOfSegments	: 16;
+
+	var _pts = [], res = [],	// clone array
+		x, y,					// our x,y coords
+		t1x, t2x, t1y, t2y,		// tension vectors
+		c1, c2, c3, c4,			// cardinal points
+		st, t, i;				// steps based on num. of segments
+
+	// clone array so we don't change the original
+	_pts = ptsa.slice(0);
+
+    _pts.unshift(ptsa[1]);			//copy 1. point and insert at beginning
+    _pts.unshift(ptsa[0]);
+    _pts.push(ptsa[ptsa.length - 2]);	//copy last point and append
+    _pts.push(ptsa[ptsa.length - 1]);
+
+	// ok, lets start..
+	
+	// 1. loop goes through point array
+	// 2. loop goes through each segment between the two points + one point before and after
+	for (i=2; i < (_pts.length - 4); i+=2) {
+
+        // calc tension vectors
+        t1x = (_pts[i+2] - _pts[i-2]) * tension;
+        t2x = (_pts[i+4] - _pts[i]) * tension;
+        
+        t1y = (_pts[i+3] - _pts[i-1]) * tension;
+        t2y = (_pts[i+5] - _pts[i+1]) * tension;
+
+        for (t=0; t <= numOfSegments; t++) {
+
+			// calc step
+			st = t / numOfSegments;
+		
+			// calc cardinals
+			c1 =   2 * Math.pow(st, 3) 	- 3 * Math.pow(st, 2) + 1; 
+			c2 = -(2 * Math.pow(st, 3)) + 3 * Math.pow(st, 2); 
+			c3 = 	   Math.pow(st, 3)	- 2 * Math.pow(st, 2) + st; 
+			c4 = 	   Math.pow(st, 3)	- 	  Math.pow(st, 2);
+
+			// calc x and y cords with common control vectors
+			x = c1 * _pts[i]	+ c2 * _pts[i+2] + c3 * t1x + c4 * t2x;
+			y = c1 * _pts[i+1]	+ c2 * _pts[i+3] + c3 * t1y + c4 * t2y;
+		
+			//store points in array
+			res.push(x);
+			res.push(y);
+
+		}
+	}
+	
+	return res;
+}
+
+/**
+ *		Draws an array of points (x,y).
+ *
+ *	USAGE:
+ *
+ *		drawLines(context, points)
+ *
+ *		drawLines(context, array)
+ *
+ *		context				= 2d context from canvas element
+ *		points				= array of float or integers arranged as x1,y1,x2,y1,...,xn,yn. Minimum 2 points.
+ *
+ *		NOTE: array must contain a minimum set of two points.
+ */
+function drawLines(ctx, pts) {
+	ctx.moveTo(pts[0], pts[1]);
+	for(i=2;i<pts.length-1;i+=2) ctx.lineTo(pts[i], pts[i+1]);
+}
+
+
+
+
+//--------------------------------------------------------------------------------------------------------------------------------
+
 
 
 function drawPoint(ctx,x,y,r,color){
@@ -739,7 +860,6 @@ function drawControlLine(ctx,x,y,px,py){
 }
 function drawSpline(ctx,pts,t,closed){
     showDetails=true;
-    ctx.save();
     var cp=[];   // array of control points, as x0,y0,x1,y1,...
     var n=pts.length;
 
@@ -800,8 +920,6 @@ function drawSpline(ctx,pts,t,closed){
             drawControlLine(ctx,pts[n-4],pts[n-3],cp[2*n-10],cp[2*n-9]);
         }
     }
-    ctx.restore();
-    
     if(showDetails){   //   Draw the knot points.
         for(var i=0;i<n;i+=2){
             drawPoint(ctx,pts[i],pts[i+1],2.5,"#ffff00");
