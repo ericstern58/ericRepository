@@ -252,7 +252,8 @@ $(document).on('mouseup', function(e){
 				restoreCanvas();
 				//drawLineChain(DTPoints); //commented to test out drawcurve
 				//drawCurve(context, pointsToArray(DTPoints));
-				drawCurve(context, [0,0,96,200,250,106,156,23]);
+				drawCurve(context, );
+				context.drawCurve([0,0,96,200,250,106,156,23], 0.5, null, 16, false);
 			} else {
 				DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 				return;
