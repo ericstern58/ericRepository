@@ -637,24 +637,6 @@ function DTDestroy()
 	// 5. Destroy JavaScript
 	document.getElementById('DTScript').remove();
 }
-function toggleOptions() {
-	var h = 150;	// Height of the options div
-	var opacity = $('#drawTools-options').css('opacity');
-	
-	if(opacity == 0) {
-		$("#drawTools-options").stop(true, true).animate({
-			height: (h + "px"),
-			marginTop: ("-=" + h + "px"),
-			opacity: "1"
-		},300, "swing");
-	} else if(opacity == 1) {
-		$("#drawTools-options").stop(true, true).animate({
-			height: "0px",
-			marginTop: ("+=" + h + "px"),
-			opacity: "0"
-		},300, "swing");
-	}
-}
 function isWithinToggleOptionsBounds(x, y){
 	var x2 = x - $("#drawTools-options").offset().top;
 	var y2 = y - $("#drawTools-options").offset().left;
