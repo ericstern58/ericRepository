@@ -211,7 +211,9 @@ $(document).on('mousemove', function(e){
 			restoreCanvas();
 			DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 			try{
-			drawCurve(context, DTPoints, 0.5, false); }catch(err){alert(err);}
+			//drawCurve(context, DTPoints, 0.5, false); 
+			drawSpline(context,pointsToArray(DTPoints),0.5,false);
+			}catch(err){alert(err);}
 			DTPoints.length = DTPoints.length - 1;
 		}
 	} else if(currentToolType === toolType.RECT) {
@@ -250,14 +252,7 @@ $(document).on('mouseup', function(e){
 		if(isWithinPolygonToolBounds((e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top))){
 			if(e.which == 3) {	// If right mouse click, finish the polygon
 				restoreCanvas();
-				//drawLineChain(DTPoints); //commented to test out drawcurve
-				//drawCurve(context, pointsToArray(DTPoints));
-				//context.drawCurve([0,0,96,200,250,106,156,23], 0.5, null, 16, false);
-				try{
-				//drawSpline(context,[20,50,100,100,150,50,200,150,250,50,300,70,310,130,380,30],0.5,false);
-				//drawCurve(context, [20,50,100,100,150,50,200,150,250,50,300,70,310,130,380,30],0.5,false);
-				drawSpline(context,pointsToArray(DTPoints),0.5,false);
-				}catch(err) {alert(err);}
+				drawLineChain(DTPoints);
 			} else {
 				DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 				return;
@@ -272,6 +267,12 @@ $(document).on('mouseup', function(e){
 		if(isWithinPolygonToolBounds((e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top))){
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				restoreCanvas();//-------------------------------------------------------------------------
+				try{
+				//drawSpline(context,[20,50,100,100,150,50,200,150,250,50,300,70,310,130,380,30],0.5,false);
+				//drawCurve(context, [20,50,100,100,150,50,200,150,250,50,300,70,310,130,380,30],0.5);
+				drawSpline(context,pointsToArray(DTPoints),0.5,false);
+				//drawCurve(context, pointsToArray(DTPoints));
+				}catch(err) {alert(err);}
 			} else {
 				DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 				return;
