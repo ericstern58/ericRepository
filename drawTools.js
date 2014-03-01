@@ -210,7 +210,8 @@ $(document).on('mousemove', function(e){
 		if(DTPoints.length > 0) {
 			restoreCanvas();
 			DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
-			drawCurve(context, DTPoints, 0.5, false);
+			try{
+			drawCurve(context, DTPoints, 0.5, false); }catch(err){alert(err);}
 			DTPoints.length = DTPoints.length - 1;
 		}
 	} else if(currentToolType === toolType.RECT) {
