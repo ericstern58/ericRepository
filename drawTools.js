@@ -25,7 +25,14 @@ DTOptionsClass.prototype.toggleMenu = function () {
 		},300, "swing");
 	}
 };
-
+DTOptionsClass.prototype.isWithinBounds = function (x, y) {
+    var x2 = x - $("#drawTools-options").offset().top;
+	var y2 = y - $("#drawTools-options").offset().left;
+	var width = $('#drawTools-options').width();
+	var height = $('#drawTools-options').height();
+	//outputDebug("[x:" + x2 + ", y:" + y2 + "]   [width:" + width + ", height:" + height + "]");
+	return (x2>=0 && y2>=0 && x2<width && y2<height);
+};
 
 var StopWatch = function (performance) {
     this.startTime = 0;
@@ -103,7 +110,7 @@ RGBColor.prototype.equals = function(color) {
 	return (this.r===color.r && this.g===color.g && this.b===color.b);
 };
 // Tool type enum
-var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,RECT:4,ELLIPSE:5,POLY:6,UTIL:99};
+var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,POLY:7,UTIL:99};
 
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
@@ -166,6 +173,8 @@ DACanvas.on('mousedown', function(e){
 		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 	} else if(currentToolType === toolType.LINECHAIN) {
 		painting = !1;
+	} else if(currentToolType === toolType.CURVE) {
+		painting = !1;
 	} else if(currentToolType === toolType.RECT) {
 		painting = !1;
 		DTPoints[0] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
@@ -197,6 +206,13 @@ $(document).on('mousemove', function(e){
 				drawLineChain(DTPoints);
 			drawLine(DTPoints[DTPoints.length-1].x,DTPoints[DTPoints.length-1].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 		}
+	} else if(currentToolType === toolType.CURVE) {
+		if(DTPoints.length > 0) {
+			restoreCanvas();
+			if(DTPoints.length > 1)
+				drawLineChain(DTPoints);
+			drawLine(DTPoints[DTPoints.length-1].x,DTPoints[DTPoints.length-1].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+		}
 	} else if(currentToolType === toolType.RECT) {
 		restoreCanvas();
 		drawRect(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
@@ -216,7 +232,7 @@ $(document).on('mousemove', function(e){
 $(document).off('mouseup');
 $(document).on('mouseup', function(e){
 	if(0 && $('#drawTools-options').css('opacity') == 1){
-		if(!isWithinToggleOptionsBounds(e.pageX, e.pageY))
+		if(!options.isWithinBounds(e.pageX, e.pageY))
 			options.toggleMenu();
 		return;
 	} else if(currentToolType === toolType.BRUSH)
@@ -230,6 +246,21 @@ $(document).on('mouseup', function(e){
 		restoreCanvas();
 		drawLine(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 	} else if(currentToolType === toolType.LINECHAIN) {
+		if(isWithinPolygonToolBounds((e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top))){
+			DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
+			if(e.which == 3) {	// If right mouse click, finish the polygon
+				restoreCanvas();
+				drawLineChain(DTPoints);
+			} else {
+				return;
+			}
+		} else {
+			restoreCanvas();
+			DTPoints.length = 0;
+			toolInUse = false;
+			return;
+		}
+	} else if(currentToolType === toolType.CURVE) {
 		if(isWithinPolygonToolBounds((e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top))){
 			DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 			if(e.which == 3) {	// If right mouse click, finish the polygon
@@ -535,6 +566,7 @@ function createDrawToolsElements()
 	createToolButton(toolType.FILL,"fill");
 	createToolButton(toolType.LINE,"line");
 	createToolButton(toolType.LINECHAIN,"linechain");
+	createToolButton(toolType.CURVE,"curve");
 	createToolButton(toolType.RECT,"rect");
 	createToolButton(toolType.ELLIPSE,"ellipse");
 	createToolButton(toolType.POLY,"poly");
@@ -636,12 +668,4 @@ function DTDestroy()
 	window.DTToolsIsCurrentlyInstalled = false;
 	// 5. Destroy JavaScript
 	document.getElementById('DTScript').remove();
-}
-function isWithinToggleOptionsBounds(x, y){
-	var x2 = x - $("#drawTools-options").offset().top;
-	var y2 = y - $("#drawTools-options").offset().left;
-	var width = $('#drawTools-options').width();
-	var height = $('#drawTools-options').height();
-	//outputDebug("[x:" + x2 + ", y:" + y2 + "]   [width:" + width + ", height:" + height + "]");
-	return (x2>=0 && y2>=0 && x2<width && y2<height);
 }
