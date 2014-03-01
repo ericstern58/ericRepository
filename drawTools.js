@@ -795,9 +795,4 @@ function drawSpline(ctx,pts,t,closed,showDetails){
 			drawControlLine(ctx,pts[n-4],pts[n-3],cp[2*n-10],cp[2*n-9]);
 		}
 	}
-	if(showDetails){   //   Draw the knot points.
-		for(var i=0;i<n;i+=2){
-			drawPoint(ctx,pts[i],pts[i+1],2.5,"#ffff00");
-		}
-	}
 }
