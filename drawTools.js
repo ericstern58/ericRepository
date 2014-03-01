@@ -1,3 +1,32 @@
+var DTOptionsClass = function (performance) {
+    this.mouseOnEventHappened = false;
+    
+    this.shapeFillEnabled = false;
+    this.shapeFillColor;
+};
+DTOptionsClass.prototype.getOffset = function () {
+    return  $("#drawTools-options").offset();
+};
+DTOptionsClass.prototype.toggleMenu = function () {
+	var h = 150;	// Height of the options div
+	var opacity = $('#drawTools-options').css('opacity');
+	
+	if(opacity == 0) {
+		$("#drawTools-options").stop(true, true).animate({
+			height: (h + "px"),
+			marginTop: ("-=" + h + "px"),
+			opacity: "1"
+		},300, "swing");
+	} else if(opacity == 1) {
+		$("#drawTools-options").stop(true, true).animate({
+			height: "0px",
+			marginTop: ("+=" + h + "px"),
+			opacity: "0"
+		},300, "swing");
+	}
+};
+
+
 var StopWatch = function (performance) {
     this.startTime = 0;
     this.stopTime = 0;
@@ -81,6 +110,7 @@ var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,RECT:4,ELLIPSE:5,POLY:6,UTIL:99}
 /*-----------------------------------------------------------------------------*/
 
 // Setup Some State Variables
+var options = new DTOptionsClass();
 var currentToolType = toolType.BRUSH;
 var toolInUse = false;
 
@@ -185,9 +215,9 @@ $(document).on('mousemove', function(e){
 // Setup Mouseup Listener
 $(document).off('mouseup');
 $(document).on('mouseup', function(e){
-	if($('#drawTools-options').css('opacity') == 1){
+	if(0 || $('#drawTools-options').css('opacity') == 1){
 		if(!isWithinToggleOptionsBounds(e.pageX, e.pageY))
-			toggleOptions();
+			options.toggleMenu();
 		return;
 	} else if(currentToolType === toolType.BRUSH)
 		return;
@@ -512,7 +542,7 @@ function createDrawToolsElements()
 	debugLabel = createToolButtonWithLabel(toolType.UTIL,"label", '0');
 	
 	var optionsButton = createUtilityButton("options");
-	optionsButton.onclick = function(){toggleOptions();};//nothing yet};
+	optionsButton.onclick = function(){options.toggleMenu();};//nothing yet};
 	
 	//Create DIV in which Options will be placed in
 	var optionsDiv = document.createElement('div');
@@ -628,8 +658,8 @@ function toggleOptions() {
 function isWithinToggleOptionsBounds(x, y){
 	var x2 = x - $("#drawTools-options").offset().top;
 	var y2 = y - $("#drawTools-options").offset().left;
-	var width = $('#drawTools-options').width();;
+	var width = $('#drawTools-options').width();
 	var height = $('#drawTools-options').height();
-	outputDebug("[x:" + x2 + ", y:" + y2 + "]   [width:" + width + ", height:" + height + "]");
+	//outputDebug("[x:" + x2 + ", y:" + y2 + "]   [width:" + width + ", height:" + height + "]");
 	return (x2>=0 && y2>=0 && x2<width && y2<height);
 }
