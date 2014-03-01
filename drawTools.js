@@ -247,11 +247,11 @@ $(document).on('mouseup', function(e){
 		drawLine(DTPoints[0].x,DTPoints[0].y,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
 	} else if(currentToolType === toolType.LINECHAIN) {
 		if(isWithinPolygonToolBounds((e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top))){
-			DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 			if(e.which == 3) {	// If right mouse click, finish the polygon
 				restoreCanvas();
 				drawLineChain(DTPoints);
 			} else {
+				DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 				return;
 			}
 		} else {
@@ -262,11 +262,11 @@ $(document).on('mouseup', function(e){
 		}
 	} else if(currentToolType === toolType.CURVE) {
 		if(isWithinPolygonToolBounds((e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top))){
-			DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 			if(e.which == 3) {	// If right mouse click, finish the polygon
 				restoreCanvas();
 				drawLineChain(DTPoints);
 			} else {
+				DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 				return;
 			}
 		} else {
