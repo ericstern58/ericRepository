@@ -733,8 +733,7 @@ function drawControlLine(ctx,x,y,px,py){
 	drawPoint(ctx,px,py,1.5,"#000000");
 	ctx.restore();
 }
-function drawSpline(ctx,pts,t,closed,showDetails){
-	showDetails	= showDetails ? showDetails : false;
+function drawSpline(ctx,pts,t,closed){
 	var cp=[];   // array of control points, as x0,y0,x1,y1,...
 	var n=pts.length;
 	
@@ -747,44 +746,32 @@ function drawSpline(ctx,pts,t,closed,showDetails){
 			cp=cp.concat(getControlPoints(pts[i],pts[i+1],pts[i+2],pts[i+3],pts[i+4],pts[i+5],t));
 		}
 		cp=cp.concat(cp[0],cp[1]);   
-		for(var i=2;i<n+2;i+=2){
-			if(!showDetails){color="#555555"}       
+		for(var i=2;i<n+2;i+=2){      
 			ctx.beginPath();
 			ctx.moveTo(pts[i],pts[i+1]);
 			ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
 			ctx.stroke();
 			ctx.closePath();
-			if(showDetails){
-				drawControlLine(ctx,pts[i],pts[i+1],cp[2*i-2],cp[2*i-1]);
-				drawControlLine(ctx,pts[i+2],pts[i+3],cp[2*i],cp[2*i+1]);
-			}
 		}
 	}else{  
 		// Draw an open curve, not connected at the ends
 		for(var i=0;i<n-4;i+=2){
 			cp=cp.concat(getControlPoints(pts[i],pts[i+1],pts[i+2],pts[i+3],pts[i+4],pts[i+5],t));
 		}    
-		for(var i=2;i<n+2;i+=2){
-			if(!showDetails){color="#555555"}     
+		for(var i=2;i<n+2;i+=2){   
 			ctx.beginPath();
 			ctx.moveTo(pts[i],pts[i+1]);
 			ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
 			ctx.stroke();
 			ctx.closePath();
-			if(showDetails){
-				drawControlLine(ctx,pts[i],pts[i+1],cp[2*i-2],cp[2*i-1]);
-				drawControlLine(ctx,pts[i+2],pts[i+3],cp[2*i],cp[2*i+1]);
-			}
 		}
 		//  For open curves the first and last arcs are simple quadratics.
-		if(!showDetails){color="#555555"}
 		ctx.beginPath();
 		ctx.moveTo(pts[0],pts[1]);
 		ctx.quadraticCurveTo(cp[0],cp[1],pts[2],pts[3]);
 		ctx.stroke();
 		ctx.closePath();
 		
-		if(!showDetails){color="#555555"} 
 		ctx.beginPath();
 		ctx.moveTo(pts[n-2],pts[n-1]);
 		ctx.quadraticCurveTo(cp[2*n-10],cp[2*n-9],pts[n-4],pts[n-3]);
