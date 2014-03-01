@@ -691,16 +691,7 @@ function pointsToArray(points) {
 
 
 
-function drawPoint(ctx,x,y,r,color){
-	ctx.save();  
-	ctx.beginPath();
-	ctx.lineWidth=1;
-	ctx.arc(x,y,r,0.0,2*Math.PI,false);
-	ctx.closePath();
-	ctx.stroke();
-	ctx.fill();
-	ctx.restore();
-}
+
 function getControlPoints(x0,y0,x1,y1,x2,y2,t){
 	//  x0,y0,x1,y1 are the coordinates of the end (knot) pts of this segment
 	//  x2,y2 is the next knot -- not connected here but needed to calculate p2
@@ -723,19 +714,6 @@ function getControlPoints(x0,y0,x1,y1,x2,y2,t){
 	var p2y=y1-fb*(y0-y2);  
 	
 	return [p1x,p1y,p2x,p2y]
-}
-function drawControlLine(ctx,x,y,px,py){
-	//  Only for demo purposes: show the control line and control points.
-	ctx.save();    
-	ctx.beginPath();
-	ctx.lineWidth=1;
-	ctx.strokeStyle="rgba(0,0,0,0.3)";
-	ctx.moveTo(x,y);
-	ctx.lineTo(px,py);
-	ctx.closePath();
-	ctx.stroke();
-	drawPoint(ctx,px,py,1.5,"#000000");
-	ctx.restore();
 }
 function drawSpline(ctx,pts,t,closed){
 	var cp=[];   // array of control points, as x0,y0,x1,y1,...
