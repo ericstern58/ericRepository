@@ -322,16 +322,12 @@ function drawRect(startX,startY,finishX,finishY)
 	DTPoints[4] = {x: startX, y: startY};
 	drawLineChain(DTPoints);
 }
-function drawLineChain(points, extraX, extraY)
+function drawLineChain(points)
 {
 	context.beginPath();
 	for(var i=1;i<points.length;i++) {
 		context.moveTo( points[i-1].x, points[i-1].y );
 		context.lineTo( points[i].x, points[i].y );
-	}
-	if ( !((typeof extraX === 'undefined') || (typeof extraX === 'undefined'))) {
-		context.moveTo( points[points.length-1].x, points[points.length-1].y );
-		context.lineTo( extraX, extraY );
 	}
 	context.stroke(); 
 }
