@@ -211,8 +211,7 @@ $(document).on('mousemove', function(e){
 			restoreCanvas();
 			DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 			try{
-			//drawCurve(context, DTPoints, 0.5, false); 
-			drawSpline(context,pointsToArray(DTPoints),0.5,false);
+			drawSpline(context,pointsToArray(DTPoints),0.5,false,true);
 			}catch(err){alert(err);}
 			DTPoints.length = DTPoints.length - 1;
 		}
