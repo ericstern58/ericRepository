@@ -685,6 +685,12 @@ function pointsToArray(points) {
 
 
 
+
+
+
+
+
+
 function drawPoint(ctx,x,y,r,color){
 	ctx.save();  
 	ctx.beginPath();
@@ -752,27 +758,20 @@ function drawSpline(ctx,pts,t,closed){
 		}  
 	}
 	
-	   
-	for(var i=2;i<n+2;i+=2){   
-		ctx.beginPath();
+	ctx.beginPath();
+	for(var i=2;i<n+2;i+=2){   //this used to split into closed vs !closed with n+2 and n-5 respectively
 		ctx.moveTo(pts[i],pts[i+1]);
 		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
-		ctx.stroke();
-		ctx.closePath();
 	}
 	
 	if(!closed){ 
 		//  For open curves the first and last arcs are simple quadratics.
-		ctx.beginPath();
 		ctx.moveTo(pts[0],pts[1]);
 		ctx.quadraticCurveTo(cp[0],cp[1],pts[2],pts[3]);
-		ctx.stroke();
-		ctx.closePath();
-		
-		ctx.beginPath();
+
 		ctx.moveTo(pts[n-2],pts[n-1]);
 		ctx.quadraticCurveTo(cp[2*n-10],cp[2*n-9],pts[n-4],pts[n-3]);
-		ctx.stroke();
-		ctx.closePath();
 	}
+	ctx.stroke();
+	ctx.closePath();
 }
