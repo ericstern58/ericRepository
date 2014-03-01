@@ -764,7 +764,7 @@ function drawSpline(ctx,pts,t,closed){
 		for(var i=0;i<n-4;i+=2){
 			cp=cp.concat(getControlPoints(pts[i],pts[i+1],pts[i+2],pts[i+3],pts[i+4],pts[i+5],t));
 		}    
-		for(var i=2;i<n-6;i+=2){
+		for(var i=2;i<n-4;i+=2){
 			if(!showDetails){color="#555555"}     
 			ctx.beginPath();
 			ctx.moveTo(pts[i],pts[i+1]);
