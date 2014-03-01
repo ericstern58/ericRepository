@@ -739,7 +739,6 @@ function drawControlLine(ctx,x,y,px,py){
 }
 function drawSpline(ctx,pts,t,closed){
     showDetails=true;
-    ctx.lineWidth=4;
     ctx.save();
     var cp=[];   // array of control points, as x0,y0,x1,y1,...
     var n=pts.length;
