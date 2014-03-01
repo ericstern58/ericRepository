@@ -763,7 +763,7 @@ function getCurvePoints(ptsa, tension, isClosed, numOfSegments) {
 	numOfSegments = typeof numOfSegments === 'number' ? numOfSegments : 16;
 
 	var _pts, res = [],			/// clone array
-		x, y,					/// our x,y coords
+		xx, y,					/// our x,y coords
 		t1x, t2x, t1y, t2y,		/// tension vectors
 		c1, c2, c3, c4,			/// cardinal points
 		st, t, i,				/// steps based on num. of segments
@@ -829,11 +829,11 @@ function getCurvePoints(ptsa, tension, isClosed, numOfSegments) {
 			c4 = pow3 - pow2;
 
 			/// calc x and y cords with common control vectors
-			x = c1 * p0 + c2 * p2 + c3 * t1x + c4 * t2x;
-			y = c1 * p1 + c2 * p3 + c3 * t1y + c4 * t2y;
+			xx = c1 * p0 + c2 * p2 + c3 * t1x + c4 * t2x;
+			yy = c1 * p1 + c2 * p3 + c3 * t1y + c4 * t2y;
 		
 			/// store points in array
-			res.push(x, y);
+			res.push( {x: xx, y: yy} );
 		}
 	}
 	
@@ -888,4 +888,3 @@ function drawLines(ctx, pts) {
 	CanvasRenderingContext2D.prototype.drawCurve = function(pts, tension, isClosed, numOfSegments, showPoints) {
 		drawCurve(this, pts, tension, isClosed, numOfSegments, showPoints)}
 }
- 
