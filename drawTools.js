@@ -250,7 +250,8 @@ $(document).on('mouseup', function(e){
 		if(isWithinPolygonToolBounds((e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top))){
 			if(e.which == 3) {	// If right mouse click, finish the polygon
 				restoreCanvas();
-				drawLineChain(DTPoints);
+				//drawLineChain(DTPoints); //commented to test out drawcurve
+				drawCurve(context, DTPoints, 0.5, false);
 			} else {
 				DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 				return;
