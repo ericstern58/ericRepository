@@ -805,10 +805,10 @@ function getCurvePoints(ptsa, tension, isClosed, numOfSegments) {
 		t1y = (p3 - _pts[i - 1]) * tension;
 		t2y = (_pts[i + 5] - p1) * tension;
 		*/
-		t1x = (p2 - _pts[i].x) * tension;
+		t1x = (p2 - _pts[i-1].x) * tension;
 		t2x = (_pts[i + 2].x - p0) * tension;
 
-		t1y = (p3 - _pts[i].y) * tension;
+		t1y = (p3 - _pts[i-1].y) * tension;
 		t2y = (_pts[i + 2].y - p1) * tension;
 
 		for(t = 0; t <= numOfSegments; t++) {
@@ -854,9 +854,9 @@ function getCurvePoints(ptsa, tension, isClosed, numOfSegments) {
  *		NOTE: array must contain a minimum set of two points.
 */
 function drawLines(ctx, pts) {
-	ctx.moveTo(pts[0], pts[1]);
-	for(i = 2, l = pts.length - 1; i < l; i += 2)
-		ctx.lineTo(pts[i], pts[i+1]);
+	ctx.moveTo(pts[0].x, pts[0].y);
+	for(i = 1, l = pts.length; i < l; i += 1)
+		ctx.lineTo(pts[i].x, pts[i].y);
 }
 
 /**
