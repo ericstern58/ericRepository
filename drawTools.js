@@ -251,7 +251,7 @@ $(document).on('mouseup', function(e){
 			if(e.which == 3) {	// If right mouse click, finish the polygon
 				restoreCanvas();
 				//drawLineChain(DTPoints); //commented to test out drawcurve
-				drawCurve(context, pointsToArray(DTPoints), 0.5, false);
+				drawCurve(context, pointsToArray(DTPoints));
 			} else {
 				DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 				return;
