@@ -202,7 +202,9 @@ $(document).on('mousemove', function(e){
 	} else if(currentToolType === toolType.LINECHAIN) {
 		if(DTPoints.length > 0) {
 			restoreCanvas();
-			drawLineChain(DTPoints,(e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top));
+			DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
+			drawLineChain(DTPoints);
+			DTPoints.length = DTPoints.length - 1;
 		}
 	} else if(currentToolType === toolType.CURVE) {
 		if(DTPoints.length > 0) {
