@@ -729,23 +729,23 @@ function getControlPoints(x0,y0,x1,y1,x2,y2,t){
 function drawSpline(ctx,pts,t,closed,editMode){
 	var cp=[];   // array of control points, as x0,y0,x1,y1,...
 	var n=pts.length;
-	var isClosedShape = (closed) ? 1 : 0;
 	
-	// Find control points
+	// First if statement: find control points
 	if(closed){
-		// Append and prepend knots and control points to close the curve
+		//   Append and prepend knots and control points to close the curve
 		pts.push(pts[0],pts[1],pts[2],pts[3]);
 		pts.unshift(pts[n-1]);
 		pts.unshift(pts[n-1]);
-	}
-	
-	for(var i = 0, var m = n-4+(4*isClosedShape); i < m; i+=2){
-		cp=cp.concat(getControlPoints(pts[i],pts[i+1],pts[i+2],pts[i+3],pts[i+4],pts[i+5],t));
-	}
-	if(closed){
+		for(var i=0;i<n;i+=2){
+			cp=cp.concat(getControlPoints(pts[i],pts[i+1],pts[i+2],pts[i+3],pts[i+4],pts[i+5],t));
+		}
 		cp=cp.concat(cp[0],cp[1]); 
+	} else {
+		// Draw an open curve, not connected at the ends
+		for(var i=0;i<n-4;i+=2){
+			cp=cp.concat(getControlPoints(pts[i],pts[i+1],pts[i+2],pts[i+3],pts[i+4],pts[i+5],t));
+		}  
 	}
-	
 	
 	ctx.beginPath();
 	ctx.moveTo(pts[2],pts[3]);
