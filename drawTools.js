@@ -789,9 +789,12 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		ctx.save(); 
 		//ctx.strokeStyle = "rgba("+(c>>16)&255+","+(c>>8)&255+","+c&255+",0.5)";
 		if(isClosedSpline) {
+			ctx.beginPath();
 			ctx.strokeStyle = "#da0000";
 			ctx.moveTo(pts[n],pts[n+1]);
 			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
+			ctx.closePath();
+			ctx.stroke();
 		}
 		
 		//   Draw the knot points.
