@@ -765,22 +765,10 @@ function drawSpline(ctx,pts,t,closed,editMode){
 	ctx.beginPath();
 	ctx.lineJoin="round";
 	ctx.moveTo(pts[2],pts[3]);
-	for(var i=2;i<n;i+=2)
+	for(var i=2;i<n+2;i+=2)
 		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
 	
 	if(isClosedSpline) {
-		var c;
-		if(editMode) {
-			c = parseInt(context.strokeStyle.substr(1,6),16);
-			ctx.save(); 
-			//ctx.strokeStyle = "rgba("+(c>>16)&255+","+(c>>8)&255+","+c&255+",0.5)";
-			
-		}
-		ctx.strokeStyle = "#da0000";
-		// Draw last curve which closes spline
-		//ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
-		if(editMode)
-			ctx.restore();
 		ctx.moveTo(pts[0],pts[1]);
 		ctx.closePath();
 		ctx.fillStyle = '#8ED6FF';
@@ -796,8 +784,15 @@ function drawSpline(ctx,pts,t,closed,editMode){
 	
 	ctx.stroke();
 	
-	if(editMode){   //   Draw the knot points.
+	if(editMode){   
 		ctx.save(); 
+		var c = parseInt(context.strokeStyle.substr(1,6),16);
+		ctx.save(); 
+		//ctx.strokeStyle = "rgba("+(c>>16)&255+","+(c>>8)&255+","+c&255+",0.5)";
+		ctx.strokeStyle = "#da0000";
+		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
+		
+		//   Draw the knot points.
 		ctx.fillStyle = '#FFFFFF';
 		ctx.strokeStyle = '#000000';
 		ctx.lineWidth=3;
