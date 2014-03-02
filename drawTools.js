@@ -267,7 +267,7 @@ $(document).on('mouseup', function(e){
 		if(isWithinPolygonToolBounds((e.pageX-canvasOffset.left),(e.pageY-canvasOffset.top))){
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				restoreCanvas();
-				drawSpline(context,pointsToArray(DTPoints),0.5,false);
+				drawSpline(context,pointsToArray(DTPoints),0.5,true);
 			} else {
 				DTPoints[DTPoints.length] = {x: e.pageX-canvasOffset.left, y: e.pageY-canvasOffset.top};
 				return;
