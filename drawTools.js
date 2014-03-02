@@ -788,10 +788,11 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		var c = parseInt(context.strokeStyle.substr(1,6),16);
 		ctx.save(); 
 		//ctx.strokeStyle = "rgba("+(c>>16)&255+","+(c>>8)&255+","+c&255+",0.5)";
-		ctx.strokeStyle = "#da0000";
-		ctx.moveTo(pts[n-2],pts[n-1]);
-		var i = n;
-		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
+		if(isClosedSpline) {
+			ctx.strokeStyle = "#da0000";
+			ctx.moveTo(pts[n],pts[n+1]);
+			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
+		}
 		
 		//   Draw the knot points.
 		ctx.fillStyle = '#FFFFFF';
