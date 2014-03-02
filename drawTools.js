@@ -734,18 +734,18 @@ function drawSpline(ctx,pts,t,closed,editMode){
 	// First check for some base cases
 	if(n == 0) {
 		return;
-	} else if(n == 1) {
-		// Draw Point
-		context.beginPath();
-		context.moveTo( pts[0], pts[1] );
-		context.lineTo( pts[0]+1, pts[1]);
-		context.stroke();
 	} else if(n == 2) {
 		// Draw Point
-		context.beginPath();
-		context.moveTo( pts[0], pts[1] );
-		context.lineTo( pts[2], pts[3]);
-		context.stroke();
+		ctx.beginPath();
+		ctx.moveTo( pts[0], pts[1] );
+		ctx.lineTo( pts[0]+1, pts[1]);
+		ctx.stroke();
+	} else if(n == 4) {
+		// Draw Point
+		ctx.beginPath();
+		ctx.moveTo( pts[0], pts[1] );
+		ctx.lineTo( pts[2], pts[3]);
+		ctx.stroke();
 	}
 	
 	// First if statement: find control points
