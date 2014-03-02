@@ -729,6 +729,7 @@ function getControlPoints(x0,y0,x1,y1,x2,y2,t){
 function drawSpline(ctx,pts,t,closed,editMode){
 	var cp=[];   // array of control points, as x0,y0,x1,y1,...
 	var n=pts.length;
+	var isClosedShape = (closed) ? 1 : 0;
 	
 	// First if statement: find control points
 	if(closed){
