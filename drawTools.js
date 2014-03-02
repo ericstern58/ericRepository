@@ -773,16 +773,15 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		if(editMode) {
 			c = parseInt(context.strokeStyle.substr(1,6),16);
 			ctx.save(); 
-			//ctx.strokeStyle = "rgba("+(c>>16)&255+","+(c>>8)&255+","+c&255+",0.5)";
+			ctx.strokeStyle = "rgba("+(c>>16)&255+","+(c>>8)&255+","+c&255+",0.5)";
 		}
 		// Draw last curve which closes spline
 		ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
-		/*if(editMode)
-			ctx.restore();*/
+		if(editMode)
+			ctx.restore();
 		ctx.moveTo(pts[0],pts[1]);
 		ctx.closePath();
 		ctx.fillStyle = '#8ED6FF';
-		//ctx.stroke();
 		ctx.fill();
 	} else { 
 		//  For open curves the first and last arcs are simple quadratics.
