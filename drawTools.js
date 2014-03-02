@@ -749,7 +749,6 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		var p2x=x1-fb*(x0-x2);
 		var p2y=y1-fb*(y0-y2);  
 		
-		return [p1x,p1y,p2x,p2y]
 		// Then add them to array
 		cp=cp.concat([p1x,p1y,p2x,p2y]);
 	}
