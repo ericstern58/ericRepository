@@ -748,10 +748,24 @@ function drawSpline(ctx,pts,t,closed,editMode){
 	}
 	
 	ctx.beginPath();
+	/*
 	for(var i=2;i<n+2;i+=2){   //this used to split into closed vs !closed with n+2 and n-5 respectively
 		ctx.moveTo(pts[i],pts[i+1]);
 		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
+	}*/
+	if(closed) {
+		for(var i=2;i<n;i+=2){   //this used to split into closed vs !closed with n+2 and n-5 respectively
+			ctx.moveTo(pts[i],pts[i+1]);
+			ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
+		}
+	} else { 
+		for(var i=2;i<n+2;i+=2){   //this used to split into closed vs !closed with n+2 and n-5 respectively
+			ctx.moveTo(pts[i],pts[i+1]);
+			ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
+		}
 	}
+	
+	
 	
 	if(closed) {
 		ctx.moveTo(pts[0],pts[1]);
@@ -759,8 +773,7 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		ctx.fillStyle = '#8ED6FF';
 		ctx.stroke();
 		ctx.fill();
-	}
-	if(!closed){ 
+	} else { 
 		//  For open curves the first and last arcs are simple quadratics.
 		ctx.moveTo(pts[0],pts[1]);
 		ctx.quadraticCurveTo(cp[0],cp[1],pts[2],pts[3]);
