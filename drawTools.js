@@ -219,7 +219,7 @@ $(document).on('mousemove', function(e){
 			restoreCanvas();
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 			try{
-			drawSpline(context,pointsToArray(DTPoints),0.5,false);
+			drawSpline(context,pointsToArray(DTPoints),0.5,true);
 			}catch(err){alert(err);}
 			DTPoints.length = DTPoints.length - 1;
 		}
@@ -278,7 +278,7 @@ $(document).on('mouseup', function(e){
 		if(isWithinPolygonToolBounds(mouseX,mouseY)){
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				restoreCanvas();
-				drawSpline(context,pointsToArray(DTPoints),0.5,false);
+				drawSpline(context,pointsToArray(DTPoints),0.5,true);
 			} else {
 				DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 				return;
