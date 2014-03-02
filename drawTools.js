@@ -748,6 +748,7 @@ function drawSpline(ctx,pts,t,closed,editMode){
 	}
 	
 	ctx.beginPath();
+	ctx.moveTo(pts[2],pts[3]);
 	for(var i=2;i<n+2;i+=2){
 		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
 	}
