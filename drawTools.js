@@ -278,7 +278,7 @@ $(document).on('mouseup', function(e){
 		if(isWithinPolygonToolBounds(mouseX,mouseY)){
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				restoreCanvas();
-				drawSpline(context,pointsToArray(DTPoints),0.5,true);
+				drawSpline(context,pointsToArray(DTPoints),0.5,false);
 			} else {
 				DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 				return;
@@ -767,5 +767,5 @@ function drawSpline(ctx,pts,t,closed){
 		ctx.quadraticCurveTo(cp[2*n-10],cp[2*n-9],pts[n-4],pts[n-3]);
 	}
 	
-	//ctx.stroke();
+	ctx.stroke();
 }
