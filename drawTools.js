@@ -723,14 +723,15 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		ctx.stroke();
 	}
 	
-	// First if statement: find control points
+	
+	// For closed spline: Append and prepend knots and control points to close the curve
 	if(isClosedSpline){
-		//   Append and prepend knots and control points to close the curve
 		pts.push(pts[0],pts[1],pts[2],pts[3]);
 		pts.unshift(pts[n-1]);
 		pts.unshift(pts[n-1]);
 	} 
 	
+	// Find Control Points
 	for(var i=0, m = (n-4+(4*isClosedSpline));i<m;i+=2){
 		// Calculate Control Points
 		//  x0,y0,x1,y1 are the coordinates of the end (knot) pts of this segment
@@ -755,15 +756,12 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		// Then add them to cp array
 		cp=cp.concat(p1x,p1y,p2x,p2y);
 	}
-	
-	
 	cp = (isClosedSpline) ? cp.concat(cp[0],cp[1]) : cp;
-
 	
 	ctx.beginPath();
 	ctx.lineJoin="round";
 	ctx.moveTo(pts[2],pts[3]);
-	for(var i=2;i<n+2;i+=2)
+	for(var i=2;i<n;i+=2)
 		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
 	
 	if(isClosedSpline) {
