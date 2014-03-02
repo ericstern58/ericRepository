@@ -782,7 +782,7 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		ctx.save(); 
 		ctx.fillStyle = '#FFFFFF';
       		ctx.strokeStyle = '#000000';
-		ctx.lineWidth=2;
+		ctx.lineWidth=3;
 		for(var i=(2*isClosedSpline), m = (n-2+(2*isClosedSpline));i<m;i+=2){
 			ctx.beginPath();
 			ctx.arc(pts[i],pts[i+1],2.5,2*Math.PI,false);
