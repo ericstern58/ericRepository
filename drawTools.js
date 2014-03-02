@@ -101,13 +101,17 @@ function Point(x, y) {
 	this.y = y;
 }
 // Color Object
-function RGBColor(r, g, b) {
+function RGBColor(r, g, b, a) {
 	this.r = r;
 	this.g = g;
 	this.b = b;
+	this.a = (a) ? a : 255;
 }
 RGBColor.prototype.equals = function(color) {
-	return (this.r===color.r && this.g===color.g && this.b===color.b);
+	return (this.r===color.r && this.g===color.g && this.b===color.b && this.a===color.a);
+};
+RGBColor.prototype.setOpacity = function(alpha) {
+	
 };
 // Tool type enum
 var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,POLY:7,UTIL:99};
@@ -765,12 +769,17 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
 	
 	if(isClosedSpline) {
+		var c = parseInt(context.strokeStyle.substr(1,6),16);
+		var strokeColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255);
+		
 		// Draw last curve which closes spline
 		ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
+		
+		
 		ctx.moveTo(pts[0],pts[1]);
 		ctx.closePath();
 		ctx.fillStyle = '#8ED6FF';
-		ctx.stroke();
+		//ctx.stroke();
 		ctx.fill();
 	} else { 
 		//  For open curves the first and last arcs are simple quadratics.
