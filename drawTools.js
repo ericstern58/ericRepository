@@ -588,18 +588,9 @@ function createDrawToolsElements()
 	debugLabel = createToolButtonWithLabel(toolType.UTIL,"label", '0');
 	
 	var optionsButton = createUtilityButton("options");
-	optionsButton.onclick = function(){options.toggleMenu();};//nothing yet};
+	optionsButton.onclick = function(){options.toggleMenu();};
 	
-	//Create DIV in which Options will be placed in
-	var optionsDiv = document.createElement('div');
-	optionsDiv.id = 'drawTools-options';
-	drawToolsDiv.appendChild(optionsDiv);
-	
-	//Create DIV in which Options Content will be placed in
-	var optionsDivContent = document.createElement('div');
-	optionsDivContent.id = 'drawTools-options-content';
-	optionsDivContent.innerHTML = "<br><br><br><br>HELLO<br>";
-	optionsDiv.appendChild(optionsDivContent);
+	createOptionsMenu(drawToolsDiv);
 	
 	// Exitbutton to remove DrawTools
 	var exitButton = createUtilityButton("exit");
@@ -665,6 +656,20 @@ function createUtilityButton(name)
 	container.appendChild(icon);
 	
 	return button;
+}
+
+function createOptionsMenu(drawToolsDiv)
+{
+	/Create DIV in which Options will be placed in
+	var optionsDiv = document.createElement('div');
+	optionsDiv.id = 'drawTools-options';
+	drawToolsDiv.appendChild(optionsDiv);
+	
+	//Create DIV in which Options Content will be placed in
+	var optionsDivContent = document.createElement('div');
+	optionsDivContent.id = 'drawTools-options-content';
+	optionsDivContent.innerHTML = "<br><br><br><br>HELLO<br>";
+	optionsDiv.appendChild(optionsDivContent);
 }
 
 // Destroys all elements, styling and javascript
