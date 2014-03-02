@@ -755,9 +755,9 @@ function drawSpline(ctx,pts,t,closed,editMode){
 	
 	if(closed) {
 		ctx.moveTo(pts[0],pts[1]);
+		ctx.closePath();
 		ctx.fillStyle = '#8ED6FF';
 		ctx.fill();
-		ctx.closePath();
 	}
 	if(!closed){ 
 		//  For open curves the first and last arcs are simple quadratics.
