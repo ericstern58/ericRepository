@@ -755,7 +755,7 @@ function drawSpline(ctx,pts,t,closed){
 	
 	if(closed) {
       	ctx.fillStyle = '#8ED6FF';
-		ctx.closePath();
+		//ctx.closePath();
 		ctx.fill();
 	}
 	if(!closed){ 
