@@ -283,7 +283,7 @@ $(document).on('mouseup', function(e){
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				restoreCanvas();
-				drawSpline(context,pointsToArray(DTPoints),0.5,true);
+				drawSpline(context,pointsToArray(DTPoints),0.5,false,true);
 			} else {
 				return;
 			}
@@ -711,7 +711,7 @@ function pointsToArray(points) {
 
 
 
-function drawSpline(ctx,pts,t,closed,editMode){
+function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 	var cp=[];   // array of control points, as x0,y0,x1,y1,...
 	var n=pts.length;
 	var isClosedSpline = (closed) ? 1 : 0;
@@ -746,17 +746,16 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		//  t is the 'tension' which controls how far the control points spread.
 		//  Scaling factors: distances from this knot to the previous and following knots.
 		var x0=pts[i], y0=pts[i+1], x1=pts[i+2], y1=pts[i+3], x2=pts[i+4], y2=pts[i+5];
-		
+		// Calculate intermediary values
 		var d01=Math.sqrt(Math.pow(x1-x0,2)+Math.pow(y1-y0,2));
 		var d12=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));
 		var fa=t*d01/(d01+d12);
 		var fb=t-fa;
-	  
+	  	// Calculate Control Points
 		var p1x=x1+fa*(x0-x2);
 		var p1y=y1+fa*(y0-y2);
 		var p2x=x1-fb*(x0-x2);
 		var p2y=y1-fb*(y0-y2);  
-		
 		// Then add them to cp array
 		cp=cp.concat(p1x,p1y,p2x,p2y);
 	}
@@ -781,23 +780,24 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		ctx.moveTo(pts[n-2],pts[n-1]);
 		ctx.quadraticCurveTo(cp[2*n-10],cp[2*n-9],pts[n-4],pts[n-3]);
 	}
-	
 	ctx.stroke();
 	
 	if(editMode){   
-		var c = parseInt(context.strokeStyle.substr(1,6),16);
 		ctx.save(); 
-		//ctx.strokeStyle = "rgba("+(c>>16)&255+","+(c>>8)&255+","+c&255+",0.5)";
+		// Add distinguishing stroke to closing spline
 		if(isClosedSpline) {
+			// Determine wether to use dark or light stroke
+			var c = parseInt(context.strokeStyle.substr(1,6),16); // Get current stroke color
+			var c2 = (0.2126*((c>>16)&255)) + (0.7152*((c>>8)&255)) + (0.0722*(c&255)); // Get its 'lightness' level
+			ctx.strokeStyle = (c2 > 128) ? "#000000" : "#ffffff"; // If (colorIsLight) ? black : white
+			// Draw distinguishing stroke
 			ctx.beginPath();
-			var c2 = (0.2126*((c>>16)&255)) + (0.7152*((c>>8)&255)) + (0.0722*(c&255));
-			ctx.strokeStyle = c2 > 128 ? "#000000" : "#ffffff";
-			ctx.lineWidth/=2;
+			ctx.lineWidth /= 2;
 			ctx.moveTo(pts[n],pts[n+1]);
 			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
 			ctx.stroke();
 		}
-		//   Draw the knot points.
+		// Draw the knot points.
 		ctx.fillStyle = '#FFFFFF';
 		ctx.strokeStyle = '#000000';
 		ctx.lineWidth=3;
