@@ -769,12 +769,12 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
 	
 	if(isClosedSpline) {
-		var c = parseInt(context.strokeStyle.substr(1,6),16);
-		/*
+		var c;
 		if(editMode) {
+			c = parseInt(context.strokeStyle.substr(1,6),16);
 			ctx.save(); 
-			ctx.strokeStyle = "rgba("+(c>>16)&255+","+(c>>8)&255+","+c&255+",0.5)";
-		}*/
+			//ctx.strokeStyle = "rgba("+(c>>16)&255+","+(c>>8)&255+","+c&255+",0.5)";
+		}
 		// Draw last curve which closes spline
 		ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
 		/*if(editMode)
