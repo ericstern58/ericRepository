@@ -660,7 +660,7 @@ function createUtilityButton(name)
 
 function createOptionsMenu(drawToolsDiv)
 {
-	/Create DIV in which Options will be placed in
+	//Create DIV in which Options will be placed in
 	var optionsDiv = document.createElement('div');
 	optionsDiv.id = 'drawTools-options';
 	drawToolsDiv.appendChild(optionsDiv);
