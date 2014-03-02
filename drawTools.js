@@ -276,11 +276,11 @@ $(document).on('mouseup', function(e){
 		}
 	} else if(currentToolType === toolType.CURVE) {
 		if(isWithinPolygonToolBounds(mouseX,mouseY)){
-			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				restoreCanvas();
 				drawSpline(context,pointsToArray(DTPoints),0.5,true);
 			} else {
+				DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 				return;
 			}
 		} else {	// If user clicks out of acceptable boundaries, cancel all tool progress
