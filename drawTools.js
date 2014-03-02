@@ -735,7 +735,7 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		//   Append and prepend knots and control points to close the curve
 		pts.push(pts[0],pts[1],pts[2],pts[3]);
 		pts.unshift(pts[n-1]);
-		pts.unshift(pts[n-2]);	//changed this from 1 to 2
+		pts.unshift(pts[n-1]);	//changed this from 1 to 2
 		for(var i=0;i<n;i+=2){
 			cp=cp.concat(getControlPoints(pts[i],pts[i+1],pts[i+2],pts[i+3],pts[i+4],pts[i+5],t));
 		}
