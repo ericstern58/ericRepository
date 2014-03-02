@@ -787,8 +787,8 @@ function drawSpline(ctx,pts,t,closed,editMode){
 			ctx.beginPath();
 			ctx.arc(pts[i],pts[i+1],2.5,2*Math.PI,false);
 			ctx.closePath();
-			ctx.fill();
 			ctx.stroke();
+			ctx.fill();
 		}
 		ctx.restore();
 	}
