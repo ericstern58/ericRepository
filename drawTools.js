@@ -789,7 +789,7 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		var c = parseInt(context.strokeStyle.substr(1,6),16);
 		//ctx.strokeStyle = "rgba("+(c>>16)&255+","+(c>>8)&255+","+c&255+",0.5)";
 		ctx.strokeStyle = "#da0000";
-		ctx.moveTo(pts[n],pts[n+1]);
+		ctx.moveTo(pts[n-2],pts[n-1]);
 		var i = n;
 		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
 		
