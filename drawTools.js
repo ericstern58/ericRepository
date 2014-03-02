@@ -781,6 +781,7 @@ function drawSpline(ctx,pts,t,closed,editMode){
 	if(editMode){   //   Draw the knot points.
 		ctx.save(); 
 		ctx.fillStyle = '#FFFFFF';
+      		ctx.strokeStyle = '#000000';
 		ctx.lineWidth=2;
 		for(var i=(2*isClosedSpline), m = (n-2+(2*isClosedSpline));i<m;i+=2){
 			ctx.beginPath();
