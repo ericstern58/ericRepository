@@ -726,7 +726,7 @@ function getControlPoints(x0,y0,x1,y1,x2,y2,t){
 	
 	return [p1x,p1y,p2x,p2y]
 }
-function drawSpline(ctx,pts,t,closed){
+function drawSpline(ctx,pts,t,closed,editMode){
 	var cp=[];   // array of control points, as x0,y0,x1,y1,...
 	var n=pts.length;
 	
@@ -754,7 +754,7 @@ function drawSpline(ctx,pts,t,closed){
 	}
 	
 	if(closed) {
-      		ctx.fillStyle = '#8ED6FF';
+      	ctx.fillStyle = '#8ED6FF';
 		//ctx.closePath();
 		ctx.fill();
 	}
@@ -768,4 +768,19 @@ function drawSpline(ctx,pts,t,closed){
 	}
 	
 	ctx.stroke();
+	
+	if(editMode){   //   Draw the knot points.
+		ctx.save(); 
+		ctx.fillStyle = '#8ED6FF';
+		ctx.lineWidth=2;
+		for(var i=0;i<n;i+=2){
+			drawPoint(ctx,,,,"#ffff00");
+			ctx.beginPath();
+			ctx.arc(pts[i],pts[i+1],2.5,0.0,2*Math.PI,false);
+			ctx.closePath();
+			ctx.stroke();
+			ctx.fill();
+		}
+		ctx.restore();
+	}
 }
