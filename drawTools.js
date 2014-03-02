@@ -776,7 +776,7 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		for(var i=0;i<n;i+=2){
 			drawPoint(ctx,,,,"#ffff00");
 			ctx.beginPath();
-			ctx.arc(pts[i],pts[i+1],2.5,0.0,2*Math.PI,false);
+			ctx.arc(pts[i],pts[i+1],2.5,2*Math.PI,false);
 			ctx.closePath();
 			ctx.stroke();
 			ctx.fill();
