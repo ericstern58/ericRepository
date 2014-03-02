@@ -785,8 +785,8 @@ function drawSpline(ctx,pts,t,closed,editMode){
 	ctx.stroke();
 	
 	if(editMode){   
-		ctx.save(); 
 		var c = parseInt(context.strokeStyle.substr(1,6),16);
+		ctx.save(); 
 		//ctx.strokeStyle = "rgba("+(c>>16)&255+","+(c>>8)&255+","+c&255+",0.5)";
 		ctx.strokeStyle = "#da0000";
 		ctx.moveTo(pts[n-2],pts[n-1]);
