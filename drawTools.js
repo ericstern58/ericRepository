@@ -719,7 +719,7 @@ function drawSpline(ctx,pts,t,closed){
 	var cp=[];   // array of control points, as x0,y0,x1,y1,...
 	var n=pts.length;
 	
-	
+	// First if statement: find control points
 	if(closed){
 		//   Append and prepend knots and control points to close the curve
 		pts.push(pts[0],pts[1],pts[2],pts[3]);
@@ -742,6 +742,11 @@ function drawSpline(ctx,pts,t,closed){
 		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
 	}
 	
+	if(closed) {
+      	ctx.fillStyle = '#8ED6FF';
+		ctx.fill();
+		ctx.closePath();
+	}
 	if(!closed){ 
 		//  For open curves the first and last arcs are simple quadratics.
 		ctx.moveTo(pts[0],pts[1]);
@@ -750,6 +755,6 @@ function drawSpline(ctx,pts,t,closed){
 		ctx.moveTo(pts[n-2],pts[n-1]);
 		ctx.quadraticCurveTo(cp[2*n-10],cp[2*n-9],pts[n-4],pts[n-3]);
 	}
+	
 	ctx.stroke();
-	ctx.closePath();
 }
