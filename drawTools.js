@@ -219,7 +219,7 @@ $(document).on('mousemove', function(e){
 			restoreCanvas();
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 			try{
-			drawSpline(context,pointsToArray(DTPoints),0.5,true,true);
+			drawSpline(context,pointsToArray(DTPoints),0.5,false,true);
 			}catch(err){alert(err);}
 			DTPoints.length = DTPoints.length - 1;
 		}
@@ -279,7 +279,7 @@ $(document).on('mouseup', function(e){
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				restoreCanvas();
-				drawSpline(context,pointsToArray(DTPoints),0.5,true);
+				drawSpline(context,pointsToArray(DTPoints),0.5,false);
 			} else {
 				return;
 			}
@@ -749,9 +749,8 @@ function drawSpline(ctx,pts,t,closed,editMode){
 	
 	ctx.beginPath();
 	ctx.moveTo(pts[2],pts[3]);
-	for(var i=2;i<n+2;i+=2){
+	for(var i=2;i<n+2;i+=2)
 		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
-	}
 	
 	if(closed) {
 		ctx.moveTo(pts[0],pts[1]);
