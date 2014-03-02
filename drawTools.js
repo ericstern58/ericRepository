@@ -739,18 +739,16 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		
 		var d01=Math.sqrt(Math.pow(x1-x0,2)+Math.pow(y1-y0,2));
 		var d12=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));
-		
 		var fa=t*d01/(d01+d12);
 		var fb=t-fa;
 	  
 		var p1x=x1+fa*(x0-x2);
 		var p1y=y1+fa*(y0-y2);
-		
 		var p2x=x1-fb*(x0-x2);
 		var p2y=y1-fb*(y0-y2);  
 		
-		// Then add them to array
-		cp=cp.concat([p1x,p1y,p2x,p2y]);
+		// Then add them to cp array
+		cp=cp.concat(p1x,p1y,p2x,p2y);
 	}
 	
 	
@@ -784,13 +782,12 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		ctx.save(); 
 		ctx.fillStyle = '#FFFFFF';
 		ctx.lineWidth=2;
-		
-		for(var i=(2*isClosedSpline), m = (n-2+(2*isClosedSpline));i<m;i+=2){//closed i=2;i<n    open i=0;i<n-2
+		for(var i=(2*isClosedSpline), m = (n-2+(2*isClosedSpline));i<m;i+=2){
 			ctx.beginPath();
 			ctx.arc(pts[i],pts[i+1],2.5,2*Math.PI,false);
 			ctx.closePath();
-			ctx.stroke();
 			ctx.fill();
+			ctx.stroke();
 		}
 		ctx.restore();
 	}
