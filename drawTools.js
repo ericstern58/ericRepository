@@ -729,23 +729,23 @@ function getControlPoints(x0,y0,x1,y1,x2,y2,t){
 function drawSpline(ctx,pts,t,closed,editMode){
 	var cp=[];   // array of control points, as x0,y0,x1,y1,...
 	var n=pts.length;
-	var isClosedShape = (closed) ? 1 : 0;
+	var isClosedSpline = (closed) ? 1 : 0;
 	
 	// First if statement: find control points
-	if(closed){
+	if(isClosedSpline){
 		//   Append and prepend knots and control points to close the curve
 		pts.push(pts[0],pts[1],pts[2],pts[3]);
 		pts.unshift(pts[n-1]);
 		pts.unshift(pts[n-1]);
 	} 
 	
-	for(var i=0, m = (n-4+(4*isClosedShape));i<m;i+=2){
+	for(var i=0, m = (n-4+(4*isClosedSpline));i<m;i+=2){
 		cp=cp.concat(getControlPoints(pts[i],pts[i+1],pts[i+2],pts[i+3],pts[i+4],pts[i+5],t));
 	}
 	
-	if(closed){
-		cp=cp.concat(cp[0],cp[1]); 
-	}
+	
+	cp = (isClosedSpline) ? cp.concat(cp[0],cp[1]) : cp;
+
 	
 	ctx.beginPath();
 	ctx.lineJoin="round";
@@ -753,7 +753,7 @@ function drawSpline(ctx,pts,t,closed,editMode){
 	for(var i=2;i<n+2;i+=2)
 		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
 	
-	if(closed) {
+	if(isClosedSpline) {
 		ctx.moveTo(pts[0],pts[1]);
 		ctx.closePath();
 		ctx.fillStyle = '#8ED6FF';
@@ -775,7 +775,7 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		ctx.fillStyle = '#FFFFFF';
 		ctx.lineWidth=2;
 		
-		for(var i=(2*isClosedShape), m = (n-2+(2*isClosedShape));i<m;i+=2){//closed i=2;i<n    open i=0;i<n-2
+		for(var i=(2*isClosedSpline), m = (n-2+(2*isClosedSpline));i<m;i+=2){//closed i=2;i<n    open i=0;i<n-2
 			ctx.beginPath();
 			ctx.arc(pts[i],pts[i+1],2.5,2*Math.PI,false);
 			ctx.closePath();
