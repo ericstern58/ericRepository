@@ -735,7 +735,7 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		//   Append and prepend knots and control points to close the curve
 		pts.push(pts[0],pts[1],pts[2],pts[3]);
 		pts.unshift(pts[n-1]);
-		pts.unshift(pts[n-1]);	//changed this from 1 to 2
+		pts.unshift(pts[n-1]);
 		for(var i=0;i<n;i+=2){
 			cp=cp.concat(getControlPoints(pts[i],pts[i+1],pts[i+2],pts[i+3],pts[i+4],pts[i+5],t));
 		}
@@ -748,24 +748,10 @@ function drawSpline(ctx,pts,t,closed,editMode){
 	}
 	
 	ctx.beginPath();
-	/*
-	for(var i=2;i<n+2;i+=2){   //this used to split into closed vs !closed with n+2 and n-5 respectively
+	for(var i=2;i<n+2;i+=2){
 		ctx.moveTo(pts[i],pts[i+1]);
 		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
-	}*/
-	if(closed) {
-		for(var i=2;i<n+2;i+=2){   //this used to split into closed vs !closed with n+2 and n-5 respectively
-			ctx.moveTo(pts[i],pts[i+1]);
-			ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
-		}
-	} else { 
-		for(var i=2;i<n+2;i+=2){   //this used to split into closed vs !closed with n+2 and n-5 respectively
-			ctx.moveTo(pts[i],pts[i+1]);
-			ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
-		}
 	}
-	
-	
 	
 	if(closed) {
 		ctx.moveTo(pts[0],pts[1]);
