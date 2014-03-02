@@ -797,18 +797,17 @@ function drawSpline(ctx,pts,t,closed,editMode){
 			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
 			ctx.stroke();
 		}
-		
 		//   Draw the knot points.
 		ctx.fillStyle = '#FFFFFF';
 		ctx.strokeStyle = '#000000';
 		ctx.lineWidth=3;
+		ctx.beginPath();
 		for(var i=(2*isClosedSpline), m = (n-2+(2*isClosedSpline));i<m;i+=2){
-			ctx.beginPath();
 			ctx.arc(pts[i],pts[i+1],2.5,2*Math.PI,false);
+		}
 			ctx.closePath();
 			ctx.stroke();
 			ctx.fill();
-		}
 		ctx.restore();
 	}
 }
