@@ -219,7 +219,7 @@ $(document).on('mousemove', function(e){
 			restoreCanvas();
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 			try{
-			drawSpline(context,pointsToArray(DTPoints),0.5,true);
+			drawSpline(context,pointsToArray(DTPoints),0.5,true,true);
 			}catch(err){alert(err);}
 			DTPoints.length = DTPoints.length - 1;
 		}
