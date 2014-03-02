@@ -793,7 +793,6 @@ function drawSpline(ctx,pts,t,closed,editMode){
 			ctx.strokeStyle = "#da0000";
 			ctx.moveTo(pts[n],pts[n+1]);
 			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
-			ctx.closePath();
 			ctx.stroke();
 		}
 		
