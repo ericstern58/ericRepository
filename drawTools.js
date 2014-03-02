@@ -737,15 +737,14 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		pts.push(pts[0],pts[1],pts[2],pts[3]);
 		pts.unshift(pts[n-1]);
 		pts.unshift(pts[n-1]);
-		for(var i=0, m = (n-4+(4*isClosedShape));i<m;i+=2){
-			cp=cp.concat(getControlPoints(pts[i],pts[i+1],pts[i+2],pts[i+3],pts[i+4],pts[i+5],t));
-		}
+	} 
+	
+	for(var i=0, m = (n-4+(4*isClosedShape));i<m;i+=2){
+		cp=cp.concat(getControlPoints(pts[i],pts[i+1],pts[i+2],pts[i+3],pts[i+4],pts[i+5],t));
+	}
+	
+	if(closed){
 		cp=cp.concat(cp[0],cp[1]); 
-	} else {
-		// Draw an open curve, not connected at the ends
-		for(var i=0, m = (n-4+(4*isClosedShape));i<m;i+=2){
-			cp=cp.concat(getControlPoints(pts[i],pts[i+1],pts[i+2],pts[i+3],pts[i+4],pts[i+5],t));
-		}  
 	}
 	
 	ctx.beginPath();
