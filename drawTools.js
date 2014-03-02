@@ -792,8 +792,11 @@ function drawSpline(ctx,pts,t,closed,editMode){
 			ctx.beginPath();
 			var c2 = (0.2126*((c>>16)&255)) + (0.7152*((c>>8)&255)) + (0.0722*(c&255));
 			ctx.strokeStyle = c2 > 128 ? "#000000" : "#ffffff";
-			//ctx.strokeStyle = "#d80000";
+			ctx.moveTo(pts[n],pts[n+1]);
+			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
 			
+			ctx.lineWidth/=2;
+			ctx.strokeStyle = c2 < 128 ? "#000000" : "#ffffff";
 			ctx.moveTo(pts[n],pts[n+1]);
 			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
 			ctx.stroke();
