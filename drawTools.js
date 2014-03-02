@@ -767,5 +767,5 @@ function drawSpline(ctx,pts,t,closed){
 		ctx.quadraticCurveTo(cp[2*n-10],cp[2*n-9],pts[n-4],pts[n-3]);
 	}
 	
-	ctx.stroke();
+	//ctx.stroke();
 }
