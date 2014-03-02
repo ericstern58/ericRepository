@@ -790,12 +790,8 @@ function drawSpline(ctx,pts,t,closed,editMode){
 		//ctx.strokeStyle = "rgba("+(c>>16)&255+","+(c>>8)&255+","+c&255+",0.5)";
 		if(isClosedSpline) {
 			ctx.beginPath();
-			//ctx.strokeStyle = "#da0000";
-			var my_gradient=ctx.createLinearGradient(0,0,170,0);
-			my_gradient.addColorStop(0,"black");
-			my_gradient.addColorStop(0.5,"red");
-			my_gradient.addColorStop(1,"white");
-			ctx.strokeStyle =my_gradient;
+			var c2 = (0.2126*((c>>16)&255)) + (0.7152*((c>>8)&255)) + (0.0722*(c&255));
+			ctx.strokeStyle = c2 < 128 ? "#000000" : "#ffffff";
 			
 			ctx.moveTo(pts[n],pts[n+1]);
 			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
