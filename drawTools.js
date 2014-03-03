@@ -503,7 +503,7 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 	}
 	cp = (isClosedSpline) ? cp.concat(cp[0],cp[1]) : cp;
 	
-	ctx.save(); 
+	ctx.save(); // Push current state of context to stack
 	
 	ctx.beginPath();
 	ctx.lineJoin="round";
@@ -519,6 +519,17 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 			context.strokeStyle = "rgba(" + ((c>>16)&255) + "," + ((c>>8)&255) + "," + (c&255) + ",0.5)";
 			// Make the closing stroke
 			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
+			// And lastly, draw the knot points.
+			ctx.fillStyle = '#FFFFFF';
+			ctx.strokeStyle = '#000000';
+			ctx.lineWidth=3;
+			for(var i=(2*isClosedSpline), m = (n-2+(2*isClosedSpline));i<m;i+=2){
+				ctx.beginPath();
+				ctx.arc(pts[i],pts[i+1],2.5,2*Math.PI,false);
+				ctx.closePath();
+				ctx.stroke();
+				ctx.fill();
+			}
 		} else{
 			// Make the closing stroke
 			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
@@ -537,21 +548,7 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 		ctx.quadraticCurveTo(cp[2*n-10],cp[2*n-9],pts[n-4],pts[n-3]);
 	}
 	ctx.stroke();
-	
-	if(editMode){   
-		// Draw the knot points.
-		ctx.fillStyle = '#FFFFFF';
-		ctx.strokeStyle = '#000000';
-		ctx.lineWidth=3;
-		for(var i=(2*isClosedSpline), m = (n-2+(2*isClosedSpline));i<m;i+=2){
-			ctx.beginPath();
-			ctx.arc(pts[i],pts[i+1],2.5,2*Math.PI,false);
-			ctx.closePath();
-			ctx.stroke();
-			ctx.fill();
-		}
-	}
-	ctx.restore();
+	ctx.restore(); // Pop the context stack to restore original state
 }
 
   /*-----------------------------------------------------------------------------*/
