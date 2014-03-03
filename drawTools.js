@@ -1,41 +1,31 @@
 
-
 var StopWatch = function (performance) {
     this.startTime = 0;
     this.stopTime = 0;
     this.running = false;
     this.performance = performance === false ? false : !!window.performance;
 };
-
 StopWatch.prototype.currentTime = function () {
     return this.performance ? window.performance.now() : new Date().getTime();
 };
-
 StopWatch.prototype.start = function () {
     this.startTime = this.currentTime();
     this.running = true;
 };
-
 StopWatch.prototype.stop = function () {
     this.stopTime = this.currentTime();
     this.running = false;
 };
-
 StopWatch.prototype.getElapsedMilliseconds = function () {
-    if (this.running) {
+    if (this.running)
         this.stopTime = this.currentTime();
-    }
-
     return this.stopTime - this.startTime;
 };
-
 StopWatch.prototype.getElapsedSeconds = function () {
     return this.getElapsedMilliseconds() / 1000;
 };
-
 StopWatch.prototype.printElapsed = function (name) {
     var currentName = name || 'Elapsed:';
-
     console.log(currentName, '[' + this.getElapsedMilliseconds() + 'ms]', '[' + this.getElapsedSeconds() + 's]');
     outputDebug('[' + this.getElapsedMilliseconds() + 'ms]');
 };
@@ -47,8 +37,8 @@ StopWatch.prototype.printElapsed = function (name) {
 // Setup Constants
 var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
-var DTBrushes = [{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},{id: 'brush-12', size: 12},
-	{id: 'brush-35', size: 35}];
+var DTBrushes = [{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},
+                 {id: 'brush-12', size: 12},{id: 'brush-35', size: 35}];
 
 // Setup Some Global Variables
 window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
@@ -61,40 +51,40 @@ context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
 /*-----------------------------------------------------------------------------*/
-function DTOptionsClass(performance) {
-    this.mouseOnEventHappened = false;
-    
+function DTOptionsClass(idNameString) {
+	this.idName = idNameString;
+	
     this.shapeFillEnabled = false;
-    this.shapeFillColor;
+    this.shapeFillColor ;
     
     this.getOffset = function () {
-	    return  $("#drawTools-options").offset();
+	    return  $(idName).offset();
 	};
 	this.toggleMenu = function () {
 		var h = 150;	// Height of the options div
-		var opacity = $('#drawTools-options').css('opacity');
+		var opacity = $(idName).css('opacity');
 		
 		if(opacity == 0) {
-			$("#drawTools-options").stop(true, true).animate({
+			$(idName).stop(true, true).animate({
 				height: (h + "px"),
 				marginTop: ("-=" + h + "px"),
 				opacity: "1"
 			},300, "swing");
 		} else if(opacity == 1) {
-			$("#drawTools-options").stop(true, true).animate({
+			$(idName).stop(true, true).animate({
 				height: "0px",
 				marginTop: ("+=" + h + "px"),
 				opacity: "0"
 			},300, "swing");
 		}
 	};
-	this.isWithinBounds = function (x, y) {
-	    var x2 = x - $("#drawTools-options").offset().top;
-		var y2 = y - $("#drawTools-options").offset().left;
+	this.isWithinBounds = function (pageX, pageY) {
+	    var x = pageX - $('#drawTools-options').offset().top;
+		var y = pageX - $('#drawTools-options').offset().left;
 		var width = $('#drawTools-options').width();
 		var height = $('#drawTools-options').height();
 		//outputDebug("[x:" + x2 + ", y:" + y2 + "]   [width:" + width + ", height:" + height + "]");
-		return (x2>=0 && y2>=0 && x2<width && y2<height);
+		return (x>=0 && y>=0 && x<width && y<height);
 	};
 };
 
@@ -124,7 +114,7 @@ var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,POLY:7,
 /*-----------------------------------------------------------------------------*/
 
 // Setup Some State Variables
-var options = new DTOptionsClass();
+var options = new DTOptionsClass('#drawTools-options');
 var currentToolType = toolType.BRUSH;
 var toolInUse = false;
 
@@ -376,7 +366,7 @@ function drawEllipse(startX,startY,finishX,finishY){
 }
 
 function floodFill(e){
-	// This fix avoids issues with brush placing dot over flood fill seed area
+	// This restoreCanvas() fix avoids issues with brush placing dot over flood fill seed area
 	restoreCanvas();
 	
 	var w = canvasWidth;
