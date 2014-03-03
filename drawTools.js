@@ -316,8 +316,7 @@ function drawRect(ctx,startX,startY,finishX,finishY)
 	//**************************************************************************************
 	//                FIX THIS           -<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<
 	//***********************************************************************************************************/
-	var pts = [startX,startY,finishX,finishY];
-	
+	var pts = new Array(startX,startY,finishX,finishY);
 	drawLineChain(ctx,pts,false,true,options.shapeFillColor);
 }
 function drawEllipse(ctx,pts,fillColorHex){
