@@ -1,5 +1,4 @@
 
-
 var StopWatch = function (performance) {
     this.startTime = 0;
     this.stopTime = 0;
@@ -83,7 +82,7 @@ RGBColor.prototype.setOpacity = function(alpha) {
 var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,POLY:7,UTIL:99};
 
 //----- BEGIN ----- Options Class--------------------------------------------------------
-var DTOptionsClass = function (performance) {
+var DTOptionsClass = function () {
     this.mouseOnEventHappened = false;
     
     this.shapeFillEnabled = false;
@@ -119,7 +118,7 @@ DTOptionsClass.prototype.isWithinBounds = function (x, y) {
 	return (x2>=0 && y2>=0 && x2<width && y2<height);
 };
 DTOptionsClass.prototype.isVisible = function () {
-	return $('#drawTools-options').css('opacity') == 1);
+	return ($('#drawTools-options').css('opacity') == 1);
 };
 //-----  END  ----- Options Class--------------------------------------------------------
 
