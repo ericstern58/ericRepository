@@ -542,7 +542,7 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 		// Determine wether to use dark or light points
 		var c = parseInt(ctx.strokeStyle.substr(1,6),16); // Get current stroke color
 		var c2 = (0.2126*((c>>16)&255)) + (0.7152*((c>>8)&255)) + (0.0722*(c&255)); // Get its 'lightness' level
-		ctx.strokeStyle = (c2 > 128) ? "#000000" : "#FFFFFF"; // If (colorIsLight) ? black : white
+		ctx.strokeStyle = (c2 < 128) ? "#000000" : "#FFFFFF"; // If (colorIsLight) ? black : white
 		ctx.fillStyle = '#FFFFFF';
 		ctx.lineWidth=3;
 		for(var i=(2*isClosedSpline), m = (n-2+(2*isClosedSpline));i<m;i+=2){
