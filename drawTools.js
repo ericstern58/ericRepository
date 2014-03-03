@@ -449,12 +449,14 @@ function floodFill(e){
 }
 function drawLineChain(ctx,pts,editMode,closed,closedFillColorHex)
 {
+	ctx.save();
 	ctx.beginPath();
 	for(var i=1;i<pts.length;i++) {
 		ctx.moveTo( pts[i-1].x, pts[i-1].y );
 		ctx.lineTo( pts[i].x, pts[i].y );
 	}
-	ctx.stroke(); 
+	ctx.stroke();
+	ctx.restore();
 }
 function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 	var cp=[];   // array of control points, as x0,y0,x1,y1,...
