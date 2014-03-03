@@ -503,18 +503,31 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 	}
 	cp = (isClosedSpline) ? cp.concat(cp[0],cp[1]) : cp;
 	
+	ctx.save(); 
+	
 	ctx.beginPath();
 	ctx.lineJoin="round";
 	ctx.moveTo(pts[2],pts[3]);
-	for(var i=2;i<n+2;i+=2)
+	for(var i=2;i<n;i+=2)
 		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
 	
 	if(isClosedSpline) {
-		if(closedFillColorHex) {
+		if(editMode) {
+			ctx.stroke(); // Stroke all lines previous to this one
+			// Get current stroke color and set it to .5 opacity
+			var c = parseInt(context.strokeStyle.substr(1,6),16);
+			context.strokeStyle = "rgba(" + ((c>>16)&255) + "," + ((c>>8)&255) + "," + (c&255) + ",0.5)";
+			// Make the closing stroke
+			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
+		} else{
+			// Make the closing stroke
+			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
 			ctx.moveTo(pts[0],pts[1]);
 			ctx.closePath();
-			ctx.fillStyle = closedFillColorHex;
-			ctx.fill();
+			if(closedFillColorHex) {
+				ctx.fillStyle = closedFillColorHex;
+				ctx.fill();
+			}
 		}
 	} else { 
 		// For open curves the first and last arcs are simple quadratics.
@@ -526,20 +539,6 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 	ctx.stroke();
 	
 	if(editMode){   
-		ctx.save(); 
-		// Add distinguishing stroke to closing spline
-		if(isClosedSpline) {
-			// Determine wether to use dark or light stroke
-			var c = parseInt(context.strokeStyle.substr(1,6),16); // Get current stroke color
-			var c2 = (0.2126*((c>>16)&255)) + (0.7152*((c>>8)&255)) + (0.0722*(c&255)); // Get its 'lightness' level
-			ctx.strokeStyle = (c2 > 128) ? "#000000" : "#FFFFFF"; // If (colorIsLight) ? black : white
-			// Draw distinguishing stroke
-			ctx.beginPath();
-			ctx.lineWidth /= 2;
-			ctx.moveTo(pts[n],pts[n+1]);
-			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
-			ctx.stroke();
-		}
 		// Draw the knot points.
 		ctx.fillStyle = '#FFFFFF';
 		ctx.strokeStyle = '#000000';
@@ -551,8 +550,8 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 			ctx.stroke();
 			ctx.fill();
 		}
-		ctx.restore();
 	}
+	ctx.restore();
 }
 
   /*-----------------------------------------------------------------------------*/
