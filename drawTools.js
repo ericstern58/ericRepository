@@ -209,7 +209,7 @@ $(document).on('mousemove', function(e){
 		if(DTPoints.length > 0) {
 			restoreCanvas();
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
-			drawLineChain(context,DTPoints,true,options.lineToolsShouldClose,options.lineToolsFillColor);
+			drawLineChain(context,pointsToArray(DTPoints),true,options.lineToolsShouldClose,options.lineToolsFillColor);
 			DTPoints.length = DTPoints.length - 1;
 		}
 	} else if(currentToolType === toolType.CURVE) {
@@ -259,7 +259,7 @@ $(document).on('mouseup', function(e){
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 			if(e.which == 3) {	// If right mouse click, finish the polygon
 				restoreCanvas();
-				drawLineChain(context,DTPoints,false,options.lineToolsShouldClose,options.lineToolsFillColor);
+				drawLineChain(context,pointsToArray(DTPoints),false,options.lineToolsShouldClose,options.lineToolsFillColor);
 			} else {
 				return;
 			}
@@ -317,7 +317,7 @@ function drawRect(ctx,startX,startY,finishX,finishY)
 	DTPoints[1] = {x: finishX, y: startY};
 	DTPoints[2] = {x: finishX, y: finishY};
 	DTPoints[3] = {x: startX, y: finishY};
-	drawLineChain(ctx,DTPoints,false,true,options.shapeFillColor);
+	drawLineChain(ctx,pointsToArray(DTPoints),false,true,options.shapeFillColor);
 }
 function drawEllipse(ctx,pts,fillColorHex){
 	var x = pts[0],
@@ -441,9 +441,9 @@ function drawLineChain(ctx,pts,editMode,closeShape,closedFillColorHex)
 	ctx.save();
 	ctx.lineJoin="round";
 	ctx.beginPath();
-	ctx.moveTo( pts[0].x, pts[0].y );
-	for(var i=1;i<pts.length;i++)
-		ctx.lineTo( pts[i].x, pts[i].y );
+	ctx.moveTo( pts[0], pts[1] );
+	for(var i=1;i<pts.length;i+=2)
+		ctx.lineTo( pts[i], pts[i+1] );
 	if(closeShape) {
 		if(editMode) {
 			ctx.stroke(); // Stroke all lines previous to this one
@@ -451,8 +451,8 @@ function drawLineChain(ctx,pts,editMode,closeShape,closedFillColorHex)
 			var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 			ctx.strokeStyle = "rgba(" + ((c>>16)&255) + "," + ((c>>8)&255) + "," + (c&255) + ",0.5)";
 			// Make the closing stroke
-			ctx.moveTo( pts[pts.length-1].x, pts[pts.length-1].y );
-			ctx.lineTo( pts[0].x, pts[0].y );
+			ctx.moveTo( pts[pts.length-2], pts[pts.length-1] );
+			ctx.lineTo( pts[0], pts[1] );
 		} else {
 			ctx.closePath()
 			if(closedFillColorHex) {
