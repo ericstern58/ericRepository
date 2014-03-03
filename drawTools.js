@@ -1,4 +1,3 @@
-
 var StopWatch = function (performance) {
     this.startTime = 0;
     this.stopTime = 0;
@@ -160,7 +159,7 @@ createDrawToolsElements();	// Create Draw Tools Elements and Interface
 // Setup Mousedown Listener
 DACanvas.off('mousedown');
 DACanvas.on('mousedown', function(e){
-	if(options.isVisble()){
+	if(0 && options.isVisble()){
 		painting = !1;
 		restoreCanvas();
 		return;
@@ -251,7 +250,7 @@ $(document).on('mousemove', function(e){
 // Setup Mouseup Listener
 $(document).off('mouseup');
 $(document).on('mouseup', function(e){
-	if(options.isVisible()){
+	if(0 && options.isVisible()){
 		if(!options.isWithinBounds(e.pageX, e.pageY))
 			options.toggleMenu();
 		return;
