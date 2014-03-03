@@ -53,8 +53,12 @@ context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
 var DTOptionsClass = function (idNameString) {
 	this.idName = idNameString;
 	
+	// Shape Options
 	this.shapeFillEnabled = false;
-	this.shapeFillColor;
+	this.shapeFillColor = '#8ED6FF';
+	
+	this.lineToolsShouldClose = true;
+	this.lineToolsFillColor = '#8ED6FF';
 };
 DTOptionsClass.prototype.getOffset = function () {
 	return $(this.idName).offset();
@@ -214,7 +218,7 @@ $(document).on('mousemove', function(e){
 			restoreCanvas();
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 			try{
-			drawSpline(context,pointsToArray(DTPoints),0.5,true,true);
+			drawSpline(context,pointsToArray(DTPoints),0.5,true,options.lineToolsShouldClose,options.lineToolsFillColor);
 			}catch(err){alert(err);}
 			DTPoints.length = DTPoints.length - 1;
 		}
@@ -274,7 +278,7 @@ $(document).on('mouseup', function(e){
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				restoreCanvas();
-				drawSpline(context,pointsToArray(DTPoints),0.5,false,true);
+			drawSpline(context,pointsToArray(DTPoints),0.5,false,options.lineToolsShouldClose,options.lineToolsFillColor);
 			} else {
 				return;
 			}
@@ -508,7 +512,7 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 	if(isClosedSpline) {
 		ctx.moveTo(pts[0],pts[1]);
 		ctx.closePath();
-		ctx.fillStyle = '#8ED6FF';
+		ctx.fillStyle = closedFillColorHex;
 		ctx.fill();
 	} else { 
 		// For open curves the first and last arcs are simple quadratics.
@@ -526,7 +530,7 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 			// Determine wether to use dark or light stroke
 			var c = parseInt(context.strokeStyle.substr(1,6),16); // Get current stroke color
 			var c2 = (0.2126*((c>>16)&255)) + (0.7152*((c>>8)&255)) + (0.0722*(c&255)); // Get its 'lightness' level
-			ctx.strokeStyle = (c2 > 128) ? "#000000" : "#ffffff"; // If (colorIsLight) ? black : white
+			ctx.strokeStyle = (c2 > 128) ? "#000000" : "#FFFFFF"; // If (colorIsLight) ? black : white
 			// Draw distinguishing stroke
 			ctx.beginPath();
 			ctx.lineWidth /= 2;
