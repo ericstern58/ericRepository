@@ -1,4 +1,3 @@
-
 var StopWatch = function (performance) {
     this.startTime = 0;
     this.stopTime = 0;
@@ -51,14 +50,14 @@ context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
 /*-----------------------------------------------------------------------------*/
-function DTOptionsClass(idNameString) {
+var DTOtionsClass = function(idNameString) {
 	this.idName = idNameString;
 	
-    this.shapeFillEnabled = false;
-    this.shapeFillColor ;
-    
-    this.getOffset = function () {
-	    return  $(idName).offset();
+	this.shapeFillEnabled = false;
+	this.shapeFillColor ;
+	
+	this.getOffset = function () {
+		return  $(idName).offset();
 	};
 	this.toggleMenu = function () {
 		var h = 150;	// Height of the options div
@@ -79,7 +78,7 @@ function DTOptionsClass(idNameString) {
 		}
 	};
 	this.isWithinBounds = function (pageX, pageY) {
-	    var x = pageX - $('#drawTools-options').offset().top;
+		var x = pageX - $('#drawTools-options').offset().top;
 		var y = pageX - $('#drawTools-options').offset().left;
 		var width = $('#drawTools-options').width();
 		var height = $('#drawTools-options').height();
