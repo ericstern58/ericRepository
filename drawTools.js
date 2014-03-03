@@ -160,7 +160,7 @@ createDrawToolsElements();	// Create Draw Tools Elements and Interface
 DACanvas.off('mousedown');
 DACanvas.on('mousedown', function(e){
 	outputDebug(options.isVisble());
-	if(options.isVisble()){
+	if(0&& options.isVisble()){
 		//painting = !1;
 		//restoreCanvas();
 		return;
