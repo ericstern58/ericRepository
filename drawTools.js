@@ -54,8 +54,7 @@ var DTOptionsClass = function (idNameString) {
 	this.idName = idNameString;
 	
 	// Shape Options
-	this.shapeFillEnabled = false;
-	this.shapeFillColor = '#8ED6FF';
+	this.shapeFillColor = '#8ED6FF'; // Will be null if no fill for shapes
 	
 	this.lineToolsShouldClose = true;
 	this.lineToolsFillColor = '';// '#8ED6FF';
@@ -228,7 +227,7 @@ $(document).on('mousemove', function(e){
 	} else if(currentToolType === toolType.ELLIPSE) {
 		restoreCanvas();
 		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
-		drawEllipse(context,pointsToArray(DTPoints));
+		drawEllipse(context,pointsToArray(DTPoints),options.shapeFillColor);
 		DTPoints.length = DTPoints.length - 1;
 	} else if(currentToolType === toolType.POLY) {
 		
@@ -291,7 +290,7 @@ $(document).on('mouseup', function(e){
 	} else if(currentToolType === toolType.ELLIPSE) {
 		restoreCanvas();
 		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
-		drawEllipse(context,pointsToArray(DTPoints));
+		drawEllipse(context,pointsToArray(DTPoints),options.shapeFillColor);
 	} else if(currentToolType === toolType.POLY) {
 
 	}
@@ -320,7 +319,7 @@ function drawRect(ctx,startX,startY,finishX,finishY)
 	DTPoints[3] = {x: startX, y: finishY};
 	drawLineChain(ctx,DTPoints,false,true,options.shapeFillColor);
 }
-function drawEllipse(ctx,pts){
+function drawEllipse(ctx,pts,fillColorHex){
 	var x = pts[0],
 	y =  pts[1],
 	w = pts[2] - pts[0],
@@ -339,6 +338,12 @@ function drawEllipse(ctx,pts){
 	ctx.bezierCurveTo( xe, ym + oy, xm + ox, ye, xm, ye );
 	ctx.bezierCurveTo( xm - ox, ye, x, ym + oy, x, ym );
 	ctx.closePath();
+	if(fillColorHex) {
+		ctx.save();
+		ctx.fillStyle = fillColorHex;
+		ctx.fill();
+		ctx.restore();
+	}
 	ctx.stroke();
 }
 
