@@ -112,7 +112,7 @@ var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,POLY:7,
 /*-----------------------------------------------------------------------------*/
 
 // Setup Some State Variables
-var options = new DTOptionsClass('#drawTools-options');
+var options = new DTOptionsClass('#' + DRAW_TOOLS_ID + '-options');
 var currentToolType = toolType.BRUSH;
 var toolInUse = false;
 
@@ -621,7 +621,7 @@ function setupCSS()
 		\n\
 		#drawTools-btn-exit .drawTools-btn-container{background:#a50000;border-bottom:1px solid #7c0000;}\n\
 		#drawTools-btn-exit .drawTools-btn-container:focus{outline:thin dotted #fff;}\n\
-		#drawTools-btn-exit .drawTools-btn-container:hover,#drawTools-btn-options .drawTools-btn:focus{background-color:#b90c0c;border-bottom:1px solid #980909;}\n\
+		#drawTools-btn-exit .drawTools-btn-container:hover,#drawTools-btn-exit .drawTools-btn:focus{background-color:#b90c0c;border-bottom:1px solid #980909;}\n\
 		#drawTools-btn-exit .drawTools-btn-container:active{background-color:#a50000;border-bottom:1px solid #a50000;}\n\
 		\n\
 		#drawTools-options{margin-top:"+optionsMarginTop+"px;background:#252525;border-bottom:1px solid #171717;width:300px;height:0px;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
@@ -732,18 +732,18 @@ function createUtilityButton(name)
 	//create button
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
-	button.id = 'drawTools-btn-' + name;
-	button.className = 'drawTools-btn';
+	button.id = DRAW_TOOLS_ID + '-btn-' + name;
+	button.className = DRAW_TOOLS_ID + '-btn';
 	document.getElementById(DRAW_TOOLS_ID).appendChild(button);
 
 	//Create container div
 	var container = document.createElement('div');
-	container.className = 'drawTools-btn-container';
+	container.className = DRAW_TOOLS_ID + '-btn-container';
 	button.appendChild(container);
 	
 	// Create icon div
 	var icon = document.createElement('div');
-	icon.id = 'drawTools-btn-icon-' + name;
+	icon.id = DRAW_TOOLS_ID + '-btn-icon-' + name;
 	container.appendChild(icon);
 	
 	return button;
@@ -753,12 +753,12 @@ function createOptionsMenu(drawToolsDiv)
 {
 	//Create DIV in which Options will be placed in
 	var optionsDiv = document.createElement('div');
-	optionsDiv.id = 'drawTools-options';
+	optionsDiv.id = DRAW_TOOLS_ID + '-options';
 	drawToolsDiv.appendChild(optionsDiv);
 	
 	//Create DIV in which Options Content will be placed in
 	var optionsDivContent = document.createElement('div');
-	optionsDivContent.id = 'drawTools-options-content';
+	optionsDivContent.id = DRAW_TOOLS_ID + '-options-content';
 	optionsDivContent.innerHTML = "<br><br><br><br>HELLO<br>";
 	optionsDiv.appendChild(optionsDivContent);
 }
