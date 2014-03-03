@@ -227,7 +227,9 @@ $(document).on('mousemove', function(e){
 		drawRect(context,DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
 	} else if(currentToolType === toolType.ELLIPSE) {
 		restoreCanvas();
-		drawEllipse(context,DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
+		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
+		drawEllipse(context,pointsToArray(DTPoints));
+		DTPoints.length = DTPoints.length - 1;
 	} else if(currentToolType === toolType.POLY) {
 		
 	}
@@ -288,7 +290,8 @@ $(document).on('mouseup', function(e){
 		drawRect(context,DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
 	} else if(currentToolType === toolType.ELLIPSE) {
 		restoreCanvas();
-		drawEllipse(context,DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
+		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
+		drawEllipse(context,pointsToArray(DTPoints));
 	} else if(currentToolType === toolType.POLY) {
 
 	}
@@ -317,11 +320,11 @@ function drawRect(ctx,startX,startY,finishX,finishY)
 	DTPoints[3] = {x: startX, y: finishY};
 	drawLineChain(ctx,DTPoints,false,true,options.shapeFillColor);
 }
-function drawEllipse(ctx,startX,startY,finishX,finishY){
-	var x = startX,
-	y = startY,
-	w = finishX - startX,
-	h = finishY - startY,
+function drawEllipse(ctx,pts){
+	var x = pts[0],
+	y =  pts[1],
+	w = pts[2] - pts[0],
+	h = pts[3] -  pts[1],
 	kappa = .5522848,
 	ox = ( w / 2 ) * kappa,// control point offset horizontal
 	oy = ( h / 2 ) * kappa,// control point offset vertical
