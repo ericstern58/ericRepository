@@ -227,7 +227,7 @@ $(document).on('mousemove', function(e){
 		drawRect(context,DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
 	} else if(currentToolType === toolType.ELLIPSE) {
 		restoreCanvas();
-		drawEllipse(DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
+		drawEllipse(context,DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
 	} else if(currentToolType === toolType.POLY) {
 		
 	}
@@ -288,7 +288,7 @@ $(document).on('mouseup', function(e){
 		drawRect(context,DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
 	} else if(currentToolType === toolType.ELLIPSE) {
 		restoreCanvas();
-		drawEllipse(DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
+		drawEllipse(context,DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
 	} else if(currentToolType === toolType.POLY) {
 
 	}
@@ -317,7 +317,7 @@ function drawRect(ctx,startX,startY,finishX,finishY)
 	DTPoints[3] = {x: startX, y: finishY};
 	drawLineChain(ctx,DTPoints,false,true,options.shapeFillColor);
 }
-function drawEllipse(startX,startY,finishX,finishY){
+function drawEllipse(ctx,startX,startY,finishX,finishY){
 	var x = startX,
 	y = startY,
 	w = finishX - startX,
@@ -329,14 +329,14 @@ function drawEllipse(startX,startY,finishX,finishY){
 	ye = y + h,            // y-end
 	xm = x + w / 2,        // x-middle
 	ym = y + h / 2;        // y-middle
-	context.beginPath();
-	context.moveTo( x, ym );
-	context.bezierCurveTo( x, ym - oy, xm - ox, y, xm, y );
-	context.bezierCurveTo( xm + ox, y, xe, ym - oy, xe, ym );
-	context.bezierCurveTo( xe, ym + oy, xm + ox, ye, xm, ye );
-	context.bezierCurveTo( xm - ox, ye, x, ym + oy, x, ym );
-	context.closePath();
-	context.stroke();
+	ctx.beginPath();
+	ctx.moveTo( x, ym );
+	ctx.bezierCurveTo( x, ym - oy, xm - ox, y, xm, y );
+	ctx.bezierCurveTo( xm + ox, y, xe, ym - oy, xe, ym );
+	ctx.bezierCurveTo( xe, ym + oy, xm + ox, ye, xm, ye );
+	ctx.bezierCurveTo( xm - ox, ye, x, ym + oy, x, ym );
+	ctx.closePath();
+	ctx.stroke();
 }
 
 function floodFill(e){
