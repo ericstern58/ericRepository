@@ -441,8 +441,8 @@ function drawLineChain(ctx,pts,editMode,closeShape,closedFillColorHex)
 		if(editMode) {
 			ctx.stroke(); // Stroke all lines previous to this one
 			// Get current stroke color and set it to .5 opacity
-			var c = parseInt(context.strokeStyle.substr(1,6),16);
-			context.strokeStyle = "rgba(" + ((c>>16)&255) + "," + ((c>>8)&255) + "," + (c&255) + ",0.5)";
+			var c = parseInt(ctx.strokeStyle.substr(1,6),16);
+			ctx.strokeStyle = "rgba(" + ((c>>16)&255) + "," + ((c>>8)&255) + "," + (c&255) + ",0.5)";
 			// Make the closing stroke
 			ctx.moveTo( pts[pts.length-1].x, pts[pts.length-1].y );
 			ctx.lineTo( pts[0].x, pts[0].y );
@@ -515,12 +515,10 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 		if(editMode) {
 			ctx.stroke(); // Stroke all lines previous to this one
 			// Get current stroke color and set it to .5 opacity
-			var c = parseInt(context.strokeStyle.substr(1,6),16);
-			ctx.save();
-			context.strokeStyle = "rgba(" + ((c>>16)&255) + "," + ((c>>8)&255) + "," + (c&255) + ",0.5)";
+			var c = parseInt(ctx.strokeStyle.substr(1,6),16);
+			ctx.strokeStyle = "rgba(" + ((c>>16)&255) + "," + ((c>>8)&255) + "," + (c&255) + ",0.5)";
 			// Make the closing stroke
 			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
-			ctx.restore();
 		} else{
 			// Make the closing stroke
 			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
