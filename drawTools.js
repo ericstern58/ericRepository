@@ -159,6 +159,7 @@ createDrawToolsElements();	// Create Draw Tools Elements and Interface
 // Setup Mousedown Listener
 DACanvas.off('mousedown');
 DACanvas.on('mousedown', function(e){
+	outputDebug(options.isVisble());
 	if(options.isVisble()){
 		painting = !1;
 		restoreCanvas();
@@ -250,6 +251,7 @@ $(document).on('mousemove', function(e){
 // Setup Mouseup Listener
 $(document).off('mouseup');
 $(document).on('mouseup', function(e){
+	outputDebug(options.isVisble());
 	if(options.isVisible()){
 		if(!options.isWithinBounds(e.pageX, e.pageY))
 			options.toggleMenu();
