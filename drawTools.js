@@ -313,11 +313,8 @@ function drawLine(ctx,startX,startY,finishX,finishY)
 }
 function drawRect(ctx,startX,startY,finishX,finishY)
 {
-	DTPoints[0] = {x: startX, y: startY};
-	DTPoints[1] = {x: finishX, y: startY};
-	DTPoints[2] = {x: finishX, y: finishY};
-	DTPoints[3] = {x: startX, y: finishY};
-	drawLineChain(ctx,[startX,startY,finishX,finishY],false,true,options.shapeFillColor);
+	var pts = [startX,startY,finishX,finishY]l
+	drawLineChain(ctx,pts,false,true,options.shapeFillColor);
 }
 function drawEllipse(ctx,pts,fillColorHex){
 	var x = pts[0],
