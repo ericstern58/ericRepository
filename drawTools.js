@@ -450,6 +450,7 @@ function floodFill(e){
 function drawLineChain(ctx,pts,editMode,closed,closedFillColorHex)
 {
 	ctx.save();
+	ctx.lineJoin="round";
 	ctx.beginPath();
 	ctx.moveTo( pts[0].x, pts[0].y );
 	for(var i=1;i<pts.length;i++)
