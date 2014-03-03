@@ -541,6 +541,7 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 	ctx.stroke();
 	// Draw the knot points.
 	if(editMode){   
+		ctx.save();
 		// Determine wether to use dark or light points
 		var c = parseInt(ctx.strokeStyle.substr(1,6),16); // Get current stroke color
 		var c2 = (0.2126*((c>>16)&255)) + (0.7152*((c>>8)&255)) + (0.0722*(c&255)); // Get its 'lightness' level
@@ -553,6 +554,7 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 			ctx.stroke();
 			ctx.fill();
 		}
+		ctx.restore();
 	}
 	ctx.restore();
 }
