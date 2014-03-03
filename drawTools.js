@@ -50,41 +50,40 @@ context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
 /*-----------------------------------------------------------------------------*/
-var DTOtionsClass = function(idNameString) {
-	this.idName = idNameString;
-	
-	this.shapeFillEnabled = false;
-	this.shapeFillColor ;
-	
-	this.getOffset = function () {
-		return  $(idName).offset();
-	};
-	this.toggleMenu = function () {
-		var h = 150;	// Height of the options div
-		var opacity = $(this.idName).css('opacity');
-		
-		if(opacity == 0) {
-			$(this.idName).stop(true, true).animate({
-				height: (h + "px"),
-				marginTop: ("-=" + h + "px"),
-				opacity: "1"
-			},300, "swing");
-		} else if(opacity == 1) {
-			$(this.idName).stop(true, true).animate({
-				height: "0px",
-				marginTop: ("+=" + h + "px"),
-				opacity: "0"
-			},300, "swing");
-		}
-	};
-	this.isWithinBounds = function (pageX, pageY) {
-		var x = pageX - $('#drawTools-options').offset().top;
-		var y = pageX - $('#drawTools-options').offset().left;
-		var width = $('#drawTools-options').width();
-		var height = $('#drawTools-options').height();
-		//outputDebug("[x:" + x2 + ", y:" + y2 + "]   [width:" + width + ", height:" + height + "]");
-		return (x>=0 && y>=0 && x<width && y<height);
-	};
+var DTOptionsClass = function (performance) {
+    this.mouseOnEventHappened = false;
+    
+    this.shapeFillEnabled = false;
+    this.shapeFillColor;
+};
+DTOptionsClass.prototype.getOffset = function () {
+	return $("#drawTools-options").offset();
+};
+DTOptionsClass.prototype.toggleMenu = function () {
+var h = 150;	// Height of the options div
+var opacity = $('#drawTools-options').css('opacity');
+
+if(opacity == 0) {
+$("#drawTools-options").stop(true, true).animate({
+height: (h + "px"),
+marginTop: ("-=" + h + "px"),
+opacity: "1"
+},300, "swing");
+} else if(opacity == 1) {
+$("#drawTools-options").stop(true, true).animate({
+height: "0px",
+marginTop: ("+=" + h + "px"),
+opacity: "0"
+},300, "swing");
+}
+};
+DTOptionsClass.prototype.isWithinBounds = function (x, y) {
+    var x2 = x - $("#drawTools-options").offset().top;
+var y2 = y - $("#drawTools-options").offset().left;
+var width = $('#drawTools-options').width();
+var height = $('#drawTools-options').height();
+//outputDebug("[x:" + x2 + ", y:" + y2 + "] [width:" + width + ", height:" + height + "]");
+return (x2>=0 && y2>=0 && x2<width && y2<height);
 };
 
 // Point Object
