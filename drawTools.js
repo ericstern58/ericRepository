@@ -509,11 +509,13 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 	for(var i=2;i<n+2;i+=2)
 		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
 	
-	if(isClosedSpline && closedFillColorHex) {
-		ctx.moveTo(pts[0],pts[1]);
-		ctx.closePath();
-		ctx.fillStyle = closedFillColorHex;
-		ctx.fill();
+	if(isClosedSpline) {
+		if(closedFillColorHex) {
+			ctx.moveTo(pts[0],pts[1]);
+			ctx.closePath();
+			ctx.fillStyle = closedFillColorHex;
+			ctx.fill();
+		}
 	} else { 
 		// For open curves the first and last arcs are simple quadratics.
 		ctx.moveTo(pts[0],pts[1]);
