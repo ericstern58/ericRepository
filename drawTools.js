@@ -185,7 +185,7 @@ DACanvas.on('mousedown', function(e){
 		painting = !1;
 		DTPoints[0] = {x: mouseX, y: mouseY};
 	} else if(currentToolType === toolType.POLY) {
-		painting = !1;
+		
 	}
 });
 // Setup Mousemove Listener
@@ -210,7 +210,7 @@ $(document).on('mousemove', function(e){
 		if(DTPoints.length > 0) {
 			restoreCanvas();
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
-			drawLineChain(context,DTPoints);
+			drawLineChain(context,DTPoints,true,toptions.lineToolsShouldClose,options.lineToolsFillColor);
 			DTPoints.length = DTPoints.length - 1;
 		}
 	} else if(currentToolType === toolType.CURVE) {
@@ -229,12 +229,7 @@ $(document).on('mousemove', function(e){
 		restoreCanvas();
 		drawEllipse(DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
 	} else if(currentToolType === toolType.POLY) {
-		if(DTPoints.length > 0) {
-			restoreCanvas();
-			if(DTPoints.length > 1)
-				drawLineChain(context,DTPoints);
-			drawLine(DTPoints[DTPoints.length-1].x,DTPoints[DTPoints.length-1].y,mouseX,mouseY);
-		}
+		
 	}
 });
 // Setup Mouseup Listener
@@ -263,7 +258,7 @@ $(document).on('mouseup', function(e){
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 			if(e.which == 3) {	// If right mouse click, finish the polygon
 				restoreCanvas();
-				drawLineChain(context,DTPoints);
+				drawLineChain(context,DTPoints,false,toptions.lineToolsShouldClose,options.lineToolsFillColor);
 			} else {
 				return;
 			}
@@ -295,20 +290,7 @@ $(document).on('mouseup', function(e){
 		restoreCanvas();
 		drawEllipse(DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
 	} else if(currentToolType === toolType.POLY) {
-		if(isWithinPolygonToolBounds(mouseX,mouseY)){
-			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
-			if(e.which == 3) {	// If right mouse click, finish the polygon
-				restoreCanvas();
-				drawLineChain(context,DTPoints);
-			} else {
-				return;
-			}
-		} else {
-			restoreCanvas();
-			DTPoints.length = 0;
-			toolInUse = false;
-			return;
-		}
+
 	}
 	DTPoints.length = 0;
 	toolInUse = false;
@@ -334,7 +316,7 @@ function drawRect(startX,startY,finishX,finishY)
 	DTPoints[2] = {x: finishX, y: finishY};
 	DTPoints[3] = {x: startX, y: finishY};
 	DTPoints[4] = {x: startX, y: startY};
-	drawLineChain(context,DTPoints);
+	drawLineChain(context,DTPoints,false,true,options.shapeFillColor);
 }
 function drawEllipse(startX,startY,finishX,finishY){
 	var x = startX,
@@ -455,7 +437,24 @@ function drawLineChain(ctx,pts,editMode,closed,closedFillColorHex)
 	ctx.moveTo( pts[0].x, pts[0].y );
 	for(var i=1;i<pts.length;i++)
 		ctx.lineTo( pts[i].x, pts[i].y );
-	ctx.stroke();
+	if(closed) {
+		if(editMode) {
+			ctx.stroke();
+			var c = parseInt(context.strokeStyle.substr(1,6),16); // Get current stroke color
+			context.strokeStyle = "rgba(" + ((c>>16)&255) + "," + ((c>>8)&255) + "," + (c&255) + ",0.5)";
+			ctx.moveTo( pts[pts.length-1].x, pts[pts.length-1].y );
+			ctx.lineTo( pts[0].x, pts[0].y );
+		} else {
+			if(closedFillColorHex) {
+				ctx.closePath()
+				ctx.fillStyle = closedFillColorHex;
+				ctx.fill();
+				ctx.stroke();
+			}
+		}
+	} else {
+		ctx.stroke();
+	}
 	ctx.restore();
 }
 function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
