@@ -161,8 +161,8 @@ DACanvas.off('mousedown');
 DACanvas.on('mousedown', function(e){
 	outputDebug(options.isVisble());
 	if(options.isVisble()){
-		painting = !1;
-		restoreCanvas();
+		//painting = !1;
+		//restoreCanvas();
 		return;
 	} else if(currentToolType === toolType.BRUSH)
 		return;
