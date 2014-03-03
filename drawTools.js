@@ -50,8 +50,7 @@ context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
 /*-----------------------------------------------------------------------------*/
-var DTOptionsClass = function (performance) {
-	this.mouseOnEventHappened = false;
+var DTOptionsClass = function (idNameString) {
 	
 	this.shapeFillEnabled = false;
 	this.shapeFillColor;
