@@ -108,13 +108,13 @@ DTOptionsClass.prototype.toggleMenu = function () {
 		},300, "swing");
 	}
 };
-DTOptionsClass.prototype.isWithinBounds = function (x, y) {
-    var x2 = x - $("#drawTools-options").offset().top;
-	var y2 = y - $("#drawTools-options").offset().left;
+DTOptionsClass.prototype.isWithinBounds = function (pageX, pageY) {
+    var x = pageX - $("#drawTools-options").offset().top;
+	var y = pageY - $("#drawTools-options").offset().left;
 	var width = $('#drawTools-options').width();
 	var height = $('#drawTools-options').height();
-	//outputDebug("[x:" + x2 + ", y:" + y2 + "]   [width:" + width + ", height:" + height + "]");
-	return (x2>=0 && y2>=0 && x2<width && y2<height);
+	outputDebug("[x:" + x + ", y:" + y + "]   [width:" + width + ", height:" + height + "]");
+	return (x>=0 && y>=0 && x<width && y<height);
 };
 DTOptionsClass.prototype.isVisible = function () {
 	return ($('#drawTools-options').css('opacity') == 1);
@@ -250,7 +250,6 @@ $(document).on('mousemove', function(e){
 // Setup Mouseup Listener
 $(document).off('mouseup');
 $(document).on('mouseup', function(e){
-	outputDebug( options.isVisible().toString() );
 	if(0 && options.isVisible()){
 		if(!options.isWithinBounds(e.pageX, e.pageY))
 			options.toggleMenu();
