@@ -513,12 +513,14 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 	
 	if(isClosedSpline) {
 		if(editMode) {
+			var temp1 = ctx.strokeStyle;
 			ctx.stroke(); // Stroke all lines previous to this one
 			// Get current stroke color and set it to .5 opacity
 			ctx.save();
-			outputDebug("this: " + ctx.strokeStyle);
 			var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 			ctx.strokeStyle = "rgba(" + ((c>>16)&255) + "," + ((c>>8)&255) + "," + (c&255) + ",0.5)";
+			var temp2 = ctx.strokeStyle;
+			outputDebug("this: [" + temp1 + " ...and... " + temp2);
 			// Make the closing stroke
 			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
 			ctx.restore();
