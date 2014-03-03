@@ -210,7 +210,7 @@ $(document).on('mousemove', function(e){
 		if(DTPoints.length > 0) {
 			restoreCanvas();
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
-			drawLineChain(context,DTPoints,true,toptions.lineToolsShouldClose,options.lineToolsFillColor);
+			drawLineChain(context,DTPoints,true,options.lineToolsShouldClose,options.lineToolsFillColor);
 			DTPoints.length = DTPoints.length - 1;
 		}
 	} else if(currentToolType === toolType.CURVE) {
@@ -258,7 +258,7 @@ $(document).on('mouseup', function(e){
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 			if(e.which == 3) {	// If right mouse click, finish the polygon
 				restoreCanvas();
-				drawLineChain(context,DTPoints,false,toptions.lineToolsShouldClose,options.lineToolsFillColor);
+				drawLineChain(context,DTPoints,false,options.lineToolsShouldClose,options.lineToolsFillColor);
 			} else {
 				return;
 			}
