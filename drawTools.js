@@ -210,7 +210,7 @@ $(document).on('mousemove', function(e){
 		if(DTPoints.length > 0) {
 			restoreCanvas();
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
-			drawLineChain(DTPoints);
+			drawLineChain(context,DTPoints);
 			DTPoints.length = DTPoints.length - 1;
 		}
 	} else if(currentToolType === toolType.CURVE) {
@@ -232,7 +232,7 @@ $(document).on('mousemove', function(e){
 		if(DTPoints.length > 0) {
 			restoreCanvas();
 			if(DTPoints.length > 1)
-				drawLineChain(DTPoints);
+				drawLineChain(context,DTPoints);
 			drawLine(DTPoints[DTPoints.length-1].x,DTPoints[DTPoints.length-1].y,mouseX,mouseY);
 		}
 	}
@@ -263,7 +263,7 @@ $(document).on('mouseup', function(e){
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 			if(e.which == 3) {	// If right mouse click, finish the polygon
 				restoreCanvas();
-				drawLineChain(DTPoints);
+				drawLineChain(context,DTPoints);
 			} else {
 				return;
 			}
@@ -299,7 +299,7 @@ $(document).on('mouseup', function(e){
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 			if(e.which == 3) {	// If right mouse click, finish the polygon
 				restoreCanvas();
-				drawLineChain(DTPoints);
+				drawLineChain(context,DTPoints);
 			} else {
 				return;
 			}
@@ -334,16 +334,7 @@ function drawRect(startX,startY,finishX,finishY)
 	DTPoints[2] = {x: finishX, y: finishY};
 	DTPoints[3] = {x: startX, y: finishY};
 	DTPoints[4] = {x: startX, y: startY};
-	drawLineChain(DTPoints);
-}
-function drawLineChain(points)
-{
-	context.beginPath();
-	for(var i=1;i<points.length;i++) {
-		context.moveTo( points[i-1].x, points[i-1].y );
-		context.lineTo( points[i].x, points[i].y );
-	}
-	context.stroke(); 
+	drawLineChain(context,DTPoints);
 }
 function drawEllipse(startX,startY,finishX,finishY){
 	var x = startX,
@@ -456,7 +447,15 @@ function floodFill(e){
 		return new RGBColor(d[i],d[i+1],d[i+2]);
 	}
 }
-
+function drawLineChain(ctx,pts,editMode,closed,closedFillColorHex)
+{
+	ctx.beginPath();
+	for(var i=1;i<pts.length;i++) {
+		ctx.moveTo( pts[i-1].x, pts[i-1].y );
+		ctx.lineTo( pts[i].x, pts[i].y );
+	}
+	ctx.stroke(); 
+}
 function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 	var cp=[];   // array of control points, as x0,y0,x1,y1,...
 	var n=pts.length;
