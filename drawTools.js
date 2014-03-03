@@ -515,12 +515,12 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 		if(editMode) {
 			ctx.stroke(); // Stroke all lines previous to this one
 			// Get current stroke color and set it to .5 opacity
-			ctx.save();
+			//ctx.save();
 			var c = parseInt(context.strokeStyle.substr(1,6),16);
 			context.strokeStyle = "rgba(" + ((c>>16)&255) + "," + ((c>>8)&255) + "," + (c&255) + ",0.5)";
 			// Make the closing stroke
 			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
-			ctx.restore();
+			//ctx.restore();
 		} else{
 			// Make the closing stroke
 			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
@@ -545,7 +545,6 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 		var c = parseInt(ctx.strokeStyle.substr(1,6),16); // Get current stroke color
 		var c2 = (0.2126*((c>>16)&255)) + (0.7152*((c>>8)&255)) + (0.0722*(c&255)); // Get its 'lightness' level
 		ctx.fillStyle = (c2 > 160) ? "#444444" : "#FFFFFF"; // If (colorIsLight) ? darkGray : white;
-		outputDebug("lightness: " + c2 + "     [" + ((c>>16)&255) + ", " + ((c>>8)&255) + ", " + (c&255) + "]");
 		ctx.lineWidth=3;
 		for(var i=(2*isClosedSpline), m = (n-2+(2*isClosedSpline));i<m;i+=2){
 			ctx.beginPath();
