@@ -61,16 +61,16 @@ var DTOtionsClass = function(idNameString) {
 	};
 	this.toggleMenu = function () {
 		var h = 150;	// Height of the options div
-		var opacity = $(idName).css('opacity');
+		var opacity = $(this.idName).css('opacity');
 		
 		if(opacity == 0) {
-			$(idName).stop(true, true).animate({
+			$(this.idName).stop(true, true).animate({
 				height: (h + "px"),
 				marginTop: ("-=" + h + "px"),
 				opacity: "1"
 			},300, "swing");
 		} else if(opacity == 1) {
-			$(idName).stop(true, true).animate({
+			$(this.idName).stop(true, true).animate({
 				height: "0px",
 				marginTop: ("+=" + h + "px"),
 				opacity: "0"
