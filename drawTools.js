@@ -445,8 +445,8 @@ function drawLineChain(ctx,pts,editMode,closed,closedFillColorHex)
 			ctx.moveTo( pts[pts.length-1].x, pts[pts.length-1].y );
 			ctx.lineTo( pts[0].x, pts[0].y );
 		} else {
+			ctx.closePath()
 			if(closedFillColorHex) {
-				ctx.closePath()
 				ctx.fillStyle = closedFillColorHex;
 				ctx.fill();
 			}
