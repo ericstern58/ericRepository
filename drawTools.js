@@ -451,10 +451,9 @@ function drawLineChain(ctx,pts,editMode,closed,closedFillColorHex)
 {
 	ctx.save();
 	ctx.beginPath();
-	for(var i=1;i<pts.length;i++) {
-		ctx.moveTo( pts[i-1].x, pts[i-1].y );
+	ctx.moveTo( pts[0].x, pts[0].y );
+	for(var i=1;i<pts.length;i++)
 		ctx.lineTo( pts[i].x, pts[i].y );
-	}
 	ctx.stroke();
 	ctx.restore();
 }
