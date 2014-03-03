@@ -531,6 +531,7 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 				ctx.fillStyle = closedFillColorHex;
 				ctx.fill();
 			}
+			ctx.stroke();
 		}
 	} else { 
 		// For open curves the first and last arcs are simple quadratics.
@@ -538,8 +539,8 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 		ctx.quadraticCurveTo(cp[0],cp[1],pts[2],pts[3]);
 		ctx.moveTo(pts[n-2],pts[n-1]);
 		ctx.quadraticCurveTo(cp[2*n-10],cp[2*n-9],pts[n-4],pts[n-3]);
+		ctx.stroke();
 	}
-	ctx.stroke();
 	// Draw the knot points.
 	if(editMode){   
 		ctx.save();
