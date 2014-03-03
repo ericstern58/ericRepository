@@ -444,6 +444,7 @@ function drawLineChain(ctx,pts,editMode,closed,closedFillColorHex)
 			context.strokeStyle = "rgba(" + ((c>>16)&255) + "," + ((c>>8)&255) + "," + (c&255) + ",0.5)";
 			ctx.moveTo( pts[pts.length-1].x, pts[pts.length-1].y );
 			ctx.lineTo( pts[0].x, pts[0].y );
+			ctx.stroke();
 		} else {
 			if(closedFillColorHex) {
 				ctx.closePath()
