@@ -218,7 +218,7 @@ $(document).on('mousemove', function(e){
 			restoreCanvas();
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 			try{
-			drawSpline(context,pointsToArray(DTPoints),0.5,true,options.lineToolsShouldClose,options.lineToolsFillColor);
+			drawSpline(context,pointsToArray(DTPoints),0.5,options.lineToolsShouldClose,options.lineToolsFillColor,true);
 			}catch(err){alert(err);}
 			DTPoints.length = DTPoints.length - 1;
 		}
@@ -273,7 +273,7 @@ $(document).on('mouseup', function(e){
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				restoreCanvas();
-			drawSpline(context,pointsToArray(DTPoints),0.5,false,options.lineToolsShouldClose,options.lineToolsFillColor);
+			drawSpline(context,pointsToArray(DTPoints),0.5,options.lineToolsShouldClose,options.lineToolsFillColor,false);
 			} else {
 				return;
 			}
@@ -457,7 +457,7 @@ function drawLineChain(ctx,pts,editMode,closeShape,closedFillColorHex)
 	ctx.stroke();
 	ctx.restore();
 }
-function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
+function drawSpline(ctx,pts,t,closed,closedFillColorHex,editMode){
 	var cp=[];   // array of control points, as x0,y0,x1,y1,...
 	var n=pts.length;
 	var isClosedSpline = (closed) ? 1 : 0;
@@ -513,8 +513,8 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 	
 	if(isClosedSpline) {
 		if(editMode) {
-			ctx.save();
 			ctx.stroke(); // Stroke all lines previous to this one
+			ctx.save();
 			// Get current stroke color and set it to .5 opacity
 			var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 			ctx.strokeStyle = "rgba(" + ((c>>16)&255) + "," + ((c>>8)&255) + "," + (c&255) + ",0.5)";
