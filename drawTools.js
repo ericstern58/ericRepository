@@ -205,7 +205,7 @@ $(document).on('mousemove', function(e){
 		// Do nothing
 	} else if(currentToolType === toolType.LINE) {
 		restoreCanvas();
-		drawLine(DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
+		drawLine(context,DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
 	} else if(currentToolType === toolType.LINECHAIN) {
 		if(DTPoints.length > 0) {
 			restoreCanvas();
@@ -224,7 +224,7 @@ $(document).on('mousemove', function(e){
 		}
 	} else if(currentToolType === toolType.RECT) {
 		restoreCanvas();
-		drawRect(DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
+		drawRect(context,DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
 	} else if(currentToolType === toolType.ELLIPSE) {
 		restoreCanvas();
 		drawEllipse(DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
@@ -252,7 +252,7 @@ $(document).on('mouseup', function(e){
 		// Do nothing
 	} else if(currentToolType === toolType.LINE) {
 		restoreCanvas();
-		drawLine(DTPoints[0].x,DTPoints[0].y, mouseX, mouseY);
+		drawLine(context,DTPoints[0].x,DTPoints[0].y, mouseX, mouseY);
 	} else if(currentToolType === toolType.LINECHAIN) {
 		if(isWithinPolygonToolBounds(mouseX,mouseY)){
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
@@ -285,7 +285,7 @@ $(document).on('mouseup', function(e){
 		}
 	} else if(currentToolType === toolType.RECT) {
 		restoreCanvas();
-		drawRect(DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
+		drawRect(context,DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
 	} else if(currentToolType === toolType.ELLIPSE) {
 		restoreCanvas();
 		drawEllipse(DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
@@ -302,21 +302,21 @@ $(document).on('mouseup', function(e){
  /*------------------------------ Button Methods -------------------------------*/
 /*-----------------------------------------------------------------------------*/
 
-function drawLine(startX,startY,finishX,finishY)
+function drawLine(ctx,startX,startY,finishX,finishY)
 {
-	context.beginPath();
-	context.moveTo( startX, startY );
-	context.lineTo( finishX, finishY);
-	context.stroke();
+	ctx.beginPath();
+	ctx.moveTo( startX, startY );
+	ctx.lineTo( finishX, finishY);
+	ctx.stroke();
 }
-function drawRect(startX,startY,finishX,finishY)
+function drawRect(ctx,startX,startY,finishX,finishY)
 {
 	DTPoints[0] = {x: startX, y: startY};
 	DTPoints[1] = {x: finishX, y: startY};
 	DTPoints[2] = {x: finishX, y: finishY};
 	DTPoints[3] = {x: startX, y: finishY};
 	DTPoints[4] = {x: startX, y: startY};
-	drawLineChain(context,DTPoints,false,true,options.shapeFillColor);
+	drawLineChain(ctx,DTPoints,false,true,options.shapeFillColor);
 }
 function drawEllipse(startX,startY,finishX,finishY){
 	var x = startX,
