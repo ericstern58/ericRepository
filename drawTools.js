@@ -252,7 +252,7 @@ $(document).on('mousemove', function(e){
 $(document).off('mouseup');
 $(document).on('mouseup', function(e){
 	outputDebug(options.isVisble());
-	if(options.isVisible()){
+	if(0&& options.isVisible()){
 		if(!options.isWithinBounds(e.pageX, e.pageY))
 			options.toggleMenu();
 		return;
