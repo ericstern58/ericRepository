@@ -578,10 +578,10 @@ function isWithinPolygonToolBounds(x, y){
 function setupCSS()
 {
 	// Calculate variables used in css
-	var optionsMarginTop = canvasOffset.top + canvasHeight - $("#drawTools").offset().top;
+	var optionsMarginTop = canvasOffset.top + canvasHeight - $('#' + DRAW_TOOLS_ID).offset().top;
 	
 	var DTSheet = document.createElement('style');
-	DTSheet.id = 'drawToolsStyleSheet'; // Give id so destructor can find it if needed
+	DTSheet.id = DRAW_TOOLS_ID + 'StyleSheet'; // Give id so destructor can find it if needed
 	DTSheet.innerHTML = "\n\
 		/*These drawTools-btn-Icon are css only icons*/\n\
 		#drawTools-btn-icon-fill{margin:12px 5px 0px 21px;width:12px;height:12px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
@@ -655,7 +655,7 @@ function modifyExistingElements()
 		currentToolType = toolType.BRUSH;		// Update tool type
 		
 		// Visually unselect any other tools
-		var ele = document.getElementsByName("drawTools-btn-radio");
+		var ele = document.getElementsByName(DRAW_TOOLS_ID + "-btn-radio");
 		for(var i=0;i<ele.length;i++)
 			ele[i].checked = false;
 	}
@@ -708,26 +708,26 @@ function createToolButton(type, name)
 	//create button
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
-	button.id = 'drawTools-btn-' + name;
+	button.id = DRAW_TOOLS_ID + '-btn-' + name;
 	button.className = 'drawTools-btn';
 	button.onclick = function(){currentToolType=type;};
 	document.getElementById(DRAW_TOOLS_ID).appendChild(button);
 	
 	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
 	var radio = document.createElement('input');
-	radio.id = 'drawTools-btn-radio-' + name;
+	radio.id = DRAW_TOOLS_ID + '-btn-radio-' + name;
 	radio.setAttribute("type","radio");
-	radio.setAttribute("name","drawTools-btn-radio");
+	radio.setAttribute("name", (DRAW_TOOLS_ID + "-btn-radio"));
 	button.appendChild(radio);
 
 	//Create container div
 	var container = document.createElement('div');
-	container.className = 'drawTools-btn-container';
+	container.className = DRAW_TOOLS_ID + '-btn-container';
 	button.appendChild(container);
 	
 	// Create icon div
 	var icon = document.createElement('div');
-	icon.id = 'drawTools-btn-icon-' + name;
+	icon.id = DRAW_TOOLS_ID + '-btn-icon-' + name;
 	container.appendChild(icon);
 	
 	return button;
@@ -775,7 +775,7 @@ function DTDestroy()
 	// 1. Destroy HTML
 	document.getElementById(DRAW_TOOLS_ID).remove();
 	// 2. Destroy CSS
-	document.getElementById('drawToolsStyleSheet').remove();
+	document.getElementById(DRAW_TOOLS_ID + 'StyleSheet').remove();
 	// 3. Remove listeners (async)
 	$(document).off('mousedown');
 	$(document).off('mousemove');
