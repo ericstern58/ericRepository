@@ -146,7 +146,7 @@ createDrawToolsElements();	// Create Draw Tools Elements and Interface
 /*---------------------- Setup Listeners ----------------------*/
 
 // Setup Mousedown Listener
-DACanvas.off('touchstart ');
+DACanvas.off('touchstart');
 DACanvas.on('touchstart', function(e){
 	if(0 && $('#drawTools-options').css('opacity') == 1){
 		painting = !1;
