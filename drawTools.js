@@ -519,6 +519,8 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 			context.strokeStyle = "rgba(" + ((c>>16)&255) + "," + ((c>>8)&255) + "," + (c&255) + ",0.5)";
 			// Make the closing stroke
 			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
+			ctx.moveTo(pts[0],pts[1]);
+			ctx.closePath();
 			// And lastly, draw the knot points.
 			ctx.fillStyle = '#FFFFFF';
 			ctx.strokeStyle = '#000000';
