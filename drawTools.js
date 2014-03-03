@@ -1,38 +1,4 @@
-var DTOptionsClass = function (performance) {
-    this.mouseOnEventHappened = false;
-    
-    this.shapeFillEnabled = false;
-    this.shapeFillColor;
-};
-DTOptionsClass.prototype.getOffset = function () {
-    return  $("#drawTools-options").offset();
-};
-DTOptionsClass.prototype.toggleMenu = function () {
-	var h = 150;	// Height of the options div
-	var opacity = $('#drawTools-options').css('opacity');
-	
-	if(opacity == 0) {
-		$("#drawTools-options").stop(true, true).animate({
-			height: (h + "px"),
-			marginTop: ("-=" + h + "px"),
-			opacity: "1"
-		},300, "swing");
-	} else if(opacity == 1) {
-		$("#drawTools-options").stop(true, true).animate({
-			height: "0px",
-			marginTop: ("+=" + h + "px"),
-			opacity: "0"
-		},300, "swing");
-	}
-};
-DTOptionsClass.prototype.isWithinBounds = function (x, y) {
-    var x2 = x - $("#drawTools-options").offset().top;
-	var y2 = y - $("#drawTools-options").offset().left;
-	var width = $('#drawTools-options').width();
-	var height = $('#drawTools-options').height();
-	//outputDebug("[x:" + x2 + ", y:" + y2 + "]   [width:" + width + ", height:" + height + "]");
-	return (x2>=0 && y2>=0 && x2<width && y2<height);
-};
+
 
 var StopWatch = function (performance) {
     this.startTime = 0;
@@ -95,6 +61,43 @@ context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
 /*-----------------------------------------------------------------------------*/
+function DTOptionsClass(performance) {
+    this.mouseOnEventHappened = false;
+    
+    this.shapeFillEnabled = false;
+    this.shapeFillColor;
+    
+    this.getOffset = function () {
+	    return  $("#drawTools-options").offset();
+	};
+	this.toggleMenu = function () {
+		var h = 150;	// Height of the options div
+		var opacity = $('#drawTools-options').css('opacity');
+		
+		if(opacity == 0) {
+			$("#drawTools-options").stop(true, true).animate({
+				height: (h + "px"),
+				marginTop: ("-=" + h + "px"),
+				opacity: "1"
+			},300, "swing");
+		} else if(opacity == 1) {
+			$("#drawTools-options").stop(true, true).animate({
+				height: "0px",
+				marginTop: ("+=" + h + "px"),
+				opacity: "0"
+			},300, "swing");
+		}
+	};
+	this.isWithinBounds = function (x, y) {
+	    var x2 = x - $("#drawTools-options").offset().top;
+		var y2 = y - $("#drawTools-options").offset().left;
+		var width = $('#drawTools-options').width();
+		var height = $('#drawTools-options').height();
+		//outputDebug("[x:" + x2 + ", y:" + y2 + "]   [width:" + width + ", height:" + height + "]");
+		return (x2>=0 && y2>=0 && x2<width && y2<height);
+	};
+};
+
 // Point Object
 function Point(x, y) {
 	this.x = x;
@@ -462,6 +465,102 @@ function floodFill(e){
 	}
 }
 
+function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
+	var cp=[];   // array of control points, as x0,y0,x1,y1,...
+	var n=pts.length;
+	var isClosedSpline = (closed) ? 1 : 0;
+	// First check for some base cases
+	if(n == 0) {
+		return;
+	} else if(n == 4) {
+		// Draw Line
+		ctx.beginPath();
+		ctx.moveTo( pts[0], pts[1] );
+		ctx.lineTo( pts[2], pts[3]);
+		ctx.stroke();
+	}
+	// For closed spline: Append and prepend knots and control points to close the curve
+	if(isClosedSpline){
+		pts.push(pts[0],pts[1],pts[2],pts[3]);
+		pts.unshift(pts[n-1]);
+		pts.unshift(pts[n-1]);
+	}
+	// Find Control Points
+	for(var i=0, m = (n-4+(4*isClosedSpline));i<m;i+=2){
+		// Calculate Control Points
+		//  x0,y0,x1,y1 are the coordinates of the end (knot) pts of this segment
+		//  x2,y2 is the next knot -- not connected here but needed to calculate p2
+		//  p1 is the control point calculated here, from x1 back toward x0.
+		//  p2 is the next control point, calculated here and returned to become the 
+		//  next segment's p1.
+		//  t is the 'tension' which controls how far the control points spread.
+		//  Scaling factors: distances from this knot to the previous and following knots.
+		var x0=pts[i], y0=pts[i+1], x1=pts[i+2], y1=pts[i+3], x2=pts[i+4], y2=pts[i+5];
+		// Calculate intermediary values
+		var d01=Math.sqrt(Math.pow(x1-x0,2)+Math.pow(y1-y0,2));
+		var d12=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));
+		var fa=t*d01/(d01+d12);
+		var fb=t-fa;
+	  	// Calculate Control Points
+		var p1x=x1+fa*(x0-x2);
+		var p1y=y1+fa*(y0-y2);
+		var p2x=x1-fb*(x0-x2);
+		var p2y=y1-fb*(y0-y2);  
+		// Then add them to cp array
+		cp=cp.concat(p1x,p1y,p2x,p2y);
+	}
+	cp = (isClosedSpline) ? cp.concat(cp[0],cp[1]) : cp;
+	
+	ctx.beginPath();
+	ctx.lineJoin="round";
+	ctx.moveTo(pts[2],pts[3]);
+	for(var i=2;i<n+2;i+=2)
+		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
+	
+	if(isClosedSpline) {
+		ctx.moveTo(pts[0],pts[1]);
+		ctx.closePath();
+		ctx.fillStyle = '#8ED6FF';
+		ctx.fill();
+	} else { 
+		// For open curves the first and last arcs are simple quadratics.
+		ctx.moveTo(pts[0],pts[1]);
+		ctx.quadraticCurveTo(cp[0],cp[1],pts[2],pts[3]);
+		ctx.moveTo(pts[n-2],pts[n-1]);
+		ctx.quadraticCurveTo(cp[2*n-10],cp[2*n-9],pts[n-4],pts[n-3]);
+	}
+	ctx.stroke();
+	
+	if(editMode){   
+		ctx.save(); 
+		// Add distinguishing stroke to closing spline
+		if(isClosedSpline) {
+			// Determine wether to use dark or light stroke
+			var c = parseInt(context.strokeStyle.substr(1,6),16); // Get current stroke color
+			var c2 = (0.2126*((c>>16)&255)) + (0.7152*((c>>8)&255)) + (0.0722*(c&255)); // Get its 'lightness' level
+			ctx.strokeStyle = (c2 > 128) ? "#000000" : "#ffffff"; // If (colorIsLight) ? black : white
+			// Draw distinguishing stroke
+			ctx.beginPath();
+			ctx.lineWidth /= 2;
+			ctx.moveTo(pts[n],pts[n+1]);
+			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
+			ctx.stroke();
+		}
+		// Draw the knot points.
+		ctx.fillStyle = '#FFFFFF';
+		ctx.strokeStyle = '#000000';
+		ctx.lineWidth=3;
+		for(var i=(2*isClosedSpline), m = (n-2+(2*isClosedSpline));i<m;i+=2){
+			ctx.beginPath();
+			ctx.arc(pts[i],pts[i+1],2.5,2*Math.PI,false);
+			ctx.closePath();
+			ctx.stroke();
+			ctx.fill();
+		}
+		ctx.restore();
+	}
+}
+
   /*-----------------------------------------------------------------------------*/
  /*--------------------------- Auxiliary Functions -----------------------------*/
 /*-----------------------------------------------------------------------------*/
@@ -698,116 +797,4 @@ function pointsToArray(points) {
 	for(i = 0, l=points.length; i<l; i++)
 		arr.push(points[i].x, points[i].y);
 	return arr;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
-	var cp=[];   // array of control points, as x0,y0,x1,y1,...
-	var n=pts.length;
-	var isClosedSpline = (closed) ? 1 : 0;
-	
-	// First check for some base cases
-	if(n == 0) {
-		return;
-	} else if(n == 4) {
-		// Draw Line
-		ctx.beginPath();
-		ctx.moveTo( pts[0], pts[1] );
-		ctx.lineTo( pts[2], pts[3]);
-		ctx.stroke();
-	}
-	
-	
-	// For closed spline: Append and prepend knots and control points to close the curve
-	if(isClosedSpline){
-		pts.push(pts[0],pts[1],pts[2],pts[3]);
-		pts.unshift(pts[n-1]);
-		pts.unshift(pts[n-1]);
-	} 
-	
-	// Find Control Points
-	for(var i=0, m = (n-4+(4*isClosedSpline));i<m;i+=2){
-		// Calculate Control Points
-		//  x0,y0,x1,y1 are the coordinates of the end (knot) pts of this segment
-		//  x2,y2 is the next knot -- not connected here but needed to calculate p2
-		//  p1 is the control point calculated here, from x1 back toward x0.
-		//  p2 is the next control point, calculated here and returned to become the 
-		//  next segment's p1.
-		//  t is the 'tension' which controls how far the control points spread.
-		//  Scaling factors: distances from this knot to the previous and following knots.
-		var x0=pts[i], y0=pts[i+1], x1=pts[i+2], y1=pts[i+3], x2=pts[i+4], y2=pts[i+5];
-		// Calculate intermediary values
-		var d01=Math.sqrt(Math.pow(x1-x0,2)+Math.pow(y1-y0,2));
-		var d12=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));
-		var fa=t*d01/(d01+d12);
-		var fb=t-fa;
-	  	// Calculate Control Points
-		var p1x=x1+fa*(x0-x2);
-		var p1y=y1+fa*(y0-y2);
-		var p2x=x1-fb*(x0-x2);
-		var p2y=y1-fb*(y0-y2);  
-		// Then add them to cp array
-		cp=cp.concat(p1x,p1y,p2x,p2y);
-	}
-	cp = (isClosedSpline) ? cp.concat(cp[0],cp[1]) : cp;
-	
-	ctx.beginPath();
-	ctx.lineJoin="round";
-	ctx.moveTo(pts[2],pts[3]);
-	for(var i=2;i<n+2;i+=2)
-		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
-	
-	if(isClosedSpline) {
-		ctx.moveTo(pts[0],pts[1]);
-		ctx.closePath();
-		ctx.fillStyle = '#8ED6FF';
-		ctx.fill();
-	} else { 
-		//  For open curves the first and last arcs are simple quadratics.
-		ctx.moveTo(pts[0],pts[1]);
-		ctx.quadraticCurveTo(cp[0],cp[1],pts[2],pts[3]);
-
-		ctx.moveTo(pts[n-2],pts[n-1]);
-		ctx.quadraticCurveTo(cp[2*n-10],cp[2*n-9],pts[n-4],pts[n-3]);
-	}
-	ctx.stroke();
-	
-	if(editMode){   
-		ctx.save(); 
-		// Add distinguishing stroke to closing spline
-		if(isClosedSpline) {
-			// Determine wether to use dark or light stroke
-			var c = parseInt(context.strokeStyle.substr(1,6),16); // Get current stroke color
-			var c2 = (0.2126*((c>>16)&255)) + (0.7152*((c>>8)&255)) + (0.0722*(c&255)); // Get its 'lightness' level
-			ctx.strokeStyle = (c2 > 128) ? "#000000" : "#ffffff"; // If (colorIsLight) ? black : white
-			// Draw distinguishing stroke
-			ctx.beginPath();
-			ctx.lineWidth /= 2;
-			ctx.moveTo(pts[n],pts[n+1]);
-			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
-			ctx.stroke();
-		}
-		// Draw the knot points.
-		ctx.fillStyle = '#FFFFFF';
-		ctx.strokeStyle = '#000000';
-		ctx.lineWidth=3;
-		for(var i=(2*isClosedSpline), m = (n-2+(2*isClosedSpline));i<m;i+=2){
-			ctx.beginPath();
-			ctx.arc(pts[i],pts[i+1],2.5,2*Math.PI,false);
-			ctx.closePath();
-			ctx.stroke();
-			ctx.fill();
-		}
-		ctx.restore();
-	}
 }
