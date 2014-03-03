@@ -57,8 +57,8 @@ var DTOptionsClass = function (idNameString) {
 	this.shapeFillEnabled = false;
 	this.shapeFillColor = '#8ED6FF';
 	
-	this.lineToolsShouldClose = false;
-	this.lineToolsFillColor = '#8ED6FF';// '#8ED6FF';
+	this.lineToolsShouldClose = true;
+	this.lineToolsFillColor = '';// '#8ED6FF';
 };
 DTOptionsClass.prototype.getOffset = function () {
 	return $(this.idName).offset();
