@@ -173,14 +173,14 @@ DACanvas.on('mousedown', function(e){
 	var mouseY = e.pageY-canvasOffset.top;
 	
 	if(currentToolType === toolType.FILL) {
-		var stopwatch = new StopWatch();
-		stopwatch.start();
+		//var stopwatch = new StopWatch();
+		//stopwatch.start();
 		painting = !1;
 		try{
 			floodFill(e);
 		}catch(err){alert(err);}
-		stopwatch.stop();
-		stopwatch.printElapsed();
+		//stopwatch.stop();
+		//stopwatch.printElapsed();
 	} else if(currentToolType === toolType.LINE) {
 		painting = !1;
 		DTPoints[0] = {x: mouseX, y: mouseY};
@@ -250,6 +250,7 @@ $(document).on('mousemove', function(e){
 // Setup Mouseup Listener
 $(document).off('mouseup');
 $(document).on('mouseup', function(e){
+	outputDebug( options.isVisible().toString() );
 	if(0 && options.isVisible()){
 		if(!options.isWithinBounds(e.pageX, e.pageY))
 			options.toggleMenu();
