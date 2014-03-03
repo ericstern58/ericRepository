@@ -152,8 +152,8 @@ createDrawToolsElements();	// Create Draw Tools Elements and Interface
 /*---------------------- Setup Listeners ----------------------*/
 
 // Setup Mousedown Listener
-DACanvas.off('pointerdown');
-DACanvas.on('pointerdown', function(e){
+DACanvas.off('mousedown');
+DACanvas.on('mousedown', function(e){
 	if(0 && $('#drawTools-options').css('opacity') == 1){
 		painting = !1;
 		restoreCanvas();
@@ -194,8 +194,8 @@ DACanvas.on('pointerdown', function(e){
 	}
 });
 // Setup Mousemove Listener
-$(document).off('pointermove');
-$(document).on('pointermove', function(e){
+$(document).off('mousemove');
+$(document).on('mousemove', function(e){
  	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
 	if(currentToolType === toolType.BRUSH)
 		return;	// default behaviors
@@ -243,8 +243,8 @@ $(document).on('pointermove', function(e){
 	}
 });
 // Setup Mouseup Listener
-$(document).off('pointerup');
-$(document).on('pointerup', function(e){
+$(document).off('mouseup');
+$(document).on('mouseup', function(e){
 	if(0 && $('#drawTools-options').css('opacity') == 1){
 		if(!options.isWithinBounds(e.pageX, e.pageY))
 			options.toggleMenu();
