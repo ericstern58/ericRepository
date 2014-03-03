@@ -442,7 +442,7 @@ function drawLineChain(ctx,pts,editMode,closeShape,closedFillColorHex)
 	ctx.lineJoin="round";
 	ctx.beginPath();
 	ctx.moveTo( pts[0], pts[1] );
-	for(var i=1;i<pts.length;i+=2)
+	for(var i=2;i<pts.length;i+=2)
 		ctx.lineTo( pts[i], pts[i+1] );
 	if(closeShape) {
 		if(editMode) {
