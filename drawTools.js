@@ -513,8 +513,8 @@ function drawSpline(ctx,pts,t,editMode,closed,closedFillColorHex){
 	
 	if(isClosedSpline) {
 		if(editMode) {
-			ctx.stroke(); // Stroke all lines previous to this one
 			ctx.save();
+			ctx.stroke(); // Stroke all lines previous to this one
 			// Get current stroke color and set it to .5 opacity
 			var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 			ctx.strokeStyle = "rgba(" + ((c>>16)&255) + "," + ((c>>8)&255) + "," + (c&255) + ",0.5)";
