@@ -429,7 +429,7 @@ function floodFill(e){
 		return new RGBColor(d[i],d[i+1],d[i+2]);
 	}
 }
-function drawLineChain(ctx,pts,editMode,closed,closedFillColorHex)
+function drawLineChain(ctx,pts,editMode,closeShape,closedFillColorHex)
 {
 	ctx.save();
 	ctx.lineJoin="round";
@@ -437,11 +437,13 @@ function drawLineChain(ctx,pts,editMode,closed,closedFillColorHex)
 	ctx.moveTo( pts[0].x, pts[0].y );
 	for(var i=1;i<pts.length;i++)
 		ctx.lineTo( pts[i].x, pts[i].y );
-	if(closed) {
+	if(closeShape) {
 		if(editMode) {
-			ctx.stroke();
-			var c = parseInt(context.strokeStyle.substr(1,6),16); // Get current stroke color
+			ctx.stroke(); // Stroke all lines previous to this one
+			// Get current stroke color and set it to .5 opacity
+			var c = parseInt(context.strokeStyle.substr(1,6),16);
 			context.strokeStyle = "rgba(" + ((c>>16)&255) + "," + ((c>>8)&255) + "," + (c&255) + ",0.5)";
+			// Make the closing stroke
 			ctx.moveTo( pts[pts.length-1].x, pts[pts.length-1].y );
 			ctx.lineTo( pts[0].x, pts[0].y );
 		} else {
