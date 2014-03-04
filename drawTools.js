@@ -53,8 +53,8 @@ context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
 var DTOptionsClass = function (idNameString) {
 	this.idName = idNameString;
 	
-	// Shape Options
-	//fillDefault = false;
+	// Fill Options
+	this.useStrokeAsFill = false;
 	this.fillColor = ''; // Will be null if no fill for shapes
 	
 	this.lineToolsShouldClose = false;
@@ -810,8 +810,38 @@ function createOptionsMenu(drawToolsDiv)
 	drawToolsDiv.appendChild(optionsDiv);
 	
 	var colorElements = document.getElementsByClassName(colorPicker);
-	//<input type="radio" id="radio1" name="drawTools-options-palette-radios" checked>
-	//<label class="drawTools-options-colorBox" for="radio1">1</label>
+	//var paletteArray new Array();
+	var optionsPaletteHtml = "";
+	
+	//<input id='radio1' type='radio' name='drawTools-options-palette-radios' checked>
+	//<label for='radio1' class='drawTools-options-colorBox'></label>
+	
+	optionsPaletteHtml += 
+		"<input id='drawtools-options-radio-none' type='radio' name='drawTools-options-palette-radio' checked>\
+		<label for='drawtools-options-radio-none" + i + "' onclick='setOptionsColor('');'></label>";
+	optionsPaletteHtml += 
+		"<input id='drawtools-options-radio-normalfill' type='radio' name='drawTools-options-palette-radio' checked>\
+		<label for='drawtools-options-radio-normalfill" + i + "' onclick='setOptionsColor('',1);'></label>";
+	
+	for(var i=0;i<colorElements.length;i++) {
+		//paletteArray.push(hexColorElements[i].getAttribute("data-color"));
+		var color = hexColorElements[i].getAttribute("data-color");
+		optionsPaletteHtml += 
+			"<input id='drawtools-options-radio-" + i + "' type='radio' name='drawTools-options-palette-radio'>\
+			<label for='drawtools-options-radio-" + i + "' onclick='setOptionsColor(" + color + ");'></label>";
+	}
+	var paletteDiv = document.getElementById('drawTools-options-palette');
+	paletteDiv.innerHTML = optionsPaletteHtml;
+	
+	
+	function setOptionsColor(color,default) {
+		if(default) {
+			useStrokeAsFill = true;
+			options.fillColor = '';
+		} else {
+			options.fillColor = color;
+		}
+	}
 }
 
 // Destroys all elements, styling and javascript
