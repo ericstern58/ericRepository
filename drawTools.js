@@ -668,7 +668,7 @@ function setupCSS()
 		\n\
 		#drawTools-options-palette input{display:none !important;}\n\
 		#drawTools-options-palette input:checked + label{border:2px solid #c2c2c2;}\n\
-		#drawTools-options-palette label{background:blue;width:36px;height:36px;line-height:2.428571429;border:2px solid #252525;position:relative;float:left;display:inline-block;}\n\
+		#drawTools-options-palette label{width:36px;height:36px;line-height:2.428571429;border:2px solid #252525;position:relative;float:left;display:inline-block;margin=0;padding=0;}\n\
 		#drawTools-options-palette label:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\
 		#drawTools-options-palette label:hover,#drawTools-options-palette label:focus,#drawTools-options-palette label:active{border:2px solid red;}\n\
 		\n\
