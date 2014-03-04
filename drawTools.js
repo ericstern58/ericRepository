@@ -666,7 +666,7 @@ function setupCSS()
 		#drawTools-options-leftPanel{border:1px solid green;width:150px;height:100%;position:absolute;left:0px;}\n\
 		#drawTools-options-palette{border:1px solid white;width:240px;height:100%;position:absolute;right:0px;}\n\
 		\n\
-		#drawTools-options-palette input[type='radio']{display:none;}\n\
+		#drawTools-options-palette input{display:none;}\n\
 		#drawTools-options-palette input:checked + label{border:2px solid #c2c2c2;}\n\
 		#drawTools-options-palette label{background:blue;width:36px;height:36px;line-height:2.428571429;border:2px solid #252525;position:relative;float:left;display:inline-block;}\n\
 		#drawTools-options-palette label:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\
