@@ -54,7 +54,8 @@ var DTOptionsClass = function (idNameString) {
 	this.idName = idNameString;
 	
 	// Shape Options
-	this.shapeFillColor = ''; // Will be null if no fill for shapes
+	//fillDefault = false;
+	this.fillColor = ''; // Will be null if no fill for shapes
 	
 	this.lineToolsShouldClose = false;
 	this.lineToolsFillColor = '';// '#8ED6FF';
@@ -63,7 +64,7 @@ DTOptionsClass.prototype.getOffset = function () {
 	return $(this.idName).offset();
 };
 DTOptionsClass.prototype.toggleMenu = function () {
-	var h = 150;	// Height of the options div
+	var h = 175;	// Height of the options div
 	var opacity = $(this.idName).css('opacity');
 	
 	if(opacity == 0) {
@@ -222,12 +223,12 @@ $(document).on('mousemove', function(e){
 	} else if(currentToolType === toolType.RECT) {
 		restoreCanvas();
 		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
-		drawRect(context,pointsToArray(DTPoints),options.shapeFillColor);
+		drawRect(context,pointsToArray(DTPoints),options.fillColor);
 		DTPoints.length = DTPoints.length - 1;
 	} else if(currentToolType === toolType.ELLIPSE) {
 		restoreCanvas();
 		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
-		drawEllipse(context,pointsToArray(DTPoints),options.shapeFillColor);
+		drawEllipse(context,pointsToArray(DTPoints),options.fillColor);
 		DTPoints.length = DTPoints.length - 1;
 	}
 });
@@ -285,11 +286,11 @@ $(document).on('mouseup', function(e){
 	} else if(currentToolType === toolType.RECT) {
 		restoreCanvas();
 		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
-		drawRect(context,pointsToArray(DTPoints),options.shapeFillColor);
+		drawRect(context,pointsToArray(DTPoints),options.fillColor);
 	} else if(currentToolType === toolType.ELLIPSE) {
 		restoreCanvas();
 		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
-		drawEllipse(context,pointsToArray(DTPoints),options.shapeFillColor);
+		drawEllipse(context,pointsToArray(DTPoints),options.fillColor);
 	}
 	DTPoints.length = 0;
 	toolInUse = false;
@@ -660,7 +661,7 @@ function setupCSS()
 		#drawTools-btn-exit .drawTools-btn-container:hover,#drawTools-btn-exit .drawTools-btn:focus{background-color:#b90c0c;border-bottom:1px solid #980909;}\n\
 		#drawTools-btn-exit .drawTools-btn-container:active{background-color:#a50000;border-bottom:1px solid #a50000;}\n\
 		\n\
-		#drawTools-options{margin-top:"+optionsMarginTop+"px;background:#252525;border-bottom:1px solid #171717;width:300px;height:0px;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
+		#drawTools-options{margin-top:"+optionsMarginTop+"px;background:#252525;border-bottom:1px solid #171717;width:420px;height:175px;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
 		#drawTools-options-content{border:1px solid #ffffff;position:absolute;top:8px;left:8px;right:8px;bottom:8px;}\n\
 		\n\
 		";
