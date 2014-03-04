@@ -826,8 +826,9 @@ function createOptionsMenu(drawToolsDiv)
 			<label for='drawtools-options-radio-" + i + "' onclick=setOptionsColor(" + color + " style='background:" + color + ";');></label>";
 	}
 	var paletteDiv = document.getElementById('drawTools-options-palette');
-	//paletteDiv.innerHTML = optionsPaletteHtml;
+	paletteDiv.innerHTML = optionsPaletteHtml;
 	}catch(err){alert(err);}
+	
 	
 }
 function setOptionsColor(color,normalfill) {
