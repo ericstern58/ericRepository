@@ -815,12 +815,12 @@ function createOptionsMenu(drawToolsDiv)
 	optionsPaletteHtml += 
 		'<label for="drawtools-options-radio-none" onclick=setOptionsColor(""); style="width:120px;">\
 			<input id="drawtools-options-radio-none" type="radio" name="drawTools-options-palette-radio" checked>\
-			<div style="width:116px;color:#c2c2c2";>None</div>\
+			<div style="width:120px;color:#c2c2c2";>None</div>\
 		</label>';
 	optionsPaletteHtml += 
 		'<label for="drawtools-options-radio-normalfill" onclick=setOptionsColor("",1); style="width:120px;">\
 			<input id="drawtools-options-radio-normalfill" type="radio" name="drawTools-options-palette-radio">\
-			<div style="width:116px;color:#c2c2c2;">Brush Color</div>\
+			<div style="width:120px;color:#c2c2c2;">Brush Color</div>\
 		</label>';
 	
 	for(var i=0;i<colorElements.length;i++) {
