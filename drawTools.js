@@ -822,8 +822,8 @@ function createOptionsMenu(drawToolsDiv)
 		//paletteArray.push(hexColorElements[i].getAttribute("data-color"));
 		var color = colorElements[i].getAttribute("data-color");
 		optionsPaletteHtml += 
-			"<input id='drawtools-options-radio-" + i + "' type='radio' name='drawTools-options-palette-radio'>\
-			<label for='drawtools-options-radio-" + i + "' onclick=setOptionsColor(" + color + " style='background:" + color + ";');></label>";
+			'<input id="drawtools-options-radio-' + i + '" type="radio" name="drawTools-options-palette-radio">\
+			<label for="drawtools-options-radio-' + i + '" onclick=setOptionsColor(' + color + '); style="background:' + color + ';"></label>';
 	}
 	var paletteDiv = document.getElementById('drawTools-options-palette');
 	paletteDiv.innerHTML = optionsPaletteHtml;
