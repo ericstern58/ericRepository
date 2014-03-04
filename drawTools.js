@@ -807,7 +807,7 @@ function createOptionsMenu(drawToolsDiv)
 			<div id='drawTools-options-palette'></div>\
 		</div>";
 	drawToolsDiv.appendChild(optionsDiv);
-	/*	
+	try{
 	var colorElements = document.getElementsByClassName(colorPicker);
 	var optionsPaletteHtml = "";
 	
@@ -827,7 +827,7 @@ function createOptionsMenu(drawToolsDiv)
 	}
 	var paletteDiv = document.getElementById('drawTools-options-palette');
 	//paletteDiv.innerHTML = optionsPaletteHtml;
-	*/
+	}catch(err){alert(err);}
 	
 }
 function setOptionsColor(color,normalfill) {
