@@ -666,15 +666,15 @@ function setupCSS()
 		#drawTools-options-leftPanel{border:1px solid green;width:150px;height:100%;position:absolute;left:0px;}\n\
 		#drawTools-options-palette{border:1px solid white;width:240px;height:100%;position:absolute;right:0px;}\n\
 		\n\
-		#drawTools-options-paletted input{display:none !important;visibility:hidden !important;margin:0px;padding:0px;}\n\
-		#drawTools-options-palette input:checked + label{border:2px solid #c2c2c2;}\n\
-		#drawTools-options-palette label{width:36px;height:36px;line-height:2.428571429;border:2px solid #252525;float:left;margin=0;padding=0;}\n\
-		#drawTools-options-palette label:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\
-		#drawTools-options-palette label:hover,#drawTools-options-palette div:focus,#drawTools-options-palette div:active{border:2px solid red;}\n\
+		#drawTools-options-palette label{width:40px;height:40px;float:left;margin=0;padding=0;}\n\
+		#drawTools-options-palette input{display:none;visibility:hidden;margin:0px;padding:0px;}\n\
+		#drawTools-options-palette input:checked + div{border:2px solid #c2c2c2;}\n\
+		#drawTools-options-palette div{width:36px;height:36px;line-height:2.428571429;border:2px solid #252525;margin=0;padding=0;}\n\
+		#drawTools-options-palette div:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\
+		#drawTools-options-palette div:hover,#drawTools-options-palette div:focus,#drawTools-options-palette div:active{border:2px solid red;}\n\
 		\n\
-		.drawTools-buttonText,#drawTools-options-palette label{font-size:14px;font-weight:normal;text-align:center;vertical-align:middle;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}\n\
+		.drawTools-buttonText,#drawTools-options-palette div{font-size:14px;font-weight:normal;text-align:center;vertical-align:middle;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}\n\
 		\n\
-		.drawTools-options-palette-input{display:none !important;visibility:hidden !important;margin:0px;padding:0px;}\n\
 		";
 	document.body.appendChild(DTSheet);
 }
@@ -813,18 +813,24 @@ function createOptionsMenu(drawToolsDiv)
 	var optionsPaletteHtml = "";
 	
 	optionsPaletteHtml += 
-		'<input id="drawtools-options-radio-none" type="radio" name="drawTools-options-palette-radio" checked>\
-		<label for="drawtools-options-radio-none" onclick=setOptionsColor(""); style="width:116px;color:#c2c2c2;">None</label>';
+		'<label for="drawtools-options-radio-none" onclick=setOptionsColor(""); style="width:120px;">\
+			<input id="drawtools-options-radio-none" type="radio" name="drawTools-options-palette-radio" checked>\
+			<div style="width:116px;color:#c2c2c2;>None</div>\
+		</label>';
 	optionsPaletteHtml += 
-		'<input id="drawtools-options-radio-normalfill" type="radio" name="drawTools-options-palette-radio">\
-		<label for="drawtools-options-radio-normalfill" onclick=setOptionsColor("",1); style="width:116px;color:#c2c2c2;">Brush Color</label>';
+		'<label for="drawtools-options-radio-normalfill" onclick=setOptionsColor("",1); style="width:120px;">\
+			<input id="drawtools-options-radio-normalfill" type="radio" name="drawTools-options-palette-radio">\
+			<div style="width:116px;color:#c2c2c2;>Brush Color</div>\
+		</label>';
 	
 	for(var i=0;i<colorElements.length;i++) {
 		//paletteArray.push(hexColorElements[i].getAttribute("data-color"));
 		var color = colorElements[i].getAttribute("data-color");
 		optionsPaletteHtml += 
-			'<input id="drawtools-options-radio-' + i + '" class="drawTools-options-palette-input" type="radio" name="drawTools-options-palette-radio">\
-			<label for="drawtools-options-radio-' + i + '" onclick=setOptionsColor("' + color + '"); style="background:' + color + ';"></label>';
+			'<label for="drawtools-options-radio-' + i + '" onclick=setOptionsColor("' + color + '");">\
+				<input id="drawtools-options-radio-' + i + '" type="radio" name="drawTools-options-palette-radio">\
+				<div style="background:' + color + ';></div>\
+			</label>';
 	}
 	var paletteDiv = document.getElementById('drawTools-options-palette');
 	paletteDiv.innerHTML = optionsPaletteHtml;
