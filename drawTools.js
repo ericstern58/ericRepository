@@ -223,7 +223,7 @@ $(document).on('mousemove', function(e){
 		}
 	} else if(currentToolType === toolType.RECT) {
 		restoreCanvas();
-		drawRect(context,DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
+		drawRect(context,DTPoints[0].x,DTPoints[0].y,mouseX,mouseY,options.shapeFillColor);
 	} else if(currentToolType === toolType.ELLIPSE) {
 		restoreCanvas();
 		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
@@ -286,7 +286,7 @@ $(document).on('mouseup', function(e){
 		}
 	} else if(currentToolType === toolType.RECT) {
 		restoreCanvas();
-		drawRect(context,DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
+		drawRect(context,DTPoints[0].x,DTPoints[0].y,mouseX,mouseY,options.shapeFillColor);
 	} else if(currentToolType === toolType.ELLIPSE) {
 		restoreCanvas();
 		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
@@ -311,13 +311,21 @@ function drawLine(ctx,startX,startY,finishX,finishY)
 	ctx.lineTo( finishX, finishY);
 	ctx.stroke();
 }
-function drawRect(ctx,startX,startY,finishX,finishY)
+function drawRect(ctx,startX,startY,finishX,finishY,fillColorHex)
 {
-	//**************************************************************************************
-	//                FIX THIS           -<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<
-	//***********************************************************************************************************/
-	var pts = new Array(startX,startY,finishX,finishY);
-	drawLineChain(ctx,pts,false,true,options.shapeFillColor);
+	//var pts = new Array(startX,startY,finishX,finishY);
+	//drawLineChain(ctx,pts,false,true,options.shapeFillColor);
+	
+	ctx.save();
+	ctx.lineJoin="round";
+	ctx.rect(startX,startY,finishX-startX,finishY-startY);
+	if(fillColorHex) {
+		ctx.fillStyle = fillColorHex;
+		ctx.fill();
+	}
+	ctx.stroke(); 
+	ctx.restore();
+	
 }
 function drawEllipse(ctx,pts,fillColorHex){
 	var x = pts[0],
