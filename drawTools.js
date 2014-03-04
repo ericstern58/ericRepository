@@ -54,7 +54,7 @@ var DTOptionsClass = function (idNameString) {
 	this.idName = idNameString;
 	
 	// Shape Options
-	this.shapeFillColor = '#8ED6FF'; // Will be null if no fill for shapes
+	this.shapeFillColor = ''; // Will be null if no fill for shapes
 	
 	this.lineToolsShouldClose = true;
 	this.lineToolsFillColor = '';// '#8ED6FF';
