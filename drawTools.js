@@ -108,7 +108,7 @@ RGBColor.prototype.setOpacity = function(alpha) {
 	
 };
 // Tool type enum
-var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,POLY:7,UTIL:99};
+var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99};
 
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
@@ -183,9 +183,7 @@ DACanvas.on('mousedown', function(e){
 	} else if(currentToolType === toolType.ELLIPSE) {
 		painting = !1;
 		DTPoints[0] = {x: mouseX, y: mouseY};
-	} else if(currentToolType === toolType.POLY) {
-		
-	}
+	} 
 });
 // Setup Mousemove Listener
 $(document).off('mousemove');
@@ -231,8 +229,6 @@ $(document).on('mousemove', function(e){
 		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 		drawEllipse(context,pointsToArray(DTPoints),options.shapeFillColor);
 		DTPoints.length = DTPoints.length - 1;
-	} else if(currentToolType === toolType.POLY) {
-		
 	}
 });
 // Setup Mouseup Listener
@@ -294,8 +290,6 @@ $(document).on('mouseup', function(e){
 		restoreCanvas();
 		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 		drawEllipse(context,pointsToArray(DTPoints),options.shapeFillColor);
-	} else if(currentToolType === toolType.POLY) {
-
 	}
 	DTPoints.length = 0;
 	toolInUse = false;
@@ -625,8 +619,6 @@ function setupCSS()
 		#drawTools-btn-icon-fill{margin:12px 5px 0px 21px;width:12px;height:12px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
 		#drawTools-btn-icon-fill:before{border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;content:'';}\n\
 		#drawTools-btn-icon-line{margin:8px 16px 0px 17px;width:5px;height:15px;background:black;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
-		#drawTools-btn-icon-poly{margin:16px 9px 0px 9px;width:20px;border-width:8px 4px 0;border-style:solid;border-color:black transparent;}\n\
-		#drawTools-btn-icon-poly:before{margin:-17px 0px 0px -4px;content:'';display:block;border-width:0 10px 9px;border-style:solid;border-color:transparent transparent black;}\n\
 		#drawTools-btn-icon-rect{margin:8px 8px 0px 8px;width:22px;height:15px;background:black;}\n\
 		#drawTools-btn-icon-ellipse{margin:8px 8px 0px 8px;width:22px;height:15px;background:black;-moz-border-radius:11px/8px;-webkit-border-radius:11px/8px;border-radius:11px/8px;}\n\
 		#drawTools-btn-icon-exit{margin:6px 16px 0px 16px;width:5px;height:21px;background:#c2c2c2;-webkit-transform:skew(43deg);-moz-transform:skew(43deg);-o-transform:skew(43deg);transform:skew(43deg);}\n\
@@ -718,7 +710,6 @@ function createDrawToolsElements()
 	createToolButton(toolType.CURVE,"curve");
 	createToolButton(toolType.RECT,"rect");
 	createToolButton(toolType.ELLIPSE,"ellipse");
-	createToolButton(toolType.POLY,"poly");
 	
 	debugLabel = createToolButtonWithLabel(toolType.UTIL,"label", '0');
 	
