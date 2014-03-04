@@ -793,13 +793,14 @@ function createOptionsMenu(drawToolsDiv)
 	//Create DIV in which Options will be placed in
 	var optionsDiv = document.createElement('div');
 	optionsDiv.id = DRAW_TOOLS_ID + '-options';
+	optionsDiv.innerHTML = "\
+		<div id='drawTools-options-content'>\
+			<div id='drawTools-options-leftPanel'></div>\
+			<div id='drawTools-options-palette'></div>\
+		</div>";
 	drawToolsDiv.appendChild(optionsDiv);
 	
-	//Create DIV in which Options Content will be placed in
-	var optionsDivContent = document.createElement('div');
-	optionsDivContent.id = DRAW_TOOLS_ID + '-options-content';
-	optionsDivContent.innerHTML = "<br><br><br><br>HELLO<br>";
-	optionsDiv.appendChild(optionsDivContent);
+	
 }
 
 // Destroys all elements, styling and javascript
