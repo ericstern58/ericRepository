@@ -812,17 +812,17 @@ function createOptionsMenu(drawToolsDiv)
 	var optionsPaletteHtml = "";
 	
 	optionsPaletteHtml += 
-		'<input id="drawtools-options-radio-none" type="radio" name="drawTools-options-palette-radio" checked>\
+		'<input id="drawtools-options-radio-none" type="radio" name="drawTools-options-palette-radio" style="display:none;" checked>\
 		<label for="drawtools-options-radio-none" onclick=setOptionsColor(""); style="width:116px;color:#c2c2c2;">None</label>';
 	optionsPaletteHtml += 
-		'<input id="drawtools-options-radio-normalfill" type="radio" name="drawTools-options-palette-radio">\
+		'<input id="drawtools-options-radio-normalfill" type="radio" name="drawTools-options-palette-radio" style="display:none;">\
 		<label for="drawtools-options-radio-normalfill" onclick=setOptionsColor("",1); style="width:116px;color:#c2c2c2;">Brush Color</label>';
 	
 	for(var i=0;i<colorElements.length;i++) {
 		//paletteArray.push(hexColorElements[i].getAttribute("data-color"));
 		var color = colorElements[i].getAttribute("data-color");
 		optionsPaletteHtml += 
-			'<input id="drawtools-options-radio-' + i + '" type="radio" name="drawTools-options-palette-radio">\
+			'<input id="drawtools-options-radio-' + i + '" type="radio" name="drawTools-options-palette-radio" style="display:none;">\
 			<label for="drawtools-options-radio-' + i + '" onclick=setOptionsColor("' + color + '"); style="background:' + color + ';"></label>';
 	}
 	var paletteDiv = document.getElementById('drawTools-options-palette');
