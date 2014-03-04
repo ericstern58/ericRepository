@@ -808,7 +808,7 @@ function createOptionsMenu(drawToolsDiv)
 		</div>";
 	drawToolsDiv.appendChild(optionsDiv);
 	try{
-	var colorElements = document.getElementsByClassName(colorPicker);
+	var colorElements = document.getElementsByClassName('colorPicker');
 	var optionsPaletteHtml = "";
 	
 	optionsPaletteHtml += 
