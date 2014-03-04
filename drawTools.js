@@ -316,7 +316,7 @@ function drawLine(ctx,startX,startY,finishX,finishY)
 function drawRect(ctx,pts,fillColorHex)
 {
 	//var pts = new Array(startX,startY,finishX,finishY);
-	drawLineChain(ctx,pts,false,true,fillColorHex);
+	//drawLineChain(ctx,pts,false,true,fillColorHex);
 	/*
 	ctx.save();
 	ctx.lineJoin="round";
@@ -328,7 +328,20 @@ function drawRect(ctx,pts,fillColorHex)
 	ctx.stroke(); 
 	ctx.restore();
 	*/
-	
+	ctx.save();
+	ctx.lineJoin="round";
+	ctx.beginPath();
+	ctx.moveTo( startX, startY );
+	ctx.lineTo( finishX, startY);
+	ctx.lineTo( finishX, finishY);
+	ctx.lineTo( finishX, startY);
+	ctx.closePath();
+	if(fillColorHex) {
+		ctx.fillStyle = fillColorHex;
+		ctx.fill();
+	}
+	ctx.stroke();
+	ctx.restore();
 }
 function drawEllipse(ctx,pts,fillColorHex){
 	var x = pts[0],
