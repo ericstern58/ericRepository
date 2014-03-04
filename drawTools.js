@@ -822,7 +822,7 @@ function createOptionsMenu(drawToolsDiv)
 		//paletteArray.push(hexColorElements[i].getAttribute("data-color"));
 		var color = colorElements[i].getAttribute("data-color");
 		optionsPaletteHtml += 
-			'<input id="drawtools-options-radio-' + i + '" type="radio" name="drawTools-options-palette-radio" style="display:none;">\
+			'<input id="drawtools-options-radio-' + i + '" class="hidden" type="radio" name="drawTools-options-palette-radio" style="display:none;">\
 			<label for="drawtools-options-radio-' + i + '" onclick=setOptionsColor("' + color + '"); style="background:' + color + ';"></label>';
 	}
 	var paletteDiv = document.getElementById('drawTools-options-palette');
