@@ -666,7 +666,7 @@ function setupCSS()
 		#drawTools-options-leftPanel{border:1px solid green;width:150px;height:100%;position:absolute;left:0px;}\n\
 		#drawTools-options-palette{border:1px solid white;width:240px;height:100%;position:absolute;right:0px;}\n\
 		\n\
-		#drawTools-options-palette input{display:none;outline-style:none;outline-offset:0;margin:0px;padding:0px;}\n\
+		#drawTools-options-palette input{display:none !important;outline-style:none;outline-offset:0;margin:0px;padding:0px;}\n\
 		#drawTools-options-palette input:checked + label{border:2px solid #c2c2c2;}\n\
 		#drawTools-options-palette label{width:36px;height:36px;line-height:2.428571429;border:2px solid #252525;float:left;margin=0;padding=0;}\n\
 		#drawTools-options-palette label:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\
@@ -813,10 +813,10 @@ function createOptionsMenu(drawToolsDiv)
 	
 	optionsPaletteHtml += 
 		'<input id="drawtools-options-radio-none" type="radio" name="drawTools-options-palette-radio" checked>\
-		<label for="drawtools-options-radio-none' + i + '" onclick=setOptionsColor(""); style="width:116px;"></label>';
+		<label for="drawtools-options-radio-none" onclick=setOptionsColor(""); style="width:116px;">None</label>';
 	optionsPaletteHtml += 
 		'<input id="drawtools-options-radio-normalfill" type="radio" name="drawTools-options-palette-radio">\
-		<label for="drawtools-options-radio-normalfill' + i + '" onclick=setOptionsColor("",1); style="width:116px;"></label>';
+		<label for="drawtools-options-radio-normalfill" onclick=setOptionsColor("",1); style="width:116px;">Brush Color</label>';
 	
 	for(var i=0;i<colorElements.length;i++) {
 		//paletteArray.push(hexColorElements[i].getAttribute("data-color"));
