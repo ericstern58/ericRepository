@@ -813,7 +813,7 @@ function createOptionsMenu(drawToolsDiv)
 	
 	optionsPaletteHtml += 
 		"<input id='drawtools-options-radio-none' type='radio' name='drawTools-options-palette-radio' checked>\
-		<label for='drawtools-options-radio-none" + i + "' onclick=setOptionsColor('');></label>";
+		<label for='drawtools-options-radio-none" + i + "' onclick=setOptionsColor('');>None</label>";
 	optionsPaletteHtml += 
 		"<input id='drawtools-options-radio-normalfill' type='radio' name='drawTools-options-palette-radio'>\
 		<label for='drawtools-options-radio-normalfill" + i + "' onclick=setOptionsColor('',1);></label>";
@@ -823,7 +823,7 @@ function createOptionsMenu(drawToolsDiv)
 		var color = colorElements[i].getAttribute("data-color");
 		optionsPaletteHtml += 
 			"<input id='drawtools-options-radio-" + i + "' type='radio' name='drawTools-options-palette-radio'>\
-			<label for='drawtools-options-radio-" + i + "' onclick=setOptionsColor(" + color + ");></label>";
+			<label for='drawtools-options-radio-" + i + "' onclick=setOptionsColor(" + color + " style='background:" + color + ";');></label>";
 	}
 	var paletteDiv = document.getElementById('drawTools-options-palette');
 	//paletteDiv.innerHTML = optionsPaletteHtml;
