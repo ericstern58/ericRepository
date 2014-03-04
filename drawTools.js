@@ -666,10 +666,10 @@ function setupCSS()
 		#drawTools-options-leftPanel{border:1px solid green;width:150px;height:100%;position:absolute;left:0px;}\n\
 		#drawTools-options-palette{width:240px;height:100%;position:absolute;right:0px;}\n\
 		\n\
-		#drawTools-options-palette label{border:1px solid green;width:40px;height:40px;float:left;overflow:hidden;margin=0;padding=0;}\n\
+		#drawTools-options-palette label{border:1px solid green;width:40px;height:40px;float:left;overflow:hidden;margin=0 0 -5px 0;padding=0;}\n\
 		#drawTools-options-palette input{display:none;visibility:hidden;margin:0px;padding:0px;}\n\
 		#drawTools-options-palette input:checked + div{border:2px solid #c2c2c2;}\n\
-		#drawTools-options-palette div{width:40px;height:40px;border:2px solid #252525;margin=0;padding=0;}\n\
+		#drawTools-options-palette div{width:40px;height:40px;border:2px solid #252525;margin=0;padding=0;line-height:2.428571429;}\n\
 		#drawTools-options-palette div:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\
 		#drawTools-options-palette div:hover,#drawTools-options-palette div:focus,#drawTools-options-palette div:active{border:2px solid red;}\n\
 		\n\
