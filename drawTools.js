@@ -288,7 +288,8 @@ $(document).on('mouseup', function(e){
 		}
 	} else if(currentToolType === toolType.RECT) {
 		restoreCanvas();
-		drawRect(context,DTPoints[0].x,DTPoints[0].y,mouseX,mouseY,options.shapeFillColor);
+		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
+		drawRect(context,pointsToArray(DTPoints),options.shapeFillColor);
 	} else if(currentToolType === toolType.ELLIPSE) {
 		restoreCanvas();
 		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
@@ -331,10 +332,10 @@ function drawRect(ctx,pts,fillColorHex)
 	ctx.save();
 	ctx.lineJoin="round";
 	ctx.beginPath();
-	ctx.moveTo( startX, startY );
-	ctx.lineTo( finishX, startY);
-	ctx.lineTo( finishX, finishY);
-	ctx.lineTo( finishX, startY);
+	ctx.moveTo( pts[0], pts[1] );
+	ctx.lineTo( pts[2], pts[1]);
+	ctx.lineTo( pts[2], pts[3]);
+	ctx.lineTo( pts[0], pts[3]);
 	ctx.closePath();
 	if(fillColorHex) {
 		ctx.fillStyle = fillColorHex;
