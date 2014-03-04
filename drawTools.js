@@ -56,7 +56,7 @@ var DTOptionsClass = function (idNameString) {
 	// Shape Options
 	this.shapeFillColor = ''; // Will be null if no fill for shapes
 	
-	this.lineToolsShouldClose = true;
+	this.lineToolsShouldClose = false;
 	this.lineToolsFillColor = '';// '#8ED6FF';
 };
 DTOptionsClass.prototype.getOffset = function () {
