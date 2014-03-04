@@ -670,7 +670,7 @@ function setupCSS()
 		#drawTools-options-palette input:checked + div{border:2px solid #c2c2c2;}\n\
 		#drawTools-options-palette div{width:36px;height:36px;line-height:2.428571429;border:2px solid #252525;float:left;margin=0;padding=0;}\n\
 		#drawTools-options-palette div:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\
-		#drawTools-options-palette div:hover,#drawTools-options-palette label:focus,#drawTools-options-palette label:active{border:2px solid red;}\n\
+		#drawTools-options-palette div:hover,#drawTools-options-palette div:focus,#drawTools-options-palette div:active{border:2px solid red;}\n\
 		\n\
 		.drawTools-buttonText,#drawTools-options-palette div{font-size:14px;font-weight:normal;text-align:center;vertical-align:middle;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}\n\
 		\n\
