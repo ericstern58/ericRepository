@@ -852,6 +852,7 @@ function setOptionsColor(color,normalfill) {
 		useStrokeAsFill = true;
 		options.fillColor = '';
 	} else {
+		useStrokeAsFill = false;
 		options.fillColor = color;
 	}
 }
