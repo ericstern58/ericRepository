@@ -320,19 +320,6 @@ function drawLine(ctx,startX,startY,finishX,finishY)
 }
 function drawRect(ctx,pts,fillColorHex)
 {
-	//var pts = new Array(startX,startY,finishX,finishY);
-	//drawLineChain(ctx,pts,false,true,fillColorHex);
-	/*
-	ctx.save();
-	ctx.lineJoin="round";
-	ctx.rect(startX,startY,finishX-startX,finishY-startY);
-	if(fillColorHex) {
-		ctx.fillStyle = fillColorHex;
-		ctx.fill();
-	}
-	ctx.stroke(); 
-	ctx.restore();
-	*/
 	ctx.save();
 	ctx.lineJoin="round";
 	ctx.beginPath();
@@ -360,6 +347,8 @@ function drawEllipse(ctx,pts,fillColorHex){
 	ye = y + h,            // y-end
 	xm = x + w / 2,        // x-middle
 	ym = y + h / 2;        // y-middle
+	ctx.save();
+	ctx.lineJoin="round";
 	ctx.beginPath();
 	ctx.moveTo( x, ym );
 	ctx.bezierCurveTo( x, ym - oy, xm - ox, y, xm, y );
@@ -368,12 +357,11 @@ function drawEllipse(ctx,pts,fillColorHex){
 	ctx.bezierCurveTo( xm - ox, ye, x, ym + oy, x, ym );
 	ctx.closePath();
 	if(fillColorHex) {
-		ctx.save();
 		ctx.fillStyle = fillColorHex;
 		ctx.fill();
-		ctx.restore();
 	}
 	ctx.stroke();
+	ctx.restore();
 }
 
 function floodFill(e){
