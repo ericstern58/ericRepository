@@ -815,7 +815,7 @@ function createOptionsMenu(drawToolsDiv)
 	optionsPaletteHtml += 
 		'<label style="width:120px;">\
 			<input type="radio" name="drawTools-options-palette-radio" checked>\
-			<div onclick=setOptionsColor(""); style="width:120px;color:#c2c2c2";>None</div>\
+			<div onclick=setOptionsColor(""); style="width:120px;background:#c2c2c2";color:#252525;>None</div>\
 		</label>';
 	optionsPaletteHtml += 
 		'<label style="width:120px;">\
