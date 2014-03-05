@@ -820,9 +820,7 @@ function createOptionsMenu(drawToolsDiv)
 	optionsPaletteHtml += 
 		'<label style="width:120px;">\
 			<input type="radio" name="drawTools-options-palette-radio">\
-			<div onclick=setOptionsColor("",1); style="width:120px;color:#c2c2c2;\
-			background:-webkit-radial-gradient(transparent 40%,red 60%,green 75%,blue 90%);background:-o-radial-gradient(transparent 40%,red 60%,green 75%,blue 90%);background:-moz-radial-gradient(transparent 40%,red 60%,green 75%,blue 90%); background:radial-gradient(transparent 40%,red 60%,green 75%,blue 90%);\
-			">Brush Color</div>\
+			<div onclick=setOptionsColor("",1); style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div>\
 		</label>';
 	
 	for(var i=0;i<colorElements.length;i++) {
