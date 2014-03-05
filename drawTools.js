@@ -849,10 +849,10 @@ function createOptionsMenu(drawToolsDiv)
 }
 function setOptionsColor(color,normalfill) {
 	if(normalfill) {
-		useStrokeAsFill = true;
+		options.useStrokeAsFill = true;
 		options.fillColor = '';
 	} else {
-		useStrokeAsFill = false;
+		options.useStrokeAsFill = false;
 		options.fillColor = color;
 	}
 }
