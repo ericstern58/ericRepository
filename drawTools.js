@@ -60,6 +60,9 @@ var cleanTools = {
 	"restoreCanvas": function() {
 		this.context.constructor.prototype.putImageData.call(this.context, restorePoints[restorePosition], 0, 0);
 	},
+	"isWithinDrawingBounds": function(x,y) {
+		return (x>=(-12) && y>=(-12) && x<(cleanTools.canvasWidth+12) && y<(cleanTools.canvasHeight+12));
+	},
 };
 
 
@@ -267,9 +270,9 @@ $(document).on('mouseup', function(e){
 		cleanTools.restoreCanvas();
 		drawLine(cleanTools.context,DTPoints[0].x,DTPoints[0].y, cleanTools.mouseX, cleanTools.mouseY);
 	} else if(cleanTools.currentToolType === toolType.LINECHAIN) {
-		if(isWithinPolygonToolBounds(cleanTools.mouseX,cleanTools.mouseY)){
+		if(cleanTools.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
 			DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
-			if(e.which == 3) {	// If right mouse click, finish the polygon
+			if(e.which == 3) {	// If right mouse click, finish the chain
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 				cleanTools.restoreCanvas();
 				drawLineChain(cleanTools.context,pointsToArray(DTPoints),false,options.lineToolsShouldClose,fillColor);
@@ -283,7 +286,7 @@ $(document).on('mouseup', function(e){
 			return;
 		}
 	} else if(cleanTools.currentToolType === toolType.CURVE) {
-		if(isWithinPolygonToolBounds(cleanTools.mouseX,cleanTools.mouseY)){
+		if(cleanTools.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
 			DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
@@ -627,13 +630,6 @@ function drawSpline(ctx,pts,t,closed,closedFillColorHex,editMode){
  /*--------------------------- Auxiliary Functions -----------------------------*/
 /*-----------------------------------------------------------------------------*/
 
-function restoreCanvas() {
-	cleanTools.context.constructor.prototype.putImageData.call(cleanTools.context, restorePoints[restorePosition], 0, 0);
-}
-
-function isWithinPolygonToolBounds(x, y){
-	return (x>=(-12) && y>=(-12) && x<(cleanTools.canvasWidth+12) && y<(cleanTools.canvasHeight+12));
-}
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
 /*-----------------------------------------------------------------------------*/
