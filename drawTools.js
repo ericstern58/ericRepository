@@ -36,7 +36,7 @@ var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.pare
 var DRAWCEPTION_BRUSHES = [{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},
                  {id: 'brush-12', size: 12},{id: 'brush-35', size: 35}];
 
-// Setup Main Object
+// Setup Clean Tools Object
 var cleanTools = {
 	'id': DRAW_TOOLS_ID,
 	
@@ -113,7 +113,7 @@ function RGBColor(r, g, b, a) {
 	this.a = (a) ? a : 255;
 }
 RGBColor.prototype.equals = function(color) {
-	return (this.r===color.r && this.g===color.g && this.b===color.b && this.a===color.a);
+	return (this.r===color.r && this.g===color.g && this.b===color.b /*&& this.a===color.a*/);
 };
 RGBColor.prototype.setOpacity = function(alpha) {
 	
