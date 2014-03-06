@@ -41,10 +41,10 @@ var cleanTools = {
 	'id': DRAW_TOOLS_ID,
 	
 	'dcToolbar': DRAWCEPTION_TOOLBAR,
-	'dcBrushes': DRAWCEPTION_BRUSHES
+	'dcBrushes': DRAWCEPTION_BRUSHES,
 	
-	'canvas': drawApp.canvas;
-	'context': drawApp.context;
+	'canvas': drawApp.canvas,
+	'context': drawApp.context
     
 };
 
