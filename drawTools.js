@@ -264,8 +264,7 @@ $(document).on('mouseup', function(e){
 			}
 		} else {
 			restoreCanvas();
-			DTPoints.length = 0;
-			toolInUse = false;
+			stopToolUse();
 			return;
 		}
 	} else if(currentToolType === toolType.CURVE) {
@@ -280,8 +279,7 @@ $(document).on('mouseup', function(e){
 			}
 		} else {	// If user clicks out of acceptable boundaries, cancel all tool progress
 			restoreCanvas();
-			DTPoints.length = 0;
-			toolInUse = false;
+			stopToolUse();
 			return;
 		}
 	} else if(currentToolType === toolType.RECT) {
@@ -295,24 +293,28 @@ $(document).on('mouseup', function(e){
 		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 		drawEllipse(context,pointsToArray(DTPoints),fillColor);
 	}
-	DTPoints.length = 0;
-	toolInUse = false;
+	stopToolUse();
 	save();
 	
 });
 // Setup Mouseup Listener
 $(document).off('keydown');
 $(document).on('keydown', function(e){
-	if(e.keyCode == 37) {
-		//alert('Left was pressed');
-	}
-	else if(e.keyCode == 39) {
+	if(e.keyCode == 39) {
 		alert('Right was pressed');
-	} else {
-		alert('Keycode for that key is: ' + e.keyCode);
+	} else if(e.keyCode == "Q".charCodeAt(0);) {
+		
+	}
+	else {
+		//alert('Keycode for that key is: ' + e.keyCode);
 	}
 	
 });
+
+function stopToolUse() {
+	DTPoints.length = 0;
+	toolInUse = false;
+}
 
   /*-----------------------------------------------------------------------------*/
  /*------------------------------ Button Methods -------------------------------*/
