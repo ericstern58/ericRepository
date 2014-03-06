@@ -860,10 +860,16 @@ function createOptionsMenu(drawToolsDiv)
 }
 
 function toggleLineToolsOpen() {
-	
+	options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
 }
 function setOptionsColor(color,normalfill) {
-	lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
+	if(normalfill) {
+		options.useStrokeAsFill = true;
+		options.fillColor = '';
+	} else {
+		options.useStrokeAsFill = false;
+		options.fillColor = color;
+	}
 }
 
 // Destroys all elements, styling and javascript
