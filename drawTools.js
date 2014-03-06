@@ -823,13 +823,13 @@ function createOptionsMenu(drawToolsDiv)
 	
 	//----- BEGIN ----- LeftPanel --------------------------------------------------
 	var leftPanelHtml = "";
-	optionsPaletteHtml += 
+	leftPanelHtml += 
 		'<label class="switch">\
 			<input type="checkbox" class="switch-input">\
 			<span class="switch-label" data-on="Line Tools Closed" data-off="Line Tools Open"></span>\
 			<span class="switch-handle"></span>\
 		</label>';
-	document.getElementById('drawTools-options-leftPanel').innerHTML = optionsPaletteHtml;
+	document.getElementById('drawTools-options-leftPanel').innerHTML = leftPanelHtml;
 	//----- BEGIN ----- ColorPicker --------------------------------------------------
 	var colorElements = document.getElementsByClassName('colorPicker');
 	var optionsPaletteHtml = "";
