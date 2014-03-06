@@ -824,8 +824,8 @@ function createOptionsMenu(drawToolsDiv)
 	//----- BEGIN ----- LeftPanel --------------------------------------------------
 	var leftPanelHtml = "";
 	leftPanelHtml += 
-		'<label class="switch">\
-			<input type="checkbox" class="switch-input">\
+		'<label onclick=toggleLineToolsOpen(); class="switch">\
+			<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">\
 			<span class="switch-label" data-on="Line Tools Closed" data-off="Line Tools Open"></span>\
 			<span class="switch-handle"></span>\
 		</label>';
@@ -858,14 +858,12 @@ function createOptionsMenu(drawToolsDiv)
 	
 	
 }
+
+function toggleLineToolsOpen() {
+	
+}
 function setOptionsColor(color,normalfill) {
-	if(normalfill) {
-		options.useStrokeAsFill = true;
-		options.fillColor = '';
-	} else {
-		options.useStrokeAsFill = false;
-		options.fillColor = color;
-	}
+	lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
 }
 
 // Destroys all elements, styling and javascript
