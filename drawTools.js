@@ -661,7 +661,7 @@ function setupCSS()
 		#drawTools-options{margin-top:"+optionsMarginTop+"px;background:#252525;border-bottom:1px solid #171717;width:420px;height:0px;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
 		#drawTools-options-content{position:absolute;top:8px;left:8px;right:8px;bottom:8px;}\n\
 		\n\
-		#drawTools-options-leftPanel{border:1px solid green;width:160px;height:100%;position:absolute;left:0px;}\n\
+		#drawTools-options-leftPanel{width:160px;height:100%;position:absolute;left:0px;}\n\
 		#drawTools-options-leftPanel>.switch{display:block;margin-bottom:20px;}\n\
 		\n\
 		.switch{font:13px/20px 'Helvetica Neue',Helvetica,Arial,sans-serif;box-sizing:content-box;width:150px;height:26px;position:relative;display:inline-block;vertical-align:top;padding:3px;border-radius:2px;cursor:pointer;box-shadow:inset 0 -1px #525252,inset 0 1px 1px rgba(0,0,0,0.8);}\n\
