@@ -52,11 +52,6 @@ var cleanTools = {
 	'canvasOffset':{top:0,left:0},
 	'canvasWidth':0,
 	'canvasHeight':0
-	updateCanvasStateVariables: function() {
-		this.canvasOffset = $('#drawingCanvas').offset(); // Update canvas offset variable
-		this.canvasWidth = this.canvas.width();           // Update canvas width variable
-		this.canvasHeight = this.canvas.height();         // Update canvas width variable
-	}
     
 };
 
@@ -142,7 +137,7 @@ cleanTools["toolInUse"] = false;
 // canvasOffset;
 //var canvasWidth;
 //var canvasHeight;
-cleanTools.updateCanvasStateVariables();
+DTUpdateCanvasStateVariables();
 
 // Setup Debug Stuff
 var debugLabel; //Go to createDrawToolsElements to find assignment
@@ -169,7 +164,7 @@ cleanTools.canvas.on('mousedown', function(e){
 	} else if(cleanTools.currentToolType === toolType.BRUSH)
 		return;
 	cleanTools.toolInUse = true;
-	cleanTools.updateCanvasStateVariables();
+	DTUpdateCanvasStateVariables();
 	
 	// Translate mouse location to point relative to canvas
 	cleanTools.mouseX = e.pageX-cleanTools.canvasOffset.left;
@@ -629,7 +624,11 @@ function drawSpline(ctx,pts,t,closed,closedFillColorHex,editMode){
   /*-----------------------------------------------------------------------------*/
  /*--------------------------- Auxiliary Functions -----------------------------*/
 /*-----------------------------------------------------------------------------*/
-
+function DTUpdateCanvasStateVariables() {
+	cleanTools.canvasOffset = $('#drawingCanvas').offset();    // Update canvas offset variable
+	cleanTools.canvasWidth = cleanTools.canvas.width();           // Update canvas width variable
+	cleanTools.canvasHeight = cleanTools.canvas.height();         // Update canvas width variable
+}
 
 function restoreCanvas() {
 	cleanTools.context.constructor.prototype.putImageData.call(cleanTools.context, restorePoints[restorePosition], 0, 0);
