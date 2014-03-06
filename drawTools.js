@@ -46,14 +46,14 @@ var cleanTools = {
 	'canvas': drawApp.canvas,
 	'context': drawApp.context,
 	
-	'canvasOffset':,
-	'canvasWidth':,
-	'canvasHeight':,
+	'canvasOffset':0,
+	'canvasWidth':0,
+	'canvasHeight':0,
 	'updateCanvasStateVariables' = function () {
 		canvasOffset = $('#drawingCanvas').offset();    // Update canvas offset variable
 		canvasWidth = cleanTools.canvas.width();           // Update canvas width variable
 		canvasHeight = cleanTools.canvas.height();         // Update canvas width variable
-	},
+	}
 };
 
 
