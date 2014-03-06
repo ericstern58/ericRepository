@@ -51,7 +51,6 @@ var cleanTools = {
 
 // Setup Some Global Variables
 window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
-
 cleanTools.context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
 
 
@@ -123,10 +122,10 @@ var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99
 
 // Setup Some State Variables
 var options = new DTOptionsClass('#' + cleanTools.id + '-options');
-cleanTools["currentToolType"] = toolType.BRUSH;;
-
+cleanTools["currentToolType"] = toolType.BRUSH;
+cleanTools["toolInUse"] = false;
 //var currentToolType = toolType.BRUSH;
-var toolInUse = false;
+//var toolInUse = false;
 
 var canvasOffset;
 var canvasWidth;
@@ -157,7 +156,7 @@ cleanTools.canvas.on('mousedown', function(e){
 		return;
 	} else if(cleanTools.currentToolType === toolType.BRUSH)
 		return;
-	toolInUse = true;
+	cleanTools.toolInUse = true;
 	DTUpdateCanvasStateVariables();
 	
 	// Translate mouse location to point relative to canvas
@@ -194,7 +193,7 @@ $(document).on('mousemove', function(e){
  	//outputDebug( (e.pageX-canvasOffset.left) + ', ' + (e.pageY-canvasOffset.top));
 	if(cleanTools.currentToolType === toolType.BRUSH)
 		return;	// default behaviors
-	else if(!toolInUse)
+	else if(!cleanTools.toolInUse)
 		return;	// If no tool is in use, ignore event
 		
 	// Translate mouse location to point relative to canvas
@@ -247,7 +246,7 @@ $(document).on('mouseup', function(e){
 		return;
 	} else if(cleanTools.currentToolType === toolType.BRUSH)
 		return;
-	else if(!toolInUse)	// If no tool is in use, ignore event
+	else if(!cleanTools.toolInUse)	// If no tool is in use, ignore event
 		return;
 		
 	// Translate mouse location to point relative to canvas
@@ -272,7 +271,7 @@ $(document).on('mouseup', function(e){
 		} else {
 			restoreCanvas();
 			DTPoints.length = 0;
-			toolInUse = false;
+			cleanTools.toolInUse = false;
 			return;
 		}
 	} else if(cleanTools.currentToolType === toolType.CURVE) {
@@ -288,7 +287,7 @@ $(document).on('mouseup', function(e){
 		} else {	// If user clicks out of acceptable boundaries, cancel all tool progress
 			restoreCanvas();
 			DTPoints.length = 0;
-			toolInUse = false;
+			cleanTools.toolInUse = false;
 			return;
 		}
 	} else if(cleanTools.currentToolType === toolType.RECT) {
@@ -303,7 +302,7 @@ $(document).on('mouseup', function(e){
 		drawEllipse(cleanTools.context,pointsToArray(DTPoints),fillColor);
 	}
 	DTPoints.length = 0;
-	toolInUse = false;
+	cleanTools.toolInUse = false;
 	save();
 	
 });
@@ -318,7 +317,7 @@ $(document).on('keydown', function(e){
 			if(DTPoints.length) {
 				DTPoints.length -= 1;
 				if(DTPoints.length == 0) {
-					toolInUse = false;
+					cleanTools.toolInUse = false;
 				}
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 				restoreCanvas();
