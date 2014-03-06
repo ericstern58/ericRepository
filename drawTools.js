@@ -38,16 +38,20 @@ var DRAWCEPTION_BRUSHES = [{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},
 
 // Setup Main Object
 var cleanTools = {
-    'id': DRAW_TOOLS_ID,
-    'dcToolbar': DRAWCEPTION_TOOLBAR,
-    'dcBrushes': DRAWCEPTION_BRUSHES
+	'id': DRAW_TOOLS_ID,
+	
+	'dcToolbar': DRAWCEPTION_TOOLBAR,
+	'dcBrushes': DRAWCEPTION_BRUSHES
+	
+	'canvas': drawApp.canvas;
+	'context': drawApp.context;
+    
 };
 
 
 // Setup Some Global Variables
 window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
 var DA = drawApp;
-var DACanvas = drawApp.canvas;
 var context = drawApp.context;
 context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
 
@@ -147,8 +151,8 @@ createDrawToolsElements();      // Create Draw Tools Elements and Interface
 /*---------------------- Setup Listeners ----------------------*/
 
 // Setup Mousedown Listener
-DACanvas.off('mousedown');
-DACanvas.on('mousedown', function(e){
+cleanTools.canvas.off('mousedown');
+cleanTools.canvas.on('mousedown', function(e){
 	if(0 && $('#drawTools-options').css('opacity') == 1){
 		painting = !1;
 		restoreCanvas();
@@ -615,8 +619,8 @@ function drawSpline(ctx,pts,t,closed,closedFillColorHex,editMode){
 /*-----------------------------------------------------------------------------*/
 function DTUpdateCanvasStateVariables() {
 	canvasOffset = $('#drawingCanvas').offset();    // Update canvas offset variable
-	canvasWidth = DACanvas.width();           // Update canvas width variable
-	canvasHeight = DACanvas.height();         // Update canvas width variable
+	canvasWidth = cleanTools.canvas.width();           // Update canvas width variable
+	canvasHeight = cleanTools.canvas.height();         // Update canvas width variable
 }
 
 function restoreCanvas() {
