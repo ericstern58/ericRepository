@@ -73,13 +73,13 @@ DTOptionsClass.prototype.toggleMenu = function () {
 			height: (h + "px"),
 			marginTop: ("-=" + h + "px"),
 			opacity: "1"
-		},300, "swing");
+		},200, "swing");
 	} else if(opacity == 1) {
 		$(this.idName).stop(true, true).animate({
 			height: "0px",
 			marginTop: ("+=" + h + "px"),
 			opacity: "0"
-		},300, "swing");
+		},200, "swing");
 	}
 };
 DTOptionsClass.prototype.isWithinBounds = function (x, y) {
