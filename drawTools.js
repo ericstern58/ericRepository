@@ -136,8 +136,7 @@ var options = new DTOptionsClass('#' + cleanTools.id + '-options');
 cleanTools["currentToolType"] = toolType.BRUSH;
 cleanTools["toolInUse"] = false;
 
-//cleanTools.updateCanvasLocation();
-DTUpdateCanvasStateVariables();
+cleanTools.updateCanvasLocation();
 
 // Setup Debug Stuff
 var debugLabel; //Go to createDrawToolsElements to find assignment
@@ -164,8 +163,7 @@ cleanTools.canvas.on('mousedown', function(e){
 	} else if(cleanTools.currentToolType === toolType.BRUSH)
 		return;
 	cleanTools.toolInUse = true;
-	//cleanTools.updateCanvasLocation();
-	DTUpdateCanvasStateVariables();
+	cleanTools.updateCanvasLocation();
 	
 	// Translate mouse location to point relative to canvas
 	cleanTools.mouseX = e.pageX-cleanTools.canvasOffset.left;
@@ -625,11 +623,6 @@ function drawSpline(ctx,pts,t,closed,closedFillColorHex,editMode){
   /*-----------------------------------------------------------------------------*/
  /*--------------------------- Auxiliary Functions -----------------------------*/
 /*-----------------------------------------------------------------------------*/
-function DTUpdateCanvasStateVariables() {
-	cleanTools.canvasOffset = $('#drawingCanvas').offset();    // Update canvas offset variable
-	cleanTools.canvasWidth = cleanTools.canvas.width();           // Update canvas width variable
-	cleanTools.canvasHeight = cleanTools.canvas.height();         // Update canvas width variable
-}
 
 function restoreCanvas() {
 	cleanTools.context.constructor.prototype.putImageData.call(cleanTools.context, restorePoints[restorePosition], 0, 0);
