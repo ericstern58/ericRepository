@@ -44,7 +44,10 @@ var cleanTools = {
 	'dcBrushes': DRAWCEPTION_BRUSHES,
 	
 	'canvas': drawApp.canvas,
-	'context': drawApp.context
+	'context': drawApp.context,
+	
+	'mouseX': 0,
+	'mouseY': 0,
     
 };
 
@@ -160,8 +163,8 @@ cleanTools.canvas.on('mousedown', function(e){
 	DTUpdateCanvasStateVariables();
 	
 	// Translate mouse location to point relative to canvas
-	var mouseX = e.pageX-canvasOffset.left;
-	var mouseY = e.pageY-canvasOffset.top;
+	cleanTools.mouseX = e.pageX-canvasOffset.left;
+	cleanTools.mouseY = e.pageY-canvasOffset.top;
 	
 	if(cleanTools.currentToolType === toolType.FILL) {
 		var stopwatch = new StopWatch();
@@ -174,17 +177,17 @@ cleanTools.canvas.on('mousedown', function(e){
 		stopwatch.printElapsed();
 	} else if(cleanTools.currentToolType === toolType.LINE) {
 		painting = !1;
-		DTPoints[0] = {x: mouseX, y: mouseY};
+		DTPoints[0] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 	} else if(cleanTools.currentToolType === toolType.LINECHAIN) {
 		painting = !1;
 	} else if(cleanTools.currentToolType === toolType.CURVE) {
 		painting = !1;
 	} else if(cleanTools.currentToolType === toolType.RECT) {
 		painting = !1;
-		DTPoints[0] = {x: mouseX, y: mouseY};
+		DTPoints[0] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 	} else if(cleanTools.currentToolType === toolType.ELLIPSE) {
 		painting = !1;
-		DTPoints[0] = {x: mouseX, y: mouseY};
+		DTPoints[0] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 	} 
 });
 // Setup Mousemove Listener
@@ -197,19 +200,19 @@ $(document).on('mousemove', function(e){
 		return;	// If no tool is in use, ignore event
 		
 	// Translate mouse location to point relative to canvas
-	var mouseX = e.pageX-canvasOffset.left;
-	var mouseY = e.pageY-canvasOffset.top;
+	cleanTools.mouseX = e.pageX-canvasOffset.left;
+	cleanTools.mouseY = e.pageY-canvasOffset.top;
 	
 	if(cleanTools.currentToolType === toolType.FILL) {
 		// Do nothing
 	} else if(cleanTools.currentToolType === toolType.LINE) {
 		restoreCanvas();
-		drawLine(cleanTools.context,DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
+		drawLine(cleanTools.context,DTPoints[0].x,DTPoints[0].y,cleanTools.mouseX,cleanTools.mouseY);
 	} else if(cleanTools.currentToolType === toolType.LINECHAIN) {
 		if(DTPoints.length > 0) {
 			var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 			restoreCanvas();
-			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
+			DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 			drawLineChain(cleanTools.context,pointsToArray(DTPoints),true,options.lineToolsShouldClose,fillColor);
 			DTPoints.length = DTPoints.length - 1;
 		}
@@ -217,7 +220,7 @@ $(document).on('mousemove', function(e){
 		if(DTPoints.length > 0) {
 			var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 			restoreCanvas();
-			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
+			DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 			try{
 			drawSpline(cleanTools.context,pointsToArray(DTPoints),0.5,options.lineToolsShouldClose,fillColor,true);
 			}catch(err){alert(err);}
@@ -226,13 +229,13 @@ $(document).on('mousemove', function(e){
 	} else if(cleanTools.currentToolType === toolType.RECT) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		restoreCanvas();
-		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
+		DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 		drawRect(cleanTools.context,pointsToArray(DTPoints),fillColor);
 		DTPoints.length = DTPoints.length - 1;
 	} else if(cleanTools.currentToolType === toolType.ELLIPSE) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		restoreCanvas();
-		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
+		DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 		drawEllipse(cleanTools.context,pointsToArray(DTPoints),fillColor);
 		DTPoints.length = DTPoints.length - 1;
 	}
@@ -250,17 +253,17 @@ $(document).on('mouseup', function(e){
 		return;
 		
 	// Translate mouse location to point relative to canvas
-	var mouseX = e.pageX-canvasOffset.left;
-	var mouseY = e.pageY-canvasOffset.top;
+	cleanTools.mouseX = e.pageX-canvasOffset.left;
+	cleanTools.mouseY = e.pageY-canvasOffset.top;
 	
 	if(cleanTools.currentToolType === toolType.FILL) {
 		// Do nothing
 	} else if(cleanTools.currentToolType === toolType.LINE) {
 		restoreCanvas();
-		drawLine(cleanTools.context,DTPoints[0].x,DTPoints[0].y, mouseX, mouseY);
+		drawLine(cleanTools.context,DTPoints[0].x,DTPoints[0].y, cleanTools.mouseX, cleanTools.mouseY);
 	} else if(cleanTools.currentToolType === toolType.LINECHAIN) {
-		if(isWithinPolygonToolBounds(mouseX,mouseY)){
-			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
+		if(isWithinPolygonToolBounds(cleanTools.mouseX,cleanTools.mouseY)){
+			DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 			if(e.which == 3) {	// If right mouse click, finish the polygon
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 				restoreCanvas();
@@ -275,8 +278,8 @@ $(document).on('mouseup', function(e){
 			return;
 		}
 	} else if(cleanTools.currentToolType === toolType.CURVE) {
-		if(isWithinPolygonToolBounds(mouseX,mouseY)){
-			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
+		if(isWithinPolygonToolBounds(cleanTools.mouseX,cleanTools.mouseY)){
+			DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 				restoreCanvas();
@@ -293,12 +296,12 @@ $(document).on('mouseup', function(e){
 	} else if(cleanTools.currentToolType === toolType.RECT) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		restoreCanvas();
-		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
+		DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 		drawRect(cleanTools.context,pointsToArray(DTPoints),fillColor);
 	} else if(cleanTools.currentToolType === toolType.ELLIPSE) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		restoreCanvas();
-		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
+		DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 		drawEllipse(cleanTools.context,pointsToArray(DTPoints),fillColor);
 	}
 	DTPoints.length = 0;
