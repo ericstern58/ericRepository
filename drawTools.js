@@ -48,6 +48,11 @@ var cleanTools = {
 	
 	'mouseX': 0,
 	'mouseY': 0,
+	
+	'canvasPosX':0,
+	'canvasPosY':0,
+	'canvasWidth':0,
+	'canvasHeight':0,
     
 };
 
@@ -130,9 +135,9 @@ cleanTools["toolInUse"] = false;
 //var currentToolType = toolType.BRUSH;
 //var toolInUse = false;
 
-var canvasOffset;
-var canvasWidth;
-var canvasHeight;
+//var canvasOffset;
+//var canvasWidth;
+//var canvasHeight;
 DTUpdateCanvasStateVariables();
 
 // Setup Debug Stuff
@@ -622,9 +627,11 @@ function drawSpline(ctx,pts,t,closed,closedFillColorHex,editMode){
  /*--------------------------- Auxiliary Functions -----------------------------*/
 /*-----------------------------------------------------------------------------*/
 function DTUpdateCanvasStateVariables() {
-	canvasOffset = $('#drawingCanvas').offset();    // Update canvas offset variable
-	canvasWidth = cleanTools.canvas.width();           // Update canvas width variable
-	canvasHeight = cleanTools.canvas.height();         // Update canvas width variable
+	var offset = $('#drawingCanvas').offset();
+	cleanTools.canvasPosX = offset.x;				    			// Update canvas offset variable
+	cleanTools.canvasPosY = offset.y;				    			// Update canvas offset variable
+	cleanTools.canvasWidth = cleanTools.canvas.width();           // Update canvas width variable
+	cleanTools.canvasHeight = cleanTools.canvas.height();         // Update canvas width variable
 }
 
 function restoreCanvas() {
