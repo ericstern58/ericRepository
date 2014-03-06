@@ -309,34 +309,6 @@ $(document).on('mouseup', function(e){
 	save();
 	
 });
-/*
-// Setup Mouseup Listener
-$(document).off('keydown');
-$(document).on('keydown', function(e){
-	if(e.keyCode == 39) {
-		alert('Right was pressed');
-	} if(e.keyCode == "Q".charCodeAt(0)) {
-		
-		if(cleanTools.currentToolType === toolType.LINECHAIN || cleanTools.currentToolType === toolType.CURVE) {
-			if(DTPoints.length) {
-				DTPoints.length -= 1;
-				if(DTPoints.length == 0) {
-					cleanTools.toolInUse = false;
-				}
-				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
-				restoreCanvas();
-				if(cleanTools.currentToolType === toolType.LINECHAIN)
-					drawSpline(cleanTools.context,pointsToArray(DTPoints),0.5,options.lineToolsShouldClose,fillColor,true);
-				else
-					drawLineChain(cleanTools.context,pointsToArray(DTPoints),true,options.lineToolsShouldClose,fillColor);
-			}
-		}
-	} else {
-		//alert('Keycode for that key is: ' + e.keyCode);
-	}
-	
-});
-*/
 
 $(document).keydown(function(e) {
 	//if (r.keyCode == e.charCodeAt(0) && r.ctrlKey) {
@@ -355,10 +327,12 @@ $(document).keydown(function(e) {
 				}
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 				restoreCanvas();
+				DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 				if(cleanTools.currentToolType === toolType.LINECHAIN)
 					drawSpline(cleanTools.context,pointsToArray(DTPoints),0.5,options.lineToolsShouldClose,fillColor,true);
 				else
 					drawLineChain(cleanTools.context,pointsToArray(DTPoints),true,options.lineToolsShouldClose,fillColor);
+				DTPoints.length = DTPoints.length - 1;
 			}
 		}
 	} else {
