@@ -52,10 +52,10 @@ var cleanTools = {
 	'canvasOffset':{top:0,left:0},
 	'canvasWidth':0,
 	'canvasHeight':0
-    "updateCanvasLocation": function() {
+	"updateCanvasLocation": function() {
 		this.canvasOffset = $('#drawingCanvas').offset();    // Update canvas offset variable
-		this.canvasWidth = this.canvas.width();         	 // Update canvas width variable
-		this.canvasHeight = this.canvas.height();       	 // Update canvas width variable
+		this.canvasWidth = this.canvas.width();              // Update canvas width variable
+		this.canvasHeight = this.canvas.height();            // Update canvas width variable
 	},
 };
 
@@ -135,13 +135,9 @@ var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99
 var options = new DTOptionsClass('#' + cleanTools.id + '-options');
 cleanTools["currentToolType"] = toolType.BRUSH;
 cleanTools["toolInUse"] = false;
-//var currentToolType = toolType.BRUSH;
-//var toolInUse = false;
 
-// canvasOffset;
-//var canvasWidth;
-//var canvasHeight;
-cleanTools.updateCanvasLocation();
+//cleanTools.updateCanvasLocation();
+DTUpdateCanvasStateVariables();
 
 // Setup Debug Stuff
 var debugLabel; //Go to createDrawToolsElements to find assignment
@@ -168,7 +164,8 @@ cleanTools.canvas.on('mousedown', function(e){
 	} else if(cleanTools.currentToolType === toolType.BRUSH)
 		return;
 	cleanTools.toolInUse = true;
-	cleanTools.updateCanvasLocation();
+	//cleanTools.updateCanvasLocation();
+	DTUpdateCanvasStateVariables();
 	
 	// Translate mouse location to point relative to canvas
 	cleanTools.mouseX = e.pageX-cleanTools.canvasOffset.left;
