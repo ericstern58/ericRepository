@@ -300,6 +300,17 @@ $(document).on('mouseup', function(e){
 	save();
 	
 });
+// Setup Mouseup Listener
+$(document).off('keydown');
+$(document).on('keydown', function(e){
+	if(event.keyCode == 37) {
+		alert('Left was pressed');
+	}
+	else if(event.keyCode == 39) {
+		alert('Right was pressed');
+	}
+	
+});
 
   /*-----------------------------------------------------------------------------*/
  /*------------------------------ Button Methods -------------------------------*/
