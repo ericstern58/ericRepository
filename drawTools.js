@@ -48,11 +48,6 @@ var cleanTools = {
 	
 	'mouseX': 0,
 	'mouseY': 0,
-	
-	'canvasTop':0,
-	'canvasLeft':0,
-	'canvasWidth':0,
-	'canvasHeight':0,
     
 };
 
@@ -135,9 +130,9 @@ cleanTools["toolInUse"] = false;
 //var currentToolType = toolType.BRUSH;
 //var toolInUse = false;
 
-//var canvasOffset;
-//var canvasWidth;
-//var canvasHeight;
+var canvasOffset;
+var canvasWidth;
+var canvasHeight;
 DTUpdateCanvasStateVariables();
 
 // Setup Debug Stuff
@@ -168,8 +163,8 @@ cleanTools.canvas.on('mousedown', function(e){
 	DTUpdateCanvasStateVariables();
 	
 	// Translate mouse location to point relative to canvas
-	cleanTools.mouseX = e.pageX-cleanTools.canvasLeft;
-	cleanTools.mouseY = e.pageY-cleanTools.canvasTop;
+	cleanTools.mouseX = e.pageX-canvasOffset.left;
+	cleanTools.mouseY = e.pageY-canvasOffset.top;
 	
 	if(cleanTools.currentToolType === toolType.FILL) {
 		var stopwatch = new StopWatch();
@@ -205,8 +200,8 @@ $(document).on('mousemove', function(e){
 		return;	// If no tool is in use, ignore event
 		
 	// Translate mouse location to point relative to canvas
-	cleanTools.mouseX = e.pageX-cleanTools.canvasLeft;
-	cleanTools.mouseY = e.pageY-cleanTools.canvasTop;
+	cleanTools.mouseX = e.pageX-canvasOffset.left;
+	cleanTools.mouseY = e.pageY-canvasOffset.top;
 	
 	if(cleanTools.currentToolType === toolType.FILL) {
 		// Do nothing
@@ -258,8 +253,8 @@ $(document).on('mouseup', function(e){
 		return;
 		
 	// Translate mouse location to point relative to canvas
-	cleanTools.mouseX = e.pageX-cleanTools.canvasLeft;
-	cleanTools.mouseY = e.pageY-cleanTools.canvasTop;
+	cleanTools.mouseX = e.pageX-canvasOffset.left;
+	cleanTools.mouseY = e.pageY-canvasOffset.top;
 	
 	if(cleanTools.currentToolType === toolType.FILL) {
 		// Do nothing
@@ -627,11 +622,9 @@ function drawSpline(ctx,pts,t,closed,closedFillColorHex,editMode){
  /*--------------------------- Auxiliary Functions -----------------------------*/
 /*-----------------------------------------------------------------------------*/
 function DTUpdateCanvasStateVariables() {
-	var offset = $('#drawingCanvas').offset();
-	cleanTools.canvasPosX = offset.top;				    			// Update canvas offset variable
-	cleanTools.canvasPosY = offset.left;				    			// Update canvas offset variable
-	cleanTools.canvasWidth = cleanTools.canvas.width();           // Update canvas width variable
-	cleanTools.canvasHeight = cleanTools.canvas.height();         // Update canvas width variable
+	canvasOffset = $('#drawingCanvas').offset();    // Update canvas offset variable
+	canvasWidth = cleanTools.canvas.width();           // Update canvas width variable
+	canvasHeight = cleanTools.canvas.height();         // Update canvas width variable
 }
 
 function restoreCanvas() {
@@ -648,7 +641,7 @@ function isWithinPolygonToolBounds(x, y){
 function setupCSS()
 {
 	// Calculate variables used in css
-	var optionsMarginTop = cleanTools.canvasTop + canvasHeight - $('#' + cleanTools.id).offset().top;
+	var optionsMarginTop = canvasOffset.top + canvasHeight - $('#' + cleanTools.id).offset().top;
 	
 	var DTSheet = document.createElement('style');
 	DTSheet.id = cleanTools.id + 'StyleSheet'; // Give id so destructor can find it if needed
