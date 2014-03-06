@@ -393,22 +393,22 @@ function drawEllipse(ctx,pts,fillColorHex){
 	ctx.restore();
 }
 
-function floodFill(ctx, x, y){
+function floodFill(ctx, xSeed, ySeed){
 	// This restoreCanvas() fix avoids issues with brush placing dot over flood fill seed area
 	restoreCanvas();
 	
 	var w = canvasWidth;
 	var h = canvasHeight;
-	var p = cleanTools.context.getImageData(0,0,w,h);
+	var p = ctx.getImageData(0,0,w,h);
 	var d = p.data;
-	var targetColor = getColorFromCoords(x,y);
+	var targetColor = getColorFromCoords(xSeed,ySeed);
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255);
 	
 	// Note: target color must be different to execute function f
 	// If something is already colored the fill color, nothing needs to be done
 	if(!targetColor.equals(fillColor))
-		f(x,y);
+		f(xSeed,ySeed);
 
 	ctx.putImageData(p,0,0);
 	
