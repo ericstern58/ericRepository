@@ -303,19 +303,32 @@ $(document).on('mouseup', function(e){
 // Setup Mouseup Listener
 $(document).off('keydown');
 $(document).on('keydown', function(e){
-	if(e.keyCode == 37) {
-		//alert('Left was pressed');
-	}
-	else if(e.keyCode == 39) {
+	if(e.keyCode == 39) {
 		alert('Right was pressed');
+	} if(e.keyCode == "Q".charCodeAt(0)) {
+		
+		if(currentToolType === toolType.LINECHAIN || currentToolType === toolType.CURVE) {
+			if(DTPoints.length) {
+				DTPoints.length -= 1;
+				if(DTPoints.length == 1) {
+					toolInUse = false;
+				}
+				var fillColor = (options.useStrokeAsFill) ? context.strokeStyle : options.fillColor;
+				restoreCanvas();
+				if(currentToolType === toolType.LINECHAIN)
+					drawSpline(context,pointsToArray(DTPoints),0.5,options.lineToolsShouldClose,fillColor,true);
+				else
+					drawLineChain(context,pointsToArray(DTPoints),true,options.lineToolsShouldClose,fillColor);
+			}
+		}
 	} else {
-		alert('Keycode for that key is: ' + e.keyCode);
+		//alert('Keycode for that key is: ' + e.keyCode);
 	}
 	
 });
 
   /*-----------------------------------------------------------------------------*/
- /*------------------------------ Button Methods -------------------------------*/
+ /*----------------------------- Drawing Algorithms ----------------------------*/
 /*-----------------------------------------------------------------------------*/
 
 function drawLine(ctx,startX,startY,finishX,finishY)
