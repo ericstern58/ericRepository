@@ -29,15 +29,22 @@ StopWatch.prototype.printElapsed = function (name) {
     outputDebug('[' + this.getElapsedMilliseconds() + 'ms]');
 };
 
-
-
-
-
 // Setup Constants
+var cleanTools = {};
+
+cleanTools["PropertyD"] = 4
 var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
 var DTBrushes = [{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},
                  {id: 'brush-12', size: 12},{id: 'brush-35', size: 35}];
+
+// Setup Main Object
+var cleanTools = {
+    'id': DRAW_TOOLS_ID,
+    'dcToolbar': DRAWCEPTION_TOOLBAR,
+    'dcBrushes': DTBrushes
+};
+
 
 // Setup Some Global Variables
 window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
@@ -117,7 +124,7 @@ var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99
 /*-----------------------------------------------------------------------------*/
 
 // Setup Some State Variables
-var options = new DTOptionsClass('#' + DRAW_TOOLS_ID + '-options');
+var options = new DTOptionsClass('#' + cleanTools.id + '-options');
 var currentToolType = toolType.BRUSH;
 var toolInUse = false;
 
@@ -628,10 +635,10 @@ function isWithinPolygonToolBounds(x, y){
 function setupCSS()
 {
 	// Calculate variables used in css
-	var optionsMarginTop = canvasOffset.top + canvasHeight - $('#' + DRAW_TOOLS_ID).offset().top;
+	var optionsMarginTop = canvasOffset.top + canvasHeight - $('#' + cleanTools.id).offset().top;
 	
 	var DTSheet = document.createElement('style');
-	DTSheet.id = DRAW_TOOLS_ID + 'StyleSheet'; // Give id so destructor can find it if needed
+	DTSheet.id = cleanTools.id + 'StyleSheet'; // Give id so destructor can find it if needed
 	DTSheet.innerHTML = "\n\
 		/*These drawTools-btn-Icon are css only icons*/\n\
 		#drawTools-btn-icon-fill{margin:12px 5px 0px 21px;width:12px;height:12px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
@@ -730,7 +737,7 @@ function modifyExistingElements()
 		currentToolType = toolType.BRUSH;		// Update tool type
 		
 		// Visually unselect any other tools
-		var ele = document.getElementsByName(DRAW_TOOLS_ID + "-btn-radio");
+		var ele = document.getElementsByName(cleanTools.id + "-btn-radio");
 		for(var i=0;i<ele.length;i++)
 			ele[i].checked = false;
 	}
@@ -739,14 +746,14 @@ function modifyExistingElements()
 function createDrawToolsContainer(){
 	//Create DIV in which DrawTools will be placed in
 	var drawToolsDiv = document.createElement('div');
-	drawToolsDiv.id = DRAW_TOOLS_ID;
+	drawToolsDiv.id = cleanTools.id;
 	//drawToolsDiv.className = 'drawTools-btn-group';
 	DRAWCEPTION_TOOLBAR.appendChild(drawToolsDiv);
 }
 
 function createDrawToolsElements() 
 {
-	var drawToolsDiv = document.getElementById(DRAW_TOOLS_ID);
+	var drawToolsDiv = document.getElementById(cleanTools.id);
 	
 	// Create Tool Buttons
 	createToolButton(toolType.FILL,"fill");
@@ -782,26 +789,26 @@ function createToolButton(type, name)
 	//create button
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
-	button.id = DRAW_TOOLS_ID + '-btn-' + name;
+	button.id = cleanTools.id + '-btn-' + name;
 	button.className = 'drawTools-btn';
 	button.onclick = function(){currentToolType=type;};
-	document.getElementById(DRAW_TOOLS_ID).appendChild(button);
+	document.getElementById(cleanTools.id).appendChild(button);
 	
 	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
 	var radio = document.createElement('input');
-	radio.id = DRAW_TOOLS_ID + '-btn-radio-' + name;
+	radio.id = cleanTools.id + '-btn-radio-' + name;
 	radio.setAttribute("type","radio");
-	radio.setAttribute("name", (DRAW_TOOLS_ID + "-btn-radio"));
+	radio.setAttribute("name", (cleanTools.id + "-btn-radio"));
 	button.appendChild(radio);
 
 	//Create container div
 	var container = document.createElement('div');
-	container.className = DRAW_TOOLS_ID + '-btn-container';
+	container.className = cleanTools.id + '-btn-container';
 	button.appendChild(container);
 	
 	// Create icon div
 	var icon = document.createElement('div');
-	icon.id = DRAW_TOOLS_ID + '-btn-icon-' + name;
+	icon.id = cleanTools.id + '-btn-icon-' + name;
 	container.appendChild(icon);
 	
 	return button;
@@ -812,18 +819,18 @@ function createUtilityButton(name)
 	//create button
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
-	button.id = DRAW_TOOLS_ID + '-btn-' + name;
-	button.className = DRAW_TOOLS_ID + '-btn';
-	document.getElementById(DRAW_TOOLS_ID).appendChild(button);
+	button.id = cleanTools.id + '-btn-' + name;
+	button.className = cleanTools.id + '-btn';
+	document.getElementById(cleanTools.id).appendChild(button);
 
 	//Create container div
 	var container = document.createElement('div');
-	container.className = DRAW_TOOLS_ID + '-btn-container';
+	container.className = cleanTools.id + '-btn-container';
 	button.appendChild(container);
 	
 	// Create icon div
 	var icon = document.createElement('div');
-	icon.id = DRAW_TOOLS_ID + '-btn-icon-' + name;
+	icon.id = cleanTools.id + '-btn-icon-' + name;
 	container.appendChild(icon);
 	
 	return button;
@@ -833,7 +840,7 @@ function createOptionsMenu(drawToolsDiv)
 {
 	//Create DIV in which Options will be placed in
 	var optionsDiv = document.createElement('div');
-	optionsDiv.id = DRAW_TOOLS_ID + '-options';
+	optionsDiv.id = cleanTools.id + '-options';
 	optionsDiv.innerHTML = "\
 		<div id='drawTools-options-content'>\
 			<div id='drawTools-options-leftPanel'></div>\
@@ -896,9 +903,9 @@ function setOptionsColor(color,normalfill) {
 function DTDestroy() 
 {
 	// 1. Destroy HTML
-	document.getElementById(DRAW_TOOLS_ID).remove();
+	document.getElementById(cleanTools.id).remove();
 	// 2. Destroy CSS
-	document.getElementById(DRAW_TOOLS_ID + 'StyleSheet').remove();
+	document.getElementById(cleanTools.id + 'StyleSheet').remove();
 	// 3. Remove listeners (async)
 	$(document).off('mousedown');
 	$(document).off('mousemove');
