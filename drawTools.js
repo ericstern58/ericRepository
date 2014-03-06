@@ -171,7 +171,7 @@ cleanTools.canvas.on('mousedown', function(e){
 		stopwatch.start();
 		painting = !1;
 		try{
-			floodFill(context,e.mouseX,mouseY);
+			floodFill(cleanTools.context,e.mouseX,mouseY);
 		}catch(err){alert(err);}
 		stopwatch.stop();
 		stopwatch.printElapsed();
