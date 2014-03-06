@@ -309,7 +309,7 @@ $(document).on('keydown', function(e){
 	else if(e.keyCode == 39) {
 		alert('Right was pressed');
 	} else {
-		alert('Keycode for that key is: ' + e.keycode);
+		alert('Keycode for that key is: ' + e.keyCode);
 	}
 	
 });
