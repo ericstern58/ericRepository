@@ -121,14 +121,14 @@ function Point(x, y) {
 	this.y = y;
 }
 // Color Object
-function RGBColor(r, g, b/*, a*/) {
+function RGBColor(r, g, b, a) {
 	this.r = r;
 	this.g = g;
 	this.b = b;
-	//this.a = (a) ? a : 255;
+	this.a = (a) ? a : 255;
 }
 RGBColor.prototype.equals = function(color) {
-	return (this.r===color.r && this.g===color.g && this.b===color.b /*&& this.a===color.a*/);
+	return (this.r===color.r && this.g===color.g && this.b===color.b && this.a===color.a);
 };
 // Tool type enum
 var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99};
@@ -415,7 +415,7 @@ function floodFill(ctx,e){
 	var d = p.data;
 	var targetColor = getColorFromCoords(e.offsetX,e.offsetY);
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
-	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255);
+	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255,(c>>24)&255);
 	
 	// Note: target color must be different to execute function f
 	// If something is already colored the fill color, nothing needs to be done
