@@ -51,9 +51,8 @@ var cleanTools = {
 
 // Setup Some Global Variables
 window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
-var DA = drawApp;
-var context = drawApp.context;
-context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
+
+cleanTools.context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
 
 
   /*-----------------------------------------------------------------------------*/
@@ -207,36 +206,36 @@ $(document).on('mousemove', function(e){
 		// Do nothing
 	} else if(currentToolType === toolType.LINE) {
 		restoreCanvas();
-		drawLine(context,DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
+		drawLine(cleanTools.context,DTPoints[0].x,DTPoints[0].y,mouseX,mouseY);
 	} else if(currentToolType === toolType.LINECHAIN) {
 		if(DTPoints.length > 0) {
-			var fillColor = (options.useStrokeAsFill) ? context.strokeStyle : options.fillColor;
+			var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 			restoreCanvas();
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
-			drawLineChain(context,pointsToArray(DTPoints),true,options.lineToolsShouldClose,fillColor);
+			drawLineChain(cleanTools.context,pointsToArray(DTPoints),true,options.lineToolsShouldClose,fillColor);
 			DTPoints.length = DTPoints.length - 1;
 		}
 	} else if(currentToolType === toolType.CURVE) {
 		if(DTPoints.length > 0) {
-			var fillColor = (options.useStrokeAsFill) ? context.strokeStyle : options.fillColor;
+			var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 			restoreCanvas();
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 			try{
-			drawSpline(context,pointsToArray(DTPoints),0.5,options.lineToolsShouldClose,fillColor,true);
+			drawSpline(cleanTools.context,pointsToArray(DTPoints),0.5,options.lineToolsShouldClose,fillColor,true);
 			}catch(err){alert(err);}
 			DTPoints.length = DTPoints.length - 1;
 		}
 	} else if(currentToolType === toolType.RECT) {
-		var fillColor = (options.useStrokeAsFill) ? context.strokeStyle : options.fillColor;
+		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		restoreCanvas();
 		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
-		drawRect(context,pointsToArray(DTPoints),fillColor);
+		drawRect(cleanTools.context,pointsToArray(DTPoints),fillColor);
 		DTPoints.length = DTPoints.length - 1;
 	} else if(currentToolType === toolType.ELLIPSE) {
-		var fillColor = (options.useStrokeAsFill) ? context.strokeStyle : options.fillColor;
+		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		restoreCanvas();
 		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
-		drawEllipse(context,pointsToArray(DTPoints),fillColor);
+		drawEllipse(cleanTools.context,pointsToArray(DTPoints),fillColor);
 		DTPoints.length = DTPoints.length - 1;
 	}
 });
@@ -260,14 +259,14 @@ $(document).on('mouseup', function(e){
 		// Do nothing
 	} else if(currentToolType === toolType.LINE) {
 		restoreCanvas();
-		drawLine(context,DTPoints[0].x,DTPoints[0].y, mouseX, mouseY);
+		drawLine(cleanTools.context,DTPoints[0].x,DTPoints[0].y, mouseX, mouseY);
 	} else if(currentToolType === toolType.LINECHAIN) {
 		if(isWithinPolygonToolBounds(mouseX,mouseY)){
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 			if(e.which == 3) {	// If right mouse click, finish the polygon
-				var fillColor = (options.useStrokeAsFill) ? context.strokeStyle : options.fillColor;
+				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 				restoreCanvas();
-				drawLineChain(context,pointsToArray(DTPoints),false,options.lineToolsShouldClose,fillColor);
+				drawLineChain(cleanTools.context,pointsToArray(DTPoints),false,options.lineToolsShouldClose,fillColor);
 			} else {
 				return;
 			}
@@ -281,9 +280,9 @@ $(document).on('mouseup', function(e){
 		if(isWithinPolygonToolBounds(mouseX,mouseY)){
 			DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
 			if(e.which == 3) {	// If right mouse click, finish the curve
-				var fillColor = (options.useStrokeAsFill) ? context.strokeStyle : options.fillColor;
+				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 				restoreCanvas();
-				drawSpline(context,pointsToArray(DTPoints),0.5,options.lineToolsShouldClose,fillColor,false);
+				drawSpline(cleanTools.context,pointsToArray(DTPoints),0.5,options.lineToolsShouldClose,fillColor,false);
 			} else {
 				return;
 			}
@@ -294,15 +293,15 @@ $(document).on('mouseup', function(e){
 			return;
 		}
 	} else if(currentToolType === toolType.RECT) {
-		var fillColor = (options.useStrokeAsFill) ? context.strokeStyle : options.fillColor;
+		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		restoreCanvas();
 		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
-		drawRect(context,pointsToArray(DTPoints),fillColor);
+		drawRect(cleanTools.context,pointsToArray(DTPoints),fillColor);
 	} else if(currentToolType === toolType.ELLIPSE) {
-		var fillColor = (options.useStrokeAsFill) ? context.strokeStyle : options.fillColor;
+		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		restoreCanvas();
 		DTPoints[DTPoints.length] = {x: mouseX, y: mouseY};
-		drawEllipse(context,pointsToArray(DTPoints),fillColor);
+		drawEllipse(cleanTools.context,pointsToArray(DTPoints),fillColor);
 	}
 	DTPoints.length = 0;
 	toolInUse = false;
@@ -322,12 +321,12 @@ $(document).on('keydown', function(e){
 				if(DTPoints.length == 0) {
 					toolInUse = false;
 				}
-				var fillColor = (options.useStrokeAsFill) ? context.strokeStyle : options.fillColor;
+				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 				restoreCanvas();
 				if(currentToolType === toolType.LINECHAIN)
-					drawSpline(context,pointsToArray(DTPoints),0.5,options.lineToolsShouldClose,fillColor,true);
+					drawSpline(cleanTools.context,pointsToArray(DTPoints),0.5,options.lineToolsShouldClose,fillColor,true);
 				else
-					drawLineChain(context,pointsToArray(DTPoints),true,options.lineToolsShouldClose,fillColor);
+					drawLineChain(cleanTools.context,pointsToArray(DTPoints),true,options.lineToolsShouldClose,fillColor);
 			}
 		}
 	} else {
@@ -399,10 +398,10 @@ function floodFill(e){
 	
 	var w = canvasWidth;
 	var h = canvasHeight;
-	var p = context.getImageData(0,0,w,h);
+	var p = cleanTools.context.getImageData(0,0,w,h);
 	var d = p.data;
 	var targetColor = getColorFromCoords(e.offsetX,e.offsetY);
-	var c = parseInt(context.strokeStyle.substr(1,6),16);
+	var c = parseInt(cleanTools.context.strokeStyle.substr(1,6),16);
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255);
 	
 	// Note: target color must be different to execute function f
@@ -410,7 +409,7 @@ function floodFill(e){
 	if(!targetColor.equals(fillColor))
 		f(e.offsetX,e.offsetY);
 
-	context.putImageData(p,0,0);
+	cleanTools.context.putImageData(p,0,0);
 	
 	function f(xinitial,yinitial){
 		var queue = [new Point(xinitial,yinitial)];
@@ -624,7 +623,7 @@ function DTUpdateCanvasStateVariables() {
 }
 
 function restoreCanvas() {
-	context.constructor.prototype.putImageData.call(context, restorePoints[restorePosition], 0, 0);
+	cleanTools.context.constructor.prototype.putImageData.call(cleanTools.context, restorePoints[restorePosition], 0, 0);
 }
 
 function isWithinPolygonToolBounds(x, y){
