@@ -52,7 +52,7 @@ var cleanTools = {
 	'canvasOffset':{top:0,left:0},
 	'canvasWidth':0,
 	'canvasHeight':0
-	'updateCanvasStateVariables': function() {
+	updateCanvasStateVariables: function() {
 		this.canvasOffset = $('#drawingCanvas').offset(); // Update canvas offset variable
 		this.canvasWidth = this.canvas.width();           // Update canvas width variable
 		this.canvasHeight = this.canvas.height();         // Update canvas width variable
