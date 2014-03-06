@@ -57,6 +57,9 @@ var cleanTools = {
 		this.canvasWidth = this.canvas.width();              // Update canvas width variable
 		this.canvasHeight = this.canvas.height();            // Update canvas width variable
 	},
+	"restoreCanvas": function() {
+		this.context.constructor.prototype.putImageData.call(this.context, restorePoints[restorePosition], 0, 0);
+	},
 };
 
 
@@ -158,7 +161,7 @@ cleanTools.canvas.off('mousedown');
 cleanTools.canvas.on('mousedown', function(e){
 	if(0 && $('#drawTools-options').css('opacity') == 1){
 		painting = !1;
-		restoreCanvas();
+		cleanTools.restoreCanvas();
 		return;
 	} else if(cleanTools.currentToolType === toolType.BRUSH)
 		return;
@@ -208,12 +211,12 @@ $(document).on('mousemove', function(e){
 	if(cleanTools.currentToolType === toolType.FILL) {
 		// Do nothing
 	} else if(cleanTools.currentToolType === toolType.LINE) {
-		restoreCanvas();
+		cleanTools.restoreCanvas();
 		drawLine(cleanTools.context,DTPoints[0].x,DTPoints[0].y,cleanTools.mouseX,cleanTools.mouseY);
 	} else if(cleanTools.currentToolType === toolType.LINECHAIN) {
 		if(DTPoints.length > 0) {
 			var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
-			restoreCanvas();
+			cleanTools.restoreCanvas();
 			DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 			drawLineChain(cleanTools.context,pointsToArray(DTPoints),true,options.lineToolsShouldClose,fillColor);
 			DTPoints.length = DTPoints.length - 1;
@@ -221,7 +224,7 @@ $(document).on('mousemove', function(e){
 	} else if(cleanTools.currentToolType === toolType.CURVE) {
 		if(DTPoints.length > 0) {
 			var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
-			restoreCanvas();
+			cleanTools.restoreCanvas();
 			DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 			try{
 			drawSpline(cleanTools.context,pointsToArray(DTPoints),0.5,options.lineToolsShouldClose,fillColor,true);
@@ -230,13 +233,13 @@ $(document).on('mousemove', function(e){
 		}
 	} else if(cleanTools.currentToolType === toolType.RECT) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
-		restoreCanvas();
+		cleanTools.restoreCanvas();
 		DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 		drawRect(cleanTools.context,pointsToArray(DTPoints),fillColor);
 		DTPoints.length = DTPoints.length - 1;
 	} else if(cleanTools.currentToolType === toolType.ELLIPSE) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
-		restoreCanvas();
+		cleanTools.restoreCanvas();
 		DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 		drawEllipse(cleanTools.context,pointsToArray(DTPoints),fillColor);
 		DTPoints.length = DTPoints.length - 1;
@@ -261,20 +264,20 @@ $(document).on('mouseup', function(e){
 	if(cleanTools.currentToolType === toolType.FILL) {
 		// Do nothing
 	} else if(cleanTools.currentToolType === toolType.LINE) {
-		restoreCanvas();
+		cleanTools.restoreCanvas();
 		drawLine(cleanTools.context,DTPoints[0].x,DTPoints[0].y, cleanTools.mouseX, cleanTools.mouseY);
 	} else if(cleanTools.currentToolType === toolType.LINECHAIN) {
 		if(isWithinPolygonToolBounds(cleanTools.mouseX,cleanTools.mouseY)){
 			DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 			if(e.which == 3) {	// If right mouse click, finish the polygon
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
-				restoreCanvas();
+				cleanTools.restoreCanvas();
 				drawLineChain(cleanTools.context,pointsToArray(DTPoints),false,options.lineToolsShouldClose,fillColor);
 			} else {
 				return;
 			}
 		} else {
-			restoreCanvas();
+			cleanTools.restoreCanvas();
 			DTPoints.length = 0;
 			cleanTools.toolInUse = false;
 			return;
@@ -284,25 +287,25 @@ $(document).on('mouseup', function(e){
 			DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
-				restoreCanvas();
+				cleanTools.restoreCanvas();
 				drawSpline(cleanTools.context,pointsToArray(DTPoints),0.5,options.lineToolsShouldClose,fillColor,false);
 			} else {
 				return;
 			}
 		} else {	// If user clicks out of acceptable boundaries, cancel all tool progress
-			restoreCanvas();
+			cleanTools.restoreCanvas();
 			DTPoints.length = 0;
 			cleanTools.toolInUse = false;
 			return;
 		}
 	} else if(cleanTools.currentToolType === toolType.RECT) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
-		restoreCanvas();
+		cleanTools.restoreCanvas();
 		DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 		drawRect(cleanTools.context,pointsToArray(DTPoints),fillColor);
 	} else if(cleanTools.currentToolType === toolType.ELLIPSE) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
-		restoreCanvas();
+		cleanTools.restoreCanvas();
 		DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 		drawEllipse(cleanTools.context,pointsToArray(DTPoints),fillColor);
 	}
@@ -328,7 +331,7 @@ $(document).keydown(function(e) {
 					cleanTools.toolInUse = false;
 				}
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
-				restoreCanvas();
+				cleanTools.restoreCanvas();
 				DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 				if(cleanTools.currentToolType === toolType.LINECHAIN)
 					drawLineChain(cleanTools.context,pointsToArray(DTPoints),true,options.lineToolsShouldClose,fillColor);
@@ -401,7 +404,7 @@ function drawEllipse(ctx,pts,fillColorHex){
 
 function floodFill(ctx,e){
 	// This restoreCanvas() fix avoids issues with brush placing dot over flood fill seed area
-	restoreCanvas();
+	cleanTools.restoreCanvas();
 	
 	var w = cleanTools.canvasWidth;
 	var h = cleanTools.canvasHeight;
