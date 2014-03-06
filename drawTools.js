@@ -45,8 +45,7 @@ var cleanTools = {
 	
 	'canvas': drawApp.canvas,
 	'context': drawApp.context
-	
-    //'toolType':{BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99};
+    
 };
 
 
@@ -171,7 +170,7 @@ cleanTools.canvas.on('mousedown', function(e){
 		stopwatch.start();
 		painting = !1;
 		try{
-			floodFill(cleanTools.context,e.mouseX,mouseY);
+			floodFill(e);
 		}catch(err){alert(err);}
 		stopwatch.stop();
 		stopwatch.printElapsed();
@@ -393,24 +392,24 @@ function drawEllipse(ctx,pts,fillColorHex){
 	ctx.restore();
 }
 
-function floodFill(ctx, xSeed, ySeed){
+function floodFill(e){
 	// This restoreCanvas() fix avoids issues with brush placing dot over flood fill seed area
 	restoreCanvas();
 	
 	var w = canvasWidth;
 	var h = canvasHeight;
-	var p = ctx.getImageData(0,0,w,h);
+	var p = cleanTools.context.getImageData(0,0,w,h);
 	var d = p.data;
-	var targetColor = getColorFromCoords(xSeed,ySeed);
-	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
+	var targetColor = getColorFromCoords(e.offsetX,e.offsetY);
+	var c = parseInt(cleanTools.context.strokeStyle.substr(1,6),16);
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255);
 	
 	// Note: target color must be different to execute function f
 	// If something is already colored the fill color, nothing needs to be done
 	if(!targetColor.equals(fillColor))
-		f(xSeed,ySeed);
+		f(e.offsetX,e.offsetY);
 
-	ctx.putImageData(p,0,0);
+	cleanTools.context.putImageData(p,0,0);
 	
 	function f(xinitial,yinitial){
 		var queue = [new Point(xinitial,yinitial)];
