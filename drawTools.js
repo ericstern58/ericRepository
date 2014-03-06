@@ -44,16 +44,8 @@ var cleanTools = {
 	'dcBrushes': DRAWCEPTION_BRUSHES,
 	
 	'canvas': drawApp.canvas,
-	'context': drawApp.context,
-	
-	'canvasOffset':0,
-	'canvasWidth':0,
-	'canvasHeight':0,
-	'updateCanvasStateVariables' = function () {
-		canvasOffset = $('#drawingCanvas').offset();    // Update canvas offset variable
-		canvasWidth = cleanTools.canvas.width();           // Update canvas width variable
-		canvasHeight = cleanTools.canvas.height();         // Update canvas width variable
-	}
+	'context': drawApp.context
+    
 };
 
 
@@ -134,8 +126,10 @@ var options = new DTOptionsClass('#' + cleanTools.id + '-options');
 var currentToolType = toolType.BRUSH;
 var toolInUse = false;
 
-cleanTools.updateCanvasStateVariables();
-//DTUpdateCanvasStateVariables();
+var canvasOffset;
+var canvasWidth;
+var canvasHeight;
+DTUpdateCanvasStateVariables();
 
 // Setup Debug Stuff
 var debugLabel; //Go to createDrawToolsElements to find assignment
@@ -162,7 +156,7 @@ cleanTools.canvas.on('mousedown', function(e){
 	} else if(currentToolType === toolType.BRUSH)
 		return;
 	toolInUse = true;
-	cleanTools.updateCanvasStateVariables();
+	DTUpdateCanvasStateVariables();
 	
 	// Translate mouse location to point relative to canvas
 	var mouseX = e.pageX-canvasOffset.left;
@@ -619,7 +613,11 @@ function drawSpline(ctx,pts,t,closed,closedFillColorHex,editMode){
   /*-----------------------------------------------------------------------------*/
  /*--------------------------- Auxiliary Functions -----------------------------*/
 /*-----------------------------------------------------------------------------*/
-
+function DTUpdateCanvasStateVariables() {
+	canvasOffset = $('#drawingCanvas').offset();    // Update canvas offset variable
+	canvasWidth = cleanTools.canvas.width();           // Update canvas width variable
+	canvasHeight = cleanTools.canvas.height();         // Update canvas width variable
+}
 
 function restoreCanvas() {
 	cleanTools.context.constructor.prototype.putImageData.call(cleanTools.context, restorePoints[restorePosition], 0, 0);
