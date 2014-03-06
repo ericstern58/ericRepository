@@ -64,7 +64,8 @@ var cleanTools = {
 		return (x>=(-12) && y>=(-12) && x<(cleanTools.canvasWidth+12) && y<(cleanTools.canvasHeight+12));
 	},
 };
-
+var xfasdfadf = 2+3;
+var doasfasdf = xfasdfadf +34;
 
 // Setup Some Global Variables
 window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
