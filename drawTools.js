@@ -83,7 +83,7 @@ DTOptionsClass.prototype.toggleMenu = function () {
 	}
 };
 DTOptionsClass.prototype.setLineToolsOpen = function () {
-	options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
+	this.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
 }
 DTOptionsClass.prototype.isWithinBounds = function (x, y) {
 	var x2 = x - $(this.idName).offset().top;
@@ -134,19 +134,13 @@ var debugLabel; //Go to createDrawToolsElements to find assignment
 function outputDebug(outputString){
 	debugLabel.getElementsByTagName('div')[0].innerHTML = outputString;
 }
-/*
-window.onerror = function (msg, url, line) {
-    alert("Error on line " + line + ":\n" + msg);
-    return true; // return true to prevent browser from displaying error
-}*/
-
 // Setup tool state/event variables
-var DTPoints = new Array();	// Will contain user input point sets for shapes/lines/etc
+var DTPoints = new Array();     // Will contain user input point sets for shapes/lines/etc
 
-createDrawToolsContainer();	// Create Draw Tools Container
-setupCSS();					// Setup necessary CSS for DrawTools
-modifyExistingElements();	// Make Necessary Modifications to Existing Elements
-createDrawToolsElements();	// Create Draw Tools Elements and Interface
+createDrawToolsContainer();     // Create Draw Tools Container
+setupCSS();                     // Setup necessary CSS for DrawTools
+modifyExistingElements();       // Make Necessary Modifications to Existing Elements
+createDrawToolsElements();      // Create Draw Tools Elements and Interface
 
 /*---------------------- Setup Listeners ----------------------*/
 
