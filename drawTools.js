@@ -310,7 +310,7 @@ $(document).on('keydown', function(e){
 		if(currentToolType === toolType.LINECHAIN || currentToolType === toolType.CURVE) {
 			if(DTPoints.length) {
 				DTPoints.length -= 1;
-				if(DTPoints.length == 1) {
+				if(DTPoints.length == 0) {
 					toolInUse = false;
 				}
 				var fillColor = (options.useStrokeAsFill) ? context.strokeStyle : options.fillColor;
