@@ -402,7 +402,7 @@ function floodFill(ctx, x, y){
 	var p = cleanTools.context.getImageData(0,0,w,h);
 	var d = p.data;
 	var targetColor = getColorFromCoords(x,y);
-	var c = parseInt(cleanTools.context.strokeStyle.substr(1,6),16);
+	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255);
 	
 	// Note: target color must be different to execute function f
@@ -410,7 +410,7 @@ function floodFill(ctx, x, y){
 	if(!targetColor.equals(fillColor))
 		f(x,y);
 
-	cleanTools.context.putImageData(p,0,0);
+	ctx.putImageData(p,0,0);
 	
 	function f(xinitial,yinitial){
 		var queue = [new Point(xinitial,yinitial)];
