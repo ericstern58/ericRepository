@@ -82,6 +82,9 @@ DTOptionsClass.prototype.toggleMenu = function () {
 		},200, "swing");
 	}
 };
+DTOptionsClass.prototype.setLineToolsOpen = function () {
+	options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
+}
 DTOptionsClass.prototype.isWithinBounds = function (x, y) {
 	var x2 = x - $(this.idName).offset().top;
 	var y2 = y - $(this.idName).offset().left;
@@ -824,7 +827,7 @@ function createOptionsMenu(drawToolsDiv)
 	//----- BEGIN ----- LeftPanel --------------------------------------------------
 	var leftPanelHtml = "";
 	leftPanelHtml += 
-		'<label onclick=toggleLineToolsOpen(); class="switch">\
+		'<label onclick=options.setLineToolsOpen(); class="switch">\
 			<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">\
 			<span class="switch-label" data-on="Line Tools Closed" data-off="Line Tools Open"></span>\
 			<span class="switch-handle"></span>\
@@ -859,9 +862,6 @@ function createOptionsMenu(drawToolsDiv)
 	
 }
 
-function toggleLineToolsOpen() {
-	options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
-}
 function setOptionsColor(color,normalfill) {
 	if(normalfill) {
 		options.useStrokeAsFill = true;
