@@ -853,7 +853,7 @@ function createOptionsMenu(drawToolsDiv)
 	
 }
 function setLineToolsOpen() {
-	this.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
+	options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
 }
 
 function setOptionsColor(color,normalfill) {
