@@ -329,9 +329,9 @@ $(document).keydown(function(e) {
 				restoreCanvas();
 				DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 				if(cleanTools.currentToolType === toolType.LINECHAIN)
-					drawSpline(cleanTools.context,pointsToArray(DTPoints),0.5,options.lineToolsShouldClose,fillColor,true);
-				else
 					drawLineChain(cleanTools.context,pointsToArray(DTPoints),true,options.lineToolsShouldClose,fillColor);
+				else
+					drawSpline(cleanTools.context,pointsToArray(DTPoints),0.5,options.lineToolsShouldClose,fillColor,true);
 				DTPoints.length = DTPoints.length - 1;
 			}
 		}
