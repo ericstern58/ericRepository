@@ -105,17 +105,14 @@ function Point(x, y) {
 	this.y = y;
 }
 // Color Object
-function RGBColor(r, g, b, a) {
+function RGBColor(r, g, b/*, a*/) {
 	this.r = r;
 	this.g = g;
 	this.b = b;
-	this.a = (a) ? a : 255;
+	//this.a = (a) ? a : 255;
 }
 RGBColor.prototype.equals = function(color) {
 	return (this.r===color.r && this.g===color.g && this.b===color.b /*&& this.a===color.a*/);
-};
-RGBColor.prototype.setOpacity = function(alpha) {
-	
 };
 // Tool type enum
 var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99};
