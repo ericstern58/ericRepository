@@ -30,19 +30,17 @@ StopWatch.prototype.printElapsed = function (name) {
 };
 
 // Setup Constants
-var cleanTools = {};
-
 cleanTools["PropertyD"] = 4
 var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
-var DTBrushes = [{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},
+var DRAWCEPTION_BRUSHES = [{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},
                  {id: 'brush-12', size: 12},{id: 'brush-35', size: 35}];
 
 // Setup Main Object
 var cleanTools = {
     'id': DRAW_TOOLS_ID,
     'dcToolbar': DRAWCEPTION_TOOLBAR,
-    'dcBrushes': DTBrushes
+    'dcBrushes': DRAWCEPTION_BRUSHES
 };
 
 
@@ -724,13 +722,13 @@ function setupCSS()
 function modifyExistingElements() 
 {
 	/*	// TODO:Figure this out. This doesn't work for some reason, so i hardcoded it.
-	for(var j=0;j<DTBrushes.length;j++)
-		document.getElementById(DTBrushes[j].id).parentNode.onclick = function(){selectBrushAUX(DTBrushes[j].size);};
+	for(var j=0;j<cleanTools.dcBrushes.length;j++)
+		document.getElementById(cleanTools.dcBrushes[j].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[j].size);};
 	*/
-	document.getElementById(DTBrushes[0].id).parentNode.onclick = function(){selectBrushAUX(DTBrushes[0].size);};
-	document.getElementById(DTBrushes[1].id).parentNode.onclick = function(){selectBrushAUX(DTBrushes[1].size);};
-	document.getElementById(DTBrushes[2].id).parentNode.onclick = function(){selectBrushAUX(DTBrushes[2].size);};
-	document.getElementById(DTBrushes[3].id).parentNode.onclick = function(){selectBrushAUX(DTBrushes[3].size);};
+	document.getElementById(cleanTools.dcBrushes[0].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[0].size);};
+	document.getElementById(cleanTools.dcBrushes[1].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[1].size);};
+	document.getElementById(cleanTools.dcBrushes[2].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[2].size);};
+	document.getElementById(cleanTools.dcBrushes[3].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[3].size);};
 	
 	function selectBrushAUX(brushSize) {
 		drawApp.setSize(brushSize);				// Set default brush size
@@ -748,7 +746,7 @@ function createDrawToolsContainer(){
 	var drawToolsDiv = document.createElement('div');
 	drawToolsDiv.id = cleanTools.id;
 	//drawToolsDiv.className = 'drawTools-btn-group';
-	DRAWCEPTION_TOOLBAR.appendChild(drawToolsDiv);
+	cleanTools.dcToolbar.appendChild(drawToolsDiv);
 }
 
 function createDrawToolsElements() 
