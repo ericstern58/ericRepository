@@ -67,7 +67,7 @@ var cleanTools = {
 			return (x>=0 && y>=0 && x<this.canvasWidth && y<this.canvasHeight);
 	},
 	"isWithinDrawingBounds": function(x,y) {
-		return (x>=(-12) && y>=(-12) && x<(cleanTools.canvasWidth+12) && y<(cleanTools.canvasHeight+12));
+		return (x>=(-12) && y>=(-12) && x<(this.canvasWidth+12) && y<(this.canvasHeight+12));
 	},
 	
 };
