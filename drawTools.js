@@ -170,7 +170,6 @@ createDrawToolsElements();      // Create Draw Tools Elements and Interface
 // Setup Mousedown Listener
 cleanTools.canvas.off('mousedown');
 cleanTools.canvas.on('mousedown', function(e){
-	alert('hi');
 	if(0 && $('#drawTools-options').css('opacity') == 1){
 		painting = !1;
 		cleanTools.restoreCanvas();
@@ -452,7 +451,6 @@ function floodFill(ctx,e){
 			x=point.x;
 			y=point.y;
 			if( cleanTools.isWithinCanvasBounds(point) && targetColor.equals(getColorFromPoint(point)) ) {
-				alert("here!!!!!!!!!!!!!!");
 				colorPixel(point,fillColor);
 				queue.push(new Point(x-1,y));
 				queue.push(new Point(x+1,y));
