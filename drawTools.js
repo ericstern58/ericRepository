@@ -433,13 +433,13 @@ function floodFill(ctx,e){
 	var targetColor = getColorFromCoords(e.offsetX,e.offsetY);
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255,255);
-	
+	try{
 	// Note: target color must be different to execute function f
 	// If something is already colored the fill color, nothing needs to be done
 	if(!targetColor.equals(fillColor))
 		floodFillScanline(e.offsetX, e.offsetY, cleanTools.canvasWidth, cleanTools.canvasHeight);
 		//f(e.offsetX,e.offsetY);
-
+}catch(err){alert(err);}
 	ctx.putImageData(p,0,0);
 	
 	function f(xinitial,yinitial){
