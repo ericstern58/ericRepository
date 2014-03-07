@@ -546,7 +546,7 @@ function f(xSeed,ySeed){
 		while(temp.length>0) {
 			var y = temp.pop();
 			var x = temp.pop();
-			colorPixel(new Point(x,y),red);
+			colorPixel(new Point(x,y),green);
 		}
 	}
 	/*
