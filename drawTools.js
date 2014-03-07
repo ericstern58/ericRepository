@@ -453,6 +453,7 @@ function floodFill(ctx,e){
 	
 	
 function f(xSeed,ySeed){
+	var edgeQueue = [];
 	//[x,y,goingUp(1 vs -1)
 	var stack = [[xSeed,ySeed,1]];
 	if(test(xSeed,ySeed-1))
@@ -478,20 +479,30 @@ function f(xSeed,ySeed){
 			var i;
 			// Travel right
 			for(i = x+1; test(i,y); i++) { // While pixel line meets continues to meet its target color
+				var topFillable = test(i,y+direction);
+				var bottomFillable = test(i,y-direction);
+				var topSideUnfillable = !test(i-1,y+direction);
+				var bottomSideUnfillable = !test(i-1,y-direction);
+				//if(topSideUnfillable) {
+				//}
 				// Two if statements to know when to add a new seed
-				if(test(i,y+direction) && !test(i-1,y+direction))
+				if(topFillable && topSideUnfillable)
 					stack.push([i,y+direction,direction]);
-				if(test(i,y-direction) && !test(i-1,y-direction))
+				if(bottomFillable && bottomSideUnfillable)
 					stack.push([i,y-direction,-direction]);
 			}
 			xMax = i-1;
 			
 			// Travel left
 			for(i = x-1; test(i,y); i--) { // While pixel line meets continues to meet its target color
+				var topFillable = test(i,y+direction);
+				var bottomFillable = test(i,y-direction);
+				var topSideUnfillable = !test(i-1,y+direction);
+				var bottomSideUnfillable = !test(i-1,y-direction);
 				// Two if statements to know when to add a new seed
-				if(test(i,y+direction) && !test(i+1,y+direction))
+				if(topFillable && topSideUnfillable)
 					stack.push([i,y+direction,direction]);
-				if(test(i,y-direction) && !test(i+1,y-direction))
+				if(bottomFillable && bottomSideUnfillable)
 					stack.push([i,y-direction,-direction]);
 			}
 			xMin = i+1;
