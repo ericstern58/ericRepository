@@ -433,13 +433,12 @@ function floodFill(ctx,e){
 	var targetColor = getColorFromCoords(e.offsetX,e.offsetY);
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255,255);
-	try{
+	
 	// Note: target color must be different to execute function f
 	// If something is already colored the fill color, nothing needs to be done
 	if(!targetColor.equals(fillColor))
-		floodFillScanline(e.offsetX, e.offsetY, cleanTools.canvasWidth, cleanTools.canvasHeight);
-		//f(e.offsetX,e.offsetY);
-}catch(err){alert(err);}
+		f(e.offsetX,e.offsetY);
+
 	ctx.putImageData(p,0,0);
 	
 	function f(xinitial,yinitial){
@@ -508,84 +507,6 @@ function floodFill(ctx,e){
 		var i = (x + y * w) * 4;
 		return new RGBColor(d[i],d[i+1],d[i+2],d[i+3]);
 	}
-	
-	
-	
-	
-	
-	
-	
-	function test(x,y){
-		var point = new Point(x,y);
-		return (cleanTools.isWithinCanvasBounds(point) && targetColor.equals(getColorFromPoint(point)));
-	}
-	
-	function floodFillScanline(x, y, width, height) {
-	    // xMin, xMax, y, down[true] / up[false], extendLeft, extendRight
-	    var ranges = [[x, x, y, null, true, true]];
-	    colorPixel(new Point(x,y),fillColor);
-	
-	    while(ranges.length) {
-	        var r = ranges.pop();
-	        var down = r[3] === true;
-	        var up =   r[3] === false;
-	
-	        // extendLeft
-	        var minX = r[0];
-	        var maxX = r[1];
-	        var y = r[2];
-	        if(r[4]) {
-	            while(minX>0 &#038;&#038; test(minX-1, y)) {
-	                minX&#8211;;
-					colorPixel(new Point(minX,y),fillColor);
-	            }
-	        }
-	        // extendRight
-	        if(r[5]) {
-	            while(maxX<width-1 &#038;&#038; test(maxX+1, y)) {
-	                maxX++;
-					colorPixel(new Point(maxX,y),fillColor);
-	            }
-	        }
-	        r[0]--;
-	        r[1]++;
-	
-	        function addNextLine(newY, isNext, downwards) {
-	            var rMinX = minX;
-	            var inRange = false;
-	            for(var x=minX; x<=maxX; x++) {
-	                // skip testing, if testing previous line within previous range
-	                var empty = (isNext || (x<r[0] || x>r[1])) &#038;&#038; test(x, newY);
-	                if(!inRange &#038;&#038; empty) {
-	                    rMinX = x;
-	                    inRange = true;
-	                }
-	                else if(inRange &#038;&#038; !empty) {
-	                    ranges.push([rMinX, x-1, newY, downwards, rMinX==minX, false]);
-	                    inRange = false;
-	                }
-	                if(inRange) {
-						colorPixel(new Point(x,newY),fillColor);
-	                }
-	                // skip
-	                if(!isNext &#038;&#038; x==r[0]) {
-	                    x = r[1];
-	                }
-	            }
-	            if(inRange) {
-	                ranges.push([rMinX, x-1, newY, downwards, rMinX==minX, true]);
-	            }
-	        }
-	
-	        if(y<height)
-	            addNextLine(y+1, !up, true);
-	        if(y>0)
-	            addNextLine(y-1, !down, false);
-	    }
-	}
-	
-	
-	
 }
 function drawLineChain(ctx,pts,editMode,closeShape,closedFillColorHex)
 {
