@@ -479,30 +479,21 @@ function f(xSeed,ySeed){
 			var i;
 			// Travel right
 			for(i = x+1; test(i,y); i++) { // While pixel line meets continues to meet its target color
-				var topFillable = test(i,y+direction);
-				var bottomFillable = test(i,y-direction);
-				var topSideUnfillable = !test(i-1,y+direction);
-				var bottomSideUnfillable = !test(i-1,y-direction);
-				//if(topSideUnfillable) {
-				//}
+				
 				// Two if statements to know when to add a new seed
-				if(topFillable && topSideUnfillable)
+				if(test(i,y+direction) && !test(i-1,y+direction))
 					stack.push([i,y+direction,direction]);
-				if(bottomFillable && bottomSideUnfillable)
+				if(test(i,y-direction) && !test(i-1,y-direction))
 					stack.push([i,y-direction,-direction]);
 			}
 			xMax = i-1;
 			
 			// Travel left
 			for(i = x-1; test(i,y); i--) { // While pixel line meets continues to meet its target color
-				var topFillable = test(i,y+direction);
-				var bottomFillable = test(i,y-direction);
-				var topSideUnfillable = !test(i-1,y+direction);
-				var bottomSideUnfillable = !test(i-1,y-direction);
 				// Two if statements to know when to add a new seed
-				if(topFillable && topSideUnfillable)
+				if(test(i,y+direction) && !test(i+1,y+direction))
 					stack.push([i,y+direction,direction]);
-				if(bottomFillable && bottomSideUnfillable)
+				if(test(i,y-direction) && !test(i+1,y-direction))
 					stack.push([i,y-direction,-direction]);
 			}
 			xMin = i+1;
