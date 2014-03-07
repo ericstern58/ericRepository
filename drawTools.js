@@ -457,12 +457,11 @@ function floodFill(ctx,e){
 	
 	
 function f(xSeed,ySeed){
-	var edgeQueue = [];
 	//[x,y,goingUp(1 vs -1)
 	var stack = [[xSeed,ySeed,1]];
 	if(test(xSeed,ySeed-1))
 		stack.push([xSeed,ySeed-1,-1]);
-	var edgeQueue = [];
+	var edgeArray = [];
 	
 	var x = 0;
 	var y = 0;
@@ -483,31 +482,45 @@ function f(xSeed,ySeed){
 			var i;
 			// Travel right
 			for(i = x+1; test(i,y); i++) { // While pixel line meets continues to meet its target color
+				// Setup Bools
 				var topFillable = test(i,y+direction);
 				var bottomFillable = test(i,y-direction);
 				var topLeftUnfillable = (!test(i-1,y+direction));
 				var bottomLeftUnfillable = (!test(i-1,y-direction));
+				// Check for boundary pixels
+				if((!topFillable) && topLeftUnfillable)
+					edgeArray.push(i,(y+direction));
+				if((!bottomFillable) && bottomLeftUnfillable)
+					edgeArray.push(i,(y-direction));
 				// Two if statements to know when to add a new seed
 				if(topFillable && topLeftUnfillable)
 					stack.push([i,y+direction,direction]);
 				if(bottomFillable && bottomLeftUnfillable)
 					stack.push([i,y-direction,-direction]);
 			}
-			xMax = i-1;
+			edgeArray.push(i,y); // Push right boundary pixel
+			xMax = i-1; // Save max fill pixel
 			
 			// Travel left
 			for(i = x-1; test(i,y); i--) { // While pixel line meets continues to meet its target color
+				// Setup Bools
 				var topFillable = test(i,y+direction);
 				var bottomFillable = test(i,y-direction);
-				var topLeftUnfillable = (!test(i+1,y+direction));
-				var bottomLeftUnfillable = (!test(i+1,y-direction));
+				var topRightUnfillable = (!test(i+1,y+direction));
+				var bottomRightUnfillable = (!test(i+1,y-direction));
+				// Check for boundary pixels
+				if((!topFillable) && topRightUnfillable)
+					edgeArray.push(i,(y+direction));
+				if((!bottomFillable) && bottomRightUnfillable)
+					edgeArray.push(i,(y-direction));
 				// Two if statements to know when to add a new seed
-				if(topFillable && topLeftUnfillable)
+				if(topFillable && topRightUnfillable)
 					stack.push([i,y+direction,direction]);
-				if(bottomFillable && bottomLeftUnfillable)
+				if(bottomFillable && bottomRightUnfillable)
 					stack.push([i,y-direction,-direction]);
 			}
-			xMin = i+1;
+			edgeArray.push(i,y); // Push left boundary pixel
+			xMin = i+1;// Save min fill pixel
 			paint(xMin,xMax,y,fillColor);
 		}
 	}
