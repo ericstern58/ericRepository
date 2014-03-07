@@ -133,7 +133,7 @@ function RGBColor(r, g, b, a) {
 	this.r = r;
 	this.g = g;
 	this.b = b;
-	this.a = (a) ? a : 255;
+	this.a = (a) ? a : 0;
 }
 RGBColor.prototype.equals = function(color) {
 	return (this.r===color.r && this.g===color.g && this.b===color.b && this.a===color.a);
