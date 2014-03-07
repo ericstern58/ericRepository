@@ -524,6 +524,12 @@ function f(xSeed,ySeed){
 			paint(xMin,xMax,y,fillColor);
 		}
 	}
+	var red = new RGBColor(255,0,0,255);
+	while(edgeArray.length>0) {
+		var y = edgeArray.pop();
+		var x = edgeArray.pop();
+		colorPixel(new Point(x,y),red);
+	}
 }
 function paint(xMin,xMax,y,color) {
 	//alert("Starting linepaint");
