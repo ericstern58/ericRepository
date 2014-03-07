@@ -468,8 +468,8 @@ function f(xSeed,ySeed){
 			if(test(x,y+direction))
 				stack.push([x,y+direction,direction]);
 			
-			var rightBound;
-			var leftBound;
+			var xMax;
+			var xMin;
 			var i;
 			// Travel right
 			for(i = x+1; test(i,y); i++) { // While pixel line meets continues to meet its target color
@@ -479,7 +479,7 @@ function f(xSeed,ySeed){
 				if(test(i,y-direction) && !test(x-1,y-direction))
 					stack.push([x,y-direction,direction]);
 			}
-			rightBound = i-1;
+			xMax = i-1;
 			
 			// Travel left
 			for(i = x-1; test(i,y); i--) { // While pixel line meets continues to meet its target color
@@ -489,7 +489,7 @@ function f(xSeed,ySeed){
 				if(test(i,y-direction) && !test(x+1,y-direction))
 					stack.push([x,y-direction,direction]);
 			}
-			leftBound = i+1;
+			xMin = i+1;
 			paint(xMin,xMax,y,fillColor);
 		}
 	}
