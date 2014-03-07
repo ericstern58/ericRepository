@@ -74,8 +74,11 @@ var cleanTools = {
 var xfasdfadf = 2+3;
 var doasfasdf = xfasdfadf +34;
 var doasdsasdffasdf = xfasdfadf +33;
+
+
+
+
 var doasdsasdffadsdf = doasdsasdffasdf +33;
-var doasdsad = doasdsasdffasdf +xfasdfadf;
 
 
 // Setup Some Global Variables
