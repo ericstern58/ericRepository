@@ -467,10 +467,10 @@ function f(xSeed,ySeed){
 	var resetArray = function(resetRightOne){
 		if(resetRightOne) {
 			edgeArrayRight.push(currentEdgeArrayRight);
-			edgeArrayRight.length = 0;
+			currentEdgeArrayRight.length = 0;
 		} else {
 			edgeArrayLeft.push(currentEdgeArrayLeft);
-			edgeArrayLeft.length = 0;
+			currentEdgeArrayLeft.length = 0;
 		}
 	}
 	
