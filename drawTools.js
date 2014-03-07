@@ -211,11 +211,12 @@ cleanTools.canvas.on('mousedown', function(e){
 $(document).off('mousemove');
 $(document).on('mousemove', function(e){
 	if(cleanTools.isWithinCanvasBounds(e.pageX-cleanTools.canvasOffset.left,e.pageX-cleanTools.canvasOffset.left)) {
-		var p = cleanTools.context.getImageData(x, y, 1, 1).data;
 		try{
-		
-		outputDebug("[r:" +p[0] + ", g:" + p[1] + ", b:" + p[2] + ", a:" + p[3] + "]");
+			var p = cleanTools.context.getImageData(x, y, 1, 1).data;
+			outputDebug("[r:" +p[0] + ", g:" + p[1] + ", b:" + p[2] + ", a:" + p[3] + "]");
 		} catch(err){alert(err);}
+	} else {
+		outputDebug("Out of bounds.")
 	}
 	if(cleanTools.currentToolType === toolType.BRUSH)
 		return;	// default behaviors
