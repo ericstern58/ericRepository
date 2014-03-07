@@ -491,7 +491,7 @@ function f(xSeed,ySeed){
 				if(test(i,y+direction) && !test(x+1,y+direction))
 					stack.push([i,y+direction,direction]);
 				if(test(i,y-direction) && !test(x+1,y-direction))
-					stack.push([x,y-direction,direction]);
+					stack.push([x,y-direction,-direction]);
 			}
 			xMin = i+1;
 			paint(xMin,xMax,y,fillColor);
