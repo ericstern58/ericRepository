@@ -441,7 +441,83 @@ function floodFill(ctx,e){
 
 	ctx.putImageData(p,0,0);
 	
-	function f(xinitial,yinitial){
+	//----------------------------------------------------------------------------------------------------------
+	
+	
+	
+	
+	
+	
+	
+function f(xSeed,ySeed){
+	//[x,y,goingUp(1 vs -1)
+	var stack = [[xSeed,ySeed,1]];
+	var edgeQueue = [];
+	
+	var x = 0;
+	var y = 0;
+	var direction = 0;
+	
+	while(stack.length>0) {
+		var line = stack.pop();
+		x = line[0];
+		y = line[1];
+		direction = line[2];
+		if(test(x,y)) {	// If pixel hasn't been colored continue.
+			// Check if pixel above is eligible to be seed pixel for next line.
+			if(test(x,y+direction))
+				stack.push([x,y+direction,direction]);
+			
+			var rightBound;
+			var leftBound;
+			var i;
+			// Travel right
+			for(i = x+1; test(i,y); i++) { // While pixel line meets continues to meet its target color
+				// Two if statements to know when to add a new seed
+				if(test(i,y+direction) && !test(x-1,y+direction))
+					stack.push([i,y+direction,direction]);
+				if(test(i,y-direction) && !test(x-1,y-direction))
+					stack.push([x,y-direction,direction]);
+			}
+			rightBound = i-1;
+			
+			// Travel left
+			for(i = x-1; test(i,y); i--) { // While pixel line meets continues to meet its target color
+				// Two if statements to know when to add a new seed
+				if(test(i,y+direction) && !test(x+1,y+direction))
+					stack.push([i,y+direction,direction]);
+				if(test(i,y-direction) && !test(x+1,y-direction))
+					stack.push([x,y-direction,direction]);
+			}
+			leftBound = i+1;
+			paint(xMin,xMax,y,fillColor);
+		}
+	}
+}
+function paint(xMin,xMax,y,color) {
+	var r = color.r, g = color.g, b = color.b, a = color.a;
+	var limit = xMax + 1;
+	for(var i = (point.x + point.y * w) * 4; i<limit; i++) {
+		d[i]=r;
+		d[i+1]=g;
+		d[i+2]=b;
+		d[i+3]=a;
+	}
+}
+function test(x,y) {
+	return (cleanTools.isWithinCanvasBounds(point) && targetColor.equals(getColorFromPoint(point)));
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//------------------------------------------------------------------------------------------------------------
+	function f2(xinitial,yinitial){
 		var queue = [new Point(xinitial,yinitial)];
 		var edgeQueue = [];
 		var x = 0;
