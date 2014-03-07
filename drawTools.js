@@ -74,6 +74,8 @@ var cleanTools = {
 var xfasdfadf = 2+3;
 var doasfasdf = xfasdfadf +34;
 
+var sdsdfas = xfasdfadf +36;
+
 // Setup Some Global Variables
 window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
 cleanTools.context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
