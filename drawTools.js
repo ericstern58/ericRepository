@@ -505,6 +505,7 @@ function paint(xMin,xMax,y,color) {
 	}
 }
 function test(x,y) {
+	var point = new Point(x,y);
 	return (cleanTools.isWithinCanvasBounds(point) && targetColor.equals(getColorFromPoint(point)));
 }
 	
