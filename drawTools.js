@@ -499,7 +499,7 @@ function f(xSeed,ySeed){
 function paint(xMin,xMax,y,color) {
 	//alert("Starting linepaint");
 	var r = color.r, g = color.g, b = color.b, a = color.a;
-	var limit = xMax + 1;
+	var limit = (xMax+1 + y * w) * 4;
 	for(var i = (xMin + y * w) * 4; i<limit; i+=4) {
 		d[i]=r;
 		d[i+1]=g;
