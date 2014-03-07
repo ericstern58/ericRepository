@@ -210,7 +210,7 @@ cleanTools.canvas.on('mousedown', function(e){
 // Setup Mousemove Listener
 $(document).off('mousemove');
 $(document).on('mousemove', function(e){
-	if(cleanTools.isWithinCanvasBounds(e.pageX-cleanTools.canvasOffset.left,e.pageY-cleanTools.canvasOffset.top)) {
+/*	if(cleanTools.isWithinCanvasBounds(e.pageX-cleanTools.canvasOffset.left,e.pageY-cleanTools.canvasOffset.top)) {
 		try{
 			var p = cleanTools.context.getImageData(e.pageX-cleanTools.canvasOffset.left, e.pageY-cleanTools.canvasOffset.top, 1, 1).data;
 			outputDebug("[r:" +p[0] + ", g:" + p[1] + ", b:" + p[2] + ", a:" + p[3] + "]");
@@ -218,6 +218,7 @@ $(document).on('mousemove', function(e){
 	} else {
 		outputDebug("Out of bounds.")
 	}
+	*/
 	if(cleanTools.currentToolType === toolType.BRUSH)
 		return;	// default behaviors
 	else if(!cleanTools.toolInUse)
