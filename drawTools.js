@@ -462,7 +462,17 @@ function f(xSeed,ySeed){
 	var edgeArrayRight = [];
 	var edgeArrayLeft = [];
 	var currentEdgeArrayRight = [];
-	var currentEdgeArrayLeft = []
+	var currentEdgeArrayLeft = [];
+	
+	var resetArray = function(resetRightOne){
+		if(resetRightOne) {
+			edgeArrayRight.push(currentEdgeArrayRight);
+			edgeArrayRight.length = 0;
+		} else {
+			edgeArrayLeft.push(currentEdgeArrayLeft);
+			edgeArrayLeft.length = 0;
+		}
+	}
 	
 	var x = 0;
 	var y = 0;
@@ -488,11 +498,7 @@ function f(xSeed,ySeed){
 				var bottomFillable = test(i,y-direction);
 				var topLeftUnfillable = (!test(i-1,y+direction));
 				var bottomLeftUnfillable = (!test(i-1,y-direction));
-				// Check for boundary pixels
-				/*if((!topFillable) && topLeftUnfillable)
-					edgeArray.push(i,(y+direction));
-				if((!bottomFillable) && bottomLeftUnfillable)
-					edgeArray.push(i,(y-direction));*/
+
 				// Two if statements to know when to add a new seed
 				if(topFillable && topLeftUnfillable)
 					stack.push([i,y+direction,direction]);
@@ -509,24 +515,23 @@ function f(xSeed,ySeed){
 				var bottomFillable = test(i,y-direction);
 				var topRightUnfillable = (!test(i+1,y+direction));
 				var bottomRightUnfillable = (!test(i+1,y-direction));
-				// Check for boundary pixels
-				/*if((!topFillable) && topRightUnfillable)
-					edgeArray.push(i,(y+direction));
-				if((!bottomFillable) && bottomRightUnfillable)
-					edgeArray.push(i,(y-direction));*/
+
 				// Two if statements to know when to add a new seed
-				if(topFillable && topRightUnfillable)
+				if(topFillable && topRightUnfillable) {
 					stack.push([i,y+direction,direction]);
-				if(bottomFillable && bottomRightUnfillable)
+					
+				}
+				if(bottomFillable && bottomRightUnfillable) {
 					stack.push([i,y-direction,-direction]);
+				}
 			}
 			currentEdgeArrayLeft.push(i,y); // Push left boundary pixel
 			xMin = i+1;// Save min fill pixel
 			paint(xMin,xMax,y,fillColor);
 		}
 	}
-	edgeArrayRight.push(currentEdgeArrayRight);
-	edgeArrayLeft.push(currentEdgeArrayLeft);
+	resetArray(true);
+	resetArray(false);
 	
 	var red = new RGBColor(255,0,0,255);
 	var green = new RGBColor(0,255,0,255);
