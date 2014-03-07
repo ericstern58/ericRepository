@@ -497,7 +497,7 @@ function f(xSeed,ySeed){
 function paint(xMin,xMax,y,color) {
 	var r = color.r, g = color.g, b = color.b, a = color.a;
 	var limit = xMax + 1;
-	for(var i = (point.x + point.y * w) * 4; i<limit; i++) {
+	for(var i = (xMin + y * w) * 4; i<limit; i++) {
 		d[i]=r;
 		d[i+1]=g;
 		d[i+2]=b;
