@@ -488,17 +488,17 @@ function f(xSeed,ySeed){
 				var topLeftUnfillable = (!test(i-1,y+direction));
 				var bottomLeftUnfillable = (!test(i-1,y-direction));
 				// Check for boundary pixels
-				if((!topFillable) && topLeftUnfillable)
+				/*if((!topFillable) && topLeftUnfillable)
 					edgeArray.push(i,(y+direction));
 				if((!bottomFillable) && bottomLeftUnfillable)
-					edgeArray.push(i,(y-direction));
+					edgeArray.push(i,(y-direction));*/
 				// Two if statements to know when to add a new seed
 				if(topFillable && topLeftUnfillable)
 					stack.push([i,y+direction,direction]);
 				if(bottomFillable && bottomLeftUnfillable)
 					stack.push([i,y-direction,-direction]);
 			}
-			edgeArray.push(i,y); // Push right boundary pixel
+			//edgeArray.push(i,y); // Push right boundary pixel
 			xMax = i-1; // Save max fill pixel
 			
 			// Travel left
@@ -509,17 +509,17 @@ function f(xSeed,ySeed){
 				var topRightUnfillable = (!test(i+1,y+direction));
 				var bottomRightUnfillable = (!test(i+1,y-direction));
 				// Check for boundary pixels
-				if((!topFillable) && topRightUnfillable)
+				/*if((!topFillable) && topRightUnfillable)
 					edgeArray.push(i,(y+direction));
 				if((!bottomFillable) && bottomRightUnfillable)
-					edgeArray.push(i,(y-direction));
+					edgeArray.push(i,(y-direction));*/
 				// Two if statements to know when to add a new seed
 				if(topFillable && topRightUnfillable)
 					stack.push([i,y+direction,direction]);
 				if(bottomFillable && bottomRightUnfillable)
 					stack.push([i,y-direction,-direction]);
 			}
-			edgeArray.push(i,y); // Push left boundary pixel
+			//edgeArray.push(i,y); // Push left boundary pixel
 			xMin = i+1;// Save min fill pixel
 			paint(xMin,xMax,y,fillColor);
 		}
