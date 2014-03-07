@@ -462,6 +462,10 @@ function f(xSeed,ySeed){
 	if(test(xSeed,ySeed-1))
 		stack.push([xSeed,ySeed-1,-1]);
 	var edgeArray = [];
+	var edgeArrayRight = [];
+	var edgeArrayLeft = [];
+	var currentEdgeArrayRight = [];
+	var currentEdgeArrayLeft = []
 	
 	var x = 0;
 	var y = 0;
@@ -498,7 +502,7 @@ function f(xSeed,ySeed){
 				if(bottomFillable && bottomLeftUnfillable)
 					stack.push([i,y-direction,-direction]);
 			}
-			edgeArray.push(i,y); // Push right boundary pixel
+			currentEdgeArrayRight.push(i,y); // Push right boundary pixel
 			xMax = i-1; // Save max fill pixel
 			
 			// Travel left
@@ -519,17 +523,38 @@ function f(xSeed,ySeed){
 				if(bottomFillable && bottomRightUnfillable)
 					stack.push([i,y-direction,-direction]);
 			}
-			edgeArray.push(i,y); // Push left boundary pixel
+			currentEdgeArrayLeft.push(i,y); // Push left boundary pixel
 			xMin = i+1;// Save min fill pixel
 			paint(xMin,xMax,y,fillColor);
 		}
 	}
+	edgeArrayRight.push(currentEdgeArrayRight);
+	edgeArrayLeft.push(currentEdgeArrayLeft);
+	
 	var red = new RGBColor(255,0,0,255);
+	var green = new RGBColor(0,255,0,255);
+	while(edgeArrayRight.length>0) {
+		var temp = edgeArrayRight.pop();
+		while(temp.length>0) {
+			var y = temp.pop();
+			var x = temp.pop();
+			colorPixel(new Point(x,y),red);
+		}
+	}
+	while(edgeArrayLeft.length>0) {
+		var temp = edgeArrayLeft.pop();
+		while(temp.length>0) {
+			var y = temp.pop();
+			var x = temp.pop();
+			colorPixel(new Point(x,y),red);
+		}
+	}
+	/*
 	while(edgeArray.length>0) {
 		var y = edgeArray.pop();
 		var x = edgeArray.pop();
 		colorPixel(new Point(x,y),red);
-	}
+	}*/
 }
 function paint(xMin,xMax,y,color) {
 	//alert("Starting linepaint");
