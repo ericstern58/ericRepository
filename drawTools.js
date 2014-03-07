@@ -74,8 +74,6 @@ var cleanTools = {
 var xfasdfadf = 2+3;
 var doasfasdf = xfasdfadf +34;
 
-var sdsdfas = xfasdfadf +36;
-
 // Setup Some Global Variables
 window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
 cleanTools.context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
@@ -483,7 +481,7 @@ function f(xSeed,ySeed){
 				if(test(i,y+direction) && !test(i-1,y+direction))
 					stack.push([i,y+direction,direction]);
 				if(test(i,y-direction) && !test(i-1,y-direction))
-					stack.push([i,y-direction,direction]);
+					stack.push([i,y-direction,-direction]);
 			}
 			xMax = i-1;
 			
