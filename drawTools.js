@@ -35,7 +35,7 @@ var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
 var DRAWCEPTION_BRUSHES = [{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},
                  {id: 'brush-12', size: 12},{id: 'brush-35', size: 35}];
-alert('hi');
+
 // Setup Clean Tools Object
 var cleanTools = {
 	'id': DRAW_TOOLS_ID,
@@ -170,6 +170,7 @@ createDrawToolsElements();      // Create Draw Tools Elements and Interface
 // Setup Mousedown Listener
 cleanTools.canvas.off('mousedown');
 cleanTools.canvas.on('mousedown', function(e){
+	alert('hi');
 	if(0 && $('#drawTools-options').css('opacity') == 1){
 		painting = !1;
 		cleanTools.restoreCanvas();
