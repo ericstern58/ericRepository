@@ -73,6 +73,7 @@ var cleanTools = {
 };
 var xfasdfadf = 2+3;
 var doasfasdf = xfasdfadf +34;
+var doasdsasdffasdf = xfasdfadf +33;
 
 // Setup Some Global Variables
 window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
