@@ -437,8 +437,8 @@ function floodFill(ctx,e){
 	// Note: target color must be different to execute function f
 	// If something is already colored the fill color, nothing needs to be done
 	if(!targetColor.equals(fillColor))
-		colorPixel(new Point(5,5),fillColor);
-		//paint(5,w-5,50,fillColor);
+		//colorPixel(new Point(5,5),fillColor);
+		paint(5,w-5,50,fillColor);
 		//f(e.offsetX,e.offsetY);
 
 	ctx.putImageData(p,0,0);
@@ -497,16 +497,16 @@ function f(xSeed,ySeed){
 	}
 }
 function paint(xMin,xMax,y,color) {
-	alert("Starting linepaint");
+	//alert("Starting linepaint");
 	var r = color.r, g = color.g, b = color.b, a = color.a;
 	var limit = xMax + 1;
-	for(var i = (xMin + y * w) * 4; i<limit; i++) {
+	for(var i = (xMin + y * w) * 4; i<limit; i+=4) {
 		d[i]=r;
 		d[i+1]=g;
 		d[i+2]=b;
 		d[i+3]=a;
 	}
-	alert("Ending linepaint");
+	//alert("Ending linepaint");
 }
 function test(x,y) {
 	var point = new Point(x,y);
