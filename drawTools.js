@@ -210,7 +210,10 @@ cleanTools.canvas.on('mousedown', function(e){
 // Setup Mousemove Listener
 $(document).off('mousemove');
 $(document).on('mousemove', function(e){
-	
+	if(cleanTools.isWithinCanvasBounds(e.pageX-cleanTools.canvasOffset.left,e.pageX-cleanTools.canvasOffset.left)) {
+		//outputDebug("[r:" + r + ", g:" + g + ", b:" + b + ", a:" + a + "]");
+		
+	}
 	if(cleanTools.currentToolType === toolType.BRUSH)
 		return;	// default behaviors
 	else if(!cleanTools.toolInUse)
@@ -218,7 +221,7 @@ $(document).on('mousemove', function(e){
 		
 	// Translate mouse location to point relative to canvas
 	cleanTools.mouseX = e.pageX-cleanTools.canvasOffset.left;
-	cleanTools.mouseY = e.pageY-cleanTools.canvasOffset.top;
+	cleanTools.mouseY = e.pageX-cleanTools.canvasOffset.left;
 	
 	if(cleanTools.currentToolType === toolType.FILL) {
 		// Do nothing
@@ -483,21 +486,21 @@ function floodFill(ctx,e){
 		d[i]=color.r;
 		d[i+1]=color.g;
 		d[i+2]=color.b;
-		d[i+3]=255;
+		d[i+3]=color.a;
 	}
 	// [Experimental] Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
 	function colorPixelBlend(point,color1,color2){
 		var r=Math.ceil((color1.r+color2.r)/2);
 		var g=Math.ceil((color1.g+color2.g)/2);
 		var b=Math.ceil((color1.b+color2.b)/2);
-		colorPixel(point,new RGBColor(r,g,b));
+		colorPixel(point,new RGBColor(r,g,b,255));
 	}
 	function getColorFromPoint(point){
 		return getColorFromCoords(point.x,point.y);
 	}
 	function getColorFromCoords(x,y){
 		var i = (x + y * w) * 4;
-		return new RGBColor(d[i],d[i+1],d[i+2]);
+		return new RGBColor(d[i],d[i+1],d[i+2],d[i+3]);
 	}
 }
 function drawLineChain(ctx,pts,editMode,closeShape,closedFillColorHex)
