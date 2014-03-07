@@ -480,10 +480,10 @@ function f(xSeed,ySeed){
 			// Travel right
 			for(i = x+1; test(i,y); i++) { // While pixel line meets continues to meet its target color
 				// Two if statements to know when to add a new seed
-				if(test(i,y+direction) && !test(x-1,y+direction))
+				if(test(i,y+direction) && !test(i-1,y+direction))
 					stack.push([i,y+direction,direction]);
-				if(test(i,y-direction) && !test(x-1,y-direction))
-					stack.push([x,y-direction,direction]);
+				if(test(i,y-direction) && !test(i-1,y-direction))
+					stack.push([i,y-direction,direction]);
 			}
 			xMax = i-1;
 			
