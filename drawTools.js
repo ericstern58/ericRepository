@@ -488,10 +488,10 @@ function f(xSeed,ySeed){
 				var topLeftUnfillable = (!test(i-1,y+direction));
 				var bottomLeftUnfillable = (!test(i-1,y-direction));
 				// Check for boundary pixels
-				if((!topFillable) && topLeftUnfillable)
+				/*if((!topFillable) && topLeftUnfillable)
 					edgeArray.push(i,(y+direction));
 				if((!bottomFillable) && bottomLeftUnfillable)
-					edgeArray.push(i,(y-direction));
+					edgeArray.push(i,(y-direction));*/
 				// Two if statements to know when to add a new seed
 				if(topFillable && topLeftUnfillable)
 					stack.push([i,y+direction,direction]);
