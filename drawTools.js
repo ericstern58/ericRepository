@@ -455,8 +455,8 @@ function floodFill(ctx,e){
 function f(xSeed,ySeed){
 	//[x,y,goingUp(1 vs -1)
 	var stack = [[xSeed,ySeed,1]];
-	if(test(x,y-1))
-		stack.push([x,y-1,-1]);
+	if(test(xSeed,ySeed-1))
+		stack.push([xSeed,ySeed-1,-1]);
 	var edgeQueue = [];
 	
 	var x = 0;
