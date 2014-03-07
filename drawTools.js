@@ -75,7 +75,6 @@ var xfasdfadf = 2+3;
 var doasfasdf = xfasdfadf +34;
 
 var sdsdfas = xfasdfadf +36;
-var doddfssfasdf = xfasdfadf +323;
 
 // Setup Some Global Variables
 window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
@@ -457,6 +456,8 @@ function floodFill(ctx,e){
 function f(xSeed,ySeed){
 	//[x,y,goingUp(1 vs -1)
 	var stack = [[xSeed,ySeed,1]];
+	if(test(x,y-1))
+		stack.push([x,y-1,-1]);
 	var edgeQueue = [];
 	
 	var x = 0;
