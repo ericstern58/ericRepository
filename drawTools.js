@@ -496,6 +496,7 @@ function f(xSeed,ySeed){
 	}
 }
 function paint(xMin,xMax,y,color) {
+	alert("Starting linepaint");
 	var r = color.r, g = color.g, b = color.b, a = color.a;
 	var limit = xMax + 1;
 	for(var i = (xMin + y * w) * 4; i<limit; i++) {
@@ -504,6 +505,7 @@ function paint(xMin,xMax,y,color) {
 		d[i+2]=b;
 		d[i+3]=a;
 	}
+	alert("Ending linepaint");
 }
 function test(x,y) {
 	var point = new Point(x,y);
