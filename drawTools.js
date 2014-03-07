@@ -221,7 +221,7 @@ $(document).on('mousemove', function(e){
 		
 	// Translate mouse location to point relative to canvas
 	cleanTools.mouseX = e.pageX-cleanTools.canvasOffset.left;
-	cleanTools.mouseY = e.pageX-cleanTools.canvasOffset.left;
+	cleanTools.mouseY = e.pageX-cleanTools.canvasOffset.top;
 	
 	if(cleanTools.currentToolType === toolType.FILL) {
 		// Do nothing
