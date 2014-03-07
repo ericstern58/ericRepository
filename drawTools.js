@@ -438,8 +438,8 @@ function floodFill(ctx,e){
 	// If something is already colored the fill color, nothing needs to be done
 	if(!targetColor.equals(fillColor))
 		//colorPixel(new Point(5,5),fillColor);
-		paint(5,w-5,50,fillColor);
-		//f(e.offsetX,e.offsetY);
+		//paint(5,w-5,50,fillColor);
+		f(e.offsetX,e.offsetY);
 
 	ctx.putImageData(p,0,0);
 	
