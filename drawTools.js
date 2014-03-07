@@ -210,10 +210,10 @@ cleanTools.canvas.on('mousedown', function(e){
 // Setup Mousemove Listener
 $(document).off('mousemove');
 $(document).on('mousemove', function(e){
-	if(cleanTools.isWithinCanvasBounds(e.pageX-cleanTools.canvasOffset.left,e.pageX-cleanTools.canvasOffset.left)) {
+	//if(cleanTools.isWithinCanvasBounds(e.pageX-cleanTools.canvasOffset.left,e.pageX-cleanTools.canvasOffset.left)) {
 		//outputDebug("[r:" + r + ", g:" + g + ", b:" + b + ", a:" + a + "]");
 		
-	}
+	//}
 	if(cleanTools.currentToolType === toolType.BRUSH)
 		return;	// default behaviors
 	else if(!cleanTools.toolInUse)
