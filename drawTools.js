@@ -498,7 +498,7 @@ function f(xSeed,ySeed){
 				if(bottomFillable && bottomLeftUnfillable)
 					stack.push([i,y-direction,-direction]);
 			}
-			//edgeArray.push(i,y); // Push right boundary pixel
+			edgeArray.push(i,y); // Push right boundary pixel
 			xMax = i-1; // Save max fill pixel
 			
 			// Travel left
@@ -519,7 +519,7 @@ function f(xSeed,ySeed){
 				if(bottomFillable && bottomRightUnfillable)
 					stack.push([i,y-direction,-direction]);
 			}
-			//edgeArray.push(i,y); // Push left boundary pixel
+			edgeArray.push(i,y); // Push left boundary pixel
 			xMin = i+1;// Save min fill pixel
 			paint(xMin,xMax,y,fillColor);
 		}
