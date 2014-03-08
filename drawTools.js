@@ -529,9 +529,11 @@ function f(xSeed,ySeed){
 				if(topFillable && topRightUnfillable) {
 					stack.push([i,y+direction,direction]);
 					resetArray(true);
+					resetArray(false);
 				}
 				if(bottomFillable && bottomRightUnfillable) {
 					stack.push([i,y-direction,-direction]);
+					resetArray(true);
 					resetArray(false);
 				}
 			}
