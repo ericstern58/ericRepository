@@ -465,7 +465,9 @@ function f(xSeed,ySeed){
 	var currentEdgeArrayLeft = [];
 	
 	var addToEdgeArray = function(addToRightOne,x,y){
-		if(addToRightOne) {
+		if(cleanTools.isWithinCanvasBounds(x,y)) {
+			return;
+		} else if(addToRightOne) {
 			currentEdgeArrayRight.push(x,y);
 		} else {
 			currentEdgeArrayLeft.push(x,y);
