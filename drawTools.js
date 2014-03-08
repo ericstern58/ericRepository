@@ -464,6 +464,13 @@ function f(xSeed,ySeed){
 	var currentEdgeArrayRight = [];
 	var currentEdgeArrayLeft = [];
 	
+	var addToEdgeArray = function(addToRightOne,x,y){
+		if(addToRightOne) {
+			currentEdgeArrayRight.push(x,y);
+		} else {
+			currentEdgeArrayLeft.push(x,y);
+		}
+	}
 	var resetArray = function(resetRightOne){
 		if(resetRightOne) {
 			edgeArrayRight.push(currentEdgeArrayRight);
@@ -505,7 +512,7 @@ function f(xSeed,ySeed){
 				if(bottomFillable && bottomLeftUnfillable)
 					stack.push([i,y-direction,-direction]);
 			}
-			currentEdgeArrayRight.push(i,y); // Push right boundary pixel
+			addToEdgeArray(true,i,y); // Push right boundary pixel
 			xMax = i-1; // Save max fill pixel
 			
 			// Travel left
@@ -525,7 +532,7 @@ function f(xSeed,ySeed){
 					stack.push([i,y-direction,-direction]);
 				}
 			}
-			currentEdgeArrayLeft.push(i,y); // Push left boundary pixel
+			addToEdgeArray(false,i,y); // Push right boundary pixel
 			xMin = i+1;// Save min fill pixel
 			paint(xMin,xMax,y,fillColor);
 		}
