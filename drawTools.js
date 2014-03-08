@@ -553,11 +553,10 @@ function f(xSeed,ySeed){
 	colorArrayLeft.push(new RGBColor(0,255,255,255)); //cyan
 	colorArrayLeft.push(new RGBColor(0,0,255,255));   //blue
 	
-	
 	while(edgeArrayRight.length>0) {
 		var temp = edgeArrayRight.pop();
+		var c = colorArrayRight[temp.length%3];
 		while(temp.length>0) {
-			var c = colorArrayRight[temp.length%3];
 			var y = temp.pop();
 			var x = temp.pop();
 			colorPixel(new Point(x,y),c);
@@ -565,8 +564,8 @@ function f(xSeed,ySeed){
 	}
 	while(edgeArrayLeft.length>0) {
 		var temp = edgeArrayLeft.pop();
+		var c = colorArrayLeft[temp.length%3];
 		while(temp.length>0) {
-			var c = colorArrayLeft[temp.length%3];
 			var y = temp.pop();
 			var x = temp.pop();
 			colorPixel(new Point(x,y),c);
