@@ -74,7 +74,7 @@ var cleanTools = {
 var xfasdfadf = 2+3;
 var doasfasdf = xfasdfadf +34;
 var doasdsasdffasdf = xfasdfadf +33;
-
+var whatahwash = xfasdfadf * doasdsasdffasdf;
 
 // Setup Some Global Variables
 window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
@@ -465,7 +465,7 @@ function f(xSeed,ySeed){
 	var currentEdgeArrayLeft = [];
 	
 	var addToEdgeArray = function(addToRightOne,x,y){
-		if(cleanTools.isWithinCanvasBounds(x,y)) {
+		if(!cleanTools.isWithinCanvasBounds(x,y)) {
 			return;
 		} else if(addToRightOne) {
 			currentEdgeArrayRight.push(x,y);
