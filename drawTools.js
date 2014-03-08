@@ -616,7 +616,7 @@ function test(x,y) {
 			point=queue.shift();
 			x=point.x;
 			y=point.y;
-			if( cleanTools.isWithinCanvasBounds(point) && targetColor.equals(getColorFromPoint(point)) ) {
+			if( targetColor.equals(getColorFromPoint(point)) && cleanTools.isWithinCanvasBounds(point) ) {
 				colorPixel(point,fillColor);
 				queue.push(new Point(x-1,y));
 				queue.push(new Point(x+1,y));
