@@ -475,10 +475,10 @@ function f(xSeed,ySeed){
 	}
 	var resetArray = function(resetRightOne){
 		if(resetRightOne) {
-			edgeArrayRight[edgeArrayRight.length] = (currentEdgeArrayRight);
+			edgeArrayRight.push(currentEdgeArrayRight);
 			currentEdgeArrayRight=[];
 		} else {
-			edgeArrayLeft[edgeArrayLeft.length] = (currentEdgeArrayLeft);
+			edgeArrayLeft.push(currentEdgeArrayLeft);
 			currentEdgeArrayLeft=[];
 		}
 	}
@@ -528,11 +528,11 @@ function f(xSeed,ySeed){
 				// Two if statements to know when to add a new seed
 				if(topFillable && topRightUnfillable) {
 					stack.push([i,y+direction,direction]);
-					//resetArray(true);
+					resetArray(true);
 				}
 				if(bottomFillable && bottomRightUnfillable) {
 					stack.push([i,y-direction,-direction]);
-					//resetArray(false);
+					resetArray(false);
 				}
 			}
 			addToEdgeArray(false,i,y); // Push right boundary pixel
