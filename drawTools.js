@@ -542,22 +542,33 @@ function f(xSeed,ySeed){
 	resetArray(true);
 	resetArray(false);
 	
-	var red = new RGBColor(255,0,0,255);
-	var green = new RGBColor(0,255,0,255);
+	var colorArrayRight = [];
+	colorArrayRight.push(new RGBColor(255,0,0,255));   //red
+	colorArrayRight.push(new RGBColor(255,156,0,255)); //orange
+	colorArrayRight.push(new RGBColor(255,255,0,255)); //yellow
+	
+	var colorArrayLeft = [];
+	colorArrayLeft.push(new RGBColor(0,255,0,255));   //green
+	colorArrayLeft.push(new RGBColor(0,255,255,255)); //cyan
+	colorArrayLeft.push(new RGBColor(0,0,255,255));   //blue
+	
+	
 	while(edgeArrayRight.length>0) {
 		var temp = edgeArrayRight.pop();
 		while(temp.length>0) {
+			var c = colorArrayRight[temp.length%3];
 			var y = temp.pop();
 			var x = temp.pop();
-			colorPixel(new Point(x,y),red);
+			colorPixel(new Point(x,y),c);
 		}
 	}
 	while(edgeArrayLeft.length>0) {
 		var temp = edgeArrayLeft.pop();
 		while(temp.length>0) {
+			var c = colorArrayLeft[temp.length%3];
 			var y = temp.pop();
 			var x = temp.pop();
-			colorPixel(new Point(x,y),green);
+			colorPixel(new Point(x,y),c);
 		}
 	}
 	/*
