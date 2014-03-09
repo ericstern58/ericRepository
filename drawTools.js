@@ -510,9 +510,9 @@ function f(xSeed,ySeed){
 				var bottomLeftUnfillable = (!test(i-1,y-direction));
 				
 				// Find Wether or not to add edge pixels
-				if(testEdgePoint(i,y+direction))
+				if(testEdgePoint(i,y+direction,y))
 					edgeArray.push(i,y+direction);
-				if(testEdgePoint(i,y-direction))
+				if(testEdgePoint(i,y-direction,y))
 					edgeArray.push(i,y-direction);
 				
 				// Two if statements to know when to add a new seed
@@ -533,9 +533,9 @@ function f(xSeed,ySeed){
 				var bottomRightUnfillable = (!test(i+1,y-direction));
 				
 				// Find Wether or not to add edge pixels
-				if(testEdgePoint(i,y+direction))
+				if(testEdgePoint(i,y+direction,y))
 					edgeArray.push(i,y+direction);
-				if(testEdgePoint(i,y-direction))
+				if(testEdgePoints(i,y-direction,y))
 					edgeArray.push(i,y-direction);
 				
 				// Two if statements to know when to add a new seed
@@ -609,8 +609,17 @@ function test(x,y) {
 	var point = new Point(x,y);
 	return (cleanTools.isWithinCanvasBounds(point) && targetColor.equals(getColorFromPoint(point)));
 }
-function testEdgePoint(x,y) {
-	if( edgeEligible(x,y) && edgeEligible(x-1,y) && edgeEligible(x+1,y) ) {
+function testEdgePoint(x,y,originalY) {
+	var edge1 = edgeEligible(x,y);
+	var edge2 = edgeEligible(x-1,y);
+	var edge3 = edgeEligible(x+1,y);
+	if( !edge1 ) {
+		return false;
+	} else if( edge2 && edge3 ) {
+		return true;
+	} else if ( edge3 && edgeEligible(x-1,originalY)) {
+		return true;
+	} else if ( edge2 && edgeEligible(x+1,originalY)) {
 		return true;
 	}
 	return false;
@@ -619,8 +628,7 @@ function edgeEligible(x,y) {
 	var point = new Point(x,y);
 	var color = getColorFromPoint(point);
 	return ( cleanTools.isWithinCanvasBounds(point) && (!fillColor.equals(color)) && (!targetColor.equals(color)) );
-}	
-	
+}
 	
 	
 	
