@@ -610,31 +610,28 @@ function edgeEligible(x,y) {
 	
 	//------------------------------------------------------------------------------------------------------------
 	function f(xinitial,yinitial){
-		var queue = [new Point(xinitial,yinitial)];
+		var queue = [xinitial,yinitial];
 		var edgeQueue = [];
 		var x = 0;
 		var y = 0;
-		var point;
 		while(queue.length>0) {
-			point=queue.shift();
-			x=point.x;
-			y=point.y;
-			if( targetColor.equals(getColorFromCoords(x,y)) && cleanTools.isWithinCanvasBounds(point) ) {
+			x=queue.shift();
+			y=queue.shift();
+			if( targetColor.equals(getColorFromCoords(x,y)) && cleanTools.isWithinCanvasBounds(x,y) ) {
 				colorPixel(x,y,fillColor);
-				queue.push(new Point(x-1,y));
-				queue.push(new Point(x+1,y));
-				queue.push(new Point(x,y-1));
-				queue.push(new Point(x,y+1));
-			} else if( !(fillColor.equals(getColorFromCoords(x,y))) && cleanTools.isWithinCanvasBounds(point) ){
+				queue.push(x-1,y);
+				queue.push(x+1,y);
+				queue.push(x,y-1);
+				queue.push(x,y+1);
+			} else if( !(fillColor.equals(getColorFromCoords(x,y))) && cleanTools.isWithinCanvasBounds(x,y) ){
 				// If inside this block, current pixel is an edge pixel
-				edgeQueue.push(point);
+				edgeQueue.push(x,y);
 			}
 		}
 		// This loop colors edge pixels and softens them with anti-aliasing
 		while(edgeQueue.length>0) {
-			point=edgeQueue.shift();
-			x=point.x;
-			y=point.y;
+			x=edgeQueue.shift();
+			y=edgeQueue.shift();
 
 			colorPixel(x,y,fillColor);
 			
@@ -648,6 +645,8 @@ function edgeEligible(x,y) {
 				colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
 		}
 	}
+	
+	
 }
 function drawLineChain(ctx,pts,editMode,closeShape,closedFillColorHex)
 {
