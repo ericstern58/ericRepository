@@ -553,8 +553,7 @@ function paint(xMin,xMax,y,color) {
 	//alert("Ending linepaint");
 }
 function test(x,y) {
-	var point = new Point(x,y);
-	return (cleanTools.isWithinCanvasBounds(point) && targetColor.equals(getColorFromPoint(point)));
+	return (cleanTools.isWithinCanvasBounds(x,y) && targetColor.equals(getColorFromCoords(x,y)));
 }
 function testEdgePoint(x,y,originalY) {
 	var edge1 = edgeEligible(x,y);
