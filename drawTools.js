@@ -593,13 +593,13 @@ function edgeEligible(x,y) {
 			point=queue.shift();
 			x=point.x;
 			y=point.y;
-			if( targetColor.equals(getColorFromCoords(point.x,point.y)) && cleanTools.isWithinCanvasBounds(point) ) {
-				colorPixel(point,fillColor);
+			if( targetColor.equals(getColorFromCoords(x,y)) && cleanTools.isWithinCanvasBounds(point) ) {
+				colorPixel(x,y,fillColor);
 				queue.push(new Point(x-1,y));
 				queue.push(new Point(x+1,y));
 				queue.push(new Point(x,y-1));
 				queue.push(new Point(x,y+1));
-			} else if( !(fillColor.equals(getColorFromCoords(point.x,point.y))) && cleanTools.isWithinCanvasBounds(point) ){
+			} else if( !(fillColor.equals(getColorFromCoords(x,y))) && cleanTools.isWithinCanvasBounds(point) ){
 				// If inside this block, current pixel is an edge pixel
 				edgeQueue.push(point);
 			}
@@ -610,7 +610,7 @@ function edgeEligible(x,y) {
 			x=point.x;
 			y=point.y;
 
-			colorPixel(point,fillColor);
+			colorPixel(x,y,fillColor);
 			
 			var point2 = new Point(x-1,y);
 			if(cleanTools.isWithinCanvasBounds(point2))
