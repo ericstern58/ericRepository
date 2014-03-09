@@ -465,8 +465,6 @@ function floodFill(ctx,e){
 		return;
 	}
 	
-	f(e.offsetX,e.offsetY);
-	ctx.putImageData(p,0,0);
 	
 	//----------------------------------------------------------------------------------------------------------
 	
@@ -643,7 +641,8 @@ function f(xSeed,ySeed){
 		}
 	}
 	
-	
+	f(e.offsetX,e.offsetY);
+	ctx.putImageData(p,0,0);
 }
 function drawLineChain(ctx,pts,editMode,closeShape,closedFillColorHex)
 {
