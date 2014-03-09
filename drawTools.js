@@ -465,7 +465,42 @@ function floodFill(ctx,e){
 		return;
 	}
 	
-	
+	function f2(xinitial,yinitial){
+		var queue = [xinitial,yinitial];
+		var edgeQueue = [];
+		var x = 0;
+		var y = 0;
+		while(queue.length>0) {
+			x=queue.shift();
+			y=queue.shift();
+			if( targetColor.equals(getColorFromCoords(x,y)) && cleanTools.isWithinCanvasBounds(x,y) ) {
+				colorPixel(x,y,fillColor);
+				queue.push(x-1,y);
+				queue.push(x+1,y);
+				queue.push(x,y-1);
+				queue.push(x,y+1);
+			} else if( !(fillColor.equals(getColorFromCoords(x,y))) && cleanTools.isWithinCanvasBounds(x,y) ){
+				// If inside this block, current pixel is an edge pixel
+				edgeQueue.push(x,y);
+			}
+		}
+		// This loop colors edge pixels and softens them with anti-aliasing
+		while(edgeQueue.length>0) {
+			x=edgeQueue.shift();
+			y=edgeQueue.shift();
+
+			colorPixel(x,y,fillColor);
+			
+			if( (!fillColor.equals(getColorFromCoords(x-1,y))) && cleanTools.isWithinCanvasBounds(x-1,y) )
+				colorPixelBlend(x-1,y,fillColor,getColorFromCoords(x-1,y));
+			if( (!fillColor.equals(getColorFromCoords(x+1,y))) && cleanTools.isWithinCanvasBounds(x+1,y) )
+				colorPixelBlend(x+1,y,fillColor,getColorFromCoords(x+1,y));
+			if( (!fillColor.equals(getColorFromCoords(x,y-1))) && cleanTools.isWithinCanvasBounds(x,y-1) )
+				colorPixelBlend(x,y-1,fillColor,getColorFromCoords(x,y-1));
+			if( (!fillColor.equals(getColorFromCoords(x,y+1))) && cleanTools.isWithinCanvasBounds(x,y+1) )
+				colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
+		}
+	}
 	//----------------------------------------------------------------------------------------------------------
 	
 	
@@ -604,42 +639,7 @@ function f(xSeed,ySeed){
 	
 	
 	//------------------------------------------------------------------------------------------------------------
-	function f2(xinitial,yinitial){
-		var queue = [xinitial,yinitial];
-		var edgeQueue = [];
-		var x = 0;
-		var y = 0;
-		while(queue.length>0) {
-			x=queue.shift();
-			y=queue.shift();
-			if( targetColor.equals(getColorFromCoords(x,y)) && cleanTools.isWithinCanvasBounds(x,y) ) {
-				colorPixel(x,y,fillColor);
-				queue.push(x-1,y);
-				queue.push(x+1,y);
-				queue.push(x,y-1);
-				queue.push(x,y+1);
-			} else if( !(fillColor.equals(getColorFromCoords(x,y))) && cleanTools.isWithinCanvasBounds(x,y) ){
-				// If inside this block, current pixel is an edge pixel
-				edgeQueue.push(x,y);
-			}
-		}
-		// This loop colors edge pixels and softens them with anti-aliasing
-		while(edgeQueue.length>0) {
-			x=edgeQueue.shift();
-			y=edgeQueue.shift();
-
-			colorPixel(x,y,fillColor);
-			
-			if( (!fillColor.equals(getColorFromCoords(x-1,y))) && cleanTools.isWithinCanvasBounds(x-1,y) )
-				colorPixelBlend(x-1,y,fillColor,getColorFromCoords(x-1,y));
-			if( (!fillColor.equals(getColorFromCoords(x+1,y))) && cleanTools.isWithinCanvasBounds(x+1,y) )
-				colorPixelBlend(x+1,y,fillColor,getColorFromCoords(x+1,y));
-			if( (!fillColor.equals(getColorFromCoords(x,y-1))) && cleanTools.isWithinCanvasBounds(x,y-1) )
-				colorPixelBlend(x,y-1,fillColor,getColorFromCoords(x,y-1));
-			if( (!fillColor.equals(getColorFromCoords(x,y+1))) && cleanTools.isWithinCanvasBounds(x,y+1) )
-				colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
-		}
-	}
+	
 	
 	f(e.offsetX,e.offsetY);
 	ctx.putImageData(p,0,0);
