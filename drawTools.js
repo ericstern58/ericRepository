@@ -425,17 +425,6 @@ function drawEllipse(ctx,pts,fillColorHex){
 }
 
 function floodFill(ctx,e){
-	// This restoreCanvas() fix avoids issues with brush placing dot over flood fill seed area
-	cleanTools.restoreCanvas();
-	
-	var w = cleanTools.canvasWidth;
-	var h = cleanTools.canvasHeight;
-	var p = ctx.getImageData(0,0,w,h);
-	var d = p.data;
-	var targetColor = getColorFromCoords(e.offsetX,e.offsetY);
-	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
-	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255,255);
-	
 	/*---------------------- Color Methods ----------------------*/
 	// Define some useful functions
 	var getColorFromCoords = function(x,y){
@@ -457,6 +446,20 @@ function floodFill(ctx,e){
 		var b=Math.ceil((color1.b+color2.b)/2);
 		colorPixel(x,y,new RGBColor(r,g,b,255));
 	}
+	
+	/*---------------------- Begin Procedure ----------------------*/
+	// This restoreCanvas() fix avoids issues with brush placing dot over flood fill seed area
+	cleanTools.restoreCanvas();
+	
+	var w = cleanTools.canvasWidth;
+	var h = cleanTools.canvasHeight;
+	var p = ctx.getImageData(0,0,w,h);
+	var d = p.data;
+	var targetColor = getColorFromCoords(e.offsetX,e.offsetY);
+	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
+	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255,255);
+	
+	
 	
 	
 	// Note: target color must be different to execute function f
@@ -645,8 +648,6 @@ function edgeEligible(x,y) {
 				colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
 		}
 	}
-
-	
 }
 function drawLineChain(ctx,pts,editMode,closeShape,closedFillColorHex)
 {
