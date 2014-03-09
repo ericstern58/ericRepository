@@ -78,7 +78,7 @@ var whatahwash = xfasdfadf * doasdsasdffasdf;
 
 
 
-var whatahwash = xfasdfadf * doasdsasdffasdf +456;
+var ddwhatahddwash = xfasdfadf * doasdsasdffasdf +456;
 
 // Setup Some Global Variables
 window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
