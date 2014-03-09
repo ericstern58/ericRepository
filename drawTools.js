@@ -572,9 +572,8 @@ function testEdgePoint(x,y,originalY) {
 	return false;
 }
 function edgeEligible(x,y) {
-	var point = new Point(x,y);
-	var color = getColorFromPoint(point);
-	return ( cleanTools.isWithinCanvasBounds(point) && (!fillColor.equals(color)) && (!targetColor.equals(color)) );
+	var color = getColorFromCoords(x,y);
+	return ( cleanTools.isWithinCanvasBounds(x,y) && (!fillColor.equals(color)) && (!targetColor.equals(color)) );
 }
 
 
