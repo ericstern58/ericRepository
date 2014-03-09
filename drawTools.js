@@ -454,7 +454,7 @@ function floodFill(ctx,e){
 	
 	
 
-function f(xSeed,ySeed){
+function f2(xSeed,ySeed){
 	//[x,y,goingUp(1 vs -1)
 	var stack = [[xSeed,ySeed,1]];
 	if(test(xSeed,ySeed-1))
@@ -583,7 +583,7 @@ function edgeEligible(x,y) {
 	
 	
 	//------------------------------------------------------------------------------------------------------------
-	function f2(xinitial,yinitial){
+	function f(xinitial,yinitial){
 		var queue = [new Point(xinitial,yinitial)];
 		var edgeQueue = [];
 		var x = 0;
@@ -593,13 +593,13 @@ function edgeEligible(x,y) {
 			point=queue.shift();
 			x=point.x;
 			y=point.y;
-			if( targetColor.equals(getColorFromPoint(point)) && cleanTools.isWithinCanvasBounds(point) ) {
+			if( targetColor.equals(getColorFromCoords(point.x,point.y)) && cleanTools.isWithinCanvasBounds(point) ) {
 				colorPixel(point,fillColor);
 				queue.push(new Point(x-1,y));
 				queue.push(new Point(x+1,y));
 				queue.push(new Point(x,y-1));
 				queue.push(new Point(x,y+1));
-			} else if(cleanTools.isWithinCanvasBounds(point) && !(fillColor.equals(getColorFromPoint(point)))){
+			} else if( !(fillColor.equals(getColorFromCoords(point.x,point.y))) && cleanTools.isWithinCanvasBounds(point) ){
 				// If inside this block, current pixel is an edge pixel
 				edgeQueue.push(point);
 			}
@@ -641,9 +641,6 @@ function edgeEligible(x,y) {
 		var g=Math.ceil((color1.g+color2.g)/2);
 		var b=Math.ceil((color1.b+color2.b)/2);
 		colorPixel(point,new RGBColor(r,g,b,255));
-	}
-	function getColorFromPoint(point){
-		return getColorFromCoords(point.x,point.y);
 	}
 	function getColorFromCoords(x,y){
 		var i = (x + y * w) * 4;
