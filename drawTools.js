@@ -462,17 +462,12 @@ function floodFill(ctx,e){
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255,255);
 	
-	
-	
-	
 	// Note: target color must be different to execute function f
 	// If something is already colored the fill color, nothing needs to be done
-	if(!targetColor.equals(fillColor))
-		//colorPixel(new Point(5,5),fillColor);
-		//paint(5,w-5,50,fillColor);
+	if(!targetColor.equals(fillColor)) {
 		f(e.offsetX,e.offsetY);
-
-	ctx.putImageData(p,0,0);
+		ctx.putImageData(p,0,0);
+	}
 	
 	//----------------------------------------------------------------------------------------------------------
 	
