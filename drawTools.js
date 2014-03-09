@@ -612,18 +612,14 @@ function edgeEligible(x,y) {
 
 			colorPixel(x,y,fillColor);
 			
-			var point2 = new Point(x-1,y);
-			if(cleanTools.isWithinCanvasBounds(point2))
-				colorPixelBlend(point2,fillColor,getColorFromCoords(x-1,y));
-			point2 = new Point(x+1,y);
-			if(cleanTools.isWithinCanvasBounds(point2))
-				colorPixelBlend(point2,fillColor,getColorFromCoords(x+1,y));
-			point2 = new Point(x,y-1);
-			if(cleanTools.isWithinCanvasBounds(point2))
-				colorPixelBlend(point2,fillColor,getColorFromCoords(x,y-1));
-			point2 = new Point(x,y+1);
-			if(cleanTools.isWithinCanvasBounds(point2))
-				colorPixelBlend(point2,fillColor,getColorFromCoords(x,y+1));
+			if(cleanTools.isWithinCanvasBounds(x-1,y))
+				colorPixelBlend(x-1,y,fillColor,getColorFromCoords(x-1,y));
+			if(cleanTools.isWithinCanvasBounds(x+1,y))
+				colorPixelBlend(x+1,y,fillColor,getColorFromCoords(x+1,y));
+			if(cleanTools.isWithinCanvasBounds(x,y-1))
+				colorPixelBlend(x,y-1,fillColor,getColorFromCoords(x,y-1));
+			if(cleanTools.isWithinCanvasBounds(x,y+1))
+				colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
 		}
 	}
 	/*---------------------- Color Methods ----------------------*/
@@ -636,11 +632,11 @@ function edgeEligible(x,y) {
 		d[i+3]=color.a;
 	}
 	// [Experimental] Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
-	function colorPixelBlend(point,color1,color2){
+	function colorPixelBlend(x,y,color1,color2){
 		var r=Math.ceil((color1.r+color2.r)/2);
 		var g=Math.ceil((color1.g+color2.g)/2);
 		var b=Math.ceil((color1.b+color2.b)/2);
-		colorPixel(point.x,point.y,new RGBColor(r,g,b,255));
+		colorPixel(x,y,new RGBColor(r,g,b,255));
 	}
 	function getColorFromCoords(x,y){
 		var i = (x + y * w) * 4;
