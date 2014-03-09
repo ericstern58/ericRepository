@@ -539,7 +539,7 @@ function f(xSeed,ySeed){
 				// Find Wether or not to add edge pixels
 				if(testEdgePoint(i,y+direction,y))
 					edgeArray.push(i,y+direction);
-				if(testEdgePoints(i,y-direction,y))
+				if(testEdgePoint(i,y-direction,y))
 					edgeArray.push(i,y-direction);
 				
 				// Two if statements to know when to add a new seed
@@ -633,7 +633,8 @@ function edgeEligible(x,y) {
 	var color = getColorFromPoint(point);
 	return ( cleanTools.isWithinCanvasBounds(point) && (!fillColor.equals(color)) && (!targetColor.equals(color)) );
 }
-	
+
+
 	
 	
 	
