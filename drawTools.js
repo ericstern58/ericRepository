@@ -475,9 +475,43 @@ function floodFill(ctx,e){
 	
 	
 	
-	
 
-function f2(xSeed,ySeed){
+function paint(xMin,xMax,y,color) {
+	//alert("Starting linepaint");
+	var r = color.r, g = color.g, b = color.b, a = color.a;
+	var limit = (xMax+1 + y * w) * 4;
+	for(var i = (xMin + y * w) * 4; i<limit; i+=4) {
+		d[i]=r;
+		d[i+1]=g;
+		d[i+2]=b;
+		d[i+3]=a;
+	}
+	//alert("Ending linepaint");
+}
+function test(x,y) {
+	return (cleanTools.isWithinCanvasBounds(x,y) && targetColor.equals(getColorFromCoords(x,y)));
+}
+function testEdgePoint(x,y,originalY) {
+	var edge1 = edgeEligible(x,y);
+	var edge2 = edgeEligible(x-1,y);
+	var edge3 = edgeEligible(x+1,y);
+	if( !edge1 ) {
+		return false;
+	} else if( edge2 && edge3 ) {
+		return true;
+	} else if ( edge3 && edgeEligible(x-1,originalY)) {
+		return true;
+	} else if ( edge2 && edgeEligible(x+1,originalY)) {
+		return true;
+	}
+	return false;
+}
+function edgeEligible(x,y) {
+	var color = getColorFromCoords(x,y);
+	return ( cleanTools.isWithinCanvasBounds(x,y) && (!fillColor.equals(color)) && (!targetColor.equals(color)) );
+}	
+
+function f(xSeed,ySeed){
 	//[x,y,goingUp(1 vs -1)
 	var stack = [[xSeed,ySeed,1]];
 	if(test(xSeed,ySeed-1))
@@ -563,40 +597,6 @@ function f2(xSeed,ySeed){
 		colorPixel(a,b,purple);
 	}
 }
-function paint(xMin,xMax,y,color) {
-	//alert("Starting linepaint");
-	var r = color.r, g = color.g, b = color.b, a = color.a;
-	var limit = (xMax+1 + y * w) * 4;
-	for(var i = (xMin + y * w) * 4; i<limit; i+=4) {
-		d[i]=r;
-		d[i+1]=g;
-		d[i+2]=b;
-		d[i+3]=a;
-	}
-	//alert("Ending linepaint");
-}
-function test(x,y) {
-	return (cleanTools.isWithinCanvasBounds(x,y) && targetColor.equals(getColorFromCoords(x,y)));
-}
-function testEdgePoint(x,y,originalY) {
-	var edge1 = edgeEligible(x,y);
-	var edge2 = edgeEligible(x-1,y);
-	var edge3 = edgeEligible(x+1,y);
-	if( !edge1 ) {
-		return false;
-	} else if( edge2 && edge3 ) {
-		return true;
-	} else if ( edge3 && edgeEligible(x-1,originalY)) {
-		return true;
-	} else if ( edge2 && edgeEligible(x+1,originalY)) {
-		return true;
-	}
-	return false;
-}
-function edgeEligible(x,y) {
-	var color = getColorFromCoords(x,y);
-	return ( cleanTools.isWithinCanvasBounds(x,y) && (!fillColor.equals(color)) && (!targetColor.equals(color)) );
-}
 
 
 	
@@ -606,7 +606,7 @@ function edgeEligible(x,y) {
 	
 	
 	//------------------------------------------------------------------------------------------------------------
-	function f(xinitial,yinitial){
+	function f2(xinitial,yinitial){
 		var queue = [xinitial,yinitial];
 		var edgeQueue = [];
 		var x = 0;
