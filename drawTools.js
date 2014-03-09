@@ -537,7 +537,7 @@ function f(xSeed,ySeed){
 	while(edgeArray.length>0) {
 		var b = edgeArray.pop();
 		var a = edgeArray.pop();
-		colorPixel(new Point(a,b),purple);
+		colorPixel(a,b,purple);
 	}
 }
 function paint(xMin,xMax,y,color) {
@@ -628,8 +628,8 @@ function edgeEligible(x,y) {
 	}
 	/*---------------------- Color Methods ----------------------*/
 	//Colors a pixel with a given color
-	function colorPixel(point,color) {
-		var i = (point.x + point.y * w) * 4;
+	function colorPixel(x,y,color) {
+		var i = (x + y * w) * 4;
 		d[i]=color.r;
 		d[i+1]=color.g;
 		d[i+2]=color.b;
