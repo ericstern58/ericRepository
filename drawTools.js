@@ -476,7 +476,7 @@ function floodFill(ctx,e){
 	
 	
 
-function paint(xMin,xMax,y,color) {
+var paint = function(xMin,xMax,y,color) {
 	//alert("Starting linepaint");
 	var r = color.r, g = color.g, b = color.b, a = color.a;
 	var limit = (xMax+1 + y * w) * 4;
@@ -488,10 +488,10 @@ function paint(xMin,xMax,y,color) {
 	}
 	//alert("Ending linepaint");
 }
-function test(x,y) {
+var test = function(x,y) {
 	return (cleanTools.isWithinCanvasBounds(x,y) && targetColor.equals(getColorFromCoords(x,y)));
 }
-function testEdgePoint(x,y,originalY) {
+var testEdgePoint = function(x,y,originalY) {
 	var edge1 = edgeEligible(x,y);
 	var edge2 = edgeEligible(x-1,y);
 	var edge3 = edgeEligible(x+1,y);
@@ -506,7 +506,7 @@ function testEdgePoint(x,y,originalY) {
 	}
 	return false;
 }
-function edgeEligible(x,y) {
+var edgeEligible function(x,y) {
 	var color = getColorFromCoords(x,y);
 	return ( cleanTools.isWithinCanvasBounds(x,y) && (!fillColor.equals(color)) && (!targetColor.equals(color)) );
 }	
