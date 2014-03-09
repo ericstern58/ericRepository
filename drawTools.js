@@ -633,6 +633,22 @@ function f2(xSeed,ySeed){
 		var a = edgeArray.pop();
 		colorPixel(a,b,purple);
 	}
+	// This loop colors edge pixels and softens them with anti-aliasing
+	while(edgeArray.length>0) {
+	x=edgeArray.shift();
+	y=edgeArray.shift();
+	
+	colorPixel(x,y,fillColor);
+		
+	if( (!fillColor.equals(getColorFromCoords(x-1,y))) && cleanTools.isWithinCanvasBounds(x-1,y) )
+		colorPixelBlend(x-1,y,fillColor,getColorFromCoords(x-1,y));
+	if( (!fillColor.equals(getColorFromCoords(x+1,y))) && cleanTools.isWithinCanvasBounds(x+1,y) )
+		colorPixelBlend(x+1,y,fillColor,getColorFromCoords(x+1,y));
+	if( (!fillColor.equals(getColorFromCoords(x,y-1))) && cleanTools.isWithinCanvasBounds(x,y-1) )
+		colorPixelBlend(x,y-1,fillColor,getColorFromCoords(x,y-1));
+	if( (!fillColor.equals(getColorFromCoords(x,y+1))) && cleanTools.isWithinCanvasBounds(x,y+1) )
+		colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
+	}
 }
 
 
