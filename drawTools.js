@@ -498,6 +498,12 @@ function f(xSeed,ySeed){
 			if(test(x,y+direction))
 				stack.push([x,y+direction,direction]);
 			
+			// Before scanning line, find wether or not to add edge pixels from seed point
+			if(testEdgePoint(x,y+direction,y))
+				edgeArray.push(x,y+direction);
+			if(testEdgePoint(x,y-direction,y))
+				edgeArray.push(x,y-direction);
+			
 			var xMax;
 			var xMin;
 			var i;
