@@ -632,13 +632,13 @@ function edgeEligible(x,y) {
 
 			colorPixel(x,y,fillColor);
 			
-			if(cleanTools.isWithinCanvasBounds(x-1,y) && (!fillColor.equals(getColorFromCoords(x-1,y))) )
+			if( (!fillColor.equals(getColorFromCoords(x-1,y))) && cleanTools.isWithinCanvasBounds(x-1,y) )
 				colorPixelBlend(x-1,y,fillColor,getColorFromCoords(x-1,y));
-			if(cleanTools.isWithinCanvasBounds(x+1,y) && (!fillColor.equals(getColorFromCoords(x+1,y))) )
+			if( (!fillColor.equals(getColorFromCoords(x+1,y))) && cleanTools.isWithinCanvasBounds(x+1,y) )
 				colorPixelBlend(x+1,y,fillColor,getColorFromCoords(x+1,y));
-			if(cleanTools.isWithinCanvasBounds(x,y-1) && (!fillColor.equals(getColorFromCoords(x,y-1))) )
+			if( (!fillColor.equals(getColorFromCoords(x,y-1))) && cleanTools.isWithinCanvasBounds(x,y-1) )
 				colorPixelBlend(x,y-1,fillColor,getColorFromCoords(x,y-1));
-			if(cleanTools.isWithinCanvasBounds(x,y+1) && (!fillColor.equals(getColorFromCoords(x,y+1))) )
+			if( (!fillColor.equals(getColorFromCoords(x,y+1))) && cleanTools.isWithinCanvasBounds(x,y+1) )
 				colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
 		}
 	}
