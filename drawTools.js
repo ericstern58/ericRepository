@@ -640,7 +640,7 @@ function edgeEligible(x,y) {
 		var r=Math.ceil((color1.r+color2.r)/2);
 		var g=Math.ceil((color1.g+color2.g)/2);
 		var b=Math.ceil((color1.b+color2.b)/2);
-		colorPixel(point,new RGBColor(r,g,b,255));
+		colorPixel(point.x,point.y,new RGBColor(r,g,b,255));
 	}
 	function getColorFromCoords(x,y){
 		var i = (x + y * w) * 4;
