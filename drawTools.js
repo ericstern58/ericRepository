@@ -61,10 +61,7 @@ var cleanTools = {
 		this.context.constructor.prototype.putImageData.call(this.context, restorePoints[restorePosition], 0, 0);
 	},
 	"isWithinCanvasBounds": function(x,y) {
-		if(!y)
-			return (x.x>=0 && x.y>=0 && x.x<this.canvasWidth && x.y<this.canvasHeight);
-		else
-			return (x>=0 && y>=0 && x<this.canvasWidth && y<this.canvasHeight);
+		return (x>=0 && y>=0 && x<this.canvasWidth && y<this.canvasHeight);
 	},
 	"isWithinDrawingBounds": function(x,y) {
 		return (x>=(-12) && y>=(-12) && x<(this.canvasWidth+12) && y<(this.canvasHeight+12));
@@ -635,13 +632,13 @@ function edgeEligible(x,y) {
 
 			colorPixel(x,y,fillColor);
 			
-			if(cleanTools.isWithinCanvasBounds(x-1,y))
+			if(cleanTools.isWithinCanvasBounds(x-1,y) && (!fillColor.equals(getColorFromCoords(x-1,y))) )
 				colorPixelBlend(x-1,y,fillColor,getColorFromCoords(x-1,y));
-			if(cleanTools.isWithinCanvasBounds(x+1,y))
+			if(cleanTools.isWithinCanvasBounds(x+1,y) && (!fillColor.equals(getColorFromCoords(x+1,y))) )
 				colorPixelBlend(x+1,y,fillColor,getColorFromCoords(x+1,y));
-			if(cleanTools.isWithinCanvasBounds(x,y-1))
+			if(cleanTools.isWithinCanvasBounds(x,y-1) && (!fillColor.equals(getColorFromCoords(x,y-1))) )
 				colorPixelBlend(x,y-1,fillColor,getColorFromCoords(x,y-1));
-			if(cleanTools.isWithinCanvasBounds(x,y+1))
+			if(cleanTools.isWithinCanvasBounds(x,y+1) && (!fillColor.equals(getColorFromCoords(x,y+1))) )
 				colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
 		}
 	}
