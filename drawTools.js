@@ -506,7 +506,7 @@ var testEdgePoint = function(x,y,originalY) {
 	}
 	return false;
 }
-var edgeEligible function(x,y) {
+var edgeEligible = function(x,y) {
 	var color = getColorFromCoords(x,y);
 	return ( cleanTools.isWithinCanvasBounds(x,y) && (!fillColor.equals(color)) && (!targetColor.equals(color)) );
 }	
