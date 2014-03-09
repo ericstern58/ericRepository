@@ -460,29 +460,6 @@ function f(xSeed,ySeed){
 	if(test(xSeed,ySeed-1))
 		stack.push([xSeed,ySeed-1,-1]);
 	var edgeArray = [];
-	var edgeArrayRight = [];
-	var edgeArrayLeft = [];
-	var currentEdgeArrayRight = [];
-	var currentEdgeArrayLeft = [];
-	
-	var addToEdgeArray = function(addToRightOne,x,y){
-		if(!cleanTools.isWithinCanvasBounds(x,y)) {
-			return;
-		} else if(addToRightOne) {
-			currentEdgeArrayRight.push(x,y);
-		} else {
-			currentEdgeArrayLeft.push(x,y);
-		}
-	}
-	var resetArray = function(resetRightOne){
-		if(resetRightOne) {
-			edgeArrayRight.push(currentEdgeArrayRight);
-			currentEdgeArrayRight=[];
-		} else {
-			edgeArrayLeft.push(currentEdgeArrayLeft);
-			currentEdgeArrayLeft=[];
-		}
-	}
 	
 	var x = 0;
 	var y = 0;
@@ -527,7 +504,7 @@ function f(xSeed,ySeed){
 				if(bottomFillable && bottomLeftUnfillable)
 					stack.push([i,y-direction,-direction]);
 			}
-			addToEdgeArray(true,i,y); // Push right boundary pixel
+			edgeArray.push(i,y);
 			xMax = i-1; // Save max fill pixel
 			
 			// Travel left
@@ -545,54 +522,18 @@ function f(xSeed,ySeed){
 					edgeArray.push(i,y-direction);
 				
 				// Two if statements to know when to add a new seed
-				if(topFillable && topRightUnfillable) {
+				if(topFillable && topRightUnfillable)
 					stack.push([i,y+direction,direction]);
-					resetArray(true);
-					resetArray(false);
-				}
-				if(bottomFillable && bottomRightUnfillable) {
+				if(bottomFillable && bottomRightUnfillable)
 					stack.push([i,y-direction,-direction]);
-					resetArray(true);
-					resetArray(false);
-				}
 			}
-			addToEdgeArray(false,i,y); // Push right boundary pixel
+			edgeArray.push(i,y);
 			xMin = i+1;// Save min fill pixel
 			paint(xMin,xMax,y,fillColor);
 		}
 	}
-	resetArray(true);
-	resetArray(false);
 	
-	var colorArrayRight = [];
-	colorArrayRight.push(new RGBColor(255,0,0,255));   //red
-	colorArrayRight.push(new RGBColor(255,156,0,255)); //orange
-	colorArrayRight.push(new RGBColor(255,255,0,255)); //yellow
-	
-	var colorArrayLeft = [];
-	colorArrayLeft.push(new RGBColor(0,255,0,255));   //green
-	colorArrayLeft.push(new RGBColor(0,255,255,255)); //cyan
-	colorArrayLeft.push(new RGBColor(0,0,255,255));   //blue
-	
-	while(edgeArrayRight.length>0) {
-		var temp = edgeArrayRight.pop();
-		var c = colorArrayRight[temp.length%3];
-		while(temp.length>0) {
-			var y = temp.pop();
-			var x = temp.pop();
-			colorPixel(new Point(x,y),c);
-		}
-	}
-	while(edgeArrayLeft.length>0) {
-		var temp = edgeArrayLeft.pop();
-		var c = colorArrayLeft[temp.length%3];
-		while(temp.length>0) {
-			var y = temp.pop();
-			var x = temp.pop();
-			colorPixel(new Point(x,y),c);
-		}
-	}
-	var purple = new RGBColor(226,0,202,255);   //purple
+	var purple = new RGBColor(255,0,0,255);   //purple
 	while(edgeArray.length>0) {
 		var b = edgeArray.pop();
 		var a = edgeArray.pop();
