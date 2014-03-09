@@ -436,6 +436,29 @@ function floodFill(ctx,e){
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255,255);
 	
+	/*---------------------- Color Methods ----------------------*/
+	// Define some useful functions
+	var getColorFromCoords = function(x,y){
+		var i = (x + y * w) * 4;
+		return new RGBColor(d[i],d[i+1],d[i+2],d[i+3]);
+	}
+	//Colors a pixel with a given color
+	var colorPixel = function(x,y,color) {
+		var i = (x + y * w) * 4;
+		d[i]=color.r;
+		d[i+1]=color.g;
+		d[i+2]=color.b;
+		d[i+3]=color.a;
+	}
+	// [Experimental] Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
+	var colorPixelBlend = function(x,y,color1,color2){
+		var r=Math.ceil((color1.r+color2.r)/2);
+		var g=Math.ceil((color1.g+color2.g)/2);
+		var b=Math.ceil((color1.b+color2.b)/2);
+		colorPixel(x,y,new RGBColor(r,g,b,255));
+	}
+	
+	
 	// Note: target color must be different to execute function f
 	// If something is already colored the fill color, nothing needs to be done
 	if(!targetColor.equals(fillColor))
@@ -622,26 +645,8 @@ function edgeEligible(x,y) {
 				colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
 		}
 	}
-	/*---------------------- Color Methods ----------------------*/
-	//Colors a pixel with a given color
-	function colorPixel(x,y,color) {
-		var i = (x + y * w) * 4;
-		d[i]=color.r;
-		d[i+1]=color.g;
-		d[i+2]=color.b;
-		d[i+3]=color.a;
-	}
-	// [Experimental] Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
-	function colorPixelBlend(x,y,color1,color2){
-		var r=Math.ceil((color1.r+color2.r)/2);
-		var g=Math.ceil((color1.g+color2.g)/2);
-		var b=Math.ceil((color1.b+color2.b)/2);
-		colorPixel(x,y,new RGBColor(r,g,b,255));
-	}
-	function getColorFromCoords(x,y){
-		var i = (x + y * w) * 4;
-		return new RGBColor(d[i],d[i+1],d[i+2],d[i+3]);
-	}
+
+	
 }
 function drawLineChain(ctx,pts,editMode,closeShape,closedFillColorHex)
 {
