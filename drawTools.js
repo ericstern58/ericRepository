@@ -464,10 +464,12 @@ function floodFill(ctx,e){
 	
 	// Note: target color must be different to execute function f
 	// If something is already colored the fill color, nothing needs to be done
-	if(!targetColor.equals(fillColor)) {
-		f(e.offsetX,e.offsetY);
-		ctx.putImageData(p,0,0);
+	if(targetColor.equals(fillColor)) {
+		return;
 	}
+	
+	f(e.offsetX,e.offsetY);
+	ctx.putImageData(p,0,0);
 	
 	//----------------------------------------------------------------------------------------------------------
 	
