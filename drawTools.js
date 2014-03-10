@@ -75,11 +75,6 @@ var doasdsasdffasdf = xfasdfadf +33;
 
 var doasdsasddffasdf = xfasdfadf +33;
 
-
-
-
-
-
 var doasfasdfas = xfasdfadf +doasdsasdffasdf;
 
 // Setup Some Global Variables
@@ -176,13 +171,13 @@ cleanTools.canvas.on('mousedown', function(e){
 	cleanTools.mouseY = e.pageY-cleanTools.canvasOffset.top;
 	
 	if(cleanTools.currentToolType === toolType.FILL) {
-		//var stopwatch = new StopWatch();
-		//stopwatch.start();
+		var stopwatch = new StopWatch();
+		stopwatch.start();
 		painting = !1;
 		try{
-		floodFill(cleanTools.context,cleanTools.mouseX,cleanTools.mouseY);
+		floodFill(cleanTools.context,e.offsetX,e.offsetY);
 		}catch(err){alert(err);}
-		//stopwatch.stop();
+		stopwatch.stop();
 		//stopwatch.printElapsed();
 	} else if(cleanTools.currentToolType === toolType.LINE) {
 		painting = !1;
@@ -416,8 +411,7 @@ function drawEllipse(ctx,pts,fillColorHex){
 
 
 function floodFill(ctx,xSeed,ySeed){
-	xSeed = xSeed%1;
-	ySeed = ySeed%1;
+	
 	/*---------------------- Setup Procedure Variables ----------------------*/
 	// This restoreCanvas() fix avoids issues with brush placing dot over flood fill seed area
 	cleanTools.restoreCanvas();
@@ -426,15 +420,11 @@ function floodFill(ctx,xSeed,ySeed){
 	var h = cleanTools.canvasHeight;
 	var p = ctx.getImageData(0,0,w,h);
 	var d = p.data;
-	var tci = (xSeed+ySeed*w)*4;
+	var tci = (xSeed+ySeed*cleanTools.canvasWidth)*4;
 	var targetColor = [d[tci],d[tci+1],d[tci+2],d[tci+3]];//getColorFromCoords(xSeed,ySeed); // Cant use because its not initialized yet
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
-	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];
-	outputDebug("Dimensions:[" + w + "," + h + "]\n" +
-		"d.length: " + d.length + "\n" +
-		"Seed Point:[" + xSeed + "," + ySeed + "]\n" +
-		"tci = (xSeed+ySeed*w)*4; is: [" + tci + "]\n" +
-		"TargetColor: " + targetColor.toString());
+	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];outputDebug("TargetColor: " + targetColor.toString());
+	
 	
 	/*---------------------- Supporting functions ----------------------*/
 	/*---------------------- Color Methods ----------------------*/
