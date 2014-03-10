@@ -191,9 +191,9 @@ cleanTools.canvas.on('mousedown', function(e){
 		painting = !1;
 		try{
 		if(e.which == 3) {	// If right mouse click, finish the curve
-			floodFill(cleanTools.context,e);
+			floodFill(cleanTools.context,e.offsetX,e.offsetY);
 		} else {
-			floodFill(cleanTools.context,e,true);
+			floodFill(cleanTools.context,e.offsetX,e.offsetY,true);
 		}
 		}catch(err){alert(err);}
 		stopwatch.stop();
@@ -428,7 +428,7 @@ function drawEllipse(ctx,pts,fillColorHex){
 	ctx.restore();
 }
 
-function floodFill(ctx,e,firstFunction){
+function floodFill(ctx,xSeed,ySeed,firstFunction){
 	/*---------------------- Color Methods ----------------------*/
 	// Define some useful functions
 	var getColorFromCoords = function(x,y){
@@ -459,7 +459,7 @@ function floodFill(ctx,e,firstFunction){
 	var h = cleanTools.canvasHeight;
 	var p = ctx.getImageData(0,0,w,h);
 	var d = p.data;
-	var targetColor = getColorFromCoords(e.offsetX,e.offsetY);
+	var targetColor = getColorFromCoords(xSeed,ySeed);
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255,255);
 	
@@ -662,9 +662,9 @@ function f2(xSeed,ySeed){
 	//------------------------------------------------------------------------------------------------------------
 	
 	if(firstFunction)
-		f(e.offsetX,e.offsetY);
+		f(xSeed,ySeed);
 	else
-		f2(e.offsetX,e.offsetY);
+		f2(xSeed,ySeed);
 	ctx.putImageData(p,0,0);
 }
 function drawLineChain(ctx,pts,editMode,closeShape,closedFillColorHex)
