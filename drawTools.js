@@ -309,7 +309,7 @@ $(document).on('mouseup', function(e){
 		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
 		drawEllipse(cleanTools.context,cleanTools.tools.points,fillColor);
 	}
-	cleanTools.tools.reset();
+	cleanTools.tools.reset(true);
 	
 });
 
