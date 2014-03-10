@@ -72,8 +72,6 @@ var xfasdfadf = 2+3;
 var doasfasdf = xfasdfadf +34;
 var doasdsasdffasdf = xfasdfadf +33;
 
-var doasfasdfas = xfasdfadf +doasdsasdffasdf;
-
 // Setup Some Global Variables
 window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
 cleanTools.context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
@@ -168,14 +166,12 @@ cleanTools.canvas.on('mousedown', function(e){
 	cleanTools.mouseY = e.pageY-cleanTools.canvasOffset.top;
 	
 	if(cleanTools.currentToolType === toolType.FILL) {
-		var stopwatch = new StopWatch();
-		stopwatch.start();
+		//var stopwatch = new StopWatch();
+		//stopwatch.start();
 		painting = !1;
-		try{
 		floodFill(cleanTools.context,cleanTools.mouseX,cleanTools.mouseY);
-		}catch(err){alert(err);}
-		stopwatch.stop();
-		stopwatch.printElapsed();
+		//stopwatch.stop();
+		//stopwatch.printElapsed();
 	} else if(cleanTools.currentToolType === toolType.LINE) {
 		painting = !1;
 		DTPoints[0] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
