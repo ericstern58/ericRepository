@@ -468,87 +468,41 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 	if(targetColor.equals(fillColor)) {
 		return;
 	}
-	
-	function f(xinitial,yinitial){
-		var queue = [xinitial,yinitial];
-		var edgeQueue = [];
-		var x = 0;
-		var y = 0;
-		while(queue.length>0) {
-			x=queue.shift();
-			y=queue.shift();
-			if( targetColor.equals(getColorFromCoords(x,y)) && cleanTools.isWithinCanvasBounds(x,y) ) {
-				colorPixel(x,y,fillColor);
-				queue.push(x-1,y);
-				queue.push(x+1,y);
-				queue.push(x,y-1);
-				queue.push(x,y+1);
-			} else if( !(fillColor.equals(getColorFromCoords(x,y))) && cleanTools.isWithinCanvasBounds(x,y) ){
-				// If inside this block, current pixel is an edge pixel
-				edgeQueue.push(x,y);
-			}
-		}
-		// This loop colors edge pixels and softens them with anti-aliasing
-		while(edgeQueue.length>0) {
-			x=edgeQueue.shift();
-			y=edgeQueue.shift();
-
-			colorPixel(x,y,fillColor);
-			
-			if( (!fillColor.equals(getColorFromCoords(x-1,y))) && cleanTools.isWithinCanvasBounds(x-1,y) )
-				colorPixelBlend(x-1,y,fillColor,getColorFromCoords(x-1,y));
-			if( (!fillColor.equals(getColorFromCoords(x+1,y))) && cleanTools.isWithinCanvasBounds(x+1,y) )
-				colorPixelBlend(x+1,y,fillColor,getColorFromCoords(x+1,y));
-			if( (!fillColor.equals(getColorFromCoords(x,y-1))) && cleanTools.isWithinCanvasBounds(x,y-1) )
-				colorPixelBlend(x,y-1,fillColor,getColorFromCoords(x,y-1));
-			if( (!fillColor.equals(getColorFromCoords(x,y+1))) && cleanTools.isWithinCanvasBounds(x,y+1) )
-				colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
+	/*---------------------- Supporting functions ----------------------*/
+	var paint = function(xMin,xMax,y,color) {
+		var r = color.r, g = color.g, b = color.b, a = color.a;
+		var limit = (xMax+1 + y * w) * 4;
+		for(var i = (xMin + y * w) * 4; i<limit; i+=4) {
+			d[i]=r;
+			d[i+1]=g;
+			d[i+2]=b;
+			d[i+3]=a;
 		}
 	}
-	//----------------------------------------------------------------------------------------------------------
-	
-	
-	
-	
-	
-	
-
-var paint = function(xMin,xMax,y,color) {
-	//alert("Starting linepaint");
-	var r = color.r, g = color.g, b = color.b, a = color.a;
-	var limit = (xMax+1 + y * w) * 4;
-	for(var i = (xMin + y * w) * 4; i<limit; i+=4) {
-		d[i]=r;
-		d[i+1]=g;
-		d[i+2]=b;
-		d[i+3]=a;
+	var test = function(x,y) {
+		return (cleanTools.isWithinCanvasBounds(x,y) && targetColor.equals(getColorFromCoords(x,y)));
 	}
-	//alert("Ending linepaint");
-}
-var test = function(x,y) {
-	return (cleanTools.isWithinCanvasBounds(x,y) && targetColor.equals(getColorFromCoords(x,y)));
-}
-var testEdgePoint = function(x,y,originalY) {
-	var edge1 = edgeEligible(x,y);
-	var edge2 = edgeEligible(x-1,y);
-	var edge3 = edgeEligible(x+1,y);
-	if( !edge1 ) {
+	var testEdgePoint = function(x,y,originalY) {
+		var edge1 = edgeEligible(x,y);
+		var edge2 = edgeEligible(x-1,y);
+		var edge3 = edgeEligible(x+1,y);
+		if( !edge1 ) {
+			return false;
+		} else if( edge2 && edge3 ) {
+			return true;
+		} else if ( edge3 && edgeEligible(x-1,originalY)) {
+			return true;
+		} else if ( edge2 && edgeEligible(x+1,originalY)) {
+			return true;
+		}
 		return false;
-	} else if( edge2 && edge3 ) {
-		return true;
-	} else if ( edge3 && edgeEligible(x-1,originalY)) {
-		return true;
-	} else if ( edge2 && edgeEligible(x+1,originalY)) {
-		return true;
 	}
-	return false;
-}
-var edgeEligible = function(x,y) {
-	var color = getColorFromCoords(x,y);
-	return ( cleanTools.isWithinCanvasBounds(x,y) && (!fillColor.equals(color)) && (!targetColor.equals(color)) );
-}	
+	var edgeEligible = function(x,y) {
+		var color = getColorFromCoords(x,y);
+		return ( cleanTools.isWithinCanvasBounds(x,y) && (!fillColor.equals(color)) && (!targetColor.equals(color)) );
+	}
 
-function f2(xSeed,ySeed){
+function f(xSeed,ySeed){
 	//[x,y,goingUp(1 vs -1)
 	var stack = [[xSeed,ySeed,1]];
 	if(test(xSeed,ySeed-1))
@@ -652,19 +606,10 @@ function f2(xSeed,ySeed){
 	}
 }
 
-
-	
-	
-	
-	
-	
 	
 	//------------------------------------------------------------------------------------------------------------
 	
-	if(firstFunction)
-		f(xSeed,ySeed);
-	else
-		f2(xSeed,ySeed);
+	f(xSeed,ySeed);
 	ctx.putImageData(p,0,0);
 }
 function drawLineChain(ctx,pts,editMode,closeShape,closedFillColorHex)
