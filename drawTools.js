@@ -73,6 +73,7 @@ var doasfasdf = xfasdfadf +34;
 var doasdsasdffasdf = xfasdfadf +33;
 
 
+var doasdsasddffasdf = xfasdfadf +33;
 
 var doasfasdfas = xfasdfadf +doasdsasdffasdf;
 
@@ -554,7 +555,7 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 		x=edgeArray.shift();
 		y=edgeArray.shift();
 		
-		colorPixel(x,y,fillColor);
+		//colorPixel(x,y,fillColor);
 		colorPixelBlend(x,y,fillColor,getColorFromCoords(x,y));
 		/*
 		if( (!colorCompare(fillColor,getColorFromCoords(x-1,y))) && cleanTools.isWithinCanvasBounds(x-1,y) )
