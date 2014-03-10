@@ -174,17 +174,17 @@ cleanTools.canvas.on('mousedown', function(e){
 		//stopwatch.printElapsed();
 	} else if(cleanTools.currentToolType === toolType.LINE) {
 		painting = !1;
-		DTPoints[0] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
+		DTPoints.push(cleanTools.mouseX,cleanTools.mouseY);
 	} else if(cleanTools.currentToolType === toolType.LINECHAIN) {
 		painting = !1;
 	} else if(cleanTools.currentToolType === toolType.CURVE) {
 		painting = !1;
 	} else if(cleanTools.currentToolType === toolType.RECT) {
 		painting = !1;
-		DTPoints[0] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
+		DTPoints.push(cleanTools.mouseX,cleanTools.mouseY);
 	} else if(cleanTools.currentToolType === toolType.ELLIPSE) {
 		painting = !1;
-		DTPoints[0] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
+		DTPoints.push(cleanTools.mouseX,cleanTools.mouseY);
 	} 
 });
 // Setup Mousemove Listener
@@ -212,37 +212,27 @@ $(document).on('mousemove', function(e){
 		// Do nothing
 	} else if(cleanTools.currentToolType === toolType.LINE) {
 		cleanTools.restoreCanvas();
-		drawLine(cleanTools.context,DTPoints[0].x,DTPoints[0].y,cleanTools.mouseX,cleanTools.mouseY);
+		drawLine(cleanTools.context,DTPoints[0],DTPoints[1],cleanTools.mouseX,cleanTools.mouseY);
 	} else if(cleanTools.currentToolType === toolType.LINECHAIN) {
 		if(DTPoints.length > 0) {
 			var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 			cleanTools.restoreCanvas();
-			DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
-			drawLineChain(cleanTools.context,pointsToArray(DTPoints),true,options.lineToolsShouldClose,fillColor);
-			DTPoints.length = DTPoints.length - 1;
+			drawLineChain(cleanTools.context,DTPoints.concat(cleanTools.mouseX,cleanTools.mouseY),true,options.lineToolsShouldClose,fillColor);
 		}
 	} else if(cleanTools.currentToolType === toolType.CURVE) {
 		if(DTPoints.length > 0) {
 			var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 			cleanTools.restoreCanvas();
-			DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
-			try{
-			drawSpline(cleanTools.context,pointsToArray(DTPoints),0.5,options.lineToolsShouldClose,fillColor,true);
-			}catch(err){alert(err);}
-			DTPoints.length = DTPoints.length - 1;
+			drawSpline(cleanTools.context,DTPoints.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,options.lineToolsShouldClose,fillColor,true);
 		}
 	} else if(cleanTools.currentToolType === toolType.RECT) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		cleanTools.restoreCanvas();
-		DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
-		drawRect(cleanTools.context,pointsToArray(DTPoints),fillColor);
-		DTPoints.length = DTPoints.length - 1;
+		drawRect(cleanTools.context,DTPoints.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
 	} else if(cleanTools.currentToolType === toolType.ELLIPSE) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		cleanTools.restoreCanvas();
-		DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
-		drawEllipse(cleanTools.context,pointsToArray(DTPoints),fillColor);
-		DTPoints.length = DTPoints.length - 1;
+		drawEllipse(cleanTools.context,DTPoints.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
 	}
 });
 // Setup Mouseup Listener
@@ -265,14 +255,14 @@ $(document).on('mouseup', function(e){
 		// Do nothing
 	} else if(cleanTools.currentToolType === toolType.LINE) {
 		cleanTools.restoreCanvas();
-		drawLine(cleanTools.context,DTPoints[0].x,DTPoints[0].y, cleanTools.mouseX, cleanTools.mouseY);
+		drawLine(cleanTools.context,DTPoints[0],DTPoints[1], cleanTools.mouseX, cleanTools.mouseY);
 	} else if(cleanTools.currentToolType === toolType.LINECHAIN) {
 		if(cleanTools.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
-			DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
+			DTPoints.push(cleanTools.mouseX,cleanTools.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the chain
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 				cleanTools.restoreCanvas();
-				drawLineChain(cleanTools.context,pointsToArray(DTPoints),false,options.lineToolsShouldClose,fillColor);
+				drawLineChain(cleanTools.context,DTPoints,false,options.lineToolsShouldClose,fillColor);
 			} else {
 				return;
 			}
@@ -284,11 +274,11 @@ $(document).on('mouseup', function(e){
 		}
 	} else if(cleanTools.currentToolType === toolType.CURVE) {
 		if(cleanTools.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
-			DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
+			DTPoints.push(cleanTools.mouseX,cleanTools.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 				cleanTools.restoreCanvas();
-				drawSpline(cleanTools.context,pointsToArray(DTPoints),0.5,options.lineToolsShouldClose,fillColor,false);
+				drawSpline(cleanTools.context,DTPoints,0.5,options.lineToolsShouldClose,fillColor,false);
 			} else {
 				return;
 			}
@@ -301,13 +291,13 @@ $(document).on('mouseup', function(e){
 	} else if(cleanTools.currentToolType === toolType.RECT) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		cleanTools.restoreCanvas();
-		DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
-		drawRect(cleanTools.context,pointsToArray(DTPoints),fillColor);
+		DTPoints.push(cleanTools.mouseX,cleanTools.mouseY);
+		drawRect(cleanTools.context,DTPoints,fillColor);
 	} else if(cleanTools.currentToolType === toolType.ELLIPSE) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		cleanTools.restoreCanvas();
-		DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
-		drawEllipse(cleanTools.context,pointsToArray(DTPoints),fillColor);
+		DTPoints.push(cleanTools.mouseX,cleanTools.mouseY);
+		drawEllipse(cleanTools.context,DTPoints,fillColor);
 	}
 	DTPoints.length = 0;
 	cleanTools.toolInUse = false;
@@ -326,18 +316,16 @@ $(document).keydown(function(e) {
 		
 		if(cleanTools.currentToolType === toolType.LINECHAIN || cleanTools.currentToolType === toolType.CURVE) {
 			if(DTPoints.length) {
-				DTPoints.length -= 1;
+				DTPoints.length -= 2;
 				if(DTPoints.length == 0) {
 					cleanTools.toolInUse = false;
 				}
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 				cleanTools.restoreCanvas();
-				DTPoints[DTPoints.length] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
 				if(cleanTools.currentToolType === toolType.LINECHAIN)
-					drawLineChain(cleanTools.context,pointsToArray(DTPoints),true,options.lineToolsShouldClose,fillColor);
+					drawLineChain(cleanTools.context,DTPoints.concat(cleanTools.mouseX,cleanTools.mouseY),true,options.lineToolsShouldClose,fillColor);
 				else
-					drawSpline(cleanTools.context,pointsToArray(DTPoints),0.5,options.lineToolsShouldClose,fillColor,true);
-				DTPoints.length = DTPoints.length - 1;
+					drawSpline(cleanTools.context,DTPoints.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,options.lineToolsShouldClose,fillColor,true);
 			}
 		}
 	} else {
