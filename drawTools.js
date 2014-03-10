@@ -43,7 +43,7 @@ var cleanTools = {
 	'dcToolbar': DRAWCEPTION_TOOLBAR,
 	'dcBrushes': DRAWCEPTION_BRUSHES,
 	
-	'canvas': drawApp.canvas,
+	'Canvas': drawApp.canvas,
 	'context': drawApp.context,
 	
 	'mouseX': 0,
@@ -54,8 +54,8 @@ var cleanTools = {
 	'canvasHeight':0,
 	"updateCanvasLocation": function() {
 		this.canvasOffset = $('#drawingCanvas').offset();    // Update canvas offset variable
-		this.canvasWidth = this.canvas.width();              // Update canvas width variable
-		this.canvasHeight = this.canvas.height();            // Update canvas width variable
+		this.canvasWidth = this.Canvas.width();              // Update canvas width variable
+		this.canvasHeight = this.Canvas.height();            // Update canvas width variable
 	},
 	"restoreCanvas": function() {
 		this.context.constructor.prototype.putImageData.call(this.context, restorePoints[restorePosition], 0, 0);
@@ -162,8 +162,8 @@ createDrawToolsElements();      // Create Draw Tools Elements and Interface
 /*---------------------- Setup Listeners ----------------------*/
 
 // Setup Mousedown Listener
-cleanTools.canvas.off('mousedown');
-cleanTools.canvas.on('mousedown', function(e){
+cleanTools.Canvas.off('mousedown');
+cleanTools.Canvas.on('mousedown', function(e){
 	if(0 && $('#drawTools-options').css('opacity') == 1){
 		painting = !1;
 		cleanTools.restoreCanvas();
