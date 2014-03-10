@@ -74,13 +74,10 @@ cleanTools["tools"] = {
 	"toolInUse": false,
 	"points": [], // Will contain user input point sets for shapes/lines/etc
 	
-	"toolType": {BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99};
-	"reset": function(saveCanvas) {
-		this.points.length = 0;
-		this.toolInUse = false;
-		if(saveCanvas)
-			save();
-	},
+	"toolType": {BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99},
+	//"reset": function() {
+		
+	//},
 };
 
 
@@ -280,7 +277,8 @@ $(document).on('mouseup', function(e){
 			}
 		} else {
 			cleanTools.restoreCanvas();
-			cleanTools.tools.reset();
+			cleanTools.tools.points.length = 0;
+			cleanTools.tools.toolInUse = false;
 			return;
 		}
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
@@ -295,7 +293,8 @@ $(document).on('mouseup', function(e){
 			}
 		} else {	// If user clicks out of acceptable boundaries, cancel all tool progress
 			cleanTools.restoreCanvas();
-			cleanTools.tools.reset();
+			cleanTools.tools.points.length = 0;
+			cleanTools.tools.toolInUse = false;
 			return;
 		}
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
@@ -309,7 +308,9 @@ $(document).on('mouseup', function(e){
 		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
 		drawEllipse(cleanTools.context,cleanTools.tools.points,fillColor);
 	}
-	cleanTools.tools.reset(true);
+	cleanTools.tools.points.length = 0;
+	cleanTools.tools.toolInUse = false;
+	save();
 	
 });
 
@@ -325,7 +326,7 @@ $(document).keydown(function(e) {
 			if(cleanTools.tools.points.length) {
 				cleanTools.tools.points.length -= 2;
 				if(cleanTools.tools.points.length == 0) {
-					cleanTools.tools.reset();
+					cleanTools.tools.toolInUse = false;
 				}
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 				cleanTools.restoreCanvas();
