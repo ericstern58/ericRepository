@@ -68,6 +68,16 @@ var cleanTools = {
 	},
 	
 };
+
+cleanTools["tools"] = {
+	//"reset": function() {
+		
+	//},
+	"currentToolType": 0,
+	"toolInUse": false,
+};
+
+
 var xfasdfadf = 2+3;
 var doasfasdf = xfasdfadf +34;
 var doasdsasdffasdf = xfasdfadf +33;
@@ -129,8 +139,6 @@ var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99
 /*-----------------------------------------------------------------------------*/
 // Setup Some State Variables
 var options = new DTOptionsClass('#' + cleanTools.id + '-options');
-cleanTools["currentToolType"] = toolType.BRUSH;
-cleanTools["toolInUse"] = false;
 
 cleanTools.updateCanvasLocation();
 
@@ -313,7 +321,6 @@ $(document).keydown(function(e) {
 	if(e.keyCode == 39) {
 		alert('Right was pressed');
 	} if(e.keyCode == "Q".charCodeAt(0)) {
-		
 		if(cleanTools.currentToolType === toolType.LINECHAIN || cleanTools.currentToolType === toolType.CURVE) {
 			if(DTPoints.length) {
 				DTPoints.length -= 2;
@@ -336,7 +343,6 @@ $(document).keydown(function(e) {
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- Drawing Algorithms ----------------------------*/
 /*-----------------------------------------------------------------------------*/
-
 function drawLine(ctx,startX,startY,finishX,finishY)
 {
 	ctx.beginPath();
@@ -389,8 +395,6 @@ function drawEllipse(ctx,pts,fillColorHex){
 	ctx.stroke();
 	ctx.restore();
 }
-
-
 function floodFill(ctx,xSeed,ySeed){
 	xSeed = Math.round( xSeed );
 	ySeed = Math.round( ySeed );
@@ -698,11 +702,6 @@ function drawSpline(ctx,pts,t,closed,closedFillColorHex,editMode){
 	}
 	ctx.restore();
 }
-
-  /*-----------------------------------------------------------------------------*/
- /*--------------------------- Auxiliary Functions -----------------------------*/
-/*-----------------------------------------------------------------------------*/
-
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
 /*-----------------------------------------------------------------------------*/
@@ -928,7 +927,7 @@ function createOptionsMenu(drawToolsDiv)
 	leftPanelHtml += 
 		'<label onclick=setLineToolsOpen(); class="switch">\
 			<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">\
-			<span class="switch-label" data-on="Loop Line Tools" data-off="Line Tools Open"></span>\
+			<span class="switch-label" data-on="Line Tools Closed" data-off="Line Tools Open"></span>\
 			<span class="switch-handle"></span>\
 		</label>';
 	document.getElementById('drawTools-options-leftPanel').innerHTML = leftPanelHtml;
@@ -989,11 +988,4 @@ function DTDestroy()
 	window.DTToolsIsCurrentlyInstalled = false;
 	// 5. Destroy JavaScript
 	document.getElementById('DTScript').remove();
-}
-
-function pointsToArray(points) {
-	var arr = new Array();
-	for(i = 0, l=points.length; i<l; i++)
-		arr.push(points[i].x, points[i].y);
-	return arr;
 }
