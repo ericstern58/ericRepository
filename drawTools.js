@@ -525,10 +525,9 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 				
 				
 				var range = [0,0];
-				var i;
 				for(var j = 0; j < 2; j++) {
 					var incr = (j) ? 1 : -1 ;
-					
+					var i;
 					for(i = x+incr; test(i,y); i+=incr) { // While pixel line meets continues to meet its target color
 						// Setup Bools
 						var topFillable = test(i,y+direction);
