@@ -171,13 +171,13 @@ cleanTools.canvas.on('mousedown', function(e){
 	cleanTools.mouseY = e.pageY-cleanTools.canvasOffset.top;
 	
 	if(cleanTools.currentToolType === toolType.FILL) {
-		var stopwatch = new StopWatch();
-		stopwatch.start();
+		//var stopwatch = new StopWatch();
+		//stopwatch.start();
 		painting = !1;
 		try{
-		floodFill(cleanTools.context,e.offsetX,e.offsetY);
+		floodFill(cleanTools.context,cleanTools.mouseX,cleanTools.mouseX);
 		}catch(err){alert(err);}
-		stopwatch.stop();
+		//stopwatch.stop();
 		//stopwatch.printElapsed();
 	} else if(cleanTools.currentToolType === toolType.LINE) {
 		painting = !1;
