@@ -410,7 +410,21 @@ function drawEllipse(ctx,pts,fillColorHex){
 }
 
 
-function floodFill(ctx,xSeed,ySeed,firstFunction){
+function floodFill(ctx,xSeed,ySeed){
+	
+	/*---------------------- Setup Procedure Variables ----------------------*/
+	// This restoreCanvas() fix avoids issues with brush placing dot over flood fill seed area
+	cleanTools.restoreCanvas();
+	
+	var w = cleanTools.canvasWidth;
+	var h = cleanTools.canvasHeight;
+	var p = ctx.getImageData(0,0,w,h);
+	var d = p.data;
+	var targetColor = [d[(x+y*w)*4],d[(x+y*w)*4+1],d[(x+y*w)*4+2],d[(x+y*w)*4+3]];//getColorFromCoords(xSeed,ySeed); // Cant use because its not initialized yet
+	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
+	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];outputDebug("TargetColor: " + targetColor.toString());
+	
+	
 	/*---------------------- Supporting functions ----------------------*/
 	/*---------------------- Color Methods ----------------------*/
 	// Define some useful functions
@@ -469,18 +483,13 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 		var color = getColorFromCoords(x,y);
 		return ( cleanTools.isWithinCanvasBounds(x,y) && (!colorCompare(fillColor,color)) && (!colorCompare(targetColor,color)) );
 	}
+	
+	
+	
+	
+	
+	
 	/*---------------------- Begin Procedure ----------------------*/
-	// This restoreCanvas() fix avoids issues with brush placing dot over flood fill seed area
-	cleanTools.restoreCanvas();
-	
-	var w = cleanTools.canvasWidth;
-	var h = cleanTools.canvasHeight;
-	var p = ctx.getImageData(0,0,w,h);
-	var d = p.data;
-	var targetColor = getColorFromCoords(xSeed,ySeed);
-	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
-	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];outputDebug("TargetColor: " + targetColor.toString());
-	
 	// If seed pixel is already colored the fill color, nothing needs to be done, return early
 	if(colorCompare(targetColor,fillColor))
 		return;
