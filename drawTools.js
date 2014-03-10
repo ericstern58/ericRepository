@@ -72,7 +72,7 @@ var cleanTools = {
 cleanTools["tools"] = {
 	"currentToolType": 0,
 	"toolInUse": false,
-	"points": new Array(); // Will contain user input point sets for shapes/lines/etc
+	"points": [], // Will contain user input point sets for shapes/lines/etc
 	//"reset": function() {
 		
 	//},
