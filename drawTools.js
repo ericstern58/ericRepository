@@ -533,17 +533,20 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 					var topLeftUnfillable = (!test(i-1,y+direction));
 					var bottomLeftUnfillable = (!test(i-1,y-direction));
 					
-					// Find Wether or not to add edge pixels
-					if(testEdgePoint(i,y+direction,y))
-						edgeArray.push(i,y+direction);
-					if(testEdgePoint(i,y-direction,y))
-						edgeArray.push(i,y-direction);
+					
+					
 					
 					// Two if statements to know when to add a new seed
 					if(topFillable && topLeftUnfillable)
 						stack.push([i,y+direction,direction]);
+					else if(testEdgePoint(i,y+direction,y)) // Find Wether or not to add edge pixels
+						edgeArray.push(i,y+direction);
+						
 					if(bottomFillable && bottomLeftUnfillable)
 						stack.push([i,y-direction,-direction]);
+					else if(testEdgePoint(i,y-direction,y)) // Find Wether or not to add edge pixels
+						edgeArray.push(i,y-direction);
+						
 				}
 				edgeArray.push(i,y);
 				range[1] = i-1; // Save max fill pixel
