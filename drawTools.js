@@ -126,11 +126,6 @@ DTOptionsClass.prototype.isWithinBounds = function (x, y) {
 	return (x2>=0 && y2>=0 && x2<width && y2<height);
 };
 
-// Point Object
-function Point(x, y) {
-	this.x = x;
-	this.y = y;
-}
 // Tool type enum
 var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99};
 
