@@ -485,11 +485,6 @@ function floodFill(ctx,xSeed,ySeed){
 		return ( cleanTools.isWithinCanvasBounds(x,y) && (!colorCompare(fillColor,color)) && (!colorCompare(targetColor,color)) );
 	}
 	
-	
-	
-	
-	
-	
 	/*---------------------- Begin Procedure ----------------------*/
 	// If seed pixel is already colored the fill color, nothing needs to be done, return early
 	if(colorCompare(targetColor,fillColor))
