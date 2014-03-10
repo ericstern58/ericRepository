@@ -425,6 +425,8 @@ function drawEllipse(ctx,pts,fillColorHex){
 }
 
 function floodFill(ctx,xSeed,ySeed,firstFunction){
+	
+	/*---------------------- Supporting functions ----------------------*/
 	/*---------------------- Color Methods ----------------------*/
 	// Define some useful functions
 	var getColorFromCoords = function(x,y){
@@ -447,24 +449,6 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 		colorPixel(x,y,new RGBColor(r,g,b,255));
 	}
 	
-	/*---------------------- Begin Procedure ----------------------*/
-	// This restoreCanvas() fix avoids issues with brush placing dot over flood fill seed area
-	cleanTools.restoreCanvas();
-	
-	var w = cleanTools.canvasWidth;
-	var h = cleanTools.canvasHeight;
-	var p = ctx.getImageData(0,0,w,h);
-	var d = p.data;
-	var targetColor = getColorFromCoords(xSeed,ySeed);
-	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
-	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255,255);
-	
-	// Note: target color must be different to execute function f
-	// If something is already colored the fill color, nothing needs to be done
-	if(targetColor.equals(fillColor)) {
-		return;
-	}
-	/*---------------------- Supporting functions ----------------------*/
 	var paint = function(xMin,xMax,y,color) {
 		var r = color.r, g = color.g, b = color.b, a = color.a;
 		var limit = (xMax+1 + y * w) * 4;
@@ -497,114 +481,121 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 		var color = getColorFromCoords(x,y);
 		return ( cleanTools.isWithinCanvasBounds(x,y) && (!fillColor.equals(color)) && (!targetColor.equals(color)) );
 	}
-
-function f(xSeed,ySeed){
-	//[x,y,goingUp(1 vs -1)
-	var stack = [[xSeed,ySeed,1]];
-	if(test(xSeed,ySeed-1))
-		stack.push([xSeed,ySeed-1,-1]);
-	var edgeArray = [];
+	/*---------------------- Begin Procedure ----------------------*/
+	// This restoreCanvas() fix avoids issues with brush placing dot over flood fill seed area
+	cleanTools.restoreCanvas();
 	
-	var x = 0;
-	var y = 0;
-	var direction = 0;
+	var w = cleanTools.canvasWidth;
+	var h = cleanTools.canvasHeight;
+	var p = ctx.getImageData(0,0,w,h);
+	var d = p.data;
+	var targetColor = getColorFromCoords(xSeed,ySeed);
+	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
+	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255,255);
 	
-	while(stack.length>0) {
-		var line = stack.pop();
-		x = line[0];
-		y = line[1];
-		direction = line[2];
-		if(test(x,y)) {	// If pixel hasn't been colored continue.
-			// Check if pixel above is eligible to be seed pixel for next line.
-			if(test(x,y+direction))
-				stack.push([x,y+direction,direction]);
-			
-			// Before scanning line, find wether or not to add edge pixels from seed point
-			if(testEdgePoint(x,y+direction,y))
-				edgeArray.push(x,y+direction);
-			if(testEdgePoint(x,y-direction,y))
-				edgeArray.push(x,y-direction);
-			
-			var xMax;
-			var xMin;
-			var i;
-			// Travel right
-			for(i = x+1; test(i,y); i++) { // While pixel line meets continues to meet its target color
-				// Setup Bools
-				var topFillable = test(i,y+direction);
-				var bottomFillable = test(i,y-direction);
-				var topLeftUnfillable = (!test(i-1,y+direction));
-				var bottomLeftUnfillable = (!test(i-1,y-direction));
+	// Note: target color must be different to execute function f
+	// If something is already colored the fill color, nothing needs to be done
+	if(targetColor.equals(fillColor)) {
+		return;
+	}
+	
+	function f(xSeed,ySeed){
+		//[x,y,goingUp(1 vs -1)
+		var stack = [[xSeed,ySeed,1]];
+		if(test(xSeed,ySeed-1))
+			stack.push([xSeed,ySeed-1,-1]);
+		var edgeArray = [];
+		
+		var x = 0;
+		var y = 0;
+		var direction = 0;
+		
+		while(stack.length>0) {
+			var line = stack.pop();
+			x = line[0];
+			y = line[1];
+			direction = line[2];
+			if(test(x,y)) {	// If pixel hasn't been colored continue.
+				// Check if pixel above is eligible to be seed pixel for next line.
+				if(test(x,y+direction))
+					stack.push([x,y+direction,direction]);
 				
-				// Find Wether or not to add edge pixels
-				if(testEdgePoint(i,y+direction,y))
-					edgeArray.push(i,y+direction);
-				if(testEdgePoint(i,y-direction,y))
-					edgeArray.push(i,y-direction);
+				// Before scanning line, find wether or not to add edge pixels from seed point
+				if(testEdgePoint(x,y+direction,y))
+					edgeArray.push(x,y+direction);
+				if(testEdgePoint(x,y-direction,y))
+					edgeArray.push(x,y-direction);
 				
-				// Two if statements to know when to add a new seed
-				if(topFillable && topLeftUnfillable)
-					stack.push([i,y+direction,direction]);
-				if(bottomFillable && bottomLeftUnfillable)
-					stack.push([i,y-direction,-direction]);
+				var xMax;
+				var xMin;
+				var i;
+				// Travel right
+				for(i = x+1; test(i,y); i++) { // While pixel line meets continues to meet its target color
+					// Setup Bools
+					var topFillable = test(i,y+direction);
+					var bottomFillable = test(i,y-direction);
+					var topLeftUnfillable = (!test(i-1,y+direction));
+					var bottomLeftUnfillable = (!test(i-1,y-direction));
+					
+					// Find Wether or not to add edge pixels
+					if(testEdgePoint(i,y+direction,y))
+						edgeArray.push(i,y+direction);
+					if(testEdgePoint(i,y-direction,y))
+						edgeArray.push(i,y-direction);
+					
+					// Two if statements to know when to add a new seed
+					if(topFillable && topLeftUnfillable)
+						stack.push([i,y+direction,direction]);
+					if(bottomFillable && bottomLeftUnfillable)
+						stack.push([i,y-direction,-direction]);
+				}
+				edgeArray.push(i,y);
+				xMax = i-1; // Save max fill pixel
+				
+				// Travel left
+				for(i = x-1; test(i,y); i--) { // While pixel line meets continues to meet its target color
+					// Setup Bools
+					var topFillable = test(i,y+direction);
+					var bottomFillable = test(i,y-direction);
+					var topRightUnfillable = (!test(i+1,y+direction));
+					var bottomRightUnfillable = (!test(i+1,y-direction));
+					
+					// Find Wether or not to add edge pixels
+					if(testEdgePoint(i,y+direction,y))
+						edgeArray.push(i,y+direction);
+					if(testEdgePoint(i,y-direction,y))
+						edgeArray.push(i,y-direction);
+					
+					// Two if statements to know when to add a new seed
+					if(topFillable && topRightUnfillable)
+						stack.push([i,y+direction,direction]);
+					if(bottomFillable && bottomRightUnfillable)
+						stack.push([i,y-direction,-direction]);
+				}
+				edgeArray.push(i,y);
+				xMin = i+1;// Save min fill pixel
+				paint(xMin,xMax,y,fillColor);
 			}
-			edgeArray.push(i,y);
-			xMax = i-1; // Save max fill pixel
+		}
+		
+		// This loop colors edge pixels and softens them with anti-aliasing
+		while(edgeArray.length>0) {
+			x=edgeArray.shift();
+			y=edgeArray.shift();
 			
-			// Travel left
-			for(i = x-1; test(i,y); i--) { // While pixel line meets continues to meet its target color
-				// Setup Bools
-				var topFillable = test(i,y+direction);
-				var bottomFillable = test(i,y-direction);
-				var topRightUnfillable = (!test(i+1,y+direction));
-				var bottomRightUnfillable = (!test(i+1,y-direction));
+			colorPixel(x,y,fillColor);
 				
-				// Find Wether or not to add edge pixels
-				if(testEdgePoint(i,y+direction,y))
-					edgeArray.push(i,y+direction);
-				if(testEdgePoint(i,y-direction,y))
-					edgeArray.push(i,y-direction);
-				
-				// Two if statements to know when to add a new seed
-				if(topFillable && topRightUnfillable)
-					stack.push([i,y+direction,direction]);
-				if(bottomFillable && bottomRightUnfillable)
-					stack.push([i,y-direction,-direction]);
-			}
-			edgeArray.push(i,y);
-			xMin = i+1;// Save min fill pixel
-			paint(xMin,xMax,y,fillColor);
+			if( (!fillColor.equals(getColorFromCoords(x-1,y))) && cleanTools.isWithinCanvasBounds(x-1,y) )
+				colorPixelBlend(x-1,y,fillColor,getColorFromCoords(x-1,y));
+			if( (!fillColor.equals(getColorFromCoords(x+1,y))) && cleanTools.isWithinCanvasBounds(x+1,y) )
+				colorPixelBlend(x+1,y,fillColor,getColorFromCoords(x+1,y));
+			if( (!fillColor.equals(getColorFromCoords(x,y-1))) && cleanTools.isWithinCanvasBounds(x,y-1) )
+				colorPixelBlend(x,y-1,fillColor,getColorFromCoords(x,y-1));
+			if( (!fillColor.equals(getColorFromCoords(x,y+1))) && cleanTools.isWithinCanvasBounds(x,y+1) )
+				colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
 		}
 	}
-/*	
-	var purple = new RGBColor(255,0,0,255);   //purple
-	while(edgeArray.length>0) {
-		var b = edgeArray.pop();
-		var a = edgeArray.pop();
-		colorPixel(a,b,purple);
-	}
-	*/
-	// This loop colors edge pixels and softens them with anti-aliasing
-	while(edgeArray.length>0) {
-		x=edgeArray.shift();
-		y=edgeArray.shift();
-		
-		colorPixel(x,y,fillColor);
-			
-		if( (!fillColor.equals(getColorFromCoords(x-1,y))) && cleanTools.isWithinCanvasBounds(x-1,y) )
-			colorPixelBlend(x-1,y,fillColor,getColorFromCoords(x-1,y));
-		if( (!fillColor.equals(getColorFromCoords(x+1,y))) && cleanTools.isWithinCanvasBounds(x+1,y) )
-			colorPixelBlend(x+1,y,fillColor,getColorFromCoords(x+1,y));
-		if( (!fillColor.equals(getColorFromCoords(x,y-1))) && cleanTools.isWithinCanvasBounds(x,y-1) )
-			colorPixelBlend(x,y-1,fillColor,getColorFromCoords(x,y-1));
-		if( (!fillColor.equals(getColorFromCoords(x,y+1))) && cleanTools.isWithinCanvasBounds(x,y+1) )
-			colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
-	}
-}
 
-	
-	//------------------------------------------------------------------------------------------------------------
-	
 	f(xSeed,ySeed);
 	ctx.putImageData(p,0,0);
 }
