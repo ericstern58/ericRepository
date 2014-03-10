@@ -416,7 +416,8 @@ function drawEllipse(ctx,pts,fillColorHex){
 
 
 function floodFill(ctx,xSeed,ySeed){
-	
+	xSeed = xSeed%1;
+	ySeed = ySeed%1;
 	/*---------------------- Setup Procedure Variables ----------------------*/
 	// This restoreCanvas() fix avoids issues with brush placing dot over flood fill seed area
 	cleanTools.restoreCanvas();
