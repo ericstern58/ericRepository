@@ -164,7 +164,7 @@ cleanTools.canvas.on('mousedown', function(e){
 		painting = !1;
 		cleanTools.restoreCanvas();
 		return;
-	} else if(cleanTools.currentToolType === toolType.BRUSH)
+	} else if(cleanTools.tools.currentToolType === toolType.BRUSH)
 		return;
 	cleanTools.tools.toolInUse = true;
 	cleanTools.updateCanvasLocation();
@@ -173,24 +173,24 @@ cleanTools.canvas.on('mousedown', function(e){
 	cleanTools.mouseX = e.pageX-cleanTools.canvasOffset.left;
 	cleanTools.mouseY = e.pageY-cleanTools.canvasOffset.top;
 	
-	if(cleanTools.currentToolType === toolType.FILL) {
+	if(cleanTools.tools.currentToolType === toolType.FILL) {
 		//var stopwatch = new StopWatch();
 		//stopwatch.start();
 		painting = !1;
 		floodFill(cleanTools.context,cleanTools.mouseX,cleanTools.mouseY);
 		//stopwatch.stop();
 		//stopwatch.printElapsed();
-	} else if(cleanTools.currentToolType === toolType.LINE) {
+	} else if(cleanTools.tools.currentToolType === toolType.LINE) {
 		painting = !1;
 		DTPoints.push(cleanTools.mouseX,cleanTools.mouseY);
-	} else if(cleanTools.currentToolType === toolType.LINECHAIN) {
+	} else if(cleanTools.tools.currentToolType === toolType.LINECHAIN) {
 		painting = !1;
-	} else if(cleanTools.currentToolType === toolType.CURVE) {
+	} else if(cleanTools.tools.currentToolType === toolType.CURVE) {
 		painting = !1;
-	} else if(cleanTools.currentToolType === toolType.RECT) {
+	} else if(cleanTools.tools.currentToolType === toolType.RECT) {
 		painting = !1;
 		DTPoints.push(cleanTools.mouseX,cleanTools.mouseY);
-	} else if(cleanTools.currentToolType === toolType.ELLIPSE) {
+	} else if(cleanTools.tools.currentToolType === toolType.ELLIPSE) {
 		painting = !1;
 		DTPoints.push(cleanTools.mouseX,cleanTools.mouseY);
 	} 
@@ -207,7 +207,7 @@ $(document).on('mousemove', function(e){
 		outputDebug("Out of bounds.")
 	}
 	*/
-	if(cleanTools.currentToolType === toolType.BRUSH)
+	if(cleanTools.tools.currentToolType === toolType.BRUSH)
 		return;	// default behaviors
 	else if(!cleanTools.tools.toolInUse)
 		return;	// If no tool is in use, ignore event
@@ -216,28 +216,28 @@ $(document).on('mousemove', function(e){
 	cleanTools.mouseX = e.pageX-cleanTools.canvasOffset.left;
 	cleanTools.mouseY = e.pageY-cleanTools.canvasOffset.top;
 	
-	if(cleanTools.currentToolType === toolType.FILL) {
+	if(cleanTools.tools.currentToolType === toolType.FILL) {
 		// Do nothing
-	} else if(cleanTools.currentToolType === toolType.LINE) {
+	} else if(cleanTools.tools.currentToolType === toolType.LINE) {
 		cleanTools.restoreCanvas();
 		drawLine(cleanTools.context,DTPoints[0],DTPoints[1],cleanTools.mouseX,cleanTools.mouseY);
-	} else if(cleanTools.currentToolType === toolType.LINECHAIN) {
+	} else if(cleanTools.tools.currentToolType === toolType.LINECHAIN) {
 		if(DTPoints.length > 0) {
 			var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 			cleanTools.restoreCanvas();
 			drawLineChain(cleanTools.context,DTPoints.concat(cleanTools.mouseX,cleanTools.mouseY),true,options.lineToolsShouldClose,fillColor);
 		}
-	} else if(cleanTools.currentToolType === toolType.CURVE) {
+	} else if(cleanTools.tools.currentToolType === toolType.CURVE) {
 		if(DTPoints.length > 0) {
 			var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 			cleanTools.restoreCanvas();
 			drawSpline(cleanTools.context,DTPoints.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,options.lineToolsShouldClose,fillColor,true);
 		}
-	} else if(cleanTools.currentToolType === toolType.RECT) {
+	} else if(cleanTools.tools.currentToolType === toolType.RECT) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		cleanTools.restoreCanvas();
 		drawRect(cleanTools.context,DTPoints.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
-	} else if(cleanTools.currentToolType === toolType.ELLIPSE) {
+	} else if(cleanTools.tools.currentToolType === toolType.ELLIPSE) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		cleanTools.restoreCanvas();
 		drawEllipse(cleanTools.context,DTPoints.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
@@ -250,7 +250,7 @@ $(document).on('mouseup', function(e){
 		if(!options.isWithinBounds(e.pageX, e.pageY))
 			options.toggleMenu();
 		return;
-	} else if(cleanTools.currentToolType === toolType.BRUSH)
+	} else if(cleanTools.tools.currentToolType === toolType.BRUSH)
 		return;
 	else if(!cleanTools.tools.toolInUse)	// If no tool is in use, ignore event
 		return;
@@ -259,12 +259,12 @@ $(document).on('mouseup', function(e){
 	cleanTools.mouseX = e.pageX-cleanTools.canvasOffset.left;
 	cleanTools.mouseY = e.pageY-cleanTools.canvasOffset.top;
 	
-	if(cleanTools.currentToolType === toolType.FILL) {
+	if(cleanTools.tools.currentToolType === toolType.FILL) {
 		// Do nothing
-	} else if(cleanTools.currentToolType === toolType.LINE) {
+	} else if(cleanTools.tools.currentToolType === toolType.LINE) {
 		cleanTools.restoreCanvas();
 		drawLine(cleanTools.context,DTPoints[0],DTPoints[1], cleanTools.mouseX, cleanTools.mouseY);
-	} else if(cleanTools.currentToolType === toolType.LINECHAIN) {
+	} else if(cleanTools.tools.currentToolType === toolType.LINECHAIN) {
 		if(cleanTools.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
 			DTPoints.push(cleanTools.mouseX,cleanTools.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the chain
@@ -280,7 +280,7 @@ $(document).on('mouseup', function(e){
 			cleanTools.tools.toolInUse = false;
 			return;
 		}
-	} else if(cleanTools.currentToolType === toolType.CURVE) {
+	} else if(cleanTools.tools.currentToolType === toolType.CURVE) {
 		if(cleanTools.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
 			DTPoints.push(cleanTools.mouseX,cleanTools.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the curve
@@ -296,12 +296,12 @@ $(document).on('mouseup', function(e){
 			cleanTools.tools.toolInUse = false;
 			return;
 		}
-	} else if(cleanTools.currentToolType === toolType.RECT) {
+	} else if(cleanTools.tools.currentToolType === toolType.RECT) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		cleanTools.restoreCanvas();
 		DTPoints.push(cleanTools.mouseX,cleanTools.mouseY);
 		drawRect(cleanTools.context,DTPoints,fillColor);
-	} else if(cleanTools.currentToolType === toolType.ELLIPSE) {
+	} else if(cleanTools.tools.currentToolType === toolType.ELLIPSE) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		cleanTools.restoreCanvas();
 		DTPoints.push(cleanTools.mouseX,cleanTools.mouseY);
@@ -321,7 +321,7 @@ $(document).keydown(function(e) {
 	if(e.keyCode == 39) {
 		alert('Right was pressed');
 	} if(e.keyCode == "Q".charCodeAt(0)) {
-		if(cleanTools.currentToolType === toolType.LINECHAIN || cleanTools.currentToolType === toolType.CURVE) {
+		if(cleanTools.tools.currentToolType === toolType.LINECHAIN || cleanTools.tools.currentToolType === toolType.CURVE) {
 			if(DTPoints.length) {
 				DTPoints.length -= 2;
 				if(DTPoints.length == 0) {
@@ -329,7 +329,7 @@ $(document).keydown(function(e) {
 				}
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 				cleanTools.restoreCanvas();
-				if(cleanTools.currentToolType === toolType.LINECHAIN)
+				if(cleanTools.tools.currentToolType === toolType.LINECHAIN)
 					drawLineChain(cleanTools.context,DTPoints.concat(cleanTools.mouseX,cleanTools.mouseY),true,options.lineToolsShouldClose,fillColor);
 				else
 					drawSpline(cleanTools.context,DTPoints.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,options.lineToolsShouldClose,fillColor,true);
@@ -808,7 +808,7 @@ function modifyExistingElements()
 	
 	function selectBrushAUX(brushSize) {
 		drawApp.setSize(brushSize);				// Set default brush size
-		cleanTools.currentToolType = toolType.BRUSH;		// Update tool type
+		cleanTools.tools.currentToolType = toolType.BRUSH;		// Update tool type
 		
 		// Visually unselect any other tools
 		var ele = document.getElementsByName(cleanTools.id + "-btn-radio");
@@ -865,7 +865,7 @@ function createToolButton(type, name)
 	var button = document.createElement('label');
 	button.id = cleanTools.id + '-btn-' + name;
 	button.className = 'drawTools-btn';
-	button.onclick = function(){cleanTools.currentToolType=type;};
+	button.onclick = function(){cleanTools.tools.currentToolType=type;};
 	document.getElementById(cleanTools.id).appendChild(button);
 	
 	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
