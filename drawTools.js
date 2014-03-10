@@ -513,7 +513,7 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 			y = line[1];
 			direction = line[2];
 			if(test(x,y)) {	// If pixel hasn't been colored continue.
-				// Check if pixel above is eligible to be seed pixel for next line.
+				// Check next pixel in "direction" side is eligible to be seed pixel for next line.
 				if(test(x,y+direction))
 					stack.push([x,y+direction,direction]);
 				
@@ -523,9 +523,8 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 				if(testEdgePoint(x,y-direction,y))
 					edgeArray.push(x,y-direction);
 				
-				
 				var range = [0,0];
-				for(var j = 0; j < 2; j++) {
+				for(var j = 0; j < 2; j++) { // Iterates through left/right line sides
 					var incr = (j) ? 1 : -1 ;
 					var i;
 					for(i = x+incr; test(i,y); i+=incr) { // While pixel line meets continues to meet its target color
@@ -550,11 +549,9 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 					range[j] = i-incr; // Save max fill pixel
 					
 				}
-				
 				paint(range[0],range[1],y,fillColor);
 			}
 		}
-		
 		// This loop colors edge pixels and softens them with anti-aliasing
 		while(edgeArray.length>0) {
 			x=edgeArray.shift();
@@ -572,7 +569,6 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 				colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
 		}
 	}
-
 	f(xSeed,ySeed);
 	ctx.putImageData(p,0,0);
 }
