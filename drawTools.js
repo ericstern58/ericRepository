@@ -190,11 +190,7 @@ cleanTools.canvas.on('mousedown', function(e){
 		stopwatch.start();
 		painting = !1;
 		try{
-		if(e.which == 3) {	// If right mouse click, finish the curve
-			floodFill(cleanTools.context,e.offsetX,e.offsetY);
-		} else {
-			floodFill(cleanTools.context,e.offsetX,e.offsetY,true);
-		}
+		floodFill(cleanTools.context,e.offsetX,e.offsetY);
 		}catch(err){alert(err);}
 		stopwatch.stop();
 		stopwatch.printElapsed();
