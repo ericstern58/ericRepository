@@ -555,9 +555,8 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 		x=edgeArray.shift();
 		y=edgeArray.shift();
 		
-		//colorPixel(x,y,fillColor);
-		colorPixelBlend(x,y,fillColor,getColorFromCoords(x,y));
-		/*
+		colorPixel(x,y,fillColor);
+		
 		if( (!colorCompare(fillColor,getColorFromCoords(x-1,y))) && cleanTools.isWithinCanvasBounds(x-1,y) )
 			colorPixelBlend(x-1,y,fillColor,getColorFromCoords(x-1,y));
 		if( (!colorCompare(fillColor,getColorFromCoords(x+1,y))) && cleanTools.isWithinCanvasBounds(x+1,y) )
@@ -565,7 +564,7 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 		if( (!colorCompare(fillColor,getColorFromCoords(x,y-1))) && cleanTools.isWithinCanvasBounds(x,y-1) )
 			colorPixelBlend(x,y-1,fillColor,getColorFromCoords(x,y-1));
 		if( (!colorCompare(fillColor,getColorFromCoords(x,y+1))) && cleanTools.isWithinCanvasBounds(x,y+1) )
-			colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));*/
+			colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
 	}
 //}
 
