@@ -423,8 +423,8 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 		this.b = b;
 		this.a = (a) ? a : 0;
 	}
-	RGBColor.prototype.equals = function(color) {
-		return (this.r===color.r && this.g===color.g && this.b===color.b && this.a===color.a);
+	var colorCompare = function(color1,color2) {
+		return (color1.r===color2.r && color1.g===color2.g && color1.b===color2.b && color1.a===color2.a);
 	};
 	/*---------------------- Supporting functions ----------------------*/
 	/*---------------------- Color Methods ----------------------*/
@@ -460,7 +460,7 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 		}
 	}
 	var test = function(x,y) {
-		return (cleanTools.isWithinCanvasBounds(x,y) && targetColor.equals(getColorFromCoords(x,y)));
+		return (cleanTools.isWithinCanvasBounds(x,y) && colorCompare(targetColor,getColorFromCoords(x,y)));
 	}
 	var testEdgePoint = function(x,y,originalY) {
 		var edge1 = edgeEligible(x,y);
@@ -479,7 +479,7 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 	}
 	var edgeEligible = function(x,y) {
 		var color = getColorFromCoords(x,y);
-		return ( cleanTools.isWithinCanvasBounds(x,y) && (!fillColor.equals(color)) && (!targetColor.equals(color)) );
+		return ( cleanTools.isWithinCanvasBounds(x,y) && (!colorCompare(fillColor,color)) && (!colorCompare(targetColor,color)) );
 	}
 	/*---------------------- Begin Procedure ----------------------*/
 	// This restoreCanvas() fix avoids issues with brush placing dot over flood fill seed area
@@ -494,7 +494,7 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255,255);
 	
 	// If seed pixel is already colored the fill color, nothing needs to be done, return early
-	if(targetColor.equals(fillColor))
+	if(colorCompare(targetColor,fillColor))
 		return;
 	
 	/*---------------------- Algorithm Begin ----------------------*/
@@ -561,13 +561,13 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 		
 		colorPixel(x,y,fillColor);
 			
-		if( (!fillColor.equals(getColorFromCoords(x-1,y))) && cleanTools.isWithinCanvasBounds(x-1,y) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x-1,y))) && cleanTools.isWithinCanvasBounds(x-1,y) )
 			colorPixelBlend(x-1,y,fillColor,getColorFromCoords(x-1,y));
-		if( (!fillColor.equals(getColorFromCoords(x+1,y))) && cleanTools.isWithinCanvasBounds(x+1,y) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x+1,y))) && cleanTools.isWithinCanvasBounds(x+1,y) )
 			colorPixelBlend(x+1,y,fillColor,getColorFromCoords(x+1,y));
-		if( (!fillColor.equals(getColorFromCoords(x,y-1))) && cleanTools.isWithinCanvasBounds(x,y-1) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x,y-1))) && cleanTools.isWithinCanvasBounds(x,y-1) )
 			colorPixelBlend(x,y-1,fillColor,getColorFromCoords(x,y-1));
-		if( (!fillColor.equals(getColorFromCoords(x,y+1))) && cleanTools.isWithinCanvasBounds(x,y+1) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x,y+1))) && cleanTools.isWithinCanvasBounds(x,y+1) )
 			colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
 	}
 //}
