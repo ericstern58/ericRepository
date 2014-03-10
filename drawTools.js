@@ -533,16 +533,12 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 					var topLeftUnfillable = (!test(i-1,y+direction));
 					var bottomLeftUnfillable = (!test(i-1,y-direction));
 					
-					
-					
-					
-					// Two if statements to know when to add a new seed
-					if(topFillable && topLeftUnfillable)
+					if(topFillable && topLeftUnfillable) // Find when to add a new seed(top)
 						stack.push([i,y+direction,direction]);
 					else if(testEdgePoint(i,y+direction,y)) // Find Wether or not to add edge pixels
 						edgeArray.push(i,y+direction);
 						
-					if(bottomFillable && bottomLeftUnfillable)
+					if(bottomFillable && bottomLeftUnfillable) // Find when to add a new seed(bottom)
 						stack.push([i,y-direction,-direction]);
 					else if(testEdgePoint(i,y-direction,y)) // Find Wether or not to add edge pixels
 						edgeArray.push(i,y-direction);
@@ -559,17 +555,15 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 					var topRightUnfillable = (!test(i+1,y+direction));
 					var bottomRightUnfillable = (!test(i+1,y-direction));
 					
-					// Find Wether or not to add edge pixels
-					if(testEdgePoint(i,y+direction,y))
-						edgeArray.push(i,y+direction);
-					if(testEdgePoint(i,y-direction,y))
-						edgeArray.push(i,y-direction);
-					
-					// Two if statements to know when to add a new seed
-					if(topFillable && topRightUnfillable)
+					if(topFillable && topRightUnfillable) // Find when to add a new seed(top)
 						stack.push([i,y+direction,direction]);
-					if(bottomFillable && bottomRightUnfillable)
+					else if(testEdgePoint(i,y+direction,y)) // Find Wether or not to add edge pixels
+						edgeArray.push(i,y+direction);
+						
+					if(bottomFillable && bottomRightUnfillable) // Find when to add a new seed(top)
 						stack.push([i,y-direction,-direction]);
+					else if(testEdgePoint(i,y-direction,y)) // Find Wether or not to add edge pixels
+						edgeArray.push(i,y-direction);
 				}
 				edgeArray.push(i,y);
 				range[0] = i+1;// Save min fill pixel
