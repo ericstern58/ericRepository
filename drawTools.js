@@ -544,7 +544,8 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 						edgeArray.push(i,y-direction);
 						
 				}
-				edgeArray.push(i,y);
+				if(cleanTools.isWithinCanvasBounds(i,y))
+					edgeArray.push(i,y);
 				range[1] = i-1; // Save max fill pixel
 				
 				// Travel left
@@ -565,7 +566,8 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 					else if(testEdgePoint(i,y-direction,y)) // Find Wether or not to add edge pixels
 						edgeArray.push(i,y-direction);
 				}
-				edgeArray.push(i,y);
+				if(cleanTools.isWithinCanvasBounds(i,y))
+					edgeArray.push(i,y);
 				range[0] = i+1;// Save min fill pixel
 				paint(range[0],range[1],y,fillColor);
 			}
