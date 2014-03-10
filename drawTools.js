@@ -180,7 +180,7 @@ cleanTools.canvas.on('mousedown', function(e){
 		//stopwatch.start();
 		painting = !1;
 		try{
-		floodFill(cleanTools.context,e.offsetX,e.offsetY);
+		floodFill(cleanTools.context,cleanTools.mouseX,cleanTools.mouseY);
 		}catch(err){alert(err);}
 		//stopwatch.stop();
 		//stopwatch.printElapsed();
