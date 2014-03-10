@@ -523,34 +523,38 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 				if(testEdgePoint(x,y-direction,y))
 					edgeArray.push(x,y-direction);
 				
+				
 				for(var j = 0; j < 2; j++) {
-					var incr = (j) ? -1 : 1;
+					var incr = (j==0) ? -1 : 1 ;
+					var incrOpposite = incr*(-1);
+					
 					var range = [0,0];
 					var i;
-					// Travel right
+					
 					for(i = x+incr; test(i,y); i+=incr) { // While pixel line meets continues to meet its target color
 						// Setup Bools
 						var topFillable = test(i,y+direction);
 						var bottomFillable = test(i,y-direction);
-						var topLeftUnfillable = (!test(i-incr,y+direction));
-						var bottomLeftUnfillable = (!test(i-incr,y-direction));
+						var topLeftUnfillable = (!test(i+incrOpposite,y+direction));
+						var bottomLeftUnfillable = (!test(i+incrOpposite,y-direction));
 						
 						if(topFillable && topLeftUnfillable) // Find when to add a new seed(top)
 							stack.push([i,y+direction,direction]);
-						else if(testEdgePoint(i,y+direction,y)) // Find Wether or not to add edge pixels(top)
+						else if(testEdgePoint(i,y+direction,y)) // Find Wether or not to add edge pixels
 							edgeArray.push(i,y+direction);
 							
 						if(bottomFillable && bottomLeftUnfillable) // Find when to add a new seed(bottom)
 							stack.push([i,y-direction,-direction]);
-						else if(testEdgePoint(i,y-direction,y)) // Find Wether or not to add edge pixels(bottom)
+						else if(testEdgePoint(i,y-direction,y)) // Find Wether or not to add edge pixels
 							edgeArray.push(i,y-direction);
-							
 					}
 					if(cleanTools.isWithinCanvasBounds(i,y))
 						edgeArray.push(i,y);
-					range[1-j] = i-incr; // Save max fill pixel
+					range[j] = i+incrOpposite; // Save max fill pixel
+					
 				}
-				paint(range[0],range[1],y,fillColor);
+				
+				paint(range[1],range[0],y,fillColor);
 			}
 		}
 		
