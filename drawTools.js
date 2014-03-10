@@ -75,9 +75,12 @@ cleanTools["tools"] = {
 	"points": [], // Will contain user input point sets for shapes/lines/etc
 	
 	"toolType": {BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99},
-	//"reset": function() {
-		
-	//},
+	"reset": function(saveCanvas) {
+		this.points.length = 0;
+		this.toolInUse = false;
+		if(saveCanvas)
+			save();
+	},
 };
 
 
@@ -308,9 +311,7 @@ $(document).on('mouseup', function(e){
 		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
 		drawEllipse(cleanTools.context,cleanTools.tools.points,fillColor);
 	}
-	cleanTools.tools.points.length = 0;
-	cleanTools.tools.toolInUse = false;
-	save();
+	cleanTools.tools.reset();
 	
 });
 
