@@ -72,9 +72,6 @@ var xfasdfadf = 2+3;
 var doasfasdf = xfasdfadf +34;
 var doasdsasdffasdf = xfasdfadf +33;
 
-
-var doasdsasddffasdf = xfasdfadf +33;
-
 var doasfasdfas = xfasdfadf +doasdsasdffasdf;
 
 // Setup Some Global Variables
