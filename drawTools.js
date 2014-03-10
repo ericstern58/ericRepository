@@ -523,52 +523,33 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 				if(testEdgePoint(x,y-direction,y))
 					edgeArray.push(x,y-direction);
 				
-				var range = [0,0];
-				var i;
-				// Travel right
-				for(i = x+1; test(i,y); i++) { // While pixel line meets continues to meet its target color
-					// Setup Bools
-					var topFillable = test(i,y+direction);
-					var bottomFillable = test(i,y-direction);
-					var topLeftUnfillable = (!test(i-1,y+direction));
-					var bottomLeftUnfillable = (!test(i-1,y-direction));
-					
-					if(topFillable && topLeftUnfillable) // Find when to add a new seed(top)
-						stack.push([i,y+direction,direction]);
-					else if(testEdgePoint(i,y+direction,y)) // Find Wether or not to add edge pixels
-						edgeArray.push(i,y+direction);
+				for(var j = 0; j < 2; j++) {
+					var incr = (j) ? -1 : 1;
+					var range = [0,0];
+					var i;
+					// Travel right
+					for(i = x+incr; test(i,y); i+=incr) { // While pixel line meets continues to meet its target color
+						// Setup Bools
+						var topFillable = test(i,y+direction);
+						var bottomFillable = test(i,y-direction);
+						var topLeftUnfillable = (!test(i-incr,y+direction));
+						var bottomLeftUnfillable = (!test(i-incr,y-direction));
 						
-					if(bottomFillable && bottomLeftUnfillable) // Find when to add a new seed(bottom)
-						stack.push([i,y-direction,-direction]);
-					else if(testEdgePoint(i,y-direction,y)) // Find Wether or not to add edge pixels
-						edgeArray.push(i,y-direction);
-						
+						if(topFillable && topLeftUnfillable) // Find when to add a new seed(top)
+							stack.push([i,y+direction,direction]);
+						else if(testEdgePoint(i,y+direction,y)) // Find Wether or not to add edge pixels(top)
+							edgeArray.push(i,y+direction);
+							
+						if(bottomFillable && bottomLeftUnfillable) // Find when to add a new seed(bottom)
+							stack.push([i,y-direction,-direction]);
+						else if(testEdgePoint(i,y-direction,y)) // Find Wether or not to add edge pixels(bottom)
+							edgeArray.push(i,y-direction);
+							
+					}
+					if(cleanTools.isWithinCanvasBounds(i,y))
+						edgeArray.push(i,y);
+					range[1-j] = i-incr; // Save max fill pixel
 				}
-				if(cleanTools.isWithinCanvasBounds(i,y))
-					edgeArray.push(i,y);
-				range[1] = i-1; // Save max fill pixel
-				
-				// Travel left
-				for(i = x-1; test(i,y); i--) { // While pixel line meets continues to meet its target color
-					// Setup Bools
-					var topFillable = test(i,y+direction);
-					var bottomFillable = test(i,y-direction);
-					var topRightUnfillable = (!test(i+1,y+direction));
-					var bottomRightUnfillable = (!test(i+1,y-direction));
-					
-					if(topFillable && topRightUnfillable) // Find when to add a new seed(top)
-						stack.push([i,y+direction,direction]);
-					else if(testEdgePoint(i,y+direction,y)) // Find Wether or not to add edge pixels
-						edgeArray.push(i,y+direction);
-						
-					if(bottomFillable && bottomRightUnfillable) // Find when to add a new seed(top)
-						stack.push([i,y-direction,-direction]);
-					else if(testEdgePoint(i,y-direction,y)) // Find Wether or not to add edge pixels
-						edgeArray.push(i,y-direction);
-				}
-				if(cleanTools.isWithinCanvasBounds(i,y))
-					edgeArray.push(i,y);
-				range[0] = i+1;// Save min fill pixel
 				paint(range[0],range[1],y,fillColor);
 			}
 		}
