@@ -420,7 +420,8 @@ function floodFill(ctx,xSeed,ySeed){
 	var h = cleanTools.canvasHeight;
 	var p = ctx.getImageData(0,0,w,h);
 	var d = p.data;
-	var targetColor = [d[(xSeed+xSeed*w)*4],d[(xSeed+xSeed*w)*4+1],d[(xSeed+xSeed*w)*4+2],d[(xSeed+xSeed*w)*4+3]];//getColorFromCoords(xSeed,ySeed); // Cant use because its not initialized yet
+	var tci = (xSeed+xSeed*cleanTools.canvasWidth)*4;
+	var targetColor = [d[tci],d[tci+1],d[tci+2],d[tci+3]];//getColorFromCoords(xSeed,ySeed); // Cant use because its not initialized yet
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];outputDebug("TargetColor: " + targetColor.toString());
 	
