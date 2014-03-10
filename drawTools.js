@@ -73,6 +73,8 @@ cleanTools["tools"] = {
 	"currentToolType": 0,
 	"toolInUse": false,
 	"points": [], // Will contain user input point sets for shapes/lines/etc
+	
+	"toolType": {BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99};
 	//"reset": function() {
 		
 	//},
@@ -133,7 +135,7 @@ DTOptionsClass.prototype.isWithinBounds = function (x, y) {
 };
 
 // Tool type enum
-var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99};
+//var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99};
 
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
@@ -148,8 +150,6 @@ var debugLabel; //Go to createDrawToolsElements to find assignment
 function outputDebug(outputString){
 	debugLabel.getElementsByTagName('div')[0].innerHTML = outputString;
 }
-// Setup tool state/event variables
-//var DTPoints = new Array();     // Will contain user input point sets for shapes/lines/etc
 
 createDrawToolsContainer();     // Create Draw Tools Container
 setupCSS();                     // Setup necessary CSS for DrawTools
@@ -165,7 +165,7 @@ cleanTools.canvas.on('mousedown', function(e){
 		painting = !1;
 		cleanTools.restoreCanvas();
 		return;
-	} else if(cleanTools.tools.currentToolType === toolType.BRUSH)
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.BRUSH)
 		return;
 	cleanTools.tools.toolInUse = true;
 	cleanTools.updateCanvasLocation();
@@ -174,24 +174,24 @@ cleanTools.canvas.on('mousedown', function(e){
 	cleanTools.mouseX = e.pageX-cleanTools.canvasOffset.left;
 	cleanTools.mouseY = e.pageY-cleanTools.canvasOffset.top;
 	
-	if(cleanTools.tools.currentToolType === toolType.FILL) {
+	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
 		//var stopwatch = new StopWatch();
 		//stopwatch.start();
 		painting = !1;
 		floodFill(cleanTools.context,cleanTools.mouseX,cleanTools.mouseY);
 		//stopwatch.stop();
 		//stopwatch.printElapsed();
-	} else if(cleanTools.tools.currentToolType === toolType.LINE) {
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
 		painting = !1;
 		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
-	} else if(cleanTools.tools.currentToolType === toolType.LINECHAIN) {
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
 		painting = !1;
-	} else if(cleanTools.tools.currentToolType === toolType.CURVE) {
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
 		painting = !1;
-	} else if(cleanTools.tools.currentToolType === toolType.RECT) {
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
 		painting = !1;
 		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
-	} else if(cleanTools.tools.currentToolType === toolType.ELLIPSE) {
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
 		painting = !1;
 		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
 	} 
@@ -208,7 +208,7 @@ $(document).on('mousemove', function(e){
 		outputDebug("Out of bounds.")
 	}
 	*/
-	if(cleanTools.tools.currentToolType === toolType.BRUSH)
+	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.BRUSH)
 		return;	// default behaviors
 	else if(!cleanTools.tools.toolInUse)
 		return;	// If no tool is in use, ignore event
@@ -217,28 +217,28 @@ $(document).on('mousemove', function(e){
 	cleanTools.mouseX = e.pageX-cleanTools.canvasOffset.left;
 	cleanTools.mouseY = e.pageY-cleanTools.canvasOffset.top;
 	
-	if(cleanTools.tools.currentToolType === toolType.FILL) {
+	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
 		// Do nothing
-	} else if(cleanTools.tools.currentToolType === toolType.LINE) {
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
 		cleanTools.restoreCanvas();
 		drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1],cleanTools.mouseX,cleanTools.mouseY);
-	} else if(cleanTools.tools.currentToolType === toolType.LINECHAIN) {
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
 		if(cleanTools.tools.points.length > 0) {
 			var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 			cleanTools.restoreCanvas();
 			drawLineChain(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),true,options.lineToolsShouldClose,fillColor);
 		}
-	} else if(cleanTools.tools.currentToolType === toolType.CURVE) {
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
 		if(cleanTools.tools.points.length > 0) {
 			var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 			cleanTools.restoreCanvas();
 			drawSpline(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,options.lineToolsShouldClose,fillColor,true);
 		}
-	} else if(cleanTools.tools.currentToolType === toolType.RECT) {
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		cleanTools.restoreCanvas();
 		drawRect(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
-	} else if(cleanTools.tools.currentToolType === toolType.ELLIPSE) {
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		cleanTools.restoreCanvas();
 		drawEllipse(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
@@ -251,7 +251,7 @@ $(document).on('mouseup', function(e){
 		if(!options.isWithinBounds(e.pageX, e.pageY))
 			options.toggleMenu();
 		return;
-	} else if(cleanTools.tools.currentToolType === toolType.BRUSH)
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.BRUSH)
 		return;
 	else if(!cleanTools.tools.toolInUse)	// If no tool is in use, ignore event
 		return;
@@ -260,12 +260,12 @@ $(document).on('mouseup', function(e){
 	cleanTools.mouseX = e.pageX-cleanTools.canvasOffset.left;
 	cleanTools.mouseY = e.pageY-cleanTools.canvasOffset.top;
 	
-	if(cleanTools.tools.currentToolType === toolType.FILL) {
+	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
 		// Do nothing
-	} else if(cleanTools.tools.currentToolType === toolType.LINE) {
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
 		cleanTools.restoreCanvas();
 		drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1], cleanTools.mouseX, cleanTools.mouseY);
-	} else if(cleanTools.tools.currentToolType === toolType.LINECHAIN) {
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
 		if(cleanTools.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
 			cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the chain
@@ -281,7 +281,7 @@ $(document).on('mouseup', function(e){
 			cleanTools.tools.toolInUse = false;
 			return;
 		}
-	} else if(cleanTools.tools.currentToolType === toolType.CURVE) {
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
 		if(cleanTools.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
 			cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the curve
@@ -297,12 +297,12 @@ $(document).on('mouseup', function(e){
 			cleanTools.tools.toolInUse = false;
 			return;
 		}
-	} else if(cleanTools.tools.currentToolType === toolType.RECT) {
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		cleanTools.restoreCanvas();
 		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
 		drawRect(cleanTools.context,cleanTools.tools.points,fillColor);
-	} else if(cleanTools.tools.currentToolType === toolType.ELLIPSE) {
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		cleanTools.restoreCanvas();
 		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
@@ -322,7 +322,7 @@ $(document).keydown(function(e) {
 	if(e.keyCode == 39) {
 		alert('Right was pressed');
 	} if(e.keyCode == "Q".charCodeAt(0)) {
-		if(cleanTools.tools.currentToolType === toolType.LINECHAIN || cleanTools.tools.currentToolType === toolType.CURVE) {
+		if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN || cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
 			if(cleanTools.tools.points.length) {
 				cleanTools.tools.points.length -= 2;
 				if(cleanTools.tools.points.length == 0) {
@@ -330,7 +330,7 @@ $(document).keydown(function(e) {
 				}
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 				cleanTools.restoreCanvas();
-				if(cleanTools.tools.currentToolType === toolType.LINECHAIN)
+				if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN)
 					drawLineChain(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),true,options.lineToolsShouldClose,fillColor);
 				else
 					drawSpline(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,options.lineToolsShouldClose,fillColor,true);
@@ -810,7 +810,7 @@ function modifyExistingElements()
 	
 	function selectBrushAUX(brushSize) {
 		drawApp.setSize(brushSize);				// Set default brush size
-		cleanTools.tools.currentToolType = toolType.BRUSH;		// Update tool type
+		cleanTools.tools.currentToolType = cleanTools.tools.toolType.BRUSH;		// Update tool type
 		
 		// Visually unselect any other tools
 		var ele = document.getElementsByName(cleanTools.id + "-btn-radio");
@@ -832,14 +832,14 @@ function createDrawToolsElements()
 	var drawToolsDiv = document.getElementById(cleanTools.id);
 	
 	// Create Tool Buttons
-	createToolButton(toolType.FILL,"fill");
-	createToolButton(toolType.LINE,"line");
-	createToolButton(toolType.LINECHAIN,"linechain");
-	createToolButton(toolType.CURVE,"curve");
-	createToolButton(toolType.RECT,"rect");
-	createToolButton(toolType.ELLIPSE,"ellipse");
+	createToolButton(cleanTools.tools.toolType.FILL,"fill");
+	createToolButton(cleanTools.tools.toolType.LINE,"line");
+	createToolButton(cleanTools.tools.toolType.LINECHAIN,"linechain");
+	createToolButton(cleanTools.tools.toolType.CURVE,"curve");
+	createToolButton(cleanTools.tools.toolType.RECT,"rect");
+	createToolButton(cleanTools.tools.toolType.ELLIPSE,"ellipse");
 	
-	debugLabel = createToolButtonWithLabel(toolType.UTIL,"label", '0');
+	debugLabel = createToolButtonWithLabel(cleanTools.tools.toolType.UTIL,"label", '0');
 	
 	var optionsButton = createUtilityButton("options");
 	optionsButton.onclick = function(){options.toggleMenu();};
