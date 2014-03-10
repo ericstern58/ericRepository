@@ -524,12 +524,12 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 					edgeArray.push(x,y-direction);
 				
 				
+				var range = [0,0];
+				var i;
 				for(var j = 0; j < 2; j++) {
 					var incr = (j==0) ? -1 : 1 ;
 					var incrOpposite = incr*(-1);
 					
-					var range = [0,0];
-					var i;
 					
 					for(i = x+incr; test(i,y); i+=incr) { // While pixel line meets continues to meet its target color
 						// Setup Bools
