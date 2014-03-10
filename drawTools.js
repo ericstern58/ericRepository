@@ -43,7 +43,7 @@ var cleanTools = {
 	'dcToolbar': DRAWCEPTION_TOOLBAR,
 	'dcBrushes': DRAWCEPTION_BRUSHES,
 	
-	'Canvas': drawApp.canvas,
+	'canvas': drawApp.canvas,
 	'context': drawApp.context,
 	
 	'mouseX': 0,
@@ -162,8 +162,8 @@ createDrawToolsElements();      // Create Draw Tools Elements and Interface
 /*---------------------- Setup Listeners ----------------------*/
 
 // Setup Mousedown Listener
-cleanTools.Canvas.off('mousedown');
-cleanTools.Canvas.on('mousedown', function(e){
+cleanTools.canvas.off('mousedown');
+cleanTools.canvas.on('mousedown', function(e){
 	if(0 && $('#drawTools-options').css('opacity') == 1){
 		painting = !1;
 		cleanTools.restoreCanvas();
