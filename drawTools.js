@@ -592,6 +592,23 @@ function drawLineChain(ctx,pts,editMode,closeShape,closedFillColorHex)
 		}
 	}
 	ctx.stroke();
+	// Draw the knot points.
+	if(editMode){   
+		ctx.save();
+		// Determine wether to use dark or light points
+		var c = parseInt(ctx.strokeStyle.substr(1,6),16); // Get current stroke color
+		var c2 = (0.2126*((c>>16)&255)) + (0.7152*((c>>8)&255)) + (0.0722*(c&255)); // Get its 'lightness' level
+		ctx.fillStyle = (c2 > 160) ? "#444444" : "#FFFFFF"; // If (colorIsLight) ? darkGray : white;
+		ctx.lineWidth=3;
+		for(var i=(2*isClosedSpline), m = (n-2+(2*isClosedSpline));i<m;i+=2){
+			ctx.beginPath();
+			ctx.arc(pts[i],pts[i+1],2.5,2*Math.PI,false);
+			ctx.closePath();
+			ctx.stroke();
+			ctx.fill();
+		}
+		ctx.restore();
+	}
 	ctx.restore();
 }
 function drawSpline(ctx,pts,t,closed,closedFillColorHex,editMode){
