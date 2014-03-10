@@ -435,7 +435,8 @@ function floodFill(ctx,xSeed,ySeed){
 		var r=Math.ceil((color1[0]+color2[0])/2);
 		var g=Math.ceil((color1[1]+color2[1])/2);
 		var b=Math.ceil((color1[2]+color2[2])/2);
-		colorPixel(x,y,[r,g,b,255]);
+		var a=Math.ceil((color1[3]+color2[3])/2);
+		colorPixel(x,y,[r,g,b,a]);
 	}
 	//---Algorithm helper functions
 	var paint = function(xMin,xMax,y,color) {
