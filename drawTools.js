@@ -132,7 +132,6 @@ var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
 /*-----------------------------------------------------------------------------*/
-
 // Setup Some State Variables
 var options = new DTOptionsClass('#' + cleanTools.id + '-options');
 cleanTools["currentToolType"] = toolType.BRUSH;
@@ -179,7 +178,7 @@ cleanTools.canvas.on('mousedown', function(e){
 		floodFill(cleanTools.context,e.offsetX,e.offsetY);
 		}catch(err){alert(err);}
 		stopwatch.stop();
-		stopwatch.printElapsed();
+		//stopwatch.printElapsed();
 	} else if(cleanTools.currentToolType === toolType.LINE) {
 		painting = !1;
 		DTPoints[0] = {x: cleanTools.mouseX, y: cleanTools.mouseY};
@@ -475,7 +474,7 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 	cleanTools.restoreCanvas();
 	
 	var w = cleanTools.canvasWidth;
-	var h = cleanTools.canvasHeight;
+	var h = cleanTools.canvasHeight;outputDebug("The w is: " + w + "   and the height is: " + h);
 	var p = ctx.getImageData(0,0,w,h);
 	var d = p.data;
 	var targetColor = getColorFromCoords(xSeed,ySeed);
