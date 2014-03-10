@@ -496,7 +496,7 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 	if(targetColor.equals(fillColor))
 		return;
 	
-	function f(xSeed,ySeed){
+	var f = function(xSeed,ySeed){
 		//[x,y,goingUp(1 vs -1)
 		var stack = [[xSeed,ySeed,1]];
 		if(test(xSeed,ySeed-1))
@@ -569,6 +569,7 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 				colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
 		}
 	}
+
 	f(xSeed,ySeed);
 	ctx.putImageData(p,0,0);
 }
