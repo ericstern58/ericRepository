@@ -74,7 +74,7 @@ cleanTools["tools"] = {
 	"toolInUse": false,
 	"points": [], // Will contain user input point sets for shapes/lines/etc
 	
-	"toolType": {BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99};
+	"toolType": {BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99},
 	//"reset": function() {
 		
 	//},
