@@ -474,9 +474,9 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 	cleanTools.restoreCanvas();
 	
 	var w = cleanTools.canvasWidth;
-	var h = cleanTools.canvasHeight;outputDebug("The w is: " + w + "   and the height is: " + h);
+	var h = cleanTools.canvasHeight;
 	var p = ctx.getImageData(0,0,w,h);
-	var d = p.data;
+	var d = p.data;outputDebug("The size of d.length is: " + d.length);
 	var targetColor = getColorFromCoords(xSeed,ySeed);
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];
