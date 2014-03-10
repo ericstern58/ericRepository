@@ -528,15 +528,13 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 				var i;
 				for(var j = 0; j < 2; j++) {
 					var incr = (j==0) ? -1 : 1 ;
-					var incrOpposite = incr*(-1);
-					
 					
 					for(i = x+incr; test(i,y); i+=incr) { // While pixel line meets continues to meet its target color
 						// Setup Bools
 						var topFillable = test(i,y+direction);
 						var bottomFillable = test(i,y-direction);
-						var topLeftUnfillable = (!test(i+incrOpposite,y+direction));
-						var bottomLeftUnfillable = (!test(i+incrOpposite,y-direction));
+						var topLeftUnfillable = (!test(i-incr,y+direction));
+						var bottomLeftUnfillable = (!test(i-incr,y-direction));
 						
 						if(topFillable && topLeftUnfillable) // Find when to add a new seed(top)
 							stack.push([i,y+direction,direction]);
@@ -550,7 +548,7 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 					}
 					if(cleanTools.isWithinCanvasBounds(i,y))
 						edgeArray.push(i,y);
-					range[j] = i+incrOpposite; // Save max fill pixel
+					range[j] = i-incr; // Save max fill pixel
 					
 				}
 				
