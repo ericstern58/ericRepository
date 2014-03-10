@@ -417,14 +417,12 @@ function drawEllipse(ctx,pts,fillColorHex){
 
 
 function floodFill(ctx,xSeed,ySeed,firstFunction){
-		
-
-	var colorCompare = function(color1,color2) {
-		return (color1[0]===color2[0] && color1[1]===color2[1] && color1[2]===color2[2] && color1[3]===color2[3]);
-	};
 	/*---------------------- Supporting functions ----------------------*/
 	/*---------------------- Color Methods ----------------------*/
 	// Define some useful functions
+	var colorCompare = function(color1,color2) {
+		return (color1[0]===color2[0] && color1[1]===color2[1] && color1[2]===color2[2] && color1[3]===color2[3]);
+	};
 	var getColorFromCoords = function(x,y){
 		var i = (x + y * w) * 4;
 		return [d[i],d[i+1],d[i+2],d[i+3]];
@@ -444,7 +442,7 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 		var b=Math.ceil((color1[2]+color2[2])/2);
 		colorPixel(x,y,[r,g,b,255]);
 	}
-	
+	//---Algorithm helper functions
 	var paint = function(xMin,xMax,y,color) {
 		var r = color[0], g = color[1], b = color[2], a = color[3];
 		var limit = (xMax+1 + y * w) * 4;
