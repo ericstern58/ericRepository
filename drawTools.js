@@ -554,7 +554,7 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 					
 				}
 				
-				paint(range[1],range[0],y,fillColor);
+				paint(range[0],range[1],y,fillColor);
 			}
 		}
 		
