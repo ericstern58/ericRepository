@@ -166,7 +166,7 @@ cleanTools.canvas.on('mousedown', function(e){
 		return;
 	} else if(cleanTools.currentToolType === toolType.BRUSH)
 		return;
-	cleanTools.toolInUse = true;
+	cleanTools.tools.toolInUse = true;
 	cleanTools.updateCanvasLocation();
 	
 	// Translate mouse location to point relative to canvas
@@ -209,7 +209,7 @@ $(document).on('mousemove', function(e){
 	*/
 	if(cleanTools.currentToolType === toolType.BRUSH)
 		return;	// default behaviors
-	else if(!cleanTools.toolInUse)
+	else if(!cleanTools.tools.toolInUse)
 		return;	// If no tool is in use, ignore event
 		
 	// Translate mouse location to point relative to canvas
@@ -252,7 +252,7 @@ $(document).on('mouseup', function(e){
 		return;
 	} else if(cleanTools.currentToolType === toolType.BRUSH)
 		return;
-	else if(!cleanTools.toolInUse)	// If no tool is in use, ignore event
+	else if(!cleanTools.tools.toolInUse)	// If no tool is in use, ignore event
 		return;
 		
 	// Translate mouse location to point relative to canvas
@@ -277,7 +277,7 @@ $(document).on('mouseup', function(e){
 		} else {
 			cleanTools.restoreCanvas();
 			DTPoints.length = 0;
-			cleanTools.toolInUse = false;
+			cleanTools.tools.toolInUse = false;
 			return;
 		}
 	} else if(cleanTools.currentToolType === toolType.CURVE) {
@@ -293,7 +293,7 @@ $(document).on('mouseup', function(e){
 		} else {	// If user clicks out of acceptable boundaries, cancel all tool progress
 			cleanTools.restoreCanvas();
 			DTPoints.length = 0;
-			cleanTools.toolInUse = false;
+			cleanTools.tools.toolInUse = false;
 			return;
 		}
 	} else if(cleanTools.currentToolType === toolType.RECT) {
@@ -308,7 +308,7 @@ $(document).on('mouseup', function(e){
 		drawEllipse(cleanTools.context,DTPoints,fillColor);
 	}
 	DTPoints.length = 0;
-	cleanTools.toolInUse = false;
+	cleanTools.tools.toolInUse = false;
 	save();
 	
 });
@@ -325,7 +325,7 @@ $(document).keydown(function(e) {
 			if(DTPoints.length) {
 				DTPoints.length -= 2;
 				if(DTPoints.length == 0) {
-					cleanTools.toolInUse = false;
+					cleanTools.tools.toolInUse = false;
 				}
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 				cleanTools.restoreCanvas();
