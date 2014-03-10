@@ -476,10 +476,10 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 	var w = cleanTools.canvasWidth;
 	var h = cleanTools.canvasHeight;
 	var p = ctx.getImageData(0,0,w,h);
-	var d = p.data;outputDebug("The size of d.length is: " + d.length);
+	var d = p.data;
 	var targetColor = getColorFromCoords(xSeed,ySeed);
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
-	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];
+	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];outputDebug("TargetColor: " + targetColor.toString());
 	
 	// If seed pixel is already colored the fill color, nothing needs to be done, return early
 	if(colorCompare(targetColor,fillColor))
