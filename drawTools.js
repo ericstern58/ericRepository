@@ -425,7 +425,6 @@ function drawEllipse(ctx,pts,fillColorHex){
 }
 
 function floodFill(ctx,xSeed,ySeed,firstFunction){
-	
 	/*---------------------- Supporting functions ----------------------*/
 	/*---------------------- Color Methods ----------------------*/
 	// Define some useful functions
@@ -524,8 +523,7 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 				if(testEdgePoint(x,y-direction,y))
 					edgeArray.push(x,y-direction);
 				
-				var xMax;
-				var xMin;
+				var range = [0,0];
 				var i;
 				// Travel right
 				for(i = x+1; test(i,y); i++) { // While pixel line meets continues to meet its target color
@@ -548,7 +546,7 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 						stack.push([i,y-direction,-direction]);
 				}
 				edgeArray.push(i,y);
-				xMax = i-1; // Save max fill pixel
+				range[1] = i-1; // Save max fill pixel
 				
 				// Travel left
 				for(i = x-1; test(i,y); i--) { // While pixel line meets continues to meet its target color
@@ -571,8 +569,8 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 						stack.push([i,y-direction,-direction]);
 				}
 				edgeArray.push(i,y);
-				xMin = i+1;// Save min fill pixel
-				paint(xMin,xMax,y,fillColor);
+				range[0] = i+1;// Save min fill pixel
+				paint(range[0],range[1],y,fillColor);
 			}
 		}
 		
