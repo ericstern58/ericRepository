@@ -176,13 +176,13 @@ cleanTools.canvas.on('mousedown', function(e){
 	cleanTools.mouseY = e.pageY-cleanTools.canvasOffset.top;
 	
 	if(cleanTools.currentToolType === toolType.FILL) {
-		var stopwatch = new StopWatch();
-		stopwatch.start();
+		//var stopwatch = new StopWatch();
+		//stopwatch.start();
 		painting = !1;
 		try{
 		floodFill(cleanTools.context,e.offsetX,e.offsetY);
 		}catch(err){alert(err);}
-		stopwatch.stop();
+		//stopwatch.stop();
 		//stopwatch.printElapsed();
 	} else if(cleanTools.currentToolType === toolType.LINE) {
 		painting = !1;
@@ -428,8 +428,12 @@ function floodFill(ctx,xSeed,ySeed){
 	var tci = (xSeed+ySeed*w)*4;
 	var targetColor = [255,0,0,255];//[d[tci],d[tci+1],d[tci+2],d[tci+3]];//getColorFromCoords(xSeed,ySeed); // Cant use because its not initialized yet
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
-	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];outputDebug("TargetColor: " + targetColor.toString());
-	
+	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];
+	outputDebug("Dimensions:[" + w + "," + h + "]\n" +
+		"d.length: " + d.length + "\n" +
+		"Seed Point:[" + xSeed + "," + ySeed + "]\n" +
+		"tci = (xSeed+ySeed*w)*4; is: [" + tci + "]\n" +
+		"TargetColor: " + targetColor.toString());
 	
 	/*---------------------- Supporting functions ----------------------*/
 	/*---------------------- Color Methods ----------------------*/
