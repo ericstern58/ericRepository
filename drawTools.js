@@ -414,43 +414,38 @@ function drawEllipse(ctx,pts,fillColorHex){
 	ctx.restore();
 }
 
+
 function floodFill(ctx,xSeed,ySeed,firstFunction){
 		
-	// Color Object
-	function RGBColor(r, g, b, a) {
-		this.r = r;
-		this.g = g;
-		this.b = b;
-		this.a = (a) ? a : 0;
-	}
+
 	var colorCompare = function(color1,color2) {
-		return (color1.r===color2.r && color1.g===color2.g && color1.b===color2.b && color1.a===color2.a);
+		return (color1[0]===color2[0] && color1[1]===color2[1] && color1[2]===color2[2] && color1[3]===color2[3]);
 	};
 	/*---------------------- Supporting functions ----------------------*/
 	/*---------------------- Color Methods ----------------------*/
 	// Define some useful functions
 	var getColorFromCoords = function(x,y){
 		var i = (x + y * w) * 4;
-		return new RGBColor(d[i],d[i+1],d[i+2],d[i+3]);
+		return [d[i],d[i+1],d[i+2],d[i+3]];
 	}
 	//Colors a pixel with a given color
 	var colorPixel = function(x,y,color) {
 		var i = (x + y * w) * 4;
-		d[i]=color.r;
-		d[i+1]=color.g;
-		d[i+2]=color.b;
-		d[i+3]=color.a;
+		d[i]=color[0];
+		d[i+1]=color[1];
+		d[i+2]=color[2];
+		d[i+3]=color[3];
 	}
 	// [Experimental] Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
 	var colorPixelBlend = function(x,y,color1,color2){
-		var r=Math.ceil((color1.r+color2.r)/2);
-		var g=Math.ceil((color1.g+color2.g)/2);
-		var b=Math.ceil((color1.b+color2.b)/2);
-		colorPixel(x,y,new RGBColor(r,g,b,255));
+		var r=Math.ceil((color1[0]+color2[0])/2);
+		var g=Math.ceil((color1[1]+color2[1])/2);
+		var b=Math.ceil((color1[2]+color2[2])/2);
+		colorPixel(x,y,[r,g,b,255]);
 	}
 	
 	var paint = function(xMin,xMax,y,color) {
-		var r = color.r, g = color.g, b = color.b, a = color.a;
+		var r = color[0], g = color[1], b = color[2], a = color[3];
 		var limit = (xMax+1 + y * w) * 4;
 		for(var i = (xMin + y * w) * 4; i<limit; i+=4) {
 			d[i]=r;
@@ -491,7 +486,7 @@ function floodFill(ctx,xSeed,ySeed,firstFunction){
 	var d = p.data;
 	var targetColor = getColorFromCoords(xSeed,ySeed);
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
-	var fillColor = new RGBColor((c>>16)&255,(c>>8)&255,c&255,255);
+	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];
 	
 	// If seed pixel is already colored the fill color, nothing needs to be done, return early
 	if(colorCompare(targetColor,fillColor))
