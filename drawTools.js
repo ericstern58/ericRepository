@@ -49,26 +49,27 @@ var cleanTools = {
 	'mouseX': 0,
 	'mouseY': 0,
 	
-	'canvasOffset':{top:0,left:0},
-	'canvasWidth':0,
-	'canvasHeight':0,
 	"updateCanvasLocation": function() {
-		this.canvasOffset = $('#drawingCanvas').offset();    // Update canvas offset variable
-		this.canvasWidth = this.Canvas.width();              // Update canvas width variable
-		this.canvasHeight = this.Canvas.height();            // Update canvas width variable
+		this.canvas.offset = $('#drawingCanvas').offset();    // Update canvas offset variable
+		this.canvas.width = this.Canvas.width();              // Update canvas width variable
+		this.canvas.height = this.Canvas.height();            // Update canvas width variable
 	},
 	"restoreCanvas": function() {
 		this.context.constructor.prototype.putImageData.call(this.context, restorePoints[restorePosition], 0, 0);
 	},
 	"isWithinCanvasBounds": function(x,y) {
-		return (x>=0 && y>=0 && x<this.canvasWidth && y<this.canvasHeight);
+		return (x>=0 && y>=0 && x<this.canvas.width && y<this.canvas.height);
 	},
 	"isWithinDrawingBounds": function(x,y) {
-		return (x>=(-12) && y>=(-12) && x<(this.canvasWidth+12) && y<(this.canvasHeight+12));
+		return (x>=(-12) && y>=(-12) && x<(this.canvas.width+12) && y<(this.canvas.height+12));
 	},
 	
 };
-
+cleanTools["canvas"] = {
+	'offset':{top:0,left:0},
+	'width':0,
+	'height':0,
+};
 cleanTools["tools"] = {
 	"currentToolType": 0,
 	"toolInUse": false,
@@ -174,8 +175,8 @@ cleanTools.Canvas.on('mousedown', function(e){
 	cleanTools.updateCanvasLocation();
 	
 	// Translate mouse location to point relative to canvas
-	cleanTools.mouseX = e.pageX-cleanTools.canvasOffset.left;
-	cleanTools.mouseY = e.pageY-cleanTools.canvasOffset.top;
+	cleanTools.mouseX = e.pageX-cleanTools.canvas.offset.left;
+	cleanTools.mouseY = e.pageY-cleanTools.canvas.offset.top;
 	
 	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
 		//var stopwatch = new StopWatch();
@@ -202,9 +203,9 @@ cleanTools.Canvas.on('mousedown', function(e){
 // Setup Mousemove Listener
 $(document).off('mousemove');
 $(document).on('mousemove', function(e){
-/*	if(cleanTools.isWithinCanvasBounds(e.pageX-cleanTools.canvasOffset.left,e.pageY-cleanTools.canvasOffset.top)) {
+/*	if(cleanTools.isWithinCanvasBounds(e.pageX-cleanTools.canvas.offset.left,e.pageY-cleanTools.canvas.offset.top)) {
 		try{
-			var p = cleanTools.context.getImageData(e.pageX-cleanTools.canvasOffset.left, e.pageY-cleanTools.canvasOffset.top, 1, 1).data;
+			var p = cleanTools.context.getImageData(e.pageX-cleanTools.canvas.offset.left, e.pageY-cleanTools.canvas.offset.top, 1, 1).data;
 			outputDebug("[r:" +p[0] + ", g:" + p[1] + ", b:" + p[2] + ", a:" + p[3] + "]");
 		} catch(err){alert(err);}
 	} else {
@@ -217,8 +218,8 @@ $(document).on('mousemove', function(e){
 		return;	// If no tool is in use, ignore event
 		
 	// Translate mouse location to point relative to canvas
-	cleanTools.mouseX = e.pageX-cleanTools.canvasOffset.left;
-	cleanTools.mouseY = e.pageY-cleanTools.canvasOffset.top;
+	cleanTools.mouseX = e.pageX-cleanTools.canvas.offset.left;
+	cleanTools.mouseY = e.pageY-cleanTools.canvas.offset.top;
 	
 	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
 		// Do nothing
@@ -260,8 +261,8 @@ $(document).on('mouseup', function(e){
 		return;
 		
 	// Translate mouse location to point relative to canvas
-	cleanTools.mouseX = e.pageX-cleanTools.canvasOffset.left;
-	cleanTools.mouseY = e.pageY-cleanTools.canvasOffset.top;
+	cleanTools.mouseX = e.pageX-cleanTools.canvas.offset.left;
+	cleanTools.mouseY = e.pageY-cleanTools.canvas.offset.top;
 	
 	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
 		// Do nothing
@@ -402,11 +403,11 @@ function floodFill(ctx,xSeed,ySeed){
 	// This restoreCanvas() fix avoids issues with brush placing dot over flood fill seed area
 	cleanTools.restoreCanvas();
 	
-	var w = cleanTools.canvasWidth;
-	var h = cleanTools.canvasHeight;
+	var w = cleanTools.canvas.width;
+	var h = cleanTools.canvas.height;
 	var p = ctx.getImageData(0,0,w,h);
 	var d = p.data;
-	var tci = (xSeed+ySeed*cleanTools.canvasWidth)*4;
+	var tci = (xSeed+ySeed*cleanTools.canvas.width)*4;
 	var targetColor = [d[tci],d[tci+1],d[tci+2],d[tci+3]];//getColorFromCoords(xSeed,ySeed); // Cant use because its not initialized yet
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];
@@ -710,7 +711,7 @@ function drawSpline(ctx,pts,t,closed,closedFillColorHex,editMode){
 function setupCSS()
 {
 	// Calculate variables used in css
-	var optionsMarginTop = cleanTools.canvasOffset.top + cleanTools.canvasHeight - $('#' + cleanTools.id).offset().top;
+	var optionsMarginTop = cleanTools.canvas.offset.top + cleanTools.canvas.height - $('#' + cleanTools.id).offset().top;
 	
 	var DTSheet = document.createElement('style');
 	DTSheet.id = cleanTools.id + 'StyleSheet'; // Give id so destructor can find it if needed
