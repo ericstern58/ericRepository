@@ -137,7 +137,6 @@ cleanTools["options"] = {
 		return (x2>=0 && y2>=0 && x2<width && y2<height);
 	},
 };
-var options = cleanTools["options"];
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
 /*-----------------------------------------------------------------------------*/
@@ -146,7 +145,7 @@ window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent 
 cleanTools.context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
 cleanTools.canvas.updateLocation();
 
-
+var options = cleanTools["options"];
 
 // Setup Debug Stuff
 var debugLabel; //Go to createDrawToolsElements to find assignment
@@ -203,10 +202,8 @@ cleanTools.Canvas.on('mousedown', function(e){
 $(document).off('mousemove');
 $(document).on('mousemove', function(e){
 /*	if(cleanTools.canvas.isWithinBounds(e.pageX-cleanTools.canvas.offset.left,e.pageY-cleanTools.canvas.offset.top)) {
-		try{
-			var p = cleanTools.context.getImageData(e.pageX-cleanTools.canvas.offset.left, e.pageY-cleanTools.canvas.offset.top, 1, 1).data;
-			outputDebug("[r:" +p[0] + ", g:" + p[1] + ", b:" + p[2] + ", a:" + p[3] + "]");
-		} catch(err){alert(err);}
+		var p = cleanTools.context.getImageData(e.pageX-cleanTools.canvas.offset.left, e.pageY-cleanTools.canvas.offset.top, 1, 1).data;
+		outputDebug("[r:" +p[0] + ", g:" + p[1] + ", b:" + p[2] + ", a:" + p[3] + "]");
 	} else {
 		outputDebug("Out of bounds.")
 	}
