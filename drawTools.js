@@ -60,7 +60,6 @@ var cleanTools = {
 	
 };
 cleanTools["canvas"] = {
-	'parentObject': cleanTools,
 	'offset':{top:0,left:0},
 	'width':0,
 	'height':0,
@@ -85,9 +84,7 @@ cleanTools["tools"] = {
 			save();
 	},
 };
-try{
-outputDebug("Here is parents id: " + cleanTools.canvas.parentObject.id);
-}catch(err){alert(err);}
+
 
 var xfasdfadf = 2+3;
 var doasfasdf = xfasdfadf +34;
