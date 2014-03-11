@@ -865,27 +865,9 @@ function createToolButton(type, name)
 	button.className = 'drawTools-btn';
 	button.onclick = function(){cleanTools.tools.currentToolType=type;};
 	document.getElementById(cleanTools.id).appendChild(button);
-	
-	/*
-	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
-	var radio = document.createElement('input');
-	radio.id = cleanTools.id + '-btn-radio-' + name;
-	radio.setAttribute("type","radio");
-	radio.setAttribute("name", (cleanTools.id + "-btn-radio"));
-	button.appendChild(radio);
 
-	//Create container div
-	var container = document.createElement('div');
-	container.className = cleanTools.id + '-btn-container';
-	button.appendChild(container);
-	
-	// Create icon div
-	var icon = document.createElement('div');
-	icon.id = cleanTools.id + '-btn-icon-' + name;
-	container.appendChild(icon);
-	*/
 	button.innerHTML = 
-		'<input type="radio" id="' + cleanTools.id + '-btn-radio-' + name + '" name="' + cleanTools.id + '-btn-radio">' +
+		'<input id="' + cleanTools.id + '-btn-radio-' + name + '" name="' + cleanTools.id + '-btn-radio" type="radio">' +
 		'<div class="' + cleanTools.id + '-btn-container">' +
 			'<div id="' + cleanTools.id + '-btn-icon-' + name + '"></div>' +
 		'</div>';
