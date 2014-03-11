@@ -902,11 +902,11 @@ function createOptionsMenu(drawToolsDiv)
 	//Create DIV in which Options will be placed in
 	var optionsDiv = document.createElement('div');
 	optionsDiv.id = cleanTools.id + '-options';
-	optionsDiv.innerHTML = "\
-		<div id='drawTools-options-content'>\
-			<div id='drawTools-options-leftPanel'></div>\
-			<div id='drawTools-options-palette'></div>\
-		</div>";
+	optionsDiv.innerHTML = 
+		'<div id="drawTools-options-content">' +
+			'<div id="drawTools-options-leftPanel"></div>' +
+			'<div id="drawTools-options-palette"></div>' +
+		'</div>';
 	drawToolsDiv.appendChild(optionsDiv);
 	
 	//----- BEGIN ----- LeftPanel --------------------------------------------------
@@ -923,24 +923,24 @@ function createOptionsMenu(drawToolsDiv)
 	var optionsPaletteHtml = "";
 	
 	optionsPaletteHtml += 
-		'<label style="width:120px;">\
-			<input type="radio" name="drawTools-options-palette-radio" checked>\
-			<div onclick=setOptionsColor(""); style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div>\
-		</label>';
+		'<label style="width:120px;">' +
+			'<input type="radio" name="drawTools-options-palette-radio" checked>' +
+			'<div onclick=setOptionsColor(""); style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div>' +
+		'</label>';
 	optionsPaletteHtml += 
-		'<label style="width:120px;">\
-			<input type="radio" name="drawTools-options-palette-radio">\
-			<div onclick=setOptionsColor("",1); style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div>\
-		</label>';
+		'<label style="width:120px;">' +
+			'<input type="radio" name="drawTools-options-palette-radio">' +
+			'<div onclick=setOptionsColor("",1); style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div>' +
+		'</label>';
 	
 	for(var i=0;i<colorElements.length;i++) {
 		//paletteArray.push(hexColorElements[i].getAttribute("data-color"));
 		var color = colorElements[i].getAttribute("data-color");
 		optionsPaletteHtml += 
-			'<label>\
-				<input type="radio" name="drawTools-options-palette-radio">\
-				<div onclick=setOptionsColor("' + color + '"); style="background:' + color + ';"></div>\
-			</label>';
+			'<label>' +
+				'<input type="radio" name="drawTools-options-palette-radio">' +
+				'<div onclick=setOptionsColor("' + color + '"); style="background:' + color + ';"></div>' +
+			'</label>';
 	}
 	document.getElementById('drawTools-options-palette').innerHTML = optionsPaletteHtml;
 	
