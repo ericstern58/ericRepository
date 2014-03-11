@@ -75,16 +75,31 @@ cleanTools["canvas"] = {
 	},
 };
 cleanTools["tools"] = {
-	"currentToolType":0,
-	"toolInUse":false,
-	"points":[], // Will contain user input point sets for shapes/lines/etc
+	'currentToolType':0,
+	'toolInUse':false,
+	'points':[], // Will contain user input point sets for shapes/lines/etc
 	
-	"toolType":{BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99},
-	"reset":function(saveCanvas) {
+	'toolType':{BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99},
+	'reset':function(saveCanvas) {
 		this.points.length = 0;
 		this.toolInUse = false;
 		if(saveCanvas)
 			save();
+	},
+};
+
+cleanTools["html"] = {
+	
+	'buttonHandlers':{
+		'brushClick':function(brushSize) {
+			drawApp.setSize(brushSize);				// Set default brush size
+			cleanTools.tools.currentToolType = cleanTools.tools.toolType.BRUSH;		// Update tool type
+			
+			// Visually unselect any other tools
+			var ele = document.getElementsByName(cleanTools.id + "-btn-radio");
+			for(var i=0;i<ele.length;i++)
+				ele[i].checked = false;
+		},
 	},
 };
 
@@ -808,20 +823,12 @@ function modifyExistingElements()
 	for(var j=0;j<cleanTools.dcBrushes.length;j++)
 		document.getElementById(cleanTools.dcBrushes[j].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[j].size);};
 	*/
-	document.getElementById(cleanTools.dcBrushes[0].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[0].size);};
-	document.getElementById(cleanTools.dcBrushes[1].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[1].size);};
-	document.getElementById(cleanTools.dcBrushes[2].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[2].size);};
-	document.getElementById(cleanTools.dcBrushes[3].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[3].size);};
+	document.getElementById(cleanTools.dcBrushes[0].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[0].size);};
+	document.getElementById(cleanTools.dcBrushes[1].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[1].size);};
+	document.getElementById(cleanTools.dcBrushes[2].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[2].size);};
+	document.getElementById(cleanTools.dcBrushes[3].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[3].size);};
 	
-	function selectBrushAUX(brushSize) {
-		drawApp.setSize(brushSize);				// Set default brush size
-		cleanTools.tools.currentToolType = cleanTools.tools.toolType.BRUSH;		// Update tool type
-		
-		// Visually unselect any other tools
-		var ele = document.getElementsByName(cleanTools.id + "-btn-radio");
-		for(var i=0;i<ele.length;i++)
-			ele[i].checked = false;
-	}
+	
 }
 
 function createDrawToolsContainer(){
