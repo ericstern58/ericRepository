@@ -98,6 +98,7 @@ var doasdsasdffasdf = xfasdfadf +33;
 /*-----------------------------------------------------------------------------*/
 cleanTools["options"] = {
 	'idName':'#' + cleanTools.id + '-options',
+	'jQueryObject': $('#' + cleanTools.id + '-options'),
 	
 	// Fill Options
 	'useStrokeAsFill':false,
@@ -108,20 +109,20 @@ cleanTools["options"] = {
 	'curveTension':0.5,
 	
 	'getOffset':function () {
-		return $(this.idName).offset();
+		return jQueryObject.offset();
 	},
 	'toggleMenu':function () {
 		var h = 175;	// Height of the options div
-		var opacity = $(this.idName).css('opacity');
+		var opacity = jQueryObject.css('opacity');
 		
 		if(opacity == 0) {
-			$(this.idName).stop(true, true).animate({
+			jQueryObject.stop(true, true).animate({
 				height: (h + "px"),
 				marginTop: ("-=" + h + "px"),
 				opacity: "1"
 			},200, "swing");
 		} else if(opacity == 1) {
-			$(this.idName).stop(true, true).animate({
+			jQueryObject.stop(true, true).animate({
 				height: "0px",
 				marginTop: ("+=" + h + "px"),
 				opacity: "0"
@@ -129,10 +130,10 @@ cleanTools["options"] = {
 		}
 	},
 	'isWithinBounds':function (x, y) {
-		var x2 = x - $(this.idName).offset().top;
-		var y2 = y - $(this.idName).offset().left;
-		var width = $(this.idName).width();
-		var height = $(this.idName).height();
+		var x2 = x - jQueryObject.offset().top;
+		var y2 = y - jQueryObject.offset().left;
+		var width = jQueryObject.width();
+		var height = jQueryObject.height();
 		//outputDebug("[x:" + x2 + ", y:" + y2 + "] [width:" + width + ", height:" + height + "]");
 		return (x2>=0 && y2>=0 && x2<width && y2<height);
 	},
