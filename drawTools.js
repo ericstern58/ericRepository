@@ -54,16 +54,17 @@ var cleanTools = {
 };
 
 cleanTools["canvas"] = {
+	'parentObject' = cleanTools;
 	'offset':{top:0,left:0},
 	'width':0,
 	'height':0,
 	'updateLocation': function() {
 		this.offset = $('#drawingCanvas').offset();    // Update canvas offset variable
-		this.width = this.Canvas.width();              // Update canvas width variable
-		this.height = this.Canvas.height();            // Update canvas width variable
+		this.width = this.parentObject.Canvas.width();              // Update canvas width variable
+		this.height = this.parentObject.Canvas.height();            // Update canvas width variable
 	},
 	'restore': function() {
-		this.context.constructor.prototype.putImageData.call(this.context, restorePoints[restorePosition], 0, 0);
+		this.parentObject.context.constructor.prototype.putImageData.call(this.parentObject.context, restorePoints[restorePosition], 0, 0);
 	},
 	'isWithinBounds': function(x,y) {
 		return (x>=0 && y>=0 && x<this.width && y<this.height);
