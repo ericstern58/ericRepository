@@ -43,10 +43,11 @@ var cleanTools = {
 	'dcToolbar':DRAWCEPTION_TOOLBAR,
 	'dcBrushes':DRAWCEPTION_BRUSHES,
 	
-	'Canvas':drawApp.canvas,
-	'context':drawApp.context,
+	'canvas':{},               // Canvas related vars and methods
+	'Canvas':drawApp.canvas,   // Actual canvas object
+	'context':drawApp.context, // Canvas context
 	
-	'mouseX':0,
+	'mouseX':0, // Mouse coords
 	'mouseY':0,
 	
 	
