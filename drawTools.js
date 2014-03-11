@@ -88,14 +88,52 @@ cleanTools["tools"] = {
 	},
 };
 
-var xfasdfadf = 2+3;
-var doasfasdf = xfasdfadf +34;
-var doasdsasdffasdf = xfasdfadf +33;
-
 
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
 /*-----------------------------------------------------------------------------*/
+cleanTools["options"] = {
+    'parentObject':cleanTools,
+	'id':'#' + this.parentObject.id + '-options',
+	
+	'useStrokeAsFill':false,
+	'fillColor':'', // Will be null if no fill for shapes
+	
+	'lineToolsShouldClose':false,
+	
+	'curveTension':0.5,
+	
+	"getOffset": function() {
+		return $(this.id).offset();
+	},
+	"toggleMenu": function () {
+		var h = 175;	// Height of the options div
+		var opacity = $(this.id).css('opacity');
+		
+		if(opacity == 0) {
+			$(this.id).stop(true, true).animate({
+				height: (h + "px"),
+				marginTop: ("-=" + h + "px"),
+				opacity: "1"
+			},200, "swing");
+		} else if(opacity == 1) {
+			$(this.id).stop(true, true).animate({
+				height: "0px",
+				marginTop: ("+=" + h + "px"),
+				opacity: "0"
+			},200, "swing");
+		}
+	},
+	"isWithinBounds": function (x, y) {
+		var x2 = x - $(this.idName).offset().top;
+		var y2 = y - $(this.idName).offset().left;
+		var width = $(this.idName).width();
+		var height = $(this.idName).height();
+		//outputDebug("[x:" + x2 + ", y:" + y2 + "] [width:" + width + ", height:" + height + "]");
+		return (x2>=0 && y2>=0 && x2<width && y2<height);
+	},
+};
+
 var DTOptionsClass = function (idNameString) {
 	this.idName = idNameString;
 	
@@ -129,10 +167,10 @@ DTOptionsClass.prototype.toggleMenu = function () {
 	}
 };
 DTOptionsClass.prototype.isWithinBounds = function (x, y) {
-	var x2 = x - $(this.idName).offset().top;
-	var y2 = y - $(this.idName).offset().left;
-	var width = $(this.idName).width();
-	var height = $(this.idName).height();
+	var x2 = x - $(this.id).offset().top;
+	var y2 = y - $(this.id).offset().left;
+	var width = $(this.id).width();
+	var height = $(this.id).height();
 	//outputDebug("[x:" + x2 + ", y:" + y2 + "] [width:" + width + ", height:" + height + "]");
 	return (x2>=0 && y2>=0 && x2<width && y2<height);
 };
@@ -141,14 +179,20 @@ DTOptionsClass.prototype.isWithinBounds = function (x, y) {
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
 /*-----------------------------------------------------------------------------*/
+
+
+var xfasdfadf = 2+3;
+var doasfasdf = xfasdfadf +34;
+var doasdsasdffasdf = xfasdfadf +33;
+
 // Setup Some Global Variables
 window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
 cleanTools.context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
 cleanTools.canvas.updateLocation();
 
 // Setup Some State Variables
-var options = new DTOptionsClass('#' + cleanTools.id + '-options');
-
+//var options = new DTOptionsClass('#' + cleanTools.id + '-options');
+var options = cleanTools.options;
 
 // Setup Debug Stuff
 var debugLabel; //Go to createDrawToolsElements to find assignment
