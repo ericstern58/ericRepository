@@ -92,10 +92,6 @@ var xfasdfadf = 2+3;
 var doasfasdf = xfasdfadf +34;
 var doasdsasdffasdf = xfasdfadf +33;
 
-// Setup Some Global Variables
-window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
-cleanTools.context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
-
 
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
@@ -141,16 +137,18 @@ DTOptionsClass.prototype.isWithinBounds = function (x, y) {
 	return (x2>=0 && y2>=0 && x2<width && y2<height);
 };
 
-// Tool type enum
-//var toolType={BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99};
 
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
 /*-----------------------------------------------------------------------------*/
+// Setup Some Global Variables
+window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
+cleanTools.context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
+cleanTools.canvas.updateLocation();
+
 // Setup Some State Variables
 var options = new DTOptionsClass('#' + cleanTools.id + '-options');
 
-cleanTools.canvas.updateLocation();
 
 // Setup Debug Stuff
 var debugLabel; //Go to createDrawToolsElements to find assignment
