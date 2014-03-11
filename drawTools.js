@@ -86,7 +86,7 @@ cleanTools["tools"] = {
 	},
 };
 try{
-outputDebug("Here is parents id: " + cleanTools.parentObject.id);
+outputDebug("Here is parents id: " + cleanTools.canvas.parentObject.id);
 }catch(err){alert(err);}
 
 var xfasdfadf = 2+3;
