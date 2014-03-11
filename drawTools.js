@@ -866,6 +866,7 @@ function createToolButton(type, name)
 	button.onclick = function(){cleanTools.tools.currentToolType=type;};
 	document.getElementById(cleanTools.id).appendChild(button);
 	
+	/*
 	//Now create input tag: <input type="radio" name="options" id="brush-35"> 
 	var radio = document.createElement('input');
 	radio.id = cleanTools.id + '-btn-radio-' + name;
@@ -882,6 +883,12 @@ function createToolButton(type, name)
 	var icon = document.createElement('div');
 	icon.id = cleanTools.id + '-btn-icon-' + name;
 	container.appendChild(icon);
+	*/
+	button.innerHTML = 
+		'<input type="radio" id="' + cleanTools.id + '-btn-radio-' + name + '" name="' + cleanTools.id + '-btn-radio">' +
+		'<div class="' + cleanTools.id + '-btn-container">' +
+			'<div id="' + cleanTools.id + '-btn-icon-' + name + '"></div>' +
+		'</div>';
 	
 	return button;
 }
