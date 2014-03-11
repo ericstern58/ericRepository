@@ -88,14 +88,19 @@ cleanTools["tools"] = {
 	},
 };
 
+var xfasdfadf = 2+3;
+var doasfasdf = xfasdfadf +34;
+var doasdsasdffasdf = xfasdfadf +33;
+
 
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
 /*-----------------------------------------------------------------------------*/
-cleanTools["options"] = {
-    'parentObject':cleanTools,
-	'id':'#' + this.parentObject.id + '-options',
+//var DTOptionsClass = function () {
+var options = {
+	'idName':'#' + cleanTools.id + '-options',
 	
+	// Fill Options
 	'useStrokeAsFill':false,
 	'fillColor':'', // Will be null if no fill for shapes
 	
@@ -103,28 +108,28 @@ cleanTools["options"] = {
 	
 	'curveTension':0.5,
 	
-	"getOffset": function() {
-		return $(this.id).offset();
+	'getOffset':function () {
+		return $(this.idName).offset();
 	},
-	"toggleMenu": function () {
+	'toggleMenu':function () {
 		var h = 175;	// Height of the options div
-		var opacity = $(this.id).css('opacity');
+		var opacity = $(this.idName).css('opacity');
 		
 		if(opacity == 0) {
-			$(this.id).stop(true, true).animate({
+			$(this.idName).stop(true, true).animate({
 				height: (h + "px"),
 				marginTop: ("-=" + h + "px"),
 				opacity: "1"
 			},200, "swing");
 		} else if(opacity == 1) {
-			$(this.id).stop(true, true).animate({
+			$(this.idName).stop(true, true).animate({
 				height: "0px",
 				marginTop: ("+=" + h + "px"),
 				opacity: "0"
 			},200, "swing");
 		}
 	},
-	"isWithinBounds": function (x, y) {
+	'isWithinBounds':function (x, y) {
 		var x2 = x - $(this.idName).offset().top;
 		var y2 = y - $(this.idName).offset().left;
 		var width = $(this.idName).width();
@@ -134,57 +139,9 @@ cleanTools["options"] = {
 	},
 };
 
-var DTOptionsClass = function (idNameString) {
-	this.idName = idNameString;
-	
-	// Fill Options
-	this.useStrokeAsFill = false;
-	this.fillColor = ''; // Will be null if no fill for shapes
-	
-	this.lineToolsShouldClose = false;
-	
-	this.curveTension = 0.5;
-};
-DTOptionsClass.prototype.getOffset = function () {
-	return $(this.idName).offset();
-};
-DTOptionsClass.prototype.toggleMenu = function () {
-	var h = 175;	// Height of the options div
-	var opacity = $(this.idName).css('opacity');
-	
-	if(opacity == 0) {
-		$(this.idName).stop(true, true).animate({
-			height: (h + "px"),
-			marginTop: ("-=" + h + "px"),
-			opacity: "1"
-		},200, "swing");
-	} else if(opacity == 1) {
-		$(this.idName).stop(true, true).animate({
-			height: "0px",
-			marginTop: ("+=" + h + "px"),
-			opacity: "0"
-		},200, "swing");
-	}
-};
-DTOptionsClass.prototype.isWithinBounds = function (x, y) {
-	var x2 = x - $(this.id).offset().top;
-	var y2 = y - $(this.id).offset().left;
-	var width = $(this.id).width();
-	var height = $(this.id).height();
-	//outputDebug("[x:" + x2 + ", y:" + y2 + "] [width:" + width + ", height:" + height + "]");
-	return (x2>=0 && y2>=0 && x2<width && y2<height);
-};
-
-
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
 /*-----------------------------------------------------------------------------*/
-
-
-var xfasdfadf = 2+3;
-var doasfasdf = xfasdfadf +34;
-var doasdsasdffasdf = xfasdfadf +33;
-
 // Setup Some Global Variables
 window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
 cleanTools.context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
@@ -192,7 +149,7 @@ cleanTools.canvas.updateLocation();
 
 // Setup Some State Variables
 //var options = new DTOptionsClass('#' + cleanTools.id + '-options');
-var options = cleanTools.options;
+
 
 // Setup Debug Stuff
 var debugLabel; //Go to createDrawToolsElements to find assignment
