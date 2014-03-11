@@ -57,18 +57,19 @@ var cleanTools = {
 	"restoreCanvas": function() {
 		this.context.constructor.prototype.putImageData.call(this.context, restorePoints[restorePosition], 0, 0);
 	},
-	"isWithinCanvasBounds": function(x,y) {
-		return (x>=0 && y>=0 && x<this.canvas.width && y<this.canvas.height);
-	},
-	"isWithinDrawingBounds": function(x,y) {
-		return (x>=(-12) && y>=(-12) && x<(this.canvas.width+12) && y<(this.canvas.height+12));
-	},
 	
 };
 cleanTools["canvas"] = {
 	'offset':{top:0,left:0},
 	'width':0,
 	'height':0,
+	
+	"isWithinBounds": function(x,y) {
+		return (x>=0 && y>=0 && x<this.width && y<this.height);
+	},
+	"isWithinDrawingBounds": function(x,y) {
+		return (x>=(-12) && y>=(-12) && x<(this.width+12) && y<(this.height+12));
+	},
 };
 cleanTools["tools"] = {
 	"currentToolType": 0,
@@ -203,7 +204,7 @@ cleanTools.Canvas.on('mousedown', function(e){
 // Setup Mousemove Listener
 $(document).off('mousemove');
 $(document).on('mousemove', function(e){
-/*	if(cleanTools.isWithinCanvasBounds(e.pageX-cleanTools.canvas.offset.left,e.pageY-cleanTools.canvas.offset.top)) {
+/*	if(cleanTools.canvas.isWithinBounds(e.pageX-cleanTools.canvas.offset.left,e.pageY-cleanTools.canvas.offset.top)) {
 		try{
 			var p = cleanTools.context.getImageData(e.pageX-cleanTools.canvas.offset.left, e.pageY-cleanTools.canvas.offset.top, 1, 1).data;
 			outputDebug("[r:" +p[0] + ", g:" + p[1] + ", b:" + p[2] + ", a:" + p[3] + "]");
@@ -270,7 +271,7 @@ $(document).on('mouseup', function(e){
 		cleanTools.restoreCanvas();
 		drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1], cleanTools.mouseX, cleanTools.mouseY);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
-		if(cleanTools.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
+		if(cleanTools.canvas.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
 			cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the chain
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
@@ -285,7 +286,7 @@ $(document).on('mouseup', function(e){
 			return;
 		}
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
-		if(cleanTools.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
+		if(cleanTools.canvas.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
 			cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
@@ -451,7 +452,7 @@ function floodFill(ctx,xSeed,ySeed){
 		}
 	}
 	var test = function(x,y) {
-		return (cleanTools.isWithinCanvasBounds(x,y) && colorCompare(targetColor,getColorFromCoords(x,y)));
+		return (cleanTools.canvas.isWithinBounds(x,y) && colorCompare(targetColor,getColorFromCoords(x,y)));
 	}
 	var testEdgePoint = function(x,y,originalY) {
 		var edge1 = edgeEligible(x,y);
@@ -470,7 +471,7 @@ function floodFill(ctx,xSeed,ySeed){
 	}
 	var edgeEligible = function(x,y) {
 		var color = getColorFromCoords(x,y);
-		return ( cleanTools.isWithinCanvasBounds(x,y) && (!colorCompare(fillColor,color)) && (!colorCompare(targetColor,color)) );
+		return ( cleanTools.canvas.isWithinBounds(x,y) && (!colorCompare(fillColor,color)) && (!colorCompare(targetColor,color)) );
 	}
 	
 	/*---------------------- Begin Procedure ----------------------*/
@@ -527,7 +528,7 @@ function floodFill(ctx,xSeed,ySeed){
 					else if(testEdgePoint(i,y-direction,y)) // Find Wether or not to add edge pixels
 						edgeArray.push(i,y-direction);
 				}
-				if(cleanTools.isWithinCanvasBounds(i,y))
+				if(cleanTools.canvas.isWithinBounds(i,y))
 					edgeArray.push(i,y);
 				range[j] = i-incr; // Save max fill pixel
 				
@@ -542,13 +543,13 @@ function floodFill(ctx,xSeed,ySeed){
 		
 		colorPixel(x,y,fillColor);
 		
-		if( (!colorCompare(fillColor,getColorFromCoords(x-1,y))) && cleanTools.isWithinCanvasBounds(x-1,y) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x-1,y))) && cleanTools.canvas.isWithinBounds(x-1,y) )
 			colorPixelBlend(x-1,y,fillColor,getColorFromCoords(x-1,y));
-		if( (!colorCompare(fillColor,getColorFromCoords(x+1,y))) && cleanTools.isWithinCanvasBounds(x+1,y) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x+1,y))) && cleanTools.canvas.isWithinBounds(x+1,y) )
 			colorPixelBlend(x+1,y,fillColor,getColorFromCoords(x+1,y));
-		if( (!colorCompare(fillColor,getColorFromCoords(x,y-1))) && cleanTools.isWithinCanvasBounds(x,y-1) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x,y-1))) && cleanTools.canvas.isWithinBounds(x,y-1) )
 			colorPixelBlend(x,y-1,fillColor,getColorFromCoords(x,y-1));
-		if( (!colorCompare(fillColor,getColorFromCoords(x,y+1))) && cleanTools.isWithinCanvasBounds(x,y+1) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x,y+1))) && cleanTools.canvas.isWithinBounds(x,y+1) )
 			colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
 	}
 //}
