@@ -46,6 +46,7 @@ var cleanTools = {
 	'canvas':{},               // Canvas related vars and methods
 	'Canvas':drawApp.canvas,   // Actual canvas object
 	'context':drawApp.context, // Canvas context
+	'options':{},
 	
 	'mouseX':0, // Mouse coords
 	'mouseY':0,
@@ -75,6 +76,7 @@ cleanTools["canvas"] = {
 	},
 };
 cleanTools["tools"] = {
+    'parentObject':cleanTools,
 	'currentToolType':0,
 	'toolInUse':false,
 	'points':[], // Will contain user input point sets for shapes/lines/etc
@@ -89,16 +91,30 @@ cleanTools["tools"] = {
 };
 
 cleanTools["html"] = {
+    'parentObject':cleanTools,
+	'optionsObject':cleanTools.options,
 	
 	'buttonHandlers':{
 		'brushClick':function(brushSize) {
 			drawApp.setSize(brushSize);				// Set default brush size
-			cleanTools.tools.currentToolType = cleanTools.tools.toolType.BRUSH;		// Update tool type
+			this.parentObject.tools.currentToolType = this.parentObject.tools.toolType.BRUSH;		// Update tool type
 			
 			// Visually unselect any other tools
-			var ele = document.getElementsByName(cleanTools.id + "-btn-radio");
+			var ele = document.getElementsByName(this.parentObject.id + "-btn-radio");
 			for(var i=0;i<ele.length;i++)
 				ele[i].checked = false;
+		},
+		'setLineToolsOpen':function(){
+			optionsObject.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
+		},
+		'setOptionsColor':function(color,normalfill){
+			if(normalfill) {
+				optionsObject.useStrokeAsFill = true;
+				optionsObject.fillColor = '';
+			} else {
+				optionsObject.useStrokeAsFill = false;
+				optionsObject.fillColor = color;
+			}
 		},
 	},
 };
@@ -810,15 +826,6 @@ function setupCSS()
 /*-----------------------------------------------------------------------------*/
 function modifyExistingElements() 
 {
-	var selectBrushAUX = function(brushSize) {
-		drawApp.setSize(brushSize);				// Set default brush size
-		cleanTools.tools.currentToolType = cleanTools.tools.toolType.BRUSH;		// Update tool type
-		
-		// Visually unselect any other tools
-		var ele = document.getElementsByName(cleanTools.id + "-btn-radio");
-		for(var i=0;i<ele.length;i++)
-			ele[i].checked = false;
-	}
 	/*	// TODO:Figure this out. This doesn't work for some reason, so i hardcoded it.
 	for(var j=0;j<cleanTools.dcBrushes.length;j++)
 		document.getElementById(cleanTools.dcBrushes[j].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[j].size);};
@@ -827,8 +834,6 @@ function modifyExistingElements()
 	document.getElementById(cleanTools.dcBrushes[1].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[1].size);};
 	document.getElementById(cleanTools.dcBrushes[2].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[2].size);};
 	document.getElementById(cleanTools.dcBrushes[3].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[3].size);};
-	
-	
 }
 
 function createDrawToolsContainer(){
