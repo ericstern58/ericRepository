@@ -89,6 +89,7 @@ cleanTools["tools"] = {
 };
 
 cleanTools["html"] = {
+    'parentObject':cleanTools,
 	
 	'buttonHandlers':{
 		'brushClick':function(brushSize) {
