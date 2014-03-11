@@ -85,7 +85,9 @@ cleanTools["tools"] = {
 			save();
 	},
 };
+try{
 outputDebug("Here is parents id: " + cleanTools.parentObject.id);
+}catch(err){alert(err);}
 
 var xfasdfadf = 2+3;
 var doasfasdf = xfasdfadf +34;
