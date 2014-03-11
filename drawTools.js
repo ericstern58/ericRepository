@@ -96,8 +96,7 @@ var doasdsasdffasdf = xfasdfadf +33;
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
 /*-----------------------------------------------------------------------------*/
-//var DTOptionsClass = function () {
-var options = {
+cleanTools["options"] = {
 	'idName':'#' + cleanTools.id + '-options',
 	
 	// Fill Options
@@ -138,7 +137,7 @@ var options = {
 		return (x2>=0 && y2>=0 && x2<width && y2<height);
 	},
 };
-
+var options = cleanTools["options"];
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
 /*-----------------------------------------------------------------------------*/
@@ -147,8 +146,6 @@ window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent 
 cleanTools.context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
 cleanTools.canvas.updateLocation();
 
-// Setup Some State Variables
-//var options = new DTOptionsClass('#' + cleanTools.id + '-options');
 
 
 // Setup Debug Stuff
