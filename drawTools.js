@@ -38,30 +38,31 @@ var DRAWCEPTION_BRUSHES = [{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},
 
 // Setup Clean Tools Object
 var cleanTools = {
-	'id': DRAW_TOOLS_ID,
+	'id':DRAW_TOOLS_ID,
 	
-	'dcToolbar': DRAWCEPTION_TOOLBAR,
-	'dcBrushes': DRAWCEPTION_BRUSHES,
+	'dcToolbar':DRAWCEPTION_TOOLBAR,
+	'dcBrushes':DRAWCEPTION_BRUSHES,
 	
-	'Canvas': drawApp.canvas,
-	'context': drawApp.context,
+	'Canvas':drawApp.canvas,
+	'context':drawApp.context,
 	
-	'mouseX': 0,
-	'mouseY': 0,
+	'mouseX':0,
+	'mouseY':0,
 	
-	"updateCanvasLocation": function() {
-		this.canvas.offset = $('#drawingCanvas').offset();    // Update canvas offset variable
-		this.canvas.width = this.Canvas.width();              // Update canvas width variable
-		this.canvas.height = this.Canvas.height();            // Update canvas width variable
-	},
 	
 };
 cleanTools["canvas"] = {
     'parentObject':cleanTools,
+	'Canvas':cleanTools.Canvas,
 	'offset':{top:0,left:0},
 	'width':0,
 	'height':0,
 	
+	"updateLocation": function() {
+		this.offset = $('#drawingCanvas').offset();    // Update canvas offset variable
+		this.width = this.Canvas.width();              // Update canvas width variable
+		this.height = this.Canvas.height();            // Update canvas width variable
+	},
 	"isWithinBounds": function(x,y) {
 		return (x>=0 && y>=0 && x<this.width && y<this.height);
 	},
@@ -73,12 +74,12 @@ cleanTools["canvas"] = {
 	},
 };
 cleanTools["tools"] = {
-	"currentToolType": 0,
-	"toolInUse": false,
-	"points": [], // Will contain user input point sets for shapes/lines/etc
+	"currentToolType":0,
+	"toolInUse":false,
+	"points":[], // Will contain user input point sets for shapes/lines/etc
 	
-	"toolType": {BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99},
-	"reset": function(saveCanvas) {
+	"toolType":{BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99},
+	"reset":function(saveCanvas) {
 		this.points.length = 0;
 		this.toolInUse = false;
 		if(saveCanvas)
@@ -148,7 +149,7 @@ DTOptionsClass.prototype.isWithinBounds = function (x, y) {
 // Setup Some State Variables
 var options = new DTOptionsClass('#' + cleanTools.id + '-options');
 
-cleanTools.updateCanvasLocation();
+cleanTools.canvas.updateLocation();
 
 // Setup Debug Stuff
 var debugLabel; //Go to createDrawToolsElements to find assignment
@@ -173,7 +174,7 @@ cleanTools.Canvas.on('mousedown', function(e){
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.BRUSH)
 		return;
 	cleanTools.tools.toolInUse = true;
-	cleanTools.updateCanvasLocation();
+	cleanTools.canvas.updateLocation();
 	
 	// Translate mouse location to point relative to canvas
 	cleanTools.mouseX = e.pageX-cleanTools.canvas.offset.left;
