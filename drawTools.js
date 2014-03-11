@@ -795,6 +795,15 @@ function setupCSS()
 /*-----------------------------------------------------------------------------*/
 function modifyExistingElements() 
 {
+	var selectBrushAUX = function(brushSize) {
+		drawApp.setSize(brushSize);				// Set default brush size
+		cleanTools.tools.currentToolType = cleanTools.tools.toolType.BRUSH;		// Update tool type
+		
+		// Visually unselect any other tools
+		var ele = document.getElementsByName(cleanTools.id + "-btn-radio");
+		for(var i=0;i<ele.length;i++)
+			ele[i].checked = false;
+	}
 	/*	// TODO:Figure this out. This doesn't work for some reason, so i hardcoded it.
 	for(var j=0;j<cleanTools.dcBrushes.length;j++)
 		document.getElementById(cleanTools.dcBrushes[j].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[j].size);};
