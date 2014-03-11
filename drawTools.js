@@ -49,38 +49,33 @@ var cleanTools = {
 	'mouseX': 0,
 	'mouseY': 0,
 	
-
+	'canvasOffset':{top:0,left:0},
+	'canvasWidth':0,
+	'canvasHeight':0,
+	"updateCanvasLocation": function() {
+		this.canvasOffset = $('#drawingCanvas').offset();    // Update canvas offset variable
+		this.canvasWidth = this.Canvas.width();              // Update canvas width variable
+		this.canvasHeight = this.Canvas.height();            // Update canvas width variable
+	},
+	"restoreCanvas": function() {
+		this.context.constructor.prototype.putImageData.call(this.context, restorePoints[restorePosition], 0, 0);
+	},
+	"isWithinCanvasBounds": function(x,y) {
+		return (x>=0 && y>=0 && x<this.canvasWidth && y<this.canvasHeight);
+	},
+	"isWithinDrawingBounds": function(x,y) {
+		return (x>=(-12) && y>=(-12) && x<(this.canvasWidth+12) && y<(this.canvasHeight+12));
+	},
 	
-};
-
-cleanTools["canvas"] = {
-	'parentObject' = cleanTools,
-	'offset':{top:0,left:0},
-	'width':0,
-	'height':0,
-	'updateLocation': function() {
-		this.offset = $('#drawingCanvas').offset();    // Update canvas offset variable
-		this.width = this.parentObject.Canvas.width();              // Update canvas width variable
-		this.height = this.parentObject.Canvas.height();            // Update canvas width variable
-	},
-	'restore': function() {
-		this.parentObject.context.constructor.prototype.putImageData.call(this.parentObject.context, restorePoints[restorePosition], 0, 0);
-	},
-	'isWithinBounds': function(x,y) {
-		return (x>=0 && y>=0 && x<this.width && y<this.height);
-	},
-	'isWithinDrawingBounds': function(x,y) {
-		return (x>=(-12) && y>=(-12) && x<(this.width+12) && y<(this.height+12));
-	},
 };
 
 cleanTools["tools"] = {
-	'currentToolType': 0,
-	'toolInUse': false,
-	'points': [], // Will contain user input point sets for shapes/lines/etc
+	"currentToolType": 0,
+	"toolInUse": false,
+	"points": [], // Will contain user input point sets for shapes/lines/etc
 	
-	'toolType': {BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99},
-	'reset': function(saveCanvas) {
+	"toolType": {BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99},
+	"reset": function(saveCanvas) {
 		this.points.length = 0;
 		this.toolInUse = false;
 		if(saveCanvas)
@@ -151,7 +146,7 @@ DTOptionsClass.prototype.isWithinBounds = function (x, y) {
 // Setup Some State Variables
 var options = new DTOptionsClass('#' + cleanTools.id + '-options');
 
-cleanTools.canvas.updateLocation();
+cleanTools.updateCanvasLocation();
 
 // Setup Debug Stuff
 var debugLabel; //Go to createDrawToolsElements to find assignment
@@ -171,16 +166,16 @@ cleanTools.Canvas.off('mousedown');
 cleanTools.Canvas.on('mousedown', function(e){
 	if(0 && $('#drawTools-options').css('opacity') == 1){
 		painting = !1;
-		cleanTools.canvas.restore();
+		cleanTools.restoreCanvas();
 		return;
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.BRUSH)
 		return;
 	cleanTools.tools.toolInUse = true;
-	cleanTools.canvas.updateLocation();
+	cleanTools.updateCanvasLocation();
 	
 	// Translate mouse location to point relative to canvas
-	cleanTools.mouseX = e.pageX-cleanTools.canvas.offset.left;
-	cleanTools.mouseY = e.pageY-cleanTools.canvas.offset.top;
+	cleanTools.mouseX = e.pageX-cleanTools.canvasOffset.left;
+	cleanTools.mouseY = e.pageY-cleanTools.canvasOffset.top;
 	
 	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
 		//var stopwatch = new StopWatch();
@@ -207,9 +202,9 @@ cleanTools.Canvas.on('mousedown', function(e){
 // Setup Mousemove Listener
 $(document).off('mousemove');
 $(document).on('mousemove', function(e){
-/*	if(cleanTools.canvas.isWithinBounds(e.pageX-cleanTools.canvas.offset.left,e.pageY-cleanTools.canvas.offset.top)) {
+/*	if(cleanTools.isWithinCanvasBounds(e.pageX-cleanTools.canvasOffset.left,e.pageY-cleanTools.canvasOffset.top)) {
 		try{
-			var p = cleanTools.context.getImageData(e.pageX-cleanTools.canvas.offset.left, e.pageY-cleanTools.canvas.offset.top, 1, 1).data;
+			var p = cleanTools.context.getImageData(e.pageX-cleanTools.canvasOffset.left, e.pageY-cleanTools.canvasOffset.top, 1, 1).data;
 			outputDebug("[r:" +p[0] + ", g:" + p[1] + ", b:" + p[2] + ", a:" + p[3] + "]");
 		} catch(err){alert(err);}
 	} else {
@@ -222,33 +217,33 @@ $(document).on('mousemove', function(e){
 		return;	// If no tool is in use, ignore event
 		
 	// Translate mouse location to point relative to canvas
-	cleanTools.mouseX = e.pageX-cleanTools.canvas.offset.left;
-	cleanTools.mouseY = e.pageY-cleanTools.canvas.offset.top;
+	cleanTools.mouseX = e.pageX-cleanTools.canvasOffset.left;
+	cleanTools.mouseY = e.pageY-cleanTools.canvasOffset.top;
 	
 	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
 		// Do nothing
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
-		cleanTools.canvas.restore();
+		cleanTools.restoreCanvas();
 		drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1],cleanTools.mouseX,cleanTools.mouseY);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
 		if(cleanTools.tools.points.length > 0) {
 			var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
-			cleanTools.canvas.restore();
+			cleanTools.restoreCanvas();
 			drawLineChain(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),true,options.lineToolsShouldClose,fillColor);
 		}
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
 		if(cleanTools.tools.points.length > 0) {
 			var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
-			cleanTools.canvas.restore();
+			cleanTools.restoreCanvas();
 			drawSpline(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,options.lineToolsShouldClose,fillColor,true);
 		}
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
-		cleanTools.canvas.restore();
+		cleanTools.restoreCanvas();
 		drawRect(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
-		cleanTools.canvas.restore();
+		cleanTools.restoreCanvas();
 		drawEllipse(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
 	}
 });
@@ -265,52 +260,52 @@ $(document).on('mouseup', function(e){
 		return;
 		
 	// Translate mouse location to point relative to canvas
-	cleanTools.mouseX = e.pageX-cleanTools.canvas.offset.left;
-	cleanTools.mouseY = e.pageY-cleanTools.canvas.offset.top;
+	cleanTools.mouseX = e.pageX-cleanTools.canvasOffset.left;
+	cleanTools.mouseY = e.pageY-cleanTools.canvasOffset.top;
 	
 	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
 		// Do nothing
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
-		cleanTools.canvas.restore();
+		cleanTools.restoreCanvas();
 		drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1], cleanTools.mouseX, cleanTools.mouseY);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
-		if(cleanTools.canvas.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
+		if(cleanTools.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
 			cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the chain
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
-				cleanTools.canvas.restore();
+				cleanTools.restoreCanvas();
 				drawLineChain(cleanTools.context,cleanTools.tools.points,false,options.lineToolsShouldClose,fillColor);
 			} else {
 				return;
 			}
 		} else {
-			cleanTools.canvas.restore();
+			cleanTools.restoreCanvas();
 			cleanTools.tools.reset();
 			return;
 		}
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
-		if(cleanTools.canvas.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
+		if(cleanTools.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
 			cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
-				cleanTools.canvas.restore();
+				cleanTools.restoreCanvas();
 				drawSpline(cleanTools.context,cleanTools.tools.points,0.5,options.lineToolsShouldClose,fillColor,false);
 			} else {
 				return;
 			}
 		} else {	// If user clicks out of acceptable boundaries, cancel all tool progress
-			cleanTools.canvas.restore();
+			cleanTools.restoreCanvas();
 			cleanTools.tools.reset();
 			return;
 		}
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
-		cleanTools.canvas.restore();
+		cleanTools.restoreCanvas();
 		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
 		drawRect(cleanTools.context,cleanTools.tools.points,fillColor);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
-		cleanTools.canvas.restore();
+		cleanTools.restoreCanvas();
 		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
 		drawEllipse(cleanTools.context,cleanTools.tools.points,fillColor);
 	}
@@ -333,7 +328,7 @@ $(document).keydown(function(e) {
 					cleanTools.tools.toolInUse = false;
 				}
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
-				cleanTools.canvas.restore();
+				cleanTools.restoreCanvas();
 				if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN)
 					drawLineChain(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),true,options.lineToolsShouldClose,fillColor);
 				else
@@ -404,14 +399,14 @@ function floodFill(ctx,xSeed,ySeed){
 	xSeed = Math.round( xSeed );
 	ySeed = Math.round( ySeed );
 	/*---------------------- Setup Procedure Variables ----------------------*/
-	// This canvas.restore() fix avoids issues with brush placing dot over flood fill seed area
-	cleanTools.canvas.restore();
+	// This restoreCanvas() fix avoids issues with brush placing dot over flood fill seed area
+	cleanTools.restoreCanvas();
 	
-	var w = cleanTools.canvas.width;
-	var h = cleanTools.canvas.height;
+	var w = cleanTools.canvasWidth;
+	var h = cleanTools.canvasHeight;
 	var p = ctx.getImageData(0,0,w,h);
 	var d = p.data;
-	var tci = (xSeed+ySeed*cleanTools.canvas.width)*4;
+	var tci = (xSeed+ySeed*cleanTools.canvasWidth)*4;
 	var targetColor = [d[tci],d[tci+1],d[tci+2],d[tci+3]];//getColorFromCoords(xSeed,ySeed); // Cant use because its not initialized yet
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];
@@ -455,7 +450,7 @@ function floodFill(ctx,xSeed,ySeed){
 		}
 	}
 	var test = function(x,y) {
-		return (cleanTools.canvas.isWithinBounds(x,y) && colorCompare(targetColor,getColorFromCoords(x,y)));
+		return (cleanTools.isWithinCanvasBounds(x,y) && colorCompare(targetColor,getColorFromCoords(x,y)));
 	}
 	var testEdgePoint = function(x,y,originalY) {
 		var edge1 = edgeEligible(x,y);
@@ -474,7 +469,7 @@ function floodFill(ctx,xSeed,ySeed){
 	}
 	var edgeEligible = function(x,y) {
 		var color = getColorFromCoords(x,y);
-		return ( cleanTools.canvas.isWithinBounds(x,y) && (!colorCompare(fillColor,color)) && (!colorCompare(targetColor,color)) );
+		return ( cleanTools.isWithinCanvasBounds(x,y) && (!colorCompare(fillColor,color)) && (!colorCompare(targetColor,color)) );
 	}
 	
 	/*---------------------- Begin Procedure ----------------------*/
@@ -531,7 +526,7 @@ function floodFill(ctx,xSeed,ySeed){
 					else if(testEdgePoint(i,y-direction,y)) // Find Wether or not to add edge pixels
 						edgeArray.push(i,y-direction);
 				}
-				if(cleanTools.canvas.isWithinBounds(i,y))
+				if(cleanTools.isWithinCanvasBounds(i,y))
 					edgeArray.push(i,y);
 				range[j] = i-incr; // Save max fill pixel
 				
@@ -546,13 +541,13 @@ function floodFill(ctx,xSeed,ySeed){
 		
 		colorPixel(x,y,fillColor);
 		
-		if( (!colorCompare(fillColor,getColorFromCoords(x-1,y))) && cleanTools.canvas.isWithinBounds(x-1,y) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x-1,y))) && cleanTools.isWithinCanvasBounds(x-1,y) )
 			colorPixelBlend(x-1,y,fillColor,getColorFromCoords(x-1,y));
-		if( (!colorCompare(fillColor,getColorFromCoords(x+1,y))) && cleanTools.canvas.isWithinBounds(x+1,y) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x+1,y))) && cleanTools.isWithinCanvasBounds(x+1,y) )
 			colorPixelBlend(x+1,y,fillColor,getColorFromCoords(x+1,y));
-		if( (!colorCompare(fillColor,getColorFromCoords(x,y-1))) && cleanTools.canvas.isWithinBounds(x,y-1) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x,y-1))) && cleanTools.isWithinCanvasBounds(x,y-1) )
 			colorPixelBlend(x,y-1,fillColor,getColorFromCoords(x,y-1));
-		if( (!colorCompare(fillColor,getColorFromCoords(x,y+1))) && cleanTools.canvas.isWithinBounds(x,y+1) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x,y+1))) && cleanTools.isWithinCanvasBounds(x,y+1) )
 			colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
 	}
 //}
@@ -715,7 +710,7 @@ function drawSpline(ctx,pts,t,closed,closedFillColorHex,editMode){
 function setupCSS()
 {
 	// Calculate variables used in css
-	var optionsMarginTop = cleanTools.canvas.offset.top + cleanTools.canvas.height - $('#' + cleanTools.id).offset().top;
+	var optionsMarginTop = cleanTools.canvasOffset.top + cleanTools.canvasHeight - $('#' + cleanTools.id).offset().top;
 	
 	var DTSheet = document.createElement('style');
 	DTSheet.id = cleanTools.id + 'StyleSheet'; // Give id so destructor can find it if needed
