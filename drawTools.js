@@ -941,7 +941,7 @@ function createOptionsMenu(drawToolsDiv)
 	//----- BEGIN ----- LeftPanel --------------------------------------------------
 	var leftPanelHtml = "";
 	leftPanelHtml += 
-		'<label onclick=cleanTools.html.buttonHandlers.setLineToolsOpen(); class="switch">\
+		'<label onclick=setLineToolsOpen(); class="switch">\
 			<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">\
 			<span class="switch-label" data-on="Line Tools Closed" data-off="Line Tools Open"></span>\
 			<span class="switch-handle"></span>\
@@ -954,12 +954,12 @@ function createOptionsMenu(drawToolsDiv)
 	optionsPaletteHtml += 
 		'<label style="width:120px;">' +
 			'<input type="radio" name="drawTools-options-palette-radio" checked>' +
-			'<div onclick=cleanTools.html.buttonHandlers.setOptionsColor(""); style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div>' +
+			'<div onclick=setOptionsColor(""); style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div>' +
 		'</label>';
 	optionsPaletteHtml += 
 		'<label style="width:120px;">' +
 			'<input type="radio" name="drawTools-options-palette-radio">' +
-			'<div onclick=cleanTools.html.buttonHandlers.setOptionsColor("",1); style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div>' +
+			'<div onclick=setOptionsColor("",1); style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div>' +
 		'</label>';
 	
 	for(var i=0;i<colorElements.length;i++) {
@@ -968,12 +968,25 @@ function createOptionsMenu(drawToolsDiv)
 		optionsPaletteHtml += 
 			'<label>' +
 				'<input type="radio" name="drawTools-options-palette-radio">' +
-				'<div onclick=cleanTools.html.buttonHandlers.setOptionsColor("' + color + '"); style="background:' + color + ';"></div>' +
+				'<div onclick=setOptionsColor("' + color + '"); style="background:' + color + ';"></div>' +
 			'</label>';
 	}
 	document.getElementById('drawTools-options-palette').innerHTML = optionsPaletteHtml;
 	
 	
+}
+function setLineToolsOpen() {
+	options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
+}
+
+function setOptionsColor(color,normalfill) {
+	if(normalfill) {
+		options.useStrokeAsFill = true;
+		options.fillColor = '';
+	} else {
+		options.useStrokeAsFill = false;
+		options.fillColor = color;
+	}
 }
 
 // Destroys all elements, styling and javascript
