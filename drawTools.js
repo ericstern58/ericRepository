@@ -827,15 +827,6 @@ function setupCSS()
 /*-----------------------------------------------------------------------------*/
 function modifyExistingElements() 
 {
-	var selectBrushAUX = function(brushSize) {
-		drawApp.setSize(brushSize);				// Set default brush size
-		cleanTools.tools.currentToolType = cleanTools.tools.toolType.BRUSH;		// Update tool type
-		
-		// Visually unselect any other tools
-		var ele = document.getElementsByName(cleanTools.id + "-btn-radio");
-		for(var i=0;i<ele.length;i++)
-			ele[i].checked = false;
-	}
 	/*	// TODO:Figure this out. This doesn't work for some reason, so i hardcoded it.
 	for(var j=0;j<cleanTools.dcBrushes.length;j++)
 		document.getElementById(cleanTools.dcBrushes[j].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[j].size);};
@@ -891,20 +882,18 @@ function createToolButtonWithLabel(type, name, label)
 //Creates Tool Buttons (no innerHTML)
 function createToolButton(type, name)
 {
-	//create button
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
 	button.id = cleanTools.id + '-btn-' + name;
 	button.className = 'drawTools-btn';
-	button.onclick = function(){cleanTools.html.buttonHandlers.setToolType(type);};
-	document.getElementById(cleanTools.id).appendChild(button);
-
 	button.innerHTML = 
 		'<input id="' + cleanTools.id + '-btn-radio-' + name + '" name="' + cleanTools.id + '-btn-radio" type="radio">' +
 		'<div class="' + cleanTools.id + '-btn-container">' +
 			'<div id="' + cleanTools.id + '-btn-icon-' + name + '"></div>' +
 		'</div>';
+	document.getElementById(cleanTools.id).appendChild(button);
 	
+	button.onclick = function(){cleanTools.html.buttonHandlers.setToolType(type);};
 	return button;
 }
 //Creates Tool Buttons (no innerHTML)
@@ -915,28 +904,11 @@ function createUtilityButton(name)
 	var button = document.createElement('label');
 	button.id = cleanTools.id + '-btn-' + name;
 	button.className = cleanTools.id + '-btn';
-	document.getElementById(cleanTools.id).appendChild(button);
-
 	button.innerHTML = 
 		'<div class="' + cleanTools.id + '-btn-container">' +
 			'<div id="' + cleanTools.id + '-btn-icon-' + name + '"></div>' +
 		'</div>';
-	/*
-	//Create container div
-	var container = document.createElement('div');
-	container.className = cleanTools.id + '-btn-container';
-	button.appendChild(container);
-	
-	// Create icon div
-	var icon = document.createElement('div');
-	icon.id = cleanTools.id + '-btn-icon-' + name;
-	container.appendChild(icon);
-	*/
-	
-	/*
-	var string = 
-	
-	*/
+	document.getElementById(cleanTools.id).appendChild(button);
 	return button;
 }
 
