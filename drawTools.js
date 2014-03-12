@@ -818,29 +818,33 @@ function setupCSS()
 /*-----------------------------------------------------------------------------*/
 function setupCssAndHtml()
 {
-	createDrawToolsContainer();     // Create Draw Tools Container
+	/*---- 1. Create Draw Tools Container - DIV in which DrawTools will be placed in ----*/
+	var drawToolsDiv = document.createElement('div');
+	drawToolsDiv.id = cleanTools.id;
+	cleanTools.dcToolbar.appendChild(drawToolsDiv);
+	
 	setupCSS();                     // Setup necessary CSS for DrawTools
-	modifyExistingElements();       // Make Necessary Modifications to Existing Elements
-	createDrawToolsElements();      // Create Draw Tools Elements and Interface
-}
-
-function modifyExistingElements() 
-{
-	/*	// TODO:Figure this out. This doesn't work for some reason, so i hardcoded it.
-	for(var j=0;j<cleanTools.dcBrushes.length;j++)
-		document.getElementById(cleanTools.dcBrushes[j].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[j].size);};
-	*/
+	
+	
+	/*---- 3. Make Necessary Modifications to Existing Elements ----*/
 	document.getElementById(cleanTools.dcBrushes[0].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[0].size);};
 	document.getElementById(cleanTools.dcBrushes[1].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[1].size);};
 	document.getElementById(cleanTools.dcBrushes[2].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[2].size);};
 	document.getElementById(cleanTools.dcBrushes[3].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[3].size);};
+	/*	// TODO:Figure this out. This doesn't work for some reason, so i hardcoded it.
+	for(var j=0;j<cleanTools.dcBrushes.length;j++)
+		document.getElementById(cleanTools.dcBrushes[j].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[j].size);};
+	*/
+	
+	createDrawToolsElements();      // Create Draw Tools Elements and Interface
 }
+
+
 
 function createDrawToolsContainer(){
 	//Create DIV in which DrawTools will be placed in
 	var drawToolsDiv = document.createElement('div');
 	drawToolsDiv.id = cleanTools.id;
-	//drawToolsDiv.className = 'drawTools-btn-group';
 	cleanTools.dcToolbar.appendChild(drawToolsDiv);
 }
 
