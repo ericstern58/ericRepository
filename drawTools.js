@@ -96,7 +96,6 @@ cleanTools["tools"] = {
 			save();
 	},
 };
-
 cleanTools["options"] = {
 	'id':'#' + cleanTools.id + '-options',
 	
@@ -253,22 +252,22 @@ $(document).on('mousemove', function(e){
 		drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1],cleanTools.mouseX,cleanTools.mouseY);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
 		if(cleanTools.tools.points.length > 0) {
-			var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
+			var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
 			cleanTools.canvas.restore();
-			drawLineChain(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),true,options.lineToolsShouldClose,fillColor);
+			drawLineChain(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),true,cleanTools.options.lineToolsShouldClose,fillColor);
 		}
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
 		if(cleanTools.tools.points.length > 0) {
-			var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
+			var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
 			cleanTools.canvas.restore();
-			drawSpline(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,options.lineToolsShouldClose,fillColor,true);
+			drawSpline(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,cleanTools.options.lineToolsShouldClose,fillColor,true);
 		}
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
-		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
+		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
 		cleanTools.canvas.restore();
 		drawRect(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
-		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
+		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
 		cleanTools.canvas.restore();
 		drawEllipse(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
 	}
@@ -277,8 +276,8 @@ $(document).on('mousemove', function(e){
 $(document).off('mouseup');
 $(document).on('mouseup', function(e){
 	if(0 && $('#drawTools-options').css('opacity') == 1){
-		if(!options.isWithinBounds(e.pageX, e.pageY))
-			options.toggleMenu();
+		if(!cleanTools.options.isWithinBounds(e.pageX, e.pageY))
+			cleanTools.options.toggleMenu();
 		return;
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.BRUSH)
 		return;
@@ -299,9 +298,9 @@ $(document).on('mouseup', function(e){
 		if(cleanTools.canvas.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
 			cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the chain
-				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
+				var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
 				cleanTools.canvas.restore();
-				drawLineChain(cleanTools.context,cleanTools.tools.points,false,options.lineToolsShouldClose,fillColor);
+				drawLineChain(cleanTools.context,cleanTools.tools.points,false,cleanTools.options.lineToolsShouldClose,fillColor);
 				cleanTools.tools.reset(true);
 			} else {
 				return;
@@ -315,9 +314,9 @@ $(document).on('mouseup', function(e){
 		if(cleanTools.canvas.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
 			cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the curve
-				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
+				var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
 				cleanTools.canvas.restore();
-				drawSpline(cleanTools.context,cleanTools.tools.points,0.5,options.lineToolsShouldClose,fillColor,false);
+				drawSpline(cleanTools.context,cleanTools.tools.points,0.5,cleanTools.options.lineToolsShouldClose,fillColor,false);
 				cleanTools.tools.reset(true);
 			} else {
 				return;
@@ -328,13 +327,13 @@ $(document).on('mouseup', function(e){
 			return;
 		}
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
-		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
+		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
 		cleanTools.canvas.restore();
 		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
 		drawRect(cleanTools.context,cleanTools.tools.points,fillColor);
 		cleanTools.tools.reset(true);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
-		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
+		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
 		cleanTools.canvas.restore();
 		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
 		drawEllipse(cleanTools.context,cleanTools.tools.points,fillColor);
@@ -352,12 +351,12 @@ $(document).keydown(function(e) {
 				if(cleanTools.tools.points.length == 0) {
 					cleanTools.tools.toolInUse = false;
 				}
-				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
+				var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
 				cleanTools.canvas.restore();
 				if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN)
-					drawLineChain(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),true,options.lineToolsShouldClose,fillColor);
+					drawLineChain(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),true,cleanTools.options.lineToolsShouldClose,fillColor);
 				else
-					drawSpline(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,options.lineToolsShouldClose,fillColor,true);
+					drawSpline(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,cleanTools.options.lineToolsShouldClose,fillColor,true);
 			}
 		}
 	} else {
@@ -392,7 +391,8 @@ function drawRect(ctx,pts,fillColorHex)
 	ctx.stroke();
 	ctx.restore();
 }
-function drawEllipse(ctx,pts,fillColorHex){
+function drawEllipse(ctx,pts,fillColorHex)
+{
 	var x = pts[0],
 	y =  pts[1],
 	w = pts[2] - pts[0],
@@ -421,6 +421,7 @@ function drawEllipse(ctx,pts,fillColorHex){
 	ctx.restore();
 }
 function floodFill(ctx,xSeed,ySeed){
+	// Round seed coords in case they happen to be float type
 	xSeed = Math.round( xSeed );
 	ySeed = Math.round( ySeed );
 	/*---------------------- Setup Procedure Variables ----------------------*/
@@ -437,7 +438,6 @@ function floodFill(ctx,xSeed,ySeed){
 	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];
 	
 	/*---------------------- Supporting functions ----------------------*/
-	/*---------------------- Color Methods ----------------------*/
 	// Define some useful functions
 	var colorCompare = function(color1,color2) {
 		return (color1[0]===color2[0] && color1[1]===color2[1] && color1[2]===color2[2] && color1[3]===color2[3]);
@@ -823,7 +823,8 @@ function setupCssAndHtml()
 	drawToolsDiv.id = cleanTools.id;
 	cleanTools.dcToolbar.appendChild(drawToolsDiv);
 	
-	setupCSS();                     // Setup necessary CSS for DrawTools
+	/*---- 2. Setup necessary CSS for DrawTools ----*/
+	setupCSS();
 	
 	/*---- 3. Make Necessary Modifications to Existing Elements ----*/
 	document.getElementById(cleanTools.dcBrushes[0].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[0].size);};
@@ -847,7 +848,7 @@ function setupCssAndHtml()
 	debugLabel = createToolButtonWithLabel(cleanTools.tools.toolType.UTIL,"label", '0');
 	
 	var optionsButton = createUtilityButton("options");
-	optionsButton.onclick = function(){options.toggleMenu();};
+	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
 	
 	createOptionsMenu(drawToolsDiv);
 	
@@ -856,13 +857,7 @@ function setupCssAndHtml()
 	exitButton.onclick = function(){DTDestroy();};
 }
 
-//Creates Tool Buttons (wit a label)
-function createToolButtonWithLabel(type, name, label)
-{
-	var button = createToolButton(type, name);
-	button.getElementsByTagName('div')[0].innerHTML = label; // Place text inside it
-	return button;
-}
+
 //Creates Tool Buttons (no innerHTML)
 function createToolButton(type, name)
 {
@@ -878,6 +873,13 @@ function createToolButton(type, name)
 	document.getElementById(cleanTools.id).appendChild(button);
 	
 	button.onclick = function(){cleanTools.html.buttonHandlers.setToolType(type);};
+	return button;
+}
+//Creates Tool Buttons (with a label)
+function createToolButtonWithLabel(type, name, label)
+{
+	var button = createToolButton(type, name);
+	button.getElementsByTagName('div')[0].innerHTML = label; // Place text inside it
 	return button;
 }
 //Creates Tool Buttons (no innerHTML)
