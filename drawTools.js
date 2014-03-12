@@ -163,12 +163,12 @@ cleanTools["html"] = {
 				this.parentObject.options.fillColor = color;
 			}
 		},
-	},
-	'ac':function() {
-		return this.parentObject.options.idName;
+		'ac':function() {
+			return this.parentObject.options.idName;
+		},
 	},
 };
-alert(cleanTools.html.ac());
+alert(cleanTools.html.buttonHandlers.ac());
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
 /*-----------------------------------------------------------------------------*/
