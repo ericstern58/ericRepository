@@ -972,8 +972,10 @@ function createOptionsMenu(drawToolsDiv)
 			'</label>';
 	}
 	document.getElementById('drawTools-options-palette').innerHTML = optionsPaletteHtml;
-	/*
+	
 	var colorButtons = document.getElementsByName("drawTools-options-palette-radio");
+	alert("Number of colors: " + colorButtons.length);
+	/*
 	for(var i=0;i<colorElements.length;i++) {
 		var color = colorElements[i].getAttribute("data-color");
 		colorButtons[i+2]parent.onclick = function(){cleanTools.html.buttonHandlers.setOptionsColor(color);};
