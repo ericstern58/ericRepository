@@ -978,7 +978,7 @@ function createOptionsMenu(drawToolsDiv)
 	
 	for(var i=0;i<colorElements.length;i++) {
 		var color = colorElements[i].getAttribute("data-color");
-		colorButtons[i+2].parentNode.onclick = function(){cleanTools.html.buttonHandlers.setOptionsColor(color);};
+		colorButtons[i+2].parentNode.onclick = function(){setOptionsColor(color);};
 	}
 }
 function setLineToolsOpen() {
