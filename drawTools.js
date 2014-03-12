@@ -941,7 +941,7 @@ function createOptionsMenu(drawToolsDiv)
 	//----- BEGIN ----- LeftPanel --------------------------------------------------
 	var leftPanelHtml = "";
 	leftPanelHtml += 
-		'<label onclick=function(){cleanTools.tools.setLineToolsOpen();}; class="switch">\
+		'<label onclick=setLineToolsOpen(); class="switch">\
 			<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">\
 			<span class="switch-label" data-on="Line Tools Closed" data-off="Line Tools Open"></span>\
 			<span class="switch-handle"></span>\
