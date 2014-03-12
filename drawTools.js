@@ -941,7 +941,7 @@ function createOptionsMenu(drawToolsDiv)
 	//----- BEGIN ----- LeftPanel --------------------------------------------------
 	var leftPanelHtml = "";
 	leftPanelHtml += 
-		'<label onclick=function(){cleanTools.tools.setLineToolsOpen();} class="switch">\
+		'<label onclick=setLineToolsOpen(); class="switch">\
 			<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">\
 			<span class="switch-label" data-on="Line Tools Closed" data-off="Line Tools Open"></span>\
 			<span class="switch-handle"></span>\
@@ -952,23 +952,23 @@ function createOptionsMenu(drawToolsDiv)
 	var optionsPaletteHtml = "";
 	
 	optionsPaletteHtml += 
-		'<label style="width:120px;">' +
+		'<label onclick=setOptionsColor(""); style="width:120px;">' +
 			'<input type="radio" name="drawTools-options-palette-radio" checked>' +
-			'<div onclick=setOptionsColor(""); style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div>' +
+			'<div style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div>' +
 		'</label>';
 	optionsPaletteHtml += 
-		'<label style="width:120px;">' +
+		'<label onclick=setOptionsColor("",1); style="width:120px;">' +
 			'<input type="radio" name="drawTools-options-palette-radio">' +
-			'<div onclick=setOptionsColor("",1); style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div>' +
+			'<div style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div>' +
 		'</label>';
 	
 	for(var i=0;i<colorElements.length;i++) {
 		//paletteArray.push(hexColorElements[i].getAttribute("data-color"));
 		var color = colorElements[i].getAttribute("data-color");
 		optionsPaletteHtml += 
-			'<label>' +
+			'<label onclick=setOptionsColor("' + color + '");>' +
 				'<input type="radio" name="drawTools-options-palette-radio">' +
-				'<div onclick=setOptionsColor("' + color + '"); style="background:' + color + ';"></div>' +
+				'<div style="background:' + color + ';"></div>' +
 			'</label>';
 	}
 	document.getElementById('drawTools-options-palette').innerHTML = optionsPaletteHtml;
