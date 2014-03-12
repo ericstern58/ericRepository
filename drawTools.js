@@ -966,13 +966,18 @@ function createOptionsMenu(drawToolsDiv)
 		//paletteArray.push(hexColorElements[i].getAttribute("data-color"));
 		var color = colorElements[i].getAttribute("data-color");
 		optionsPaletteHtml += 
-			'<label onclick=setOptionsColor("' + color + '");>' +
+			'<label>' +
 				'<input type="radio" name="drawTools-options-palette-radio">' +
 				'<div style="background:' + color + ';"></div>' +
 			'</label>';
 	}
 	document.getElementById('drawTools-options-palette').innerHTML = optionsPaletteHtml;
 	
+	var colorButtons = document.getElementsByName("drawTools-options-palette-radio");
+	for(var i=0;i<colorElements.length;i++) {
+		var color = colorElements[i].getAttribute("data-color");
+		colorButtons[i+2].onclick = function(){cleanTools.html.buttonHandlers.setOptionsColor(color);};
+	}
 	
 }
 function setLineToolsOpen() {
