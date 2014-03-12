@@ -428,7 +428,7 @@ cleanTools.tools.paintMethods["drawLineChain"] = function (ctx,pts,editMode,clos
 	}
 	ctx.restore();
 }
-function drawSpline(ctx,pts,t,closed,closedFillColorHex,editMode){
+cleanTools.tools.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,editMode){
 	var cp=[];   // array of control points, as x0,y0,x1,y1,...
 	var n=pts.length;
 	var isClosedSpline = (closed) ? 1 : 0;
@@ -858,7 +858,7 @@ $(document).on('mousemove', function(e){
 		if(cleanTools.tools.points.length > 0) {
 			var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
 			cleanTools.canvas.restore();
-			drawSpline(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,cleanTools.options.lineToolsShouldClose,fillColor,true);
+			cleanTools.tools.paintMethods.drawSpline(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,cleanTools.options.lineToolsShouldClose,fillColor,true);
 		}
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
 		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
@@ -914,7 +914,7 @@ $(document).on('mouseup', function(e){
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
 				cleanTools.canvas.restore();
-				drawSpline(cleanTools.context,cleanTools.tools.points,0.5,cleanTools.options.lineToolsShouldClose,fillColor,false);
+				cleanTools.tools.paintMethods.drawSpline(cleanTools.context,cleanTools.tools.points,0.5,cleanTools.options.lineToolsShouldClose,fillColor,false);
 				cleanTools.tools.reset(true);
 			} else {
 				return;
@@ -954,7 +954,7 @@ $(document).keydown(function(e) {
 				if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN)
 					cleanTools.tools.paintMethods.drawLineChain(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),true,cleanTools.options.lineToolsShouldClose,fillColor);
 				else
-					drawSpline(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,cleanTools.options.lineToolsShouldClose,fillColor,true);
+					cleanTools.tools.paintMethods.drawSpline(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,cleanTools.options.lineToolsShouldClose,fillColor,true);
 			}
 		}
 	} else {
