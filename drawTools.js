@@ -626,7 +626,7 @@ cleanTools.html.init['setupCSS'] = function()
   /*-----------------------------------------------------------------------------*/
  /*---------------------- Elements Creation/Manipulation -----------------------*/
 /*-----------------------------------------------------------------------------*/
-function setupCssAndHtml()
+cleanTools.html.init['setupCssAndHtml'] = function()
 {
 	/*---- 1. Create Draw Tools Container - DIV in which DrawTools will be placed in ----*/
 	var drawToolsDiv = document.createElement('div');
@@ -648,28 +648,28 @@ function setupCssAndHtml()
 	
 	/*---- 4. Create Draw Tools Elements and Interface ----*/
 	// Create Tool Buttons
-	createToolButton(cleanTools.tools.toolType.FILL,"fill");
-	createToolButton(cleanTools.tools.toolType.LINE,"line");
-	createToolButton(cleanTools.tools.toolType.LINECHAIN,"linechain");
-	createToolButton(cleanTools.tools.toolType.CURVE,"curve");
-	createToolButton(cleanTools.tools.toolType.RECT,"rect");
-	createToolButton(cleanTools.tools.toolType.ELLIPSE,"ellipse");
+	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.FILL,"fill");
+	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.LINE,"line");
+	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.LINECHAIN,"linechain");
+	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.CURVE,"curve");
+	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.RECT,"rect");
+	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.ELLIPSE,"ellipse");
 	
-	debugLabel = createToolButtonWithLabel(cleanTools.tools.toolType.UTIL,"label", '0');
+	debugLabel = cleanTools.html.init.createToolButtonWithLabel(cleanTools.tools.toolType.UTIL,"label", '0');
 	
-	var optionsButton = createUtilityButton("options");
+	var optionsButton = cleanTools.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
 	
-	createOptionsMenu(drawToolsDiv);
+	cleanTools.html.init.createOptionsMenu(drawToolsDiv);
 	
 	// Exitbutton to remove DrawTools
-	var exitButton = createUtilityButton("exit");
-	exitButton.onclick = function(){DTDestroy();};
+	var exitButton = cleanTools.html.init.createUtilityButton("exit");
+	exitButton.onclick = function(){cleanTools.html.DTDestroy();};
 }
 
 
 //Creates Tool Buttons (no innerHTML)
-function createToolButton(type, name)
+cleanTools.html.init['createToolButton'] = function(type, name)
 {
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
@@ -686,14 +686,14 @@ function createToolButton(type, name)
 	return button;
 }
 //Creates Tool Buttons (with a label)
-function createToolButtonWithLabel(type, name, label)
+cleanTools.html.init['createToolButtonWithLabel'] = function(type, name, label)
 {
 	var button = createToolButton(type, name);
 	button.getElementsByTagName('div')[0].innerHTML = label; // Place text inside it
 	return button;
 }
 //Creates Tool Buttons (no innerHTML)
-function createUtilityButton(name)
+cleanTools.html.init['createUtilityButton'] = function(name)
 {
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
@@ -707,7 +707,7 @@ function createUtilityButton(name)
 	return button;
 }
 
-function createOptionsMenu(drawToolsDiv)
+cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv)
 {
 	//Create DIV in which Options will be placed in
 	var optionsDiv = document.createElement('div');
@@ -756,7 +756,7 @@ function createOptionsMenu(drawToolsDiv)
 }
 
 // Destroys all elements, styling and javascript
-function DTDestroy() 
+cleanTools.html['DTDestroy'] = function() 
 {
 	// 1. Destroy HTML
 	document.getElementById(cleanTools.id).remove();
@@ -784,7 +784,7 @@ var debugLabel; //Go to createDrawToolsElements to find assignment
 function outputDebug(outputString){
 	debugLabel.getElementsByTagName('div')[0].innerHTML = outputString;
 }
-setupCssAndHtml();
+cleanTools.html.init.setupCssAndHtml();
 
 /*---------------------- Setup Listeners ----------------------*/
 
