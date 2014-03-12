@@ -165,7 +165,7 @@ cleanTools["html"] = {
 		},
 	},
 	'ac':function() {
-		return this.parentObject.options.idNme();
+		return this.parentObject.options.idName;
 	},
 };
 alert(cleanTools.html.ac);
