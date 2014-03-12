@@ -176,7 +176,6 @@ window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent 
 cleanTools.context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
 cleanTools.canvas.updateLocation();
 
-var options = cleanTools["options"];
 
 // Setup Debug Stuff
 var debugLabel; //Go to createDrawToolsElements to find assignment
