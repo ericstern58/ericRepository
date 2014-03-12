@@ -825,7 +825,6 @@ function setupCssAndHtml()
 	
 	setupCSS();                     // Setup necessary CSS for DrawTools
 	
-	
 	/*---- 3. Make Necessary Modifications to Existing Elements ----*/
 	document.getElementById(cleanTools.dcBrushes[0].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[0].size);};
 	document.getElementById(cleanTools.dcBrushes[1].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[1].size);};
@@ -836,22 +835,8 @@ function setupCssAndHtml()
 		document.getElementById(cleanTools.dcBrushes[j].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[j].size);};
 	*/
 	
-	createDrawToolsElements();      // Create Draw Tools Elements and Interface
-}
-
-
-
-function createDrawToolsContainer(){
-	//Create DIV in which DrawTools will be placed in
-	var drawToolsDiv = document.createElement('div');
-	drawToolsDiv.id = cleanTools.id;
-	cleanTools.dcToolbar.appendChild(drawToolsDiv);
-}
-
-function createDrawToolsElements() 
-{
-	var drawToolsDiv = document.getElementById(cleanTools.id);
-	
+	/*---- 4. Create Draw Tools Elements and Interface ----*/
+	//createDrawToolsElements();      // Create Draw Tools Elements and Interface
 	// Create Tool Buttons
 	createToolButton(cleanTools.tools.toolType.FILL,"fill");
 	createToolButton(cleanTools.tools.toolType.LINE,"line");
@@ -870,6 +855,22 @@ function createDrawToolsElements()
 	// Exitbutton to remove DrawTools
 	var exitButton = createUtilityButton("exit");
 	exitButton.onclick = function(){DTDestroy();};
+}
+
+
+
+function createDrawToolsContainer(){
+	//Create DIV in which DrawTools will be placed in
+	var drawToolsDiv = document.createElement('div');
+	drawToolsDiv.id = cleanTools.id;
+	cleanTools.dcToolbar.appendChild(drawToolsDiv);
+}
+
+function createDrawToolsElements() 
+{
+	var drawToolsDiv = document.getElementById(cleanTools.id);
+	
+	
 	
 }
 
