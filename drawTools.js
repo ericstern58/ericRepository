@@ -50,6 +50,7 @@ var cleanTools = {
 	
 	'dcToolbar':DRAWCEPTION_TOOLBAR,
 	'dcBrushes':DRAWCEPTION_BRUSHES,
+	'dcPalette':[],
 	
 	'canvas':{},               // Canvas related vars and methods
 	'Canvas':drawApp.canvas,   // Actual canvas object
@@ -963,27 +964,30 @@ function createOptionsMenu(drawToolsDiv)
 		'</label>';
 	
 	for(var i=0;i<colorElements.length;i++) {
-		//paletteArray.push(hexColorElements[i].getAttribute("data-color"));
 		var color = colorElements[i].getAttribute("data-color");
+		cleanTools.dcPalette.push(color);
 		optionsPaletteHtml += 
-			'<label onclick=setOptionsColor("' + color + '");>' +
+			'<label onclick=setOptionsColor("' + color + '");>' + //
 				'<input type="radio" name="drawTools-options-palette-radio">' +
 				'<div style="background:' + color + ';"></div>' +
 			'</label>';
 	}
 	document.getElementById('drawTools-options-palette').innerHTML = optionsPaletteHtml;
+	
+	/*
 	try{
 	var colorButtons = document.getElementsByName("drawTools-options-palette-radio");
 	var string1 = "onclick1 = " + colorButtons[2].parentNode.onclick;
 	
 	for(var i=0;i<colorElements.length;i++) {
 		var color = colorElements[i].getAttribute("data-color");
-		colorButtons[i+2].parentNode.onclick = function(){setOptionsColor(""+color);};
+		colorButtons[i+2].parentNode.onclick = function(){setOptionsColor(cleanTools.dcPalette[]);};
 	}
 	
 	var string2 = "onclick2 = " + colorButtons[2].parentNode.onclick;
-	alert(string1 + "\n\n" + string2);
+	alert(string1 + "\n\n" + string2 + "\n\ncolor: " + colorElements[2].getAttribute("data-color"));
 	}catch(err){alert(err);}
+	*/
 	
 }
 function setLineToolsOpen() {
