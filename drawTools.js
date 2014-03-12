@@ -537,7 +537,7 @@ cleanTools.tools.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFi
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
 /*-----------------------------------------------------------------------------*/
-cleanTools.html.init['setupCSS'] = function()
+function setupCSS()
 {
 	// Calculate variables used in css
 	var optionsMarginTop = cleanTools.canvas.offset.top + cleanTools.canvas.height - $('#' + cleanTools.id).offset().top;
@@ -634,7 +634,7 @@ function setupCssAndHtml()
 	cleanTools.dcToolbar.appendChild(drawToolsDiv);
 	
 	/*---- 2. Setup necessary CSS for DrawTools ----*/
-	cleanTools.html.init.setupCSS();
+	setupCSS();
 	
 	/*---- 3. Make Necessary Modifications to Existing Elements ----*/
 	document.getElementById(cleanTools.dcBrushes[0].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[0].size);};
