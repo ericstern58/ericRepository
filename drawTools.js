@@ -293,10 +293,11 @@ $(document).on('mouseup', function(e){
 	cleanTools.mouseY = e.pageY-cleanTools.canvas.offset.top;
 	
 	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
-		// Do nothing
+		cleanTools.tools.reset(true);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
 		cleanTools.canvas.restore();
 		drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1], cleanTools.mouseX, cleanTools.mouseY);
+		cleanTools.tools.reset(true);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
 		if(cleanTools.canvas.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
 			cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
@@ -304,6 +305,7 @@ $(document).on('mouseup', function(e){
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 				cleanTools.canvas.restore();
 				drawLineChain(cleanTools.context,cleanTools.tools.points,false,options.lineToolsShouldClose,fillColor);
+				cleanTools.tools.reset(true);
 			} else {
 				return;
 			}
@@ -319,6 +321,7 @@ $(document).on('mouseup', function(e){
 				var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 				cleanTools.canvas.restore();
 				drawSpline(cleanTools.context,cleanTools.tools.points,0.5,options.lineToolsShouldClose,fillColor,false);
+				cleanTools.tools.reset(true);
 			} else {
 				return;
 			}
@@ -332,21 +335,17 @@ $(document).on('mouseup', function(e){
 		cleanTools.canvas.restore();
 		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
 		drawRect(cleanTools.context,cleanTools.tools.points,fillColor);
+		cleanTools.tools.reset(true);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
 		var fillColor = (options.useStrokeAsFill) ? cleanTools.context.strokeStyle : options.fillColor;
 		cleanTools.canvas.restore();
 		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
 		drawEllipse(cleanTools.context,cleanTools.tools.points,fillColor);
+		cleanTools.tools.reset(true);
 	}
-	cleanTools.tools.reset(true);
-	
 });
 
 $(document).keydown(function(e) {
-	//if (r.keyCode == e.charCodeAt(0) && r.ctrlKey) {
-	//	t.apply(this, n);
-	//	return !1
-	//}
 	if(e.keyCode == 39) {
 		alert('Right was pressed');
 	} if(e.keyCode == "Q".charCodeAt(0)) {
@@ -439,7 +438,6 @@ function floodFill(ctx,xSeed,ySeed){
 	var targetColor = [d[tci],d[tci+1],d[tci+2],d[tci+3]];//getColorFromCoords(xSeed,ySeed); // Cant use because its not initialized yet
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];
-	
 	
 	/*---------------------- Supporting functions ----------------------*/
 	/*---------------------- Color Methods ----------------------*/
@@ -927,7 +925,7 @@ function createOptionsMenu(drawToolsDiv)
 	//----- BEGIN ----- LeftPanel --------------------------------------------------
 	var leftPanelHtml = "";
 	leftPanelHtml += 
-		'<label onclick=setLineToolsOpen(); class="switch">\
+		'<label onclick=cleanTools.html.buttonHandlers.setLineToolsOpen(); class="switch">\
 			<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">\
 			<span class="switch-label" data-on="Line Tools Closed" data-off="Line Tools Open"></span>\
 			<span class="switch-handle"></span>\
