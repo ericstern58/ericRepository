@@ -172,12 +172,10 @@ cleanTools["html"] = {
 		},
 	},
 };
- 
-
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- Drawing Algorithms ----------------------------*/
 /*-----------------------------------------------------------------------------*/
-function drawLine(ctx,startX,startY,finishX,finishY)
+cleanTools.tools.paintMethods["drawLine"] = function(ctx,startX,startY,finishX,finishY)
 {
 	ctx.beginPath();
 	ctx.moveTo( startX, startY );
@@ -849,7 +847,7 @@ $(document).on('mousemove', function(e){
 		// Do nothing
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
 		cleanTools.canvas.restore();
-		drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1],cleanTools.mouseX,cleanTools.mouseY);
+		cleanTools.tools.paintMethods.drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1],cleanTools.mouseX,cleanTools.mouseY);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
 		if(cleanTools.tools.points.length > 0) {
 			var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
@@ -892,7 +890,7 @@ $(document).on('mouseup', function(e){
 		cleanTools.tools.reset(true);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
 		cleanTools.canvas.restore();
-		drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1], cleanTools.mouseX, cleanTools.mouseY);
+		cleanTools.tools.paintMethods.drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1], cleanTools.mouseX, cleanTools.mouseY);
 		cleanTools.tools.reset(true);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
 		if(cleanTools.canvas.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
