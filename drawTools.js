@@ -974,11 +974,11 @@ function createOptionsMenu(drawToolsDiv)
 	document.getElementById('drawTools-options-palette').innerHTML = optionsPaletteHtml;
 	
 	var colorButtons = document.getElementsByName("drawTools-options-palette-radio");
-	//alert("Number of colors: " + colorButtons.length + "   and number of paletecolors:" + colorElements.length);
+	//alert("onclick = " colorButtons[2].);
 	
 	for(var i=0;i<colorElements.length;i++) {
 		var color = colorElements[i].getAttribute("data-color");
-		colorButtons[i+2].parentNode.onclick = function(){setOptionsColor(color);};
+		colorButtons[i+2].parentNode.onclick = function(){setOptionsColor(""+color);};
 	}
 }
 function setLineToolsOpen() {
