@@ -142,6 +142,7 @@ cleanTools["html"] = {
 	'parentObject':cleanTools,
 	
 	'buttonHandlers':{
+		'cleanToolsObject':cleanTools,
 		'brushClick':function(brushSize) {
 			drawApp.setSize(brushSize);				// Set default brush size
 			cleanTools.tools.currentToolType = cleanTools.tools.toolType.BRUSH;		// Update tool type
@@ -152,19 +153,19 @@ cleanTools["html"] = {
 				ele[i].checked = false;
 		},
 		'setLineToolsOpen':function() {
-			this.parentObject.options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
+			this.cleanToolsObject.options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
 		},
 		'setOptionsColor':function(color,normalfill) {
 			if(normalfill) {
-				this.parentObject.options.useStrokeAsFill = true;
-				this.parentObject.options.fillColor = '';
+				this.cleanToolsObject.options.useStrokeAsFill = true;
+				this.cleanToolsObject.options.fillColor = '';
 			} else {
-				this.parentObject.options.useStrokeAsFill = false;
-				this.parentObject.options.fillColor = color;
+				this.cleanToolsObject.options.useStrokeAsFill = false;
+				this.cleanToolsObject.options.fillColor = color;
 			}
 		},
 		'ac':function() {
-			return this.parentObject.options.idName;
+			return this.cleanToolsObject.options.idName;
 		},
 	},
 };
