@@ -972,14 +972,15 @@ function createOptionsMenu(drawToolsDiv)
 			'</label>';
 	}
 	document.getElementById('drawTools-options-palette').innerHTML = optionsPaletteHtml;
-	
+	try{
 	var colorButtons = document.getElementsByName("drawTools-options-palette-radio");
-	//alert("onclick = " colorButtons[2].);
+	alert("onclick = " + colorButtons[2].parentNode.onclick);
 	
 	for(var i=0;i<colorElements.length;i++) {
 		var color = colorElements[i].getAttribute("data-color");
 		colorButtons[i+2].parentNode.onclick = function(){setOptionsColor(""+color);};
 	}
+	}catch(err){alert(err);}
 }
 function setLineToolsOpen() {
 	options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
