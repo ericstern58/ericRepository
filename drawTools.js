@@ -139,7 +139,7 @@ cleanTools["options"] = {
 	},
 };
 cleanTools["html"] = {
-    'parentObject':cleanTools,
+	'parentObject':cleanTools,
 	
 	'buttonHandlers':{
 		'brushClick':function(brushSize) {
@@ -163,9 +163,9 @@ cleanTools["html"] = {
 				this.parentObject.options.fillColor = color;
 			}
 		},
-		'ac':function() {
-			return this.parentObject.options.idNme();
-		},
+	},
+	'ac':function() {
+		return this.parentObject.options.idNme();
 	},
 };
 alert(cleanTools.html.ac);
