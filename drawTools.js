@@ -29,6 +29,9 @@ StopWatch.prototype.printElapsed = function (name) {
     outputDebug('[' + this.getElapsedMilliseconds() + 'ms]');
 };
 
+// State variable that helps prevent double installation of script
+window.DTToolsIsCurrentlyInstalled = true;
+
 // Setup Constants
 //cleanTools["PropertyD"] = 4
 var DRAW_TOOLS_ID = 'drawTools';
@@ -95,6 +98,7 @@ cleanTools["tools"] = {
 		if(saveCanvas)
 			save();
 	},
+	'paintMethods':{},
 };
 cleanTools["options"] = {
 	'id':'#' + cleanTools.id + '-options',
@@ -172,9 +176,9 @@ cleanTools["html"] = {
  /*----------------------------------- Main ------------------------------------*/
 /*-----------------------------------------------------------------------------*/
 // Setup Some Global Variables
-window.DTToolsIsCurrentlyInstalled = true;	// State variable that helps prevent double installation of script
+
 cleanTools.context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
-cleanTools.canvas.updateLocation();
+//cleanTools.canvas.updateLocation();
 
 
 // Setup Debug Stuff
