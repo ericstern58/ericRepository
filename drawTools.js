@@ -98,7 +98,7 @@ cleanTools["tools"] = {
 };
 
 cleanTools["options"] = {
-	'idName':'#' + cleanTools.id + '-options',
+	'id':'#' + cleanTools.id + '-options',
 	
 	// Fill Options
 	'useStrokeAsFill':false,
@@ -109,20 +109,20 @@ cleanTools["options"] = {
 	'curveTension':0.5,
 	
 	'getOffset':function () {
-		return $(this.idName).offset();
+		return $(this.id).offset();
 	},
 	'toggleMenu':function () {
 		var h = 175;	// Height of the options div
-		var opacity = $(this.idName).css('opacity');
+		var opacity = $(this.id).css('opacity');
 		
 		if(opacity == 0) {
-			$(this.idName).stop(true, true).animate({
+			$(this.id).stop(true, true).animate({
 				height: (h + "px"),
 				marginTop: ("-=" + h + "px"),
 				opacity: "1"
 			},200, "swing");
 		} else if(opacity == 1) {
-			$(this.idName).stop(true, true).animate({
+			$(this.id).stop(true, true).animate({
 				height: "0px",
 				marginTop: ("+=" + h + "px"),
 				opacity: "0"
@@ -130,10 +130,10 @@ cleanTools["options"] = {
 		}
 	},
 	'isWithinBounds':function (x, y) {
-		var x2 = x - $(this.idName).offset().top;
-		var y2 = y - $(this.idName).offset().left;
-		var width = $(this.idName).width();
-		var height = $(this.idName).height();
+		var x2 = x - $(this.id).offset().top;
+		var y2 = y - $(this.id).offset().left;
+		var width = $(this.id).width();
+		var height = $(this.id).height();
 		//outputDebug("[x:" + x2 + ", y:" + y2 + "] [width:" + width + ", height:" + height + "]");
 		return (x2>=0 && y2>=0 && x2<width && y2<height);
 	},
@@ -505,7 +505,6 @@ function floodFill(ctx,xSeed,ySeed){
 		return;
 	
 	/*---------------------- Algorithm Begin ----------------------*/
-	//var f = function(xSeed,ySeed){
 	//[x,y,goingUp(1 vs -1)
 	var stack = [[xSeed,ySeed,1]];
 	if(test(xSeed,ySeed-1))
@@ -577,9 +576,6 @@ function floodFill(ctx,xSeed,ySeed){
 		if( (!colorCompare(fillColor,getColorFromCoords(x,y+1))) && cleanTools.canvas.isWithinBounds(x,y+1) )
 			colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
 	}
-//}
-
-//f(xSeed,ySeed);
 	ctx.putImageData(p,0,0);
 }
 function drawLineChain(ctx,pts,editMode,closeShape,closedFillColorHex)
@@ -833,8 +829,6 @@ function modifyExistingElements()
 	document.getElementById(cleanTools.dcBrushes[1].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[1].size);};
 	document.getElementById(cleanTools.dcBrushes[2].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[2].size);};
 	document.getElementById(cleanTools.dcBrushes[3].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[3].size);};
-	
-	
 }
 
 function createDrawToolsContainer(){
