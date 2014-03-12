@@ -918,7 +918,7 @@ function createUtilityButton(name)
 	document.getElementById(cleanTools.id).appendChild(button);
 
 	button.innerHTML = 
-		'<div id="' + cleanTools.id + '-btn-container">' +
+		'<div class="' + cleanTools.id + '-btn-container">' +
 			'<div id="' + cleanTools.id + '-btn-icon-' + name + '"></div>' +
 		'</div>';
 	/*
