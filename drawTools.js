@@ -648,14 +648,14 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	
 	/*---- 4. Create Draw Tools Elements and Interface ----*/
 	// Create Tool Buttons
-	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.FILL,"fill");
-	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.LINE,"line");
-	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.LINECHAIN,"linechain");
-	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.CURVE,"curve");
-	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.RECT,"rect");
-	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.ELLIPSE,"ellipse");
+	createToolButton(cleanTools.tools.toolType.FILL,"fill");
+	createToolButton(cleanTools.tools.toolType.LINE,"line");
+	createToolButton(cleanTools.tools.toolType.LINECHAIN,"linechain");
+	createToolButton(cleanTools.tools.toolType.CURVE,"curve");
+	createToolButton(cleanTools.tools.toolType.RECT,"rect");
+	createToolButton(cleanTools.tools.toolType.ELLIPSE,"ellipse");
 	
-	debugLabel = cleanTools.html.init.createToolButtonWithLabel(cleanTools.tools.toolType.UTIL,"label", '0');
+	debugLabel = createToolButtonWithLabel(cleanTools.tools.toolType.UTIL,"label", '0');
 	
 	var optionsButton = createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
@@ -669,7 +669,7 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 
 
 //Creates Tool Buttons (no innerHTML)
-cleanTools.html.init['createToolButton'] = function(type, name)
+function createToolButton(type, name)
 {
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
@@ -686,7 +686,7 @@ cleanTools.html.init['createToolButton'] = function(type, name)
 	return button;
 }
 //Creates Tool Buttons (with a label)
-cleanTools.html.init['createToolButtonWithLabel'] = function(type, name, label)
+function createToolButtonWithLabel(type, name, label)
 {
 	var button = createToolButton(type, name);
 	button.getElementsByTagName('div')[0].innerHTML = label; // Place text inside it
