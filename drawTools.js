@@ -228,7 +228,7 @@ cleanTools.tools.paintMethods["drawEllipse"] = function(ctx,pts,fillColorHex)
 	ctx.stroke();
 	ctx.restore();
 }
-function floodFill(ctx,xSeed,ySeed){
+cleanTools.tools.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 	// Round seed coords in case they happen to be float type
 	xSeed = Math.round( xSeed );
 	ySeed = Math.round( ySeed );
@@ -383,7 +383,7 @@ function floodFill(ctx,xSeed,ySeed){
 	}
 	ctx.putImageData(p,0,0);
 }
-function drawLineChain(ctx,pts,editMode,closeShape,closedFillColorHex)
+cleanTools.tools.paintMethods["drawLineChain"] = function (ctx,pts,editMode,closeShape,closedFillColorHex)
 {
 	ctx.save();
 	ctx.lineJoin="round";
@@ -806,7 +806,7 @@ cleanTools.Canvas.on('mousedown', function(e){
 		//var stopwatch = new StopWatch();
 		//stopwatch.start();
 		painting = !1;
-		floodFill(cleanTools.context,cleanTools.mouseX,cleanTools.mouseY);
+		cleanTools.tools.paintMethods.floodFill(cleanTools.context,cleanTools.mouseX,cleanTools.mouseY);
 		//stopwatch.stop();
 		//stopwatch.printElapsed();
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
@@ -852,7 +852,7 @@ $(document).on('mousemove', function(e){
 		if(cleanTools.tools.points.length > 0) {
 			var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
 			cleanTools.canvas.restore();
-			drawLineChain(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),true,cleanTools.options.lineToolsShouldClose,fillColor);
+			cleanTools.tools.paintMethods.drawLineChain(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),true,cleanTools.options.lineToolsShouldClose,fillColor);
 		}
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
 		if(cleanTools.tools.points.length > 0) {
@@ -898,7 +898,7 @@ $(document).on('mouseup', function(e){
 			if(e.which == 3) {	// If right mouse click, finish the chain
 				var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
 				cleanTools.canvas.restore();
-				drawLineChain(cleanTools.context,cleanTools.tools.points,false,cleanTools.options.lineToolsShouldClose,fillColor);
+				cleanTools.tools.paintMethods.drawLineChain(cleanTools.context,cleanTools.tools.points,false,cleanTools.options.lineToolsShouldClose,fillColor);
 				cleanTools.tools.reset(true);
 			} else {
 				return;
@@ -952,7 +952,7 @@ $(document).keydown(function(e) {
 				var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
 				cleanTools.canvas.restore();
 				if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN)
-					drawLineChain(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),true,cleanTools.options.lineToolsShouldClose,fillColor);
+					cleanTools.tools.paintMethods.drawLineChain(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),true,cleanTools.options.lineToolsShouldClose,fillColor);
 				else
 					drawSpline(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,cleanTools.options.lineToolsShouldClose,fillColor,true);
 			}
