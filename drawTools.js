@@ -835,6 +835,12 @@ function setupCssAndHtml()
 		document.getElementById(cleanTools.dcBrushes[j].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[j].size);};*/
 
 	/*---- 4. Create Draw Tools Elements and Interface ----*/
+	createDrawToolsElements();      
+}
+
+function createDrawToolsElements() 
+{
+	var drawToolsDiv = document.getElementById(cleanTools.id);
 	
 	// Create Tool Buttons
 	createToolButton(cleanTools.tools.toolType.FILL,"fill");
@@ -849,13 +855,13 @@ function setupCssAndHtml()
 	var optionsButton = createUtilityButton("options");
 	optionsButton.onclick = function(){options.toggleMenu();};
 	
-	createOptionsMenu(document.getElementById(cleanTools.id));
+	createOptionsMenu(drawToolsDiv);
 	
 	// Exitbutton to remove DrawTools
 	var exitButton = createUtilityButton("exit");
 	exitButton.onclick = function(){DTDestroy();};
+	
 }
-
 
 //Creates Tool Buttons (wit a label)
 function createToolButtonWithLabel(type, name, label)
