@@ -974,14 +974,14 @@ function createOptionsMenu(drawToolsDiv)
 	document.getElementById('drawTools-options-palette').innerHTML = optionsPaletteHtml;
 	try{
 	var colorButtons = document.getElementsByName("drawTools-options-palette-radio");
-	var string 1 = ("onclick1 = " + colorButtons[2].parentNode.onclick);
+	var string1 = "onclick1 = " + colorButtons[2].parentNode.onclick;
 	
 	for(var i=0;i<colorElements.length;i++) {
 		var color = colorElements[i].getAttribute("data-color");
 		colorButtons[i+2].parentNode.onclick = function(){setOptionsColor(""+color);};
 	}
 	
-	var string 2 = ("onclick2 = " + colorButtons[2].parentNode.onclick);
+	var string2 = "onclick2 = " + colorButtons[2].parentNode.onclick;
 	alert(string1 + "\n\n" + string2);
 	}catch(err){alert(err);}
 	
