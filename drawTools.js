@@ -917,6 +917,11 @@ function createUtilityButton(name)
 	button.className = cleanTools.id + '-btn';
 	document.getElementById(cleanTools.id).appendChild(button);
 
+	button.innerHTML = 
+		'<div id="' + cleanTools.id + '-btn-container">' +
+			'<div id="' + cleanTools.id + '-btn-icon-' + name + '"></div>' +
+		'</div>';
+	/*
 	//Create container div
 	var container = document.createElement('div');
 	container.className = cleanTools.id + '-btn-container';
@@ -926,7 +931,12 @@ function createUtilityButton(name)
 	var icon = document.createElement('div');
 	icon.id = cleanTools.id + '-btn-icon-' + name;
 	container.appendChild(icon);
+	*/
 	
+	/*
+	var string = 
+	
+	*/
 	return button;
 }
 
