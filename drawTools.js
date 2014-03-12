@@ -182,7 +182,7 @@ cleanTools.tools.paintMethods["drawLine"] = function(ctx,startX,startY,finishX,f
 	ctx.lineTo( finishX, finishY);
 	ctx.stroke();
 }
-function drawRect(ctx,pts,fillColorHex)
+cleanTools.tools.paintMethods["drawRect"] = function(ctx,pts,fillColorHex)
 {
 	ctx.save();
 	ctx.lineJoin="round";
@@ -199,7 +199,7 @@ function drawRect(ctx,pts,fillColorHex)
 	ctx.stroke();
 	ctx.restore();
 }
-function drawEllipse(ctx,pts,fillColorHex)
+cleanTools.tools.paintMethods["drawEllipse"] = function(ctx,pts,fillColorHex)
 {
 	var x = pts[0],
 	y =  pts[1],
@@ -863,11 +863,11 @@ $(document).on('mousemove', function(e){
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
 		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
 		cleanTools.canvas.restore();
-		drawRect(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
+		cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
 		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
 		cleanTools.canvas.restore();
-		drawEllipse(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
+		cleanTools.tools.paintMethods.drawEllipse(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
 	}
 });
 // Setup Mouseup Listener
@@ -928,13 +928,13 @@ $(document).on('mouseup', function(e){
 		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
 		cleanTools.canvas.restore();
 		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
-		drawRect(cleanTools.context,cleanTools.tools.points,fillColor);
+		cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points,fillColor);
 		cleanTools.tools.reset(true);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
 		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
 		cleanTools.canvas.restore();
 		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
-		drawEllipse(cleanTools.context,cleanTools.tools.points,fillColor);
+		cleanTools.tools.paintMethods.drawEllipse(cleanTools.context,cleanTools.tools.points,fillColor);
 		cleanTools.tools.reset(true);
 	}
 });
