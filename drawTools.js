@@ -185,10 +185,7 @@ function outputDebug(outputString){
 	debugLabel.getElementsByTagName('div')[0].innerHTML = outputString;
 }
 
-createDrawToolsContainer();     // Create Draw Tools Container
-setupCSS();                     // Setup necessary CSS for DrawTools
-modifyExistingElements();       // Make Necessary Modifications to Existing Elements
-createDrawToolsElements();      // Create Draw Tools Elements and Interface
+setupCssAndHtml();
 
 /*---------------------- Setup Listeners ----------------------*/
 
@@ -819,6 +816,13 @@ function setupCSS()
   /*-----------------------------------------------------------------------------*/
  /*---------------------- Elements Creation/Manipulation -----------------------*/
 /*-----------------------------------------------------------------------------*/
+function setupCssAndHtml(){
+	createDrawToolsContainer();     // Create Draw Tools Container
+	setupCSS();                     // Setup necessary CSS for DrawTools
+	modifyExistingElements();       // Make Necessary Modifications to Existing Elements
+	createDrawToolsElements();      // Create Draw Tools Elements and Interface
+}
+
 function modifyExistingElements() 
 {
 	/*	// TODO:Figure this out. This doesn't work for some reason, so i hardcoded it.
