@@ -144,6 +144,8 @@ cleanTools["options"] = {
 cleanTools["html"] = {
 	'parentObject':cleanTools,
 	
+	'init':{}, // HTML initialization methods will be placed here
+	
 	'buttonHandlers':{
 		'cleanToolsObject':cleanTools,
 		'brushClick':function(brushSize) {
@@ -171,6 +173,7 @@ cleanTools["html"] = {
 			this.cleanToolsObject.tools.currentToolType=type;
 		},
 	},
+	
 };
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- Drawing Algorithms ----------------------------*/
@@ -534,8 +537,7 @@ cleanTools.tools.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFi
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
 /*-----------------------------------------------------------------------------*/
-
-function setupCSS()
+cleanTools.html.init['setupCSS'] = function()
 {
 	// Calculate variables used in css
 	var optionsMarginTop = cleanTools.canvas.offset.top + cleanTools.canvas.height - $('#' + cleanTools.id).offset().top;
@@ -632,7 +634,7 @@ function setupCssAndHtml()
 	cleanTools.dcToolbar.appendChild(drawToolsDiv);
 	
 	/*---- 2. Setup necessary CSS for DrawTools ----*/
-	setupCSS();
+	cleanTools.html.init.setupCSS();
 	
 	/*---- 3. Make Necessary Modifications to Existing Elements ----*/
 	document.getElementById(cleanTools.dcBrushes[0].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[0].size);};
