@@ -836,7 +836,6 @@ function setupCssAndHtml()
 	*/
 	
 	/*---- 4. Create Draw Tools Elements and Interface ----*/
-	//createDrawToolsElements();      // Create Draw Tools Elements and Interface
 	// Create Tool Buttons
 	createToolButton(cleanTools.tools.toolType.FILL,"fill");
 	createToolButton(cleanTools.tools.toolType.LINE,"line");
@@ -855,23 +854,6 @@ function setupCssAndHtml()
 	// Exitbutton to remove DrawTools
 	var exitButton = createUtilityButton("exit");
 	exitButton.onclick = function(){DTDestroy();};
-}
-
-
-
-function createDrawToolsContainer(){
-	//Create DIV in which DrawTools will be placed in
-	var drawToolsDiv = document.createElement('div');
-	drawToolsDiv.id = cleanTools.id;
-	cleanTools.dcToolbar.appendChild(drawToolsDiv);
-}
-
-function createDrawToolsElements() 
-{
-	var drawToolsDiv = document.getElementById(cleanTools.id);
-	
-	
-	
 }
 
 //Creates Tool Buttons (wit a label)
@@ -901,7 +883,6 @@ function createToolButton(type, name)
 //Creates Tool Buttons (no innerHTML)
 function createUtilityButton(name)
 {
-	//create button
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
 	button.id = cleanTools.id + '-btn-' + name;
