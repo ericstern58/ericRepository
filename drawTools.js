@@ -144,8 +144,6 @@ cleanTools["options"] = {
 cleanTools["html"] = {
 	'parentObject':cleanTools,
 	
-	'init':{}, // HTML initialization methods will be placed here
-	
 	'buttonHandlers':{
 		'cleanToolsObject':cleanTools,
 		'brushClick':function(brushSize) {
@@ -173,7 +171,6 @@ cleanTools["html"] = {
 			this.cleanToolsObject.tools.currentToolType=type;
 		},
 	},
-	
 };
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- Drawing Algorithms ----------------------------*/
@@ -537,6 +534,7 @@ cleanTools.tools.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFi
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
 /*-----------------------------------------------------------------------------*/
+
 function setupCSS()
 {
 	// Calculate variables used in css
