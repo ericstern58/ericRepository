@@ -178,7 +178,7 @@ cleanTools["html"] = {
 // Setup Some Global Variables
 
 cleanTools.context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
-//cleanTools.canvas.updateLocation();
+cleanTools.canvas.updateLocation();
 
 
 // Setup Debug Stuff
