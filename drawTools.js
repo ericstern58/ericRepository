@@ -976,7 +976,7 @@ function createOptionsMenu(drawToolsDiv)
 	var colorButtons = document.getElementsByName("drawTools-options-palette-radio");
 	for(var i=0;i<colorElements.length;i++) {
 		var color = colorElements[i].getAttribute("data-color");
-		colorButtons[i+2].onclick = function(){cleanTools.html.buttonHandlers.setOptionsColor(color);};
+		colorButtons[i+2].parent.onclick = function(){cleanTools.html.buttonHandlers.setOptionsColor(color);};
 	}
 	
 }
