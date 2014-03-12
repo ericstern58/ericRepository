@@ -33,9 +33,17 @@ StopWatch.prototype.printElapsed = function (name) {
 //cleanTools["PropertyD"] = 4
 var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
-var DRAWCEPTION_BRUSHES = [{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},
-                 {id: 'brush-12', size: 12},{id: 'brush-35', size: 35}];
+var DRAWCEPTION_BRUSHES = 
+	[{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},{id: 'brush-12', size: 12},{id: 'brush-35', size: 35}];
 
+var xfasdfadf = 2+3;
+var doasfasdf = xfasdfadf +34;
+var doasdsasdffasdf = xfasdfadf +33;
+
+
+  /*-----------------------------------------------------------------------------*/
+ /*--------------------- Custom Objects/Structures/enums -----------------------*/
+/*-----------------------------------------------------------------------------*/				 
 // Setup Clean Tools Object
 var cleanTools = {
 	'id':DRAW_TOOLS_ID,
@@ -88,30 +96,6 @@ cleanTools["tools"] = {
 	},
 };
 
-cleanTools["html"] = {
-    'parentObject':cleanTools,
-	
-	'buttonHandlers':{
-		'brushClick':function(brushSize) {
-			drawApp.setSize(brushSize);				// Set default brush size
-			cleanTools.tools.currentToolType = cleanTools.tools.toolType.BRUSH;		// Update tool type
-			
-			// Visually unselect any other tools
-			var ele = document.getElementsByName(cleanTools.id + "-btn-radio");
-			for(var i=0;i<ele.length;i++)
-				ele[i].checked = false;
-		},
-	},
-};
-
-var xfasdfadf = 2+3;
-var doasfasdf = xfasdfadf +34;
-var doasdsasdffasdf = xfasdfadf +33;
-
-
-  /*-----------------------------------------------------------------------------*/
- /*--------------------- Custom Objects/Structures/enums -----------------------*/
-/*-----------------------------------------------------------------------------*/
 cleanTools["options"] = {
 	'idName':'#' + cleanTools.id + '-options',
 	
@@ -153,6 +137,34 @@ cleanTools["options"] = {
 		return (x2>=0 && y2>=0 && x2<width && y2<height);
 	},
 };
+cleanTools["html"] = {
+    'parentObject':cleanTools,
+	
+	'buttonHandlers':{
+		'brushClick':function(brushSize) {
+			drawApp.setSize(brushSize);				// Set default brush size
+			cleanTools.tools.currentToolType = cleanTools.tools.toolType.BRUSH;		// Update tool type
+			
+			// Visually unselect any other tools
+			var ele = document.getElementsByName(cleanTools.id + "-btn-radio");
+			for(var i=0;i<ele.length;i++)
+				ele[i].checked = false;
+		},
+		'setLineToolsOpen':function() {
+			this.parentObject.options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
+		},
+		'setOptionsColor':function(color,normalfill) {
+			if(normalfill) {
+				this.parentObject.options.useStrokeAsFill = true;
+				this.parentObject.options.fillColor = '';
+			} else {
+				this.parentObject.options.useStrokeAsFill = false;
+				this.parentObject.options.fillColor = color;
+			}
+		},
+	},
+};
+
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
 /*-----------------------------------------------------------------------------*/
@@ -929,7 +941,7 @@ function createOptionsMenu(drawToolsDiv)
 	//----- BEGIN ----- LeftPanel --------------------------------------------------
 	var leftPanelHtml = "";
 	leftPanelHtml += 
-		'<label onclick=setLineToolsOpen(); class="switch">\
+		'<label onclick=cleanTools.html.buttonHandlers.setLineToolsOpen(); class="switch">\
 			<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">\
 			<span class="switch-label" data-on="Line Tools Closed" data-off="Line Tools Open"></span>\
 			<span class="switch-handle"></span>\
@@ -942,12 +954,12 @@ function createOptionsMenu(drawToolsDiv)
 	optionsPaletteHtml += 
 		'<label style="width:120px;">' +
 			'<input type="radio" name="drawTools-options-palette-radio" checked>' +
-			'<div onclick=setOptionsColor(""); style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div>' +
+			'<div onclick=cleanTools.html.buttonHandlers.setOptionsColor(""); style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div>' +
 		'</label>';
 	optionsPaletteHtml += 
 		'<label style="width:120px;">' +
 			'<input type="radio" name="drawTools-options-palette-radio">' +
-			'<div onclick=setOptionsColor("",1); style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div>' +
+			'<div onclick=cleanTools.html.buttonHandlers.setOptionsColor("",1); style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div>' +
 		'</label>';
 	
 	for(var i=0;i<colorElements.length;i++) {
@@ -956,25 +968,12 @@ function createOptionsMenu(drawToolsDiv)
 		optionsPaletteHtml += 
 			'<label>' +
 				'<input type="radio" name="drawTools-options-palette-radio">' +
-				'<div onclick=setOptionsColor("' + color + '"); style="background:' + color + ';"></div>' +
+				'<div onclick=cleanTools.html.buttonHandlers.setOptionsColor("' + color + '"); style="background:' + color + ';"></div>' +
 			'</label>';
 	}
 	document.getElementById('drawTools-options-palette').innerHTML = optionsPaletteHtml;
 	
 	
-}
-function setLineToolsOpen() {
-	options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
-}
-
-function setOptionsColor(color,normalfill) {
-	if(normalfill) {
-		options.useStrokeAsFill = true;
-		options.fillColor = '';
-	} else {
-		options.useStrokeAsFill = false;
-		options.fillColor = color;
-	}
 }
 
 // Destroys all elements, styling and javascript
