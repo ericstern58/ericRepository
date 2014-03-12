@@ -657,14 +657,14 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	
 	debugLabel = cleanTools.html.init.createToolButtonWithLabel(cleanTools.tools.toolType.UTIL,"label", '0');
 	
-	var optionsButton = cleanTools.html.init.createUtilityButton("options");
+	var optionsButton = createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
 	
-	cleanTools.html.init.createOptionsMenu(drawToolsDiv);
+	createOptionsMenu(drawToolsDiv);
 	
 	// Exitbutton to remove DrawTools
-	var exitButton = cleanTools.html.init.createUtilityButton("exit");
-	exitButton.onclick = function(){cleanTools.html.DTDestroy();};
+	var exitButton = createUtilityButton("exit");
+	exitButton.onclick = function(){DTDestroy();};
 }
 
 
@@ -693,7 +693,7 @@ cleanTools.html.init['createToolButtonWithLabel'] = function(type, name, label)
 	return button;
 }
 //Creates Tool Buttons (no innerHTML)
-cleanTools.html.init['createUtilityButton'] = function(name)
+function createUtilityButton(name)
 {
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
@@ -707,7 +707,7 @@ cleanTools.html.init['createUtilityButton'] = function(name)
 	return button;
 }
 
-cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv)
+function createOptionsMenu(drawToolsDiv)
 {
 	//Create DIV in which Options will be placed in
 	var optionsDiv = document.createElement('div');
@@ -756,7 +756,7 @@ cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv)
 }
 
 // Destroys all elements, styling and javascript
-cleanTools.html['DTDestroy'] = function() 
+function DTDestroy() 
 {
 	// 1. Destroy HTML
 	document.getElementById(cleanTools.id).remove();
