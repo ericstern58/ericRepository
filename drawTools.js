@@ -966,19 +966,18 @@ function createOptionsMenu(drawToolsDiv)
 		//paletteArray.push(hexColorElements[i].getAttribute("data-color"));
 		var color = colorElements[i].getAttribute("data-color");
 		optionsPaletteHtml += 
-			'<label>' +
+			'<label onclick=setOptionsColor("' + color + '");>' +
 				'<input type="radio" name="drawTools-options-palette-radio">' +
 				'<div style="background:' + color + ';"></div>' +
 			'</label>';
 	}
 	document.getElementById('drawTools-options-palette').innerHTML = optionsPaletteHtml;
-	
+	/*
 	var colorButtons = document.getElementsByName("drawTools-options-palette-radio");
 	for(var i=0;i<colorElements.length;i++) {
 		var color = colorElements[i].getAttribute("data-color");
-		colorButtons[i+2].parent.onclick = function(){cleanTools.html.buttonHandlers.setOptionsColor(color);};
-	}
-	
+		colorButtons[i+2]parent.onclick = function(){cleanTools.html.buttonHandlers.setOptionsColor(color);};
+	}*/
 }
 function setLineToolsOpen() {
 	options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
