@@ -145,7 +145,7 @@ cleanTools["html"] = {
 		'cleanToolsObject':cleanTools,
 		'brushClick':function(brushSize) {
 			drawApp.setSize(brushSize);				// Set default brush size
-			cleanTools.tools.currentToolType = cleanTools.tools.toolType.BRUSH;		// Update tool type
+			this.cleanToolsObject.tools.currentToolType = cleanTools.tools.toolType.BRUSH;		// Update tool type
 			
 			// Visually unselect any other tools
 			var ele = document.getElementsByName(cleanTools.id + "-btn-radio");
@@ -164,12 +164,11 @@ cleanTools["html"] = {
 				this.cleanToolsObject.options.fillColor = color;
 			}
 		},
-		'ac':function() {
-			return this.cleanToolsObject.options.idName;
+		'setToolType':function(type) {
+			this.cleanToolsObject.tools.currentToolType=type;
 		},
 	},
 };
-alert(cleanTools.html.buttonHandlers.ac());
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
 /*-----------------------------------------------------------------------------*/
@@ -897,7 +896,7 @@ function createToolButton(type, name)
 	var button = document.createElement('label');
 	button.id = cleanTools.id + '-btn-' + name;
 	button.className = 'drawTools-btn';
-	button.onclick = function(){cleanTools.tools.currentToolType=type;};
+	button.onclick = function(){cleanTools.html.buttonHandlers.setToolType(type);};
 	document.getElementById(cleanTools.id).appendChild(button);
 
 	button.innerHTML = 
@@ -977,35 +976,6 @@ function createOptionsMenu(drawToolsDiv)
 			'</label>';
 	}
 	document.getElementById('drawTools-options-palette').innerHTML = optionsPaletteHtml;
-	
-	/*
-	try{
-	var colorButtons = document.getElementsByName("drawTools-options-palette-radio");
-	var string1 = "onclick1 = " + colorButtons[2].parentNode.onclick;
-	
-	for(var i=0;i<colorElements.length;i++) {
-		var color = colorElements[i].getAttribute("data-color");
-		colorButtons[i+2].parentNode.onclick = function(){setOptionsColor(cleanTools.dcPalette[]);};
-	}
-	
-	var string2 = "onclick2 = " + colorButtons[2].parentNode.onclick;
-	alert(string1 + "\n\n" + string2 + "\n\ncolor: " + colorElements[2].getAttribute("data-color"));
-	}catch(err){alert(err);}
-	*/
-	
-}
-function setLineToolsOpen() {
-	options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
-}
-
-function setOptionsColor(color,normalfill) {
-	if(normalfill) {
-		options.useStrokeAsFill = true;
-		options.fillColor = '';
-	} else {
-		options.useStrokeAsFill = false;
-		options.fillColor = color;
-	}
 }
 
 // Destroys all elements, styling and javascript
