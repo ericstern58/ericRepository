@@ -626,7 +626,7 @@ cleanTools.html.init['setupCSS'] = function()
   /*-----------------------------------------------------------------------------*/
  /*---------------------- Elements Creation/Manipulation -----------------------*/
 /*-----------------------------------------------------------------------------*/
-cleanTools.html.init['setupCssAndHtml'] = function()
+function setupCssAndHtml()
 {
 	/*---- 1. Create Draw Tools Container - DIV in which DrawTools will be placed in ----*/
 	var drawToolsDiv = document.createElement('div');
@@ -784,7 +784,7 @@ var debugLabel; //Go to createDrawToolsElements to find assignment
 function outputDebug(outputString){
 	debugLabel.getElementsByTagName('div')[0].innerHTML = outputString;
 }
-cleanTools.html.init.setupCssAndHtml();
+setupCssAndHtml();
 
 /*---------------------- Setup Listeners ----------------------*/
 
