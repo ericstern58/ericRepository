@@ -700,8 +700,14 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 		}
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
 		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
+		var endPointX = cleanTools.mouseX;
+		var endPointY = cleanTools.mouseY;
+		if(cleanTools.shiftDown) {
+			endPointX = Math.min(endPointX,endPointY); 
+			endPointY = endPointX;
+		}
 		cleanTools.canvas.restore();
-		cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
+		cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points.concat(endPointX,endPointY),fillColor);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
 		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
 		cleanTools.canvas.restore();
@@ -779,7 +785,6 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 cleanTools.eventHandlers["keyDown"] = function(e) {
 	if(e.keyCode == 16) {
 		cleanTools.shiftDown = 1;
-		outputDebug("ShiftDown");
 	}
 	
 	if(e.keyCode == 39) {
@@ -807,7 +812,6 @@ cleanTools.eventHandlers["keyDown"] = function(e) {
 cleanTools.eventHandlers["keyUp"] = function(e) {
 	if(e.keyCode == 16) {
 		cleanTools.shiftDown = 0;
-		outputDebug("ShiftUp");
 	}
 }
 
