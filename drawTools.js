@@ -102,7 +102,7 @@ cleanTools["tools"] = {
 			save();
 	},
 	'paintMethods':{},
-	'squarePoint':function(startX,startY,endX,endY) {
+	'squareShiftHold':function(startX,startY,endX,endY) {
 		var endPointX, endPointY;
 		var width = endX - startX;
 		var height = endY - startY;
@@ -139,7 +139,7 @@ cleanTools["tools"] = {
 			return {x:endX, y:startY};
 		} else {
 			
-			return this.squarePoint(startX,startY,endX,endY);
+			return this.squareShiftHold(startX,startY,endX,endY);
 		}
 	},
 };
@@ -750,7 +750,7 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 		var endPointX = cleanTools.mouseX;
 		var endPointY = cleanTools.mouseY;
 		if(cleanTools.shiftDown) {
-			var a = cleanTools.tools.squarePoint(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
+			var a = cleanTools.tools.squareShiftHold(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
@@ -761,7 +761,7 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 		var endPointX = cleanTools.mouseX;
 		var endPointY = cleanTools.mouseY;
 		if(cleanTools.shiftDown) {
-			var a = cleanTools.tools.squarePoint(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
+			var a = cleanTools.tools.squareShiftHold(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
@@ -834,7 +834,7 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 		var endPointX = cleanTools.mouseX;
 		var endPointY = cleanTools.mouseY;
 		if(cleanTools.shiftDown) {
-			var a = cleanTools.tools.squarePoint(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
+			var a = cleanTools.tools.squareShiftHold(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
@@ -847,7 +847,7 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 		var endPointX = cleanTools.mouseX;
 		var endPointY = cleanTools.mouseY;
 		if(cleanTools.shiftDown) {
-			var a = cleanTools.tools.squarePoint(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
+			var a = cleanTools.tools.squareShiftHold(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
@@ -868,7 +868,7 @@ cleanTools.eventHandlers["keyDown"] = function(e) {
 			var endPointX = c.mouseX;
 			var endPointY = c.mouseY;
 			
-			var a = t.squarePoint(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.squareShiftHold(t.points[0],t.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 			
