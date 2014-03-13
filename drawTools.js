@@ -704,7 +704,7 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 		var endPointY = cleanTools.mouseY;
 		if(cleanTools.shiftDown) {
 			endPointX = Math.min(endPointX,endPointY); 
-			endPointY = endPointX;
+			endPointY = Math.min(endPointX,endPointY);
 		}
 		cleanTools.canvas.restore();
 		cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points.concat(endPointX,endPointY),fillColor);
