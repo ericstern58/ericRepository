@@ -713,7 +713,7 @@ function createOptionsMenu(drawToolsDiv)
 }
 
 // Destroys all elements, styling and javascript
-function DTDestroy() 
+cleanTools.html['DTDestroy'] = function() 
 {
 	// 1. Destroy HTML
 	document.getElementById(cleanTools.id).remove();
@@ -767,7 +767,7 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	
 	// Exitbutton to remove DrawTools
 	var exitButton = createUtilityButton("exit");
-	exitButton.onclick = function(){DTDestroy();};
+	exitButton.onclick = function(){cleanTools.html.DTDestroy();};
 }
 //cleanTools.html.init
  /*-----------------------------------------------------------------------------*/
