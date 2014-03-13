@@ -703,37 +703,28 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 		var endPointX = cleanTools.mouseX;
 		var endPointY = cleanTools.mouseY;
 		if(cleanTools.shiftDown) {
-			var width = cleanTools.tools.points[0] - cleanTools.mouseX;
-			var height = cleanTools.tools.points[1] - cleanTools.mouseY;
+			var width = cleanTools.mouseX - cleanTools.tools.points[0];
+			var height = cleanTools.mouseY - cleanTools.tools.points[1];
+			var valueToUse = Math.min(Math.abs(width),Math.abs(height));
 			if(width > 0) {
 				if(height > 0) { // Quadrant I (+width, +height)
-					endPointX = cleanTools.tools.points[0] + Math.min(endPointX,endPointY); 
-					endPointY = cleanTools.tools.points[1] + Math.min(endPointX,endPointY);
-					outputDebug("Quadrant I");
+					endPointX = cleanTools.tools.points[0] + valueToUse; 
+					endPointY = cleanTools.tools.points[1] + valueToUse;
+					outputDebug("Bottom Right");
 				} else { // Quadrant IV (+width, -height)
-					if(Math.abs(height) > width) {
-						endPointX = cleanTools.tools.points[0] + width; 
-						endPointY = cleanTools.tools.points[1] - width;
-					} else {
-						endPointX = cleanTools.tools.points[0] - height; 
-						endPointY = cleanTools.tools.points[1] + height;
-					}
-					outputDebug("Quadrant IV");
+					endPointX = cleanTools.tools.points[0] + valueToUse; 
+					endPointY = cleanTools.tools.points[1] - valueToUse;
+					outputDebug("Top Right");
 				}
 			} else {
 				if(height > 0) { // Quadrant II (-width, +height)
-					if(Math.abs(width) > height) {
-						endPointX = cleanTools.tools.points[0] - height; 
-						endPointY = cleanTools.tools.points[1] + height;
-					} else {
-						endPointX = cleanTools.tools.points[0] + width; 
-						endPointY = cleanTools.tools.points[1] - width;
-					}
-					outputDebug("Quadrant II");
+					endPointX = cleanTools.tools.points[0] - valueToUse; 
+					endPointY = cleanTools.tools.points[1] + valueToUse;
+					outputDebug("Bottom Left");
 				} else { // Quadrant III (-width, -height)
-					endPointX = cleanTools.tools.points[0] + Math.max(endPointX,endPointY); 
-					endPointY = cleanTools.tools.points[1] + Math.max(endPointX,endPointY);
-					outputDebug("Quadrant III");
+					endPointX = cleanTools.tools.points[0] - valueToUse; 
+					endPointY = cleanTools.tools.points[1] - valueToUse;
+					outputDebug("Top Left");
 				}
 			}
 		}
