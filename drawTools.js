@@ -1,3 +1,7 @@
+		//var stopwatch = new StopWatch();
+		//stopwatch.start();
+		//stopwatch.stop();
+		//stopwatch.printElapsed();
 var StopWatch = function (performance) {
     this.startTime = 0;
     this.stopTime = 0;
@@ -685,12 +689,8 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 	c.mouseY = e.pageY-c.canvas.offset.top;
 	
 	if(t.currentToolType === t.toolType.FILL) {
-		//var stopwatch = new StopWatch();
-		//stopwatch.start();
 		painting = !1;
 		t.paintMethods.floodFill(c.context,c.mouseX,c.mouseY);
-		//stopwatch.stop();
-		//stopwatch.printElapsed();
 	} else if(t.currentToolType === t.toolType.LINE) {
 		painting = !1;
 		t.points.push(c.mouseX,c.mouseY);
@@ -742,7 +742,7 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 	} else if(t.currentToolType === t.toolType.LINECHAIN) {
 		if(t.points.length > 0) {
 			if(c.shiftDown) {
-				var a = t.lineShiftHold(t.points[0],t.points[1],endPointX,endPointY);
+				var a = t.lineShiftHold(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
 				endPointX = a.x;
 				endPointY = a.y;
 			}
@@ -810,7 +810,7 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 	} else if(t.currentToolType === t.toolType.LINECHAIN) {
 		if(c.canvas.isWithinDrawingBounds(c.mouseX,c.mouseY)){
 			if(c.shiftDown) {
-				var a = t.lineShiftHold(t.points[0],t.points[1],endPointX,endPointY);
+				var a = t.lineShiftHold(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
 				endPointX = a.x;
 				endPointY = a.y;
 			}
@@ -870,11 +870,11 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 }
 
 cleanTools.eventHandlers["keyDown"] = function(e) {
+	var c = cleanTools;
+	var t = c.tools;
 	if(e.keyCode == 16 ) {
-		var c = cleanTools;
-		var t = c.tools;
 		c.shiftDown = 1;
-		if(!cleanTools.tools.toolInUse)
+		if(!t.toolInUse)
 			return;
 		else if( t.currentToolType === t.toolType.RECT || t.currentToolType === t.toolType.ELLIPSE ) {
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
@@ -909,18 +909,18 @@ cleanTools.eventHandlers["keyDown"] = function(e) {
 			*/
 		}
 	} else if(e.keyCode == "Q".charCodeAt(0)) {
-		if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN || cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
-			if(cleanTools.tools.points.length) {
-				cleanTools.tools.points.length -= 2;
-				if(cleanTools.tools.points.length == 0) {
-					cleanTools.tools.toolInUse = false;
+		if(t.currentToolType === t.toolType.LINECHAIN || t.currentToolType === t.toolType.CURVE) {
+			if(t.points.length) {
+				t.points.length -= 2;
+				if(t.points.length == 0) {
+					t.toolInUse = false;
 				}
-				var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-				cleanTools.canvas.restore();
-				if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN)
-					cleanTools.tools.paintMethods.drawLineChain(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),true,cleanTools.options.lineToolsShouldClose,fillColor);
+				var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+				c.canvas.restore();
+				if(t.currentToolType === t.toolType.LINECHAIN)
+					t.paintMethods.drawLineChain(c.context,t.points.concat(c.mouseX,c.mouseY),true,c.options.lineToolsShouldClose,fillColor);
 				else
-					cleanTools.tools.paintMethods.drawSpline(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,cleanTools.options.lineToolsShouldClose,fillColor,true);
+					t.paintMethods.drawSpline(c.context,t.points.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fillColor,true);
 			}
 		}
 	} else {
@@ -929,11 +929,11 @@ cleanTools.eventHandlers["keyDown"] = function(e) {
 }
 
 cleanTools.eventHandlers["keyUp"] = function(e) {
+	var c = cleanTools;
+	var t = c.tools;
 	if(e.keyCode == 16) {
-		var c = cleanTools;
-		var t = c.tools;
 		c.shiftDown = 0;
-		if(!cleanTools.tools.toolInUse)
+		if(!t.toolInUse)
 			return;
 		if( t.currentToolType === t.toolType.RECT || t.currentToolType === t.toolType.ELLIPSE ){
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
@@ -942,9 +942,9 @@ cleanTools.eventHandlers["keyUp"] = function(e) {
 			
 			c.canvas.restore();
 			if(t.currentToolType === t.toolType.RECT)
-				c.tools.paintMethods.drawRect(c.context,c.tools.points.concat(endPointX,endPointY),fillColor);
+				t.paintMethods.drawRect(c.context,t.points.concat(endPointX,endPointY),fillColor);
 			else
-				c.tools.paintMethods.drawEllipse(c.context,c.tools.points.concat(endPointX,endPointY),fillColor);
+				t.paintMethods.drawEllipse(c.context,t.points.concat(endPointX,endPointY),fillColor);
 		} else if( t.currentToolType === t.toolType.LINE || t.currentToolType === t.toolType.LINECHAIN ) {
 			/*
 			if(t.points.length > 0) {
