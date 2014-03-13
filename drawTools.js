@@ -650,7 +650,7 @@ function createToolButtonWithLabel(type, name, label)
 	return button;
 }
 //Creates Tool Buttons (no innerHTML)
-function createUtilityButton(name)
+cleanTools.html.init['createUtilityButton'] = function(name)
 {
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
@@ -760,13 +760,13 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	
 	debugLabel = createToolButtonWithLabel(cleanTools.tools.toolType.UTIL,"label", '0');
 	
-	var optionsButton = createUtilityButton("options");
+	var optionsButton = cleanTools.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
 	
 	cleanTools.html.init.createOptionsMenu(drawToolsDiv);
 	
 	// Exitbutton to remove DrawTools
-	var exitButton = createUtilityButton("exit");
+	var exitButton = cleanTools.html.init.createUtilityButton("exit");
 	exitButton.onclick = function(){cleanTools.html.DTDestroy();};
 }
 //cleanTools.html.init
