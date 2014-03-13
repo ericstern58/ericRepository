@@ -585,6 +585,7 @@ cleanTools.html.init['setupCSS'] = function()
 	var cleanToolsObject = $('#' + cleanTools.id);
 	var optionsMarginTop = cleanTools.canvas.offset.top + cleanTools.canvas.height - cleanToolsObject.offset().top;
 	var optionsMarginLeft = (cleanToolsObject.width() - 420)/2;
+	alert("cleanToolsObject.width(): " + cleanToolsObject.width() + "\noptionsMarginLeft: " + optionsMarginLeft);
 	
 	var DTSheet = document.createElement('style');
 	DTSheet.id = cleanTools.id + 'StyleSheet'; // Give id so destructor can find it if needed
