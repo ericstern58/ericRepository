@@ -703,10 +703,35 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 		var endPointX = cleanTools.mouseX;
 		var endPointY = cleanTools.mouseY;
 		if(cleanTools.shiftDown) {
-			endPointX = cleanTools.mouseX - cleanTools.tools.points[0];
-			endPointY = cleanTools.mouseY - cleanTools.tools.points[1];
-			endPointX = cleanTools.tools.points[0] + Math.min(endPointX,endPointY); 
-			endPointY = cleanTools.tools.points[1] + Math.min(endPointX,endPointY);
+			var width = cleanTools.mouseX - cleanTools.tools.points[0];
+			var height = cleanTools.mouseY - cleanTools.tools.points[1];
+			if(width > 0) {
+				if(height > 0) { // Quadrant I (+width, +height)
+					endPointX = cleanTools.tools.points[0] + Math.min(endPointX,endPointY); 
+					endPointY = cleanTools.tools.points[1] + Math.min(endPointX,endPointY);
+				} else { // Quadrant IV (+width, -height)
+					if(Math.abs(height) > width) {
+						endPointX = cleanTools.tools.points[0] + width; 
+						endPointY = cleanTools.tools.points[1] - width;
+					} else {
+						endPointX = cleanTools.tools.points[0] - height; 
+						endPointY = cleanTools.tools.points[1] + height;
+					}
+				}
+			} else {
+				if(height > 0) { // Quadrant II (-width, +height)
+					if(Math.abs(width) > height) {
+						endPointX = cleanTools.tools.points[0] - height; 
+						endPointY = cleanTools.tools.points[1] + height;
+					} else {
+						endPointX = cleanTools.tools.points[0] + width; 
+						endPointY = cleanTools.tools.points[1] - width;
+					}
+				} else { // Quadrant III (-width, -height)
+					endPointX = cleanTools.tools.points[0] + Math.max(endPointX,endPointY); 
+					endPointY = cleanTools.tools.points[1] + Math.max(endPointX,endPointY);
+				}
+			}
 		}
 		cleanTools.canvas.restore();
 		cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points.concat(endPointX,endPointY),fillColor);
