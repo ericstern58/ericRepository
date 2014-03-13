@@ -705,6 +705,8 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 }
 
 cleanTools.eventHandlers["mouseMove"] = function(e) {
+	var c = cleanTools;
+	var t = c.tools;
 /*	if(cleanTools.canvas.isWithinBounds(e.pageX-cleanTools.canvas.offset.left,e.pageY-cleanTools.canvas.offset.top)) {
 		var p = cleanTools.context.getImageData(e.pageX-cleanTools.canvas.offset.left, e.pageY-cleanTools.canvas.offset.top, 1, 1).data;
 		outputDebug("[r:" +p[0] + ", g:" + p[1] + ", b:" + p[2] + ", a:" + p[3] + "]");
@@ -712,62 +714,63 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 		outputDebug("Out of bounds.")
 	}
 	*/
-	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.BRUSH)
+	if(t.currentToolType === t.toolType.BRUSH)
 		return;	// default behaviors
-	else if(!cleanTools.tools.toolInUse)
+	else if(!t.toolInUse)
 		return;	// If no tool is in use, ignore event
 		
+		
 	// Translate mouse location to point relative to canvas
-	cleanTools.mouseX = e.pageX-cleanTools.canvas.offset.left;
-	cleanTools.mouseY = e.pageY-cleanTools.canvas.offset.top;
-	var endPointX = cleanTools.mouseX;
-	var endPointY = cleanTools.mouseY;
+	c.mouseX = e.pageX-c.canvas.offset.left;
+	c.mouseY = e.pageY-c.canvas.offset.top;
+	var endPointX = c.mouseX;
+	var endPointY = c.mouseY;
 	
-	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
+	if(t.currentToolType === t.toolType.FILL) {
 		// Do nothing
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
-		if(cleanTools.shiftDown) {
-			var a = cleanTools.tools.lineShiftHold(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
+	} else if(t.currentToolType === t.toolType.LINE) {
+		if(c.shiftDown) {
+			var a = t.lineShiftHold(t.points[0],t.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
-		cleanTools.canvas.restore();
-		cleanTools.tools.paintMethods.drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
-		if(cleanTools.tools.points.length > 0) {
-			if(cleanTools.shiftDown) {
-				var a = cleanTools.tools.lineShiftHold(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
+		c.canvas.restore();
+		t.paintMethods.drawLine(c.context,t.points[0],t.points[1],endPointX,endPointY);
+	} else if(t.currentToolType === t.toolType.LINECHAIN) {
+		if(t.points.length > 0) {
+			if(c.shiftDown) {
+				var a = t.lineShiftHold(t.points[0],t.points[1],endPointX,endPointY);
 				endPointX = a.x;
 				endPointY = a.y;
 			}
-			var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-			cleanTools.canvas.restore();
-			cleanTools.tools.paintMethods.drawLineChain(cleanTools.context,cleanTools.tools.points.concat(endPointX,endPointY),true,cleanTools.options.lineToolsShouldClose,fillColor);
+			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+			c.canvas.restore();
+			t.paintMethods.drawLineChain(c.context,t.points.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
 		}
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
-		if(cleanTools.tools.points.length > 0) {
-			var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-			cleanTools.canvas.restore();
-			cleanTools.tools.paintMethods.drawSpline(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,cleanTools.options.lineToolsShouldClose,fillColor,true);
+	} else if(t.currentToolType === t.toolType.CURVE) {
+		if(t.points.length > 0) {
+			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+			c.canvas.restore();
+			t.paintMethods.drawSpline(c.context,t.points.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fillColor,true);
 		}
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
-		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-		if(cleanTools.shiftDown) {
-			var a = cleanTools.tools.squareShiftHold(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
+	} else if(t.currentToolType === t.toolType.RECT) {
+		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+		if(c.shiftDown) {
+			var a = t.squareShiftHold(t.points[0],t.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
-		cleanTools.canvas.restore();
-		cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points.concat(endPointX,endPointY),fillColor);
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
-		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-		if(cleanTools.shiftDown) {
-			var a = cleanTools.tools.squareShiftHold(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
+		c.canvas.restore();
+		t.paintMethods.drawRect(c.context,t.points.concat(endPointX,endPointY),fillColor);
+	} else if(t.currentToolType === t.toolType.ELLIPSE) {
+		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+		if(c.shiftDown) {
+			var a = t.squareShiftHold(t.points[0],t.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
-		cleanTools.canvas.restore();
-		cleanTools.tools.paintMethods.drawEllipse(cleanTools.context,cleanTools.tools.points.concat(endPointX,endPointY),fillColor);
+		c.canvas.restore();
+		t.paintMethods.drawEllipse(c.context,t.points.concat(endPointX,endPointY),fillColor);
 	}
 }
 
