@@ -132,7 +132,7 @@ cleanTools["tools"] = {
 		var rise = startY - endY;
 		var run = (startX - endX) ? (startX - endX): 1;
 		var slope = rise/run;
-		outputDebug("Slope: " + slope);
+		outputDebug("Slope: " + Math.round(slope));
 		if( slope > 2.4 && slope < -2.4 ) { // Up-Down
 			//outputDebug("Slope: Up-Down");
 		} else if( slope < 0.4 && slope > -0.4 ) { // Left-Right
