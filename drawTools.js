@@ -723,8 +723,15 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
 		// Do nothing
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
+		var endPointX = cleanTools.mouseX;
+		var endPointY = cleanTools.mouseY;
+		if(cleanTools.shiftDown) {
+			var a = cleanTools.tools.lineShiftHold(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
+			endPointX = a.x;
+			endPointY = a.y;
+		}
 		cleanTools.canvas.restore();
-		cleanTools.tools.paintMethods.drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1],cleanTools.mouseX,cleanTools.mouseY);
+		cleanTools.tools.paintMethods.drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
 		if(cleanTools.tools.points.length > 0) {
 			var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
@@ -782,7 +789,7 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 		var endPointX = cleanTools.mouseX;
 		var endPointY = cleanTools.mouseY;
 		if(cleanTools.shiftDown) {
-			var a = cleanTools.tools.squarePoint(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
+			var a = cleanTools.tools.lineShiftHold(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
