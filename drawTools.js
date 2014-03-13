@@ -126,6 +126,21 @@ cleanTools["tools"] = {
 		}
 		return {x: endPointX, y:endPointY};
 	},
+	'lineShiftHold':function(startX,startY,endX,endY) {
+		var endPointX, endPointY;
+		
+		var rise = endY - startY;
+		var run = (endX - startX) ? (endX - startX): 1;
+		var slope = rise/run;
+		
+		if(slope > 2.4 && slope < -2.4) { // Up down
+		
+		} else if( slope < 0.4 && slope > -0.4 ) {
+		
+		} else {
+			return this.squarePoint(startX,startY,endX,endY);
+		}
+	},
 };
 cleanTools["options"] = {
 	'id':'#' + cleanTools.id + '-options',
@@ -764,8 +779,15 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
 		cleanTools.tools.reset(true);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
+		var endPointX = cleanTools.mouseX;
+		var endPointY = cleanTools.mouseY;
+		if(cleanTools.shiftDown) {
+			var a = cleanTools.tools.squarePoint(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
+			endPointX = a.x;
+			endPointY = a.y;
+		}
 		cleanTools.canvas.restore();
-		cleanTools.tools.paintMethods.drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1], cleanTools.mouseX, cleanTools.mouseY);
+		cleanTools.tools.paintMethods.drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1], endPointX, endPointY);
 		cleanTools.tools.reset(true);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
 		if(cleanTools.canvas.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
@@ -877,7 +899,7 @@ cleanTools.eventHandlers["keyUp"] = function(e) {
 		var c = cleanTools;
 		var t = c.tools;
 		c.shiftDown = 0;
-		if( (t.currentToolType === t.toolType.RECT || t.currentToolType === t.toolType.ELLIPSE) && t.toolInUse ){
+		if( t.toolInUse && (t.currentToolType === t.toolType.RECT || t.currentToolType === t.toolType.ELLIPSE) ){
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 			var endPointX = c.mouseX;
 			var endPointY = c.mouseY;
@@ -887,6 +909,8 @@ cleanTools.eventHandlers["keyUp"] = function(e) {
 				c.tools.paintMethods.drawRect(c.context,c.tools.points.concat(endPointX,endPointY),fillColor);
 			else
 				c.tools.paintMethods.drawEllipse(c.context,c.tools.points.concat(endPointX,endPointY),fillColor);
+		} else if( t.toolInUse && (t.currentToolType === t.toolType.LINE) ) {
+			
 		}
 	}
 }
