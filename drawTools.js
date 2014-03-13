@@ -700,8 +700,8 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 		}
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
 		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-		var endPointX = cleanTools.mouseX-tools.points[0];
-		var endPointY = cleanTools.mouseY-tools.points[1];
+		var endPointX = cleanTools.mouseX;
+		var endPointY = cleanTools.mouseY;
 		if(cleanTools.shiftDown) {
 			endPointX = cleanTools.mouseX-tools.points[0];
 			endPointY = cleanTools.mouseY-tools.points[1];
