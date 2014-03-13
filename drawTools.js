@@ -985,4 +985,4 @@ $(document).on('mouseup', cleanTools.eventHandlers.mouseUp);
 // Setup keyDown Listener
 $(document).keydown(cleanTools.eventHandlers.keyDown);
 // Setup keyUp Listener
-$(document).keyUp(cleanTools.eventHandlers.keyUp);
+$(document).keyup(cleanTools.eventHandlers.keyUp);
