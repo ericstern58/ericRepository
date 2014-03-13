@@ -134,11 +134,11 @@ cleanTools["tools"] = {
 		var slope = rise/run;
 		outputDebug("Slope: " + Math.round(slope*10)/10);
 		if( slope > 2.4 && slope < -2.4 ) { // Up-Down
-			//outputDebug("Slope: Up-Down");
+			return {x:0, y:endX};
 		} else if( slope < 0.4 && slope > -0.4 ) { // Left-Right
-			//outputDebug("Slope: Left-Right");
+			return {x:startX, y:0};
 		} else {
-			//outputDebug("Slope: Diagonal");
+			
 			return this.squarePoint(startX,startY,endX,endY);
 		}
 	},
