@@ -774,6 +774,33 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 	}
 }
 
+cleanTools.eventHandlers["keyDown"] = function(e) {
+	if(e.keyCode == 39) {
+		alert('Right was pressed');
+	} if(e.keyCode == "Q".charCodeAt(0)) {
+		if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN || cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
+			if(cleanTools.tools.points.length) {
+				cleanTools.tools.points.length -= 2;
+				if(cleanTools.tools.points.length == 0) {
+					cleanTools.tools.toolInUse = false;
+				}
+				var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
+				cleanTools.canvas.restore();
+				if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN)
+					cleanTools.tools.paintMethods.drawLineChain(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),true,cleanTools.options.lineToolsShouldClose,fillColor);
+				else
+					cleanTools.tools.paintMethods.drawSpline(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,cleanTools.options.lineToolsShouldClose,fillColor,true);
+			}
+		}
+	} else {
+		//alert('Keycode for that key is: ' + e.keyCode);
+	}
+}
+
+cleanTools.eventHandlers["keyUp"] = function(e) {
+
+}
+
   /*-----------------------------------------------------------------------------*/
  /*---------------------- Elements Creation/Manipulation -----------------------*/
 /*-----------------------------------------------------------------------------*/
@@ -948,25 +975,4 @@ $(document).on('mousemove', cleanTools.eventHandlers.mouseMove);
 $(document).off('mouseup');
 $(document).on('mouseup', cleanTools.eventHandlers.mouseUp);
 
-$(document).keydown(function(e) {
-	if(e.keyCode == 39) {
-		alert('Right was pressed');
-	} if(e.keyCode == "Q".charCodeAt(0)) {
-		if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN || cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
-			if(cleanTools.tools.points.length) {
-				cleanTools.tools.points.length -= 2;
-				if(cleanTools.tools.points.length == 0) {
-					cleanTools.tools.toolInUse = false;
-				}
-				var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-				cleanTools.canvas.restore();
-				if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN)
-					cleanTools.tools.paintMethods.drawLineChain(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),true,cleanTools.options.lineToolsShouldClose,fillColor);
-				else
-					cleanTools.tools.paintMethods.drawSpline(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,cleanTools.options.lineToolsShouldClose,fillColor,true);
-			}
-		}
-	} else {
-		//alert('Keycode for that key is: ' + e.keyCode);
-	}
-});
+$(document).keydown(cleanTools.eventHandlers.keyDown);
