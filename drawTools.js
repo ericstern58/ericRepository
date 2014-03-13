@@ -703,8 +703,8 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 		var endPointX = cleanTools.mouseX;
 		var endPointY = cleanTools.mouseY;
 		if(cleanTools.shiftDown) {
-			var width = cleanTools.mouseX - cleanTools.tools.points[0];
-			var height = cleanTools.mouseY - cleanTools.tools.points[1];
+			var width = cleanTools.tools.points[0] - cleanTools.mouseX;
+			var height = cleanTools.tools.points[1] - cleanTools.mouseY;
 			if(width > 0) {
 				if(height > 0) { // Quadrant I (+width, +height)
 					endPointX = cleanTools.tools.points[0] + Math.min(endPointX,endPointY); 
