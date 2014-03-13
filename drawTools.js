@@ -132,7 +132,7 @@ cleanTools["tools"] = {
 		var rise = endY - startY;
 		var run = (endX - startX) ? (endX - startX): 1;
 		var slope = rise/run;
-		
+		outputDebug("Slope: " + slope);
 		if(slope > 2.4 && slope < -2.4) { // Up down
 		
 		} else if( slope < 0.4 && slope > -0.4 ) {
