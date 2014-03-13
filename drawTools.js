@@ -668,39 +668,42 @@ cleanTools.html.init['setupCSS'] = function()
  /*------------------------------- Event Handlers ------------------------------*/
 /*-----------------------------------------------------------------------------*/
 cleanTools.eventHandlers["mouseDown"] = function(e) {
+	var c = cleanTools;
+	var t = c.tools;
+	
 	if(0 && $('#drawTools-options').css('opacity') == 1){
 		painting = !1;
-		cleanTools.canvas.restore();
+		c.canvas.restore();
 		return;
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.BRUSH)
+	} else if(t.currentToolType === t.toolType.BRUSH)
 		return;
-	cleanTools.tools.toolInUse = true;
-	cleanTools.canvas.updateLocation();
+	t.toolInUse = true;
+	c.canvas.updateLocation();
 	
 	// Translate mouse location to point relative to canvas
-	cleanTools.mouseX = e.pageX-cleanTools.canvas.offset.left;
-	cleanTools.mouseY = e.pageY-cleanTools.canvas.offset.top;
+	c.mouseX = e.pageX-c.canvas.offset.left;
+	c.mouseY = e.pageY-c.canvas.offset.top;
 	
-	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
+	if(t.currentToolType === t.toolType.FILL) {
 		//var stopwatch = new StopWatch();
 		//stopwatch.start();
 		painting = !1;
-		cleanTools.tools.paintMethods.floodFill(cleanTools.context,cleanTools.mouseX,cleanTools.mouseY);
+		t.paintMethods.floodFill(c.context,c.mouseX,c.mouseY);
 		//stopwatch.stop();
 		//stopwatch.printElapsed();
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
+	} else if(t.currentToolType === t.toolType.LINE) {
 		painting = !1;
-		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
+		t.points.push(c.mouseX,c.mouseY);
+	} else if(t.currentToolType === t.toolType.LINECHAIN) {
 		painting = !1;
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
+	} else if(t.currentToolType === t.toolType.CURVE) {
 		painting = !1;
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
+	} else if(t.currentToolType === t.toolType.RECT) {
 		painting = !1;
-		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
+		t.points.push(c.mouseX,c.mouseY);
+	} else if(t.currentToolType === t.toolType.ELLIPSE) {
 		painting = !1;
-		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
+		t.points.push(c.mouseX,c.mouseY);
 	} 
 }
 
