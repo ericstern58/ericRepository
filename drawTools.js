@@ -880,10 +880,6 @@ cleanTools.eventHandlers["keyUp"] = function(e) {
 			var endPointX = cleanTools.mouseX;
 			var endPointY = cleanTools.mouseY;
 			
-			var a = t.squarePoint(t.points[0],t.points[1],endPointX,endPointY);
-			endPointX = a.x;
-			endPointY = a.y;
-			
 			cleanTools.canvas.restore();
 			if(t.currentToolType === t.toolType.RECT)
 				cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points.concat(endPointX,endPointY),fillColor);
