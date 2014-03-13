@@ -62,6 +62,7 @@ var cleanTools = {
 	'mouseX':0, // Mouse coords
 	'mouseY':0,
 	
+	'eventHandlers':{},
 	
 };
 cleanTools["canvas"] = {
@@ -621,6 +622,46 @@ cleanTools.html.init['setupCSS'] = function()
 		";
 	document.body.appendChild(DTSheet);
 }
+  /*-----------------------------------------------------------------------------*/
+ /*------------------------------- Event Handlers ------------------------------*/
+/*-----------------------------------------------------------------------------*/
+cleanTools.eventHandlers["mouseDown"] = function(e) {
+	if(0 && $('#drawTools-options').css('opacity') == 1){
+		painting = !1;
+		cleanTools.canvas.restore();
+		return;
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.BRUSH)
+		return;
+	cleanTools.tools.toolInUse = true;
+	cleanTools.canvas.updateLocation();
+	
+	// Translate mouse location to point relative to canvas
+	cleanTools.mouseX = e.pageX-cleanTools.canvas.offset.left;
+	cleanTools.mouseY = e.pageY-cleanTools.canvas.offset.top;
+	
+	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
+		//var stopwatch = new StopWatch();
+		//stopwatch.start();
+		painting = !1;
+		cleanTools.tools.paintMethods.floodFill(cleanTools.context,cleanTools.mouseX,cleanTools.mouseY);
+		//stopwatch.stop();
+		//stopwatch.printElapsed();
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
+		painting = !1;
+		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
+		painting = !1;
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
+		painting = !1;
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
+		painting = !1;
+		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
+		painting = !1;
+		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
+	} 
+}
+
 
   /*-----------------------------------------------------------------------------*/
  /*---------------------- Elements Creation/Manipulation -----------------------*/
@@ -769,8 +810,8 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	var exitButton = cleanTools.html.init.createUtilityButton("exit");
 	exitButton.onclick = function(){cleanTools.html.DTDestroy();};
 }
-//cleanTools.html.init
- /*-----------------------------------------------------------------------------*/
+
+  /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
 /*-----------------------------------------------------------------------------*/
 // Setup Some Global Variables
@@ -788,42 +829,7 @@ cleanTools.html.init.setupCssAndHtml();
 
 // Setup Mousedown Listener
 cleanTools.Canvas.off('mousedown');
-cleanTools.Canvas.on('mousedown', function(e){
-	if(0 && $('#drawTools-options').css('opacity') == 1){
-		painting = !1;
-		cleanTools.canvas.restore();
-		return;
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.BRUSH)
-		return;
-	cleanTools.tools.toolInUse = true;
-	cleanTools.canvas.updateLocation();
-	
-	// Translate mouse location to point relative to canvas
-	cleanTools.mouseX = e.pageX-cleanTools.canvas.offset.left;
-	cleanTools.mouseY = e.pageY-cleanTools.canvas.offset.top;
-	
-	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
-		//var stopwatch = new StopWatch();
-		//stopwatch.start();
-		painting = !1;
-		cleanTools.tools.paintMethods.floodFill(cleanTools.context,cleanTools.mouseX,cleanTools.mouseY);
-		//stopwatch.stop();
-		//stopwatch.printElapsed();
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
-		painting = !1;
-		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
-		painting = !1;
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
-		painting = !1;
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
-		painting = !1;
-		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
-		painting = !1;
-		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
-	} 
-});
+cleanTools.Canvas.on('mousedown', cleanTools.eventHandlers.mouseDown);
 // Setup Mousemove Listener
 $(document).off('mousemove');
 $(document).on('mousemove', function(e){
