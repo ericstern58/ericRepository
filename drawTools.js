@@ -735,8 +735,15 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 		cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points.concat(endPointX,endPointY),fillColor);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
 		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
+		var endPointX = cleanTools.mouseX;
+		var endPointY = cleanTools.mouseY;
+		if(cleanTools.shiftDown) {
+			var a = cleanTools.tools.squarePoint(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
+			endPointX = a.x;
+			endPointY = a.y;
+		}
 		cleanTools.canvas.restore();
-		cleanTools.tools.paintMethods.drawEllipse(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
+		cleanTools.tools.paintMethods.drawEllipse(cleanTools.context,cleanTools.tools.points.concat(endPointX,endPointY),fillColor);
 	}
 }
 
