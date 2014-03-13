@@ -793,12 +793,12 @@ cleanTools.eventHandlers["keyDown"] = function(e) {
 			}
 		}
 	} else {
-		//alert('Keycode for that key is: ' + e.keyCode);
+		alert('Keycode for that key is: ' + e.keyCode);
 	}
 }
 
 cleanTools.eventHandlers["keyUp"] = function(e) {
-
+	
 }
 
   /*-----------------------------------------------------------------------------*/
@@ -963,8 +963,6 @@ function outputDebug(outputString){
 }
 cleanTools.html.init.setupCssAndHtml();
 
-/*---------------------- Setup Listeners ----------------------*/
-
 // Setup Mousedown Listener
 cleanTools.Canvas.off('mousedown');
 cleanTools.Canvas.on('mousedown', cleanTools.eventHandlers.mouseDown);
@@ -974,5 +972,7 @@ $(document).on('mousemove', cleanTools.eventHandlers.mouseMove);
 // Setup Mouseup Listener
 $(document).off('mouseup');
 $(document).on('mouseup', cleanTools.eventHandlers.mouseUp);
-
+// Setup keyDown Listener
 $(document).keydown(cleanTools.eventHandlers.keyDown);
+// Setup keyUp Listener
+$(document).keyUp(cleanTools.eventHandlers.keyUp);
