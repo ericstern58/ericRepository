@@ -700,11 +700,13 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 		}
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
 		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-		var endPointX = cleanTools.mouseX;
-		var endPointY = cleanTools.mouseY;
+		var endPointX = cleanTools.mouseX-tools.points[0];
+		var endPointY = cleanTools.mouseY-tools.points[1];
 		if(cleanTools.shiftDown) {
-			endPointX = Math.min(endPointX,endPointY); 
-			endPointY = Math.min(endPointX,endPointY);
+			endPointX = cleanTools.mouseX-tools.points[0];
+			endPointY = cleanTools.mouseY-tools.points[1];
+			endPointX = cleanTools.mouseX + Math.min(endPointX,endPointY); 
+			endPointY = cleanTools.mouseY + Math.min(endPointX,endPointY);
 		}
 		cleanTools.canvas.restore();
 		cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points.concat(endPointX,endPointY),fillColor);
