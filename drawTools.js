@@ -582,8 +582,9 @@ cleanTools.tools.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFi
 cleanTools.html.init['setupCSS'] = function()
 {
 	// Calculate variables used in css
-	var optionsMarginTop = cleanTools.canvas.offset.top + cleanTools.canvas.height - $('#' + cleanTools.id).offset().top;
-	var optionsMarginLeft = cleanTools.canvas.offset.left + (cleanTools.canvas.width/2) - 210; // Get middle of canvas and subtract optionsWidth/2
+	var cleanToolsObject = $('#' + cleanTools.id);
+	var optionsMarginTop = cleanTools.canvas.offset.top + cleanTools.canvas.height - cleanToolsObject.offset().top;
+	var optionsMarginLeft = (420 - cleanToolsObject.width())/2;
 	
 	var DTSheet = document.createElement('style');
 	DTSheet.id = cleanTools.id + 'StyleSheet'; // Give id so destructor can find it if needed
@@ -633,7 +634,7 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-exit .drawTools-btn-container:hover,#drawTools-btn-exit .drawTools-btn:focus{background-color:#b90c0c;border-bottom:1px solid #980909;}\n\
 		#drawTools-btn-exit .drawTools-btn-container:active{background-color:#a50000;border-bottom:1px solid #a50000;}\n\
 		\n\
-		#drawTools-options{margin-top:"+optionsMarginTop+"px;background:#252525;border-bottom:1px solid #171717;width:420px;height:0px;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
+		#drawTools-options{margin-top:"+optionsMarginTop+"px;margin-left:"+optionsMarginLeft+"px;background:#252525;border-bottom:1px solid #171717;width:420px;height:0px;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
 		#drawTools-options-content{position:absolute;top:8px;left:8px;right:8px;bottom:8px;}\n\
 		\n\
 		#drawTools-options-leftPanel{width:160px;height:100%;position:absolute;left:0px;}\n\
