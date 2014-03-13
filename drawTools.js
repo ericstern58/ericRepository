@@ -801,14 +801,28 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 		}
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
 		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
+		var endPointX = cleanTools.mouseX;
+		var endPointY = cleanTools.mouseY;
+		if(cleanTools.shiftDown) {
+			var a = cleanTools.tools.squarePoint(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
+			endPointX = a.x;
+			endPointY = a.y;
+		}
 		cleanTools.canvas.restore();
-		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
+		cleanTools.tools.points.push(endPointX,endPointY);
 		cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points,fillColor);
 		cleanTools.tools.reset(true);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
 		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
+		var endPointX = cleanTools.mouseX;
+		var endPointY = cleanTools.mouseY;
+		if(cleanTools.shiftDown) {
+			var a = cleanTools.tools.squarePoint(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
+			endPointX = a.x;
+			endPointY = a.y;
+		}
 		cleanTools.canvas.restore();
-		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
+		cleanTools.tools.points.push(endPointX,endPointY);
 		cleanTools.tools.paintMethods.drawEllipse(cleanTools.context,cleanTools.tools.points,fillColor);
 		cleanTools.tools.reset(true);
 	}
