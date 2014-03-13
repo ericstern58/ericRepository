@@ -102,6 +102,30 @@ cleanTools["tools"] = {
 			save();
 	},
 	'paintMethods':{},
+	'squarePoint':function(startX,startY,endX,endY) {
+		var endPointX, endPointY;
+		var width = endX - startX;
+		var height = endY - startY;
+		var valueToUse = Math.min(Math.abs(width),Math.abs(height));
+		if(width > 0) {
+			if(height > 0) { // Bottom Right
+				endPointX = startX + valueToUse; 
+				endPointY = startY + valueToUse;
+			} else { // Top Right
+				endPointX = startX + valueToUse; 
+				endPointY = startY - valueToUse;
+			}
+		} else {
+			if(height > 0) { // Bottom Left
+				endPointX = startX - valueToUse; 
+				endPointY = startY + valueToUse;
+			} else { // Top Left
+				endPointX = startX - valueToUse; 
+				endPointY = startY - valueToUse;
+			}
+		}
+		return {x: endPointX, y:endPointY};
+	},
 };
 cleanTools["options"] = {
 	'id':'#' + cleanTools.id + '-options',
@@ -703,30 +727,9 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 		var endPointX = cleanTools.mouseX;
 		var endPointY = cleanTools.mouseY;
 		if(cleanTools.shiftDown) {
-			var width = cleanTools.mouseX - cleanTools.tools.points[0];
-			var height = cleanTools.mouseY - cleanTools.tools.points[1];
-			var valueToUse = Math.min(Math.abs(width),Math.abs(height));
-			if(width > 0) {
-				if(height > 0) { // Quadrant I (+width, +height)
-					endPointX = cleanTools.tools.points[0] + valueToUse; 
-					endPointY = cleanTools.tools.points[1] + valueToUse;
-					outputDebug("Bottom Right");
-				} else { // Quadrant IV (+width, -height)
-					endPointX = cleanTools.tools.points[0] + valueToUse; 
-					endPointY = cleanTools.tools.points[1] - valueToUse;
-					outputDebug("Top Right");
-				}
-			} else {
-				if(height > 0) { // Quadrant II (-width, +height)
-					endPointX = cleanTools.tools.points[0] - valueToUse; 
-					endPointY = cleanTools.tools.points[1] + valueToUse;
-					outputDebug("Bottom Left");
-				} else { // Quadrant III (-width, -height)
-					endPointX = cleanTools.tools.points[0] - valueToUse; 
-					endPointY = cleanTools.tools.points[1] - valueToUse;
-					outputDebug("Top Left");
-				}
-			}
+			var a = cleanTools.tools.squarePoint(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
+			endPointX = a.x;
+			endPointY = a.y;
 		}
 		cleanTools.canvas.restore();
 		cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points.concat(endPointX,endPointY),fillColor);
