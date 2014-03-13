@@ -720,12 +720,12 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 	// Translate mouse location to point relative to canvas
 	cleanTools.mouseX = e.pageX-cleanTools.canvas.offset.left;
 	cleanTools.mouseY = e.pageY-cleanTools.canvas.offset.top;
+	var endPointX = cleanTools.mouseX;
+	var endPointY = cleanTools.mouseY;
 	
 	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
 		// Do nothing
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
-		var endPointX = cleanTools.mouseX;
-		var endPointY = cleanTools.mouseY;
 		if(cleanTools.shiftDown) {
 			var a = cleanTools.tools.lineShiftHold(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
 			endPointX = a.x;
@@ -747,8 +747,6 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 		}
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
 		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-		var endPointX = cleanTools.mouseX;
-		var endPointY = cleanTools.mouseY;
 		if(cleanTools.shiftDown) {
 			var a = cleanTools.tools.squareShiftHold(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
 			endPointX = a.x;
@@ -758,8 +756,6 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 		cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points.concat(endPointX,endPointY),fillColor);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
 		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-		var endPointX = cleanTools.mouseX;
-		var endPointY = cleanTools.mouseY;
 		if(cleanTools.shiftDown) {
 			var a = cleanTools.tools.squareShiftHold(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
 			endPointX = a.x;
@@ -783,12 +779,12 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 	// Translate mouse location to point relative to canvas
 	cleanTools.mouseX = e.pageX-cleanTools.canvas.offset.left;
 	cleanTools.mouseY = e.pageY-cleanTools.canvas.offset.top;
+	var endPointX = cleanTools.mouseX;
+	var endPointY = cleanTools.mouseY;
 	
 	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
 		cleanTools.tools.reset(true);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
-		var endPointX = cleanTools.mouseX;
-		var endPointY = cleanTools.mouseY;
 		if(cleanTools.shiftDown) {
 			var a = cleanTools.tools.lineShiftHold(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
 			endPointX = a.x;
@@ -831,8 +827,6 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 		}
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
 		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-		var endPointX = cleanTools.mouseX;
-		var endPointY = cleanTools.mouseY;
 		if(cleanTools.shiftDown) {
 			var a = cleanTools.tools.squareShiftHold(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
 			endPointX = a.x;
@@ -844,8 +838,6 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 		cleanTools.tools.reset(true);
 	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
 		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-		var endPointX = cleanTools.mouseX;
-		var endPointY = cleanTools.mouseY;
 		if(cleanTools.shiftDown) {
 			var a = cleanTools.tools.squareShiftHold(cleanTools.tools.points[0],cleanTools.tools.points[1],endPointX,endPointY);
 			endPointX = a.x;
