@@ -703,10 +703,10 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 		var endPointX = cleanTools.mouseX;
 		var endPointY = cleanTools.mouseY;
 		if(cleanTools.shiftDown) {
-			endPointX = cleanTools.mouseX-tools.points[0];
-			endPointY = cleanTools.mouseY-tools.points[1];
-			endPointX = cleanTools.mouseX + Math.min(endPointX,endPointY); 
-			endPointY = cleanTools.mouseY + Math.min(endPointX,endPointY);
+			endPointX = cleanTools.mouseX - cleanTools.tools.points[0];
+			endPointY = cleanTools.mouseY - cleanTools.tools.points[1];
+			endPointX = cleanTools.tools.points[0] + Math.min(endPointX,endPointY); 
+			endPointY = cleanTools.tools.points[1] + Math.min(endPointX,endPointY);
 		}
 		cleanTools.canvas.restore();
 		cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points.concat(endPointX,endPointY),fillColor);
