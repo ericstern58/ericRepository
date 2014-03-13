@@ -936,19 +936,14 @@ cleanTools.eventHandlers["keyUp"] = function(e) {
 		if(!t.toolInUse)
 			return;
 		if( t.currentToolType === t.toolType.RECT || t.currentToolType === t.toolType.ELLIPSE ){
-			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
-			
 			c.canvas.restore();
+			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 			if(t.currentToolType === t.toolType.RECT)
 				t.paintMethods.drawRect(c.context,t.points.concat(endPointX,endPointY),fillColor);
 			else
 				t.paintMethods.drawEllipse(c.context,t.points.concat(endPointX,endPointY),fillColor);
 		} else if( t.currentToolType === t.toolType.LINE || t.currentToolType === t.toolType.LINECHAIN ) {
 			if(t.points.length > 0) {
-				var a = t.lineShiftHold(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
-				endPointX = a.x;
-				endPointY = a.y;
-				
 				c.canvas.restore();
 				if( t.currentToolType === t.toolType.LINECHAIN ) {
 					var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
