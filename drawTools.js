@@ -664,7 +664,7 @@ function createUtilityButton(name)
 	return button;
 }
 
-function createOptionsMenu(drawToolsDiv)
+cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv)
 {
 	//Create DIV in which Options will be placed in
 	var optionsDiv = document.createElement('div');
@@ -763,7 +763,7 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	var optionsButton = createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
 	
-	createOptionsMenu(drawToolsDiv);
+	cleanTools.html.init.createOptionsMenu(drawToolsDiv);
 	
 	// Exitbutton to remove DrawTools
 	var exitButton = createUtilityButton("exit");
