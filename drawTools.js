@@ -173,7 +173,6 @@ cleanTools["html"] = {
 			this.cleanToolsObject.tools.currentToolType=type;
 		},
 	},
-	
 };
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- Drawing Algorithms ----------------------------*/
@@ -729,7 +728,7 @@ function DTDestroy()
 	// 5. Destroy JavaScript
 	document.getElementById('DTScript').remove();
 }
-function setupCssAndHtml()
+cleanTools.html.init['setupCssAndHtml'] = function()
 {	
 	cleanTools.canvas.updateLocation();
 	/*---- 1. Create Draw Tools Container - DIV in which DrawTools will be placed in ----*/
@@ -770,7 +769,7 @@ function setupCssAndHtml()
 	var exitButton = createUtilityButton("exit");
 	exitButton.onclick = function(){DTDestroy();};
 }
-
+//cleanTools.html.init
  /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
 /*-----------------------------------------------------------------------------*/
@@ -783,7 +782,7 @@ var debugLabel; //Go to createDrawToolsElements to find assignment
 function outputDebug(outputString){
 	debugLabel.getElementsByTagName('div')[0].innerHTML = outputString;
 }
-setupCssAndHtml();
+cleanTools.html.init.setupCssAndHtml();
 
 /*---------------------- Setup Listeners ----------------------*/
 
