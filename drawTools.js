@@ -662,6 +662,117 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 	} 
 }
 
+cleanTools.eventHandlers["mouseMove"] = function(e) {
+/*	if(cleanTools.canvas.isWithinBounds(e.pageX-cleanTools.canvas.offset.left,e.pageY-cleanTools.canvas.offset.top)) {
+		var p = cleanTools.context.getImageData(e.pageX-cleanTools.canvas.offset.left, e.pageY-cleanTools.canvas.offset.top, 1, 1).data;
+		outputDebug("[r:" +p[0] + ", g:" + p[1] + ", b:" + p[2] + ", a:" + p[3] + "]");
+	} else {
+		outputDebug("Out of bounds.")
+	}
+	*/
+	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.BRUSH)
+		return;	// default behaviors
+	else if(!cleanTools.tools.toolInUse)
+		return;	// If no tool is in use, ignore event
+		
+	// Translate mouse location to point relative to canvas
+	cleanTools.mouseX = e.pageX-cleanTools.canvas.offset.left;
+	cleanTools.mouseY = e.pageY-cleanTools.canvas.offset.top;
+	
+	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
+		// Do nothing
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
+		cleanTools.canvas.restore();
+		cleanTools.tools.paintMethods.drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1],cleanTools.mouseX,cleanTools.mouseY);
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
+		if(cleanTools.tools.points.length > 0) {
+			var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
+			cleanTools.canvas.restore();
+			cleanTools.tools.paintMethods.drawLineChain(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),true,cleanTools.options.lineToolsShouldClose,fillColor);
+		}
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
+		if(cleanTools.tools.points.length > 0) {
+			var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
+			cleanTools.canvas.restore();
+			cleanTools.tools.paintMethods.drawSpline(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,cleanTools.options.lineToolsShouldClose,fillColor,true);
+		}
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
+		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
+		cleanTools.canvas.restore();
+		cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
+		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
+		cleanTools.canvas.restore();
+		cleanTools.tools.paintMethods.drawEllipse(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
+	}
+}
+
+cleanTools.eventHandlers["mouseUp"] = function(e) {
+	if(0 && $('#drawTools-options').css('opacity') == 1){
+		if(!cleanTools.options.isWithinBounds(e.pageX, e.pageY))
+			cleanTools.options.toggleMenu();
+		return;
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.BRUSH)
+		return;
+	else if(!cleanTools.tools.toolInUse)	// If no tool is in use, ignore event
+		return;
+		
+	// Translate mouse location to point relative to canvas
+	cleanTools.mouseX = e.pageX-cleanTools.canvas.offset.left;
+	cleanTools.mouseY = e.pageY-cleanTools.canvas.offset.top;
+	
+	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
+		cleanTools.tools.reset(true);
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
+		cleanTools.canvas.restore();
+		cleanTools.tools.paintMethods.drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1], cleanTools.mouseX, cleanTools.mouseY);
+		cleanTools.tools.reset(true);
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
+		if(cleanTools.canvas.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
+			cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
+			if(e.which == 3) {	// If right mouse click, finish the chain
+				var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
+				cleanTools.canvas.restore();
+				cleanTools.tools.paintMethods.drawLineChain(cleanTools.context,cleanTools.tools.points,false,cleanTools.options.lineToolsShouldClose,fillColor);
+				cleanTools.tools.reset(true);
+			} else {
+				return;
+			}
+		} else {
+			cleanTools.canvas.restore();
+			cleanTools.tools.reset();
+			return;
+		}
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
+		if(cleanTools.canvas.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
+			cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
+			if(e.which == 3) {	// If right mouse click, finish the curve
+				var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
+				cleanTools.canvas.restore();
+				cleanTools.tools.paintMethods.drawSpline(cleanTools.context,cleanTools.tools.points,0.5,cleanTools.options.lineToolsShouldClose,fillColor,false);
+				cleanTools.tools.reset(true);
+			} else {
+				return;
+			}
+		} else {	// If user clicks out of acceptable boundaries, cancel all tool progress
+			cleanTools.canvas.restore();
+			cleanTools.tools.reset();
+			return;
+		}
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
+		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
+		cleanTools.canvas.restore();
+		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
+		cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points,fillColor);
+		cleanTools.tools.reset(true);
+	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
+		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
+		cleanTools.canvas.restore();
+		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
+		cleanTools.tools.paintMethods.drawEllipse(cleanTools.context,cleanTools.tools.points,fillColor);
+		cleanTools.tools.reset(true);
+	}
+}
 
   /*-----------------------------------------------------------------------------*/
  /*---------------------- Elements Creation/Manipulation -----------------------*/
@@ -832,118 +943,10 @@ cleanTools.Canvas.off('mousedown');
 cleanTools.Canvas.on('mousedown', cleanTools.eventHandlers.mouseDown);
 // Setup Mousemove Listener
 $(document).off('mousemove');
-$(document).on('mousemove', function(e){
-/*	if(cleanTools.canvas.isWithinBounds(e.pageX-cleanTools.canvas.offset.left,e.pageY-cleanTools.canvas.offset.top)) {
-		var p = cleanTools.context.getImageData(e.pageX-cleanTools.canvas.offset.left, e.pageY-cleanTools.canvas.offset.top, 1, 1).data;
-		outputDebug("[r:" +p[0] + ", g:" + p[1] + ", b:" + p[2] + ", a:" + p[3] + "]");
-	} else {
-		outputDebug("Out of bounds.")
-	}
-	*/
-	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.BRUSH)
-		return;	// default behaviors
-	else if(!cleanTools.tools.toolInUse)
-		return;	// If no tool is in use, ignore event
-		
-	// Translate mouse location to point relative to canvas
-	cleanTools.mouseX = e.pageX-cleanTools.canvas.offset.left;
-	cleanTools.mouseY = e.pageY-cleanTools.canvas.offset.top;
-	
-	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
-		// Do nothing
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
-		cleanTools.canvas.restore();
-		cleanTools.tools.paintMethods.drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1],cleanTools.mouseX,cleanTools.mouseY);
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
-		if(cleanTools.tools.points.length > 0) {
-			var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-			cleanTools.canvas.restore();
-			cleanTools.tools.paintMethods.drawLineChain(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),true,cleanTools.options.lineToolsShouldClose,fillColor);
-		}
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
-		if(cleanTools.tools.points.length > 0) {
-			var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-			cleanTools.canvas.restore();
-			cleanTools.tools.paintMethods.drawSpline(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),0.5,cleanTools.options.lineToolsShouldClose,fillColor,true);
-		}
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
-		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-		cleanTools.canvas.restore();
-		cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
-		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-		cleanTools.canvas.restore();
-		cleanTools.tools.paintMethods.drawEllipse(cleanTools.context,cleanTools.tools.points.concat(cleanTools.mouseX,cleanTools.mouseY),fillColor);
-	}
-});
+$(document).on('mousemove', cleanTools.eventHandlers.mouseMove);
 // Setup Mouseup Listener
 $(document).off('mouseup');
-$(document).on('mouseup', function(e){
-	if(0 && $('#drawTools-options').css('opacity') == 1){
-		if(!cleanTools.options.isWithinBounds(e.pageX, e.pageY))
-			cleanTools.options.toggleMenu();
-		return;
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.BRUSH)
-		return;
-	else if(!cleanTools.tools.toolInUse)	// If no tool is in use, ignore event
-		return;
-		
-	// Translate mouse location to point relative to canvas
-	cleanTools.mouseX = e.pageX-cleanTools.canvas.offset.left;
-	cleanTools.mouseY = e.pageY-cleanTools.canvas.offset.top;
-	
-	if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.FILL) {
-		cleanTools.tools.reset(true);
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINE) {
-		cleanTools.canvas.restore();
-		cleanTools.tools.paintMethods.drawLine(cleanTools.context,cleanTools.tools.points[0],cleanTools.tools.points[1], cleanTools.mouseX, cleanTools.mouseY);
-		cleanTools.tools.reset(true);
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN) {
-		if(cleanTools.canvas.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
-			cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
-			if(e.which == 3) {	// If right mouse click, finish the chain
-				var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-				cleanTools.canvas.restore();
-				cleanTools.tools.paintMethods.drawLineChain(cleanTools.context,cleanTools.tools.points,false,cleanTools.options.lineToolsShouldClose,fillColor);
-				cleanTools.tools.reset(true);
-			} else {
-				return;
-			}
-		} else {
-			cleanTools.canvas.restore();
-			cleanTools.tools.reset();
-			return;
-		}
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
-		if(cleanTools.canvas.isWithinDrawingBounds(cleanTools.mouseX,cleanTools.mouseY)){
-			cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
-			if(e.which == 3) {	// If right mouse click, finish the curve
-				var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-				cleanTools.canvas.restore();
-				cleanTools.tools.paintMethods.drawSpline(cleanTools.context,cleanTools.tools.points,0.5,cleanTools.options.lineToolsShouldClose,fillColor,false);
-				cleanTools.tools.reset(true);
-			} else {
-				return;
-			}
-		} else {	// If user clicks out of acceptable boundaries, cancel all tool progress
-			cleanTools.canvas.restore();
-			cleanTools.tools.reset();
-			return;
-		}
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.RECT) {
-		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-		cleanTools.canvas.restore();
-		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
-		cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points,fillColor);
-		cleanTools.tools.reset(true);
-	} else if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.ELLIPSE) {
-		var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-		cleanTools.canvas.restore();
-		cleanTools.tools.points.push(cleanTools.mouseX,cleanTools.mouseY);
-		cleanTools.tools.paintMethods.drawEllipse(cleanTools.context,cleanTools.tools.points,fillColor);
-		cleanTools.tools.reset(true);
-	}
-});
+$(document).on('mouseup', cleanTools.eventHandlers.mouseUp);
 
 $(document).keydown(function(e) {
 	if(e.keyCode == 39) {
