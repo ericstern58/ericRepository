@@ -62,6 +62,8 @@ var cleanTools = {
 	'mouseX':0, // Mouse coords
 	'mouseY':0,
 	
+	'shiftDown':0,
+	
 	'eventHandlers':{},
 	
 };
@@ -775,6 +777,11 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 }
 
 cleanTools.eventHandlers["keyDown"] = function(e) {
+	if(e.keyCode == 16) {
+		cleanTools.shiftDown = 1;
+		outputDebug("ShiftDown");
+	}
+	
 	if(e.keyCode == 39) {
 		alert('Right was pressed');
 	} if(e.keyCode == "Q".charCodeAt(0)) {
@@ -793,12 +800,15 @@ cleanTools.eventHandlers["keyDown"] = function(e) {
 			}
 		}
 	} else {
-		alert('Keycode for that key is: ' + e.keyCode);
+		//alert('Keycode for that key is: ' + e.keyCode);
 	}
 }
 
 cleanTools.eventHandlers["keyUp"] = function(e) {
-	
+	if(e.keyCode == 16) {
+		cleanTools.shiftDown = 0;
+		outputDebug("ShiftUp");
+	}
 }
 
   /*-----------------------------------------------------------------------------*/
