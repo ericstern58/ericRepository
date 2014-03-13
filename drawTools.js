@@ -129,16 +129,16 @@ cleanTools["tools"] = {
 	'lineShiftHold':function(startX,startY,endX,endY) {
 		var endPointX, endPointY;
 		
-		var rise = endY - startY;
-		var run = (endX - startX) ? (endX - startX): 1;
+		var rise = startY - endY;
+		var run = (startX - endX) ? (startX - endX): 1;
 		var slope = rise/run;
-		//outputDebug("Slope: " + slope);
-		if(slope > 2.4 && slope < -2.4) { // Up-Down
-			outputDebug("Slope: Up-Down");
+		outputDebug("Slope: " + slope);
+		if( slope > 2.4 && slope < -2.4 ) { // Up-Down
+			//outputDebug("Slope: Up-Down");
 		} else if( slope < 0.4 && slope > -0.4 ) { // Left-Right
-			outputDebug("Slope: Left-Right");
+			//outputDebug("Slope: Left-Right");
 		} else {
-			outputDebug("Slope: Diagonal");
+			//outputDebug("Slope: Diagonal");
 			return this.squarePoint(startX,startY,endX,endY);
 		}
 	},
