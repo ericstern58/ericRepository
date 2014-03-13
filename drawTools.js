@@ -830,22 +830,23 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 
 cleanTools.eventHandlers["keyDown"] = function(e) {
 	if(e.keyCode == 16) {
-		cleanTools.shiftDown = 1;
-		var t = cleanTools.tools;
+		var c = cleanTools;
+		var t = c.tools;
+		c.shiftDown = 1;
 		if( (t.currentToolType === t.toolType.RECT || t.currentToolType === t.toolType.ELLIPSE) && t.toolInUse ){
-			var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-			var endPointX = cleanTools.mouseX;
-			var endPointY = cleanTools.mouseY;
+			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+			var endPointX = c.mouseX;
+			var endPointY = c.mouseY;
 			
 			var a = t.squarePoint(t.points[0],t.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 			
-			cleanTools.canvas.restore();
+			c.canvas.restore();
 			if(t.currentToolType === t.toolType.RECT)
-				cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points.concat(endPointX,endPointY),fillColor);
+				t.paintMethods.drawRect(c.context,t.points.concat(endPointX,endPointY),fillColor);
 			else
-				cleanTools.tools.paintMethods.drawEllipse(cleanTools.context,cleanTools.tools.points.concat(endPointX,endPointY),fillColor);
+				t.paintMethods.drawEllipse(c.context,t.points.concat(endPointX,endPointY),fillColor);
 		}
 	}
 	
@@ -873,18 +874,19 @@ cleanTools.eventHandlers["keyDown"] = function(e) {
 
 cleanTools.eventHandlers["keyUp"] = function(e) {
 	if(e.keyCode == 16) {
-		cleanTools.shiftDown = 0;
-		var t = cleanTools.tools;
+		var c = cleanTools;
+		var t = c.tools;
+		c.shiftDown = 0;
 		if( (t.currentToolType === t.toolType.RECT || t.currentToolType === t.toolType.ELLIPSE) && t.toolInUse ){
-			var fillColor = (cleanTools.options.useStrokeAsFill) ? cleanTools.context.strokeStyle : cleanTools.options.fillColor;
-			var endPointX = cleanTools.mouseX;
-			var endPointY = cleanTools.mouseY;
+			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+			var endPointX = c.mouseX;
+			var endPointY = c.mouseY;
 			
-			cleanTools.canvas.restore();
+			c.canvas.restore();
 			if(t.currentToolType === t.toolType.RECT)
-				cleanTools.tools.paintMethods.drawRect(cleanTools.context,cleanTools.tools.points.concat(endPointX,endPointY),fillColor);
+				c.tools.paintMethods.drawRect(c.context,c.tools.points.concat(endPointX,endPointY),fillColor);
 			else
-				cleanTools.tools.paintMethods.drawEllipse(cleanTools.context,cleanTools.tools.points.concat(endPointX,endPointY),fillColor);
+				c.tools.paintMethods.drawEllipse(c.context,c.tools.points.concat(endPointX,endPointY),fillColor);
 		}
 	}
 }
