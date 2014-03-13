@@ -882,6 +882,7 @@ cleanTools.eventHandlers["keyDown"] = function(e) {
 			else
 				t.paintMethods.drawEllipse(c.context,t.points.concat(endPointX,endPointY),fillColor);
 		} else if( t.currentToolType === t.toolType.LINE || t.currentToolType === t.toolType.LINECHAIN ) {
+			/*
 			if(t.points.length > 0) {
 				if(c.shiftDown) {
 					var a = t.lineShiftHold(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
@@ -896,6 +897,7 @@ cleanTools.eventHandlers["keyDown"] = function(e) {
 					t.paintMethods.drawLine(c.context,t.points[0],t.points[1],endPointX,endPointY);
 				}
 			}
+			*/
 		}
 	} else if(e.keyCode == "Q".charCodeAt(0)) {
 		if(cleanTools.tools.currentToolType === cleanTools.tools.toolType.LINECHAIN || cleanTools.tools.currentToolType === cleanTools.tools.toolType.CURVE) {
@@ -935,6 +937,7 @@ cleanTools.eventHandlers["keyUp"] = function(e) {
 			else
 				c.tools.paintMethods.drawEllipse(c.context,c.tools.points.concat(endPointX,endPointY),fillColor);
 		} else if( t.currentToolType === t.toolType.LINE || t.currentToolType === t.toolType.LINECHAIN ) {
+			/*
 			if(t.points.length > 0) {
 				if(c.shiftDown) {
 					var a = t.lineShiftHold(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
@@ -949,6 +952,7 @@ cleanTools.eventHandlers["keyUp"] = function(e) {
 					t.paintMethods.drawLine(c.context,t.points[0],t.points[1],endPointX,endPointY);
 				}
 			}
+			*/
 		}
 	}
 }
