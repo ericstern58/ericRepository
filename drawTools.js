@@ -131,18 +131,14 @@ cleanTools["tools"] = {
 		return {x: endPointX, y:endPointY};
 	},
 	'lineShiftHold':function(startX,startY,endX,endY) {
-		var endPointX, endPointY;
-		
 		var rise = startY - endY;
 		var run = (startX - endX) ? (startX - endX): 1;
 		var slope = rise/run;
-		outputDebug("Slope: " + Math.round(slope*10)/10);
 		if( slope > 2.4 || slope < -2.4 ) { // Up-Down
 			return {x:startX, y:endY};
 		} else if( slope < 0.4 && slope > -0.4 ) { // Left-Right
 			return {x:endX, y:startY};
 		} else {
-			
 			return this.squareShiftHold(startX,startY,endX,endY);
 		}
 	},
@@ -935,6 +931,7 @@ cleanTools.eventHandlers["keyUp"] = function(e) {
 		
 		if(!t.toolInUse)
 			return;
+			
 		if( t.currentToolType === t.toolType.RECT || t.currentToolType === t.toolType.ELLIPSE ){
 			c.canvas.restore();
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
