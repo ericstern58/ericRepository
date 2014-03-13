@@ -709,6 +709,7 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 				if(height > 0) { // Quadrant I (+width, +height)
 					endPointX = cleanTools.tools.points[0] + Math.min(endPointX,endPointY); 
 					endPointY = cleanTools.tools.points[1] + Math.min(endPointX,endPointY);
+					outputDebug("Quadrant I");
 				} else { // Quadrant IV (+width, -height)
 					if(Math.abs(height) > width) {
 						endPointX = cleanTools.tools.points[0] + width; 
@@ -717,6 +718,7 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 						endPointX = cleanTools.tools.points[0] - height; 
 						endPointY = cleanTools.tools.points[1] + height;
 					}
+					outputDebug("Quadrant IV");
 				}
 			} else {
 				if(height > 0) { // Quadrant II (-width, +height)
@@ -727,9 +729,11 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 						endPointX = cleanTools.tools.points[0] + width; 
 						endPointY = cleanTools.tools.points[1] - width;
 					}
+					outputDebug("Quadrant II");
 				} else { // Quadrant III (-width, -height)
 					endPointX = cleanTools.tools.points[0] + Math.max(endPointX,endPointY); 
 					endPointY = cleanTools.tools.points[1] + Math.max(endPointX,endPointY);
+					outputDebug("Quadrant III");
 				}
 			}
 		}
