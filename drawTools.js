@@ -583,6 +583,7 @@ cleanTools.html.init['setupCSS'] = function()
 {
 	// Calculate variables used in css
 	var optionsMarginTop = cleanTools.canvas.offset.top + cleanTools.canvas.height - $('#' + cleanTools.id).offset().top;
+	var optionsMarginLeft = cleanTools.canvas.offset.left + (cleanTools.canvas.width/2) - 210; // Get middle of canvas and subtract optionsWidth/2
 	
 	var DTSheet = document.createElement('style');
 	DTSheet.id = cleanTools.id + 'StyleSheet'; // Give id so destructor can find it if needed
@@ -995,7 +996,7 @@ cleanTools.html.init['createUtilityButton'] = function(name)
 	return button;
 }
 
-cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv)
+cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton)
 {
 	//Create DIV in which Options will be placed in
 	var optionsDiv = document.createElement('div');
@@ -1005,7 +1006,9 @@ cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv)
 			'<div id="drawTools-options-leftPanel"></div>' +
 			'<div id="drawTools-options-palette"></div>' +
 		'</div>';
-	drawToolsDiv.appendChild(optionsDiv);
+	//drawToolsDiv.appendChild(optionsDiv);
+	
+	drawToolsDiv.insertBefore(optionsDiv, optionsButton.nextSibling);
 	
 	//----- BEGIN ----- LeftPanel --------------------------------------------------
 	var leftPanelHtml = "";
@@ -1094,7 +1097,7 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	var optionsButton = cleanTools.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
 	
-	cleanTools.html.init.createOptionsMenu(drawToolsDiv);
+	cleanTools.html.init.createOptionsMenu(drawToolsDiv, optionsButton);
 	
 	// Exitbutton to remove DrawTools
 	var exitButton = cleanTools.html.init.createUtilityButton("exit");
