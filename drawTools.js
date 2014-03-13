@@ -134,9 +134,9 @@ cleanTools["tools"] = {
 		var slope = rise/run;
 		outputDebug("Slope: " + Math.round(slope*10)/10);
 		if( slope > 2.4 && slope < -2.4 ) { // Up-Down
-			return {x:0, y:endX};
+			return {x:startX, y:endY};
 		} else if( slope < 0.4 && slope > -0.4 ) { // Left-Right
-			return {x:startX, y:0};
+			return {x:endX, y:startY};
 		} else {
 			
 			return this.squarePoint(startX,startY,endX,endY);
