@@ -862,16 +862,16 @@ cleanTools.eventHandlers["keyDown"] = function(e) {
 		if(t.currentToolType === t.toolType.LINECHAIN || t.currentToolType === t.toolType.CURVE) {
 			if(t.points.length) {
 				t.points.length -= 2;
-				if(t.points.length == 0) {
-					c.canvas.restore();
-					t.reset();
-				}
-				var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 				c.canvas.restore();
-				if(t.currentToolType === t.toolType.LINECHAIN)
-					t.paintMethods.drawLineChain(c.context,t.points.concat(c.mouseX,c.mouseY),true,c.options.lineToolsShouldClose,fillColor);
-				else
-					t.paintMethods.drawSpline(c.context,t.points.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fillColor,true);
+				if(t.points.length == 0) {
+					t.reset();
+				} else {
+					var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+					if(t.currentToolType === t.toolType.LINECHAIN)
+						t.paintMethods.drawLineChain(c.context,t.points.concat(c.mouseX,c.mouseY),true,c.options.lineToolsShouldClose,fillColor);
+					else
+						t.paintMethods.drawSpline(c.context,t.points.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fillColor,true);
+				}
 			}
 		}
 	} else {
