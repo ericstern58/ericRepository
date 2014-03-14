@@ -674,7 +674,7 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 	var c = cleanTools;
 	var t = c.tools;
 	
-	if($('#drawTools-options').css('opacity') == 1){
+	if(0 && $('#drawTools-options').css('opacity') == 1){
 		painting = !1;
 		c.canvas.restore();
 		c.canvas.updateLocation();
@@ -782,6 +782,7 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 	var t = c.tools;
 	
 	if($('#drawTools-options').css('opacity') == 1){
+		c.canvas.updateLocation();
 		if(!c.options.isWithinBounds(e.pageX, e.pageY)) {
 			c.options.toggleMenu();
 		}
