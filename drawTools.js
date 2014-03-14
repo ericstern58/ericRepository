@@ -674,7 +674,7 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 	var c = cleanTools;
 	var t = c.tools;
 	
-	if(0 && $('#drawTools-options').css('opacity') == 1){
+	if($('#drawTools-options').css('opacity') == 1){
 		painting = !1;
 		c.canvas.restore();
 		c.canvas.updateLocation();
