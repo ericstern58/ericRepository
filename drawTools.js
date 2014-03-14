@@ -679,6 +679,8 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 	if($('#drawTools-options').css('opacity') == 1){
 		//painting = !1;
 		//c.canvas.restore();
+		c.mouseDownX = e.pageX;
+		c.mouseDownY = e.pageY;
 		return;
 	} else if(t.currentToolType === t.toolType.BRUSH)
 		return;
@@ -688,8 +690,6 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 	// Translate mouse location to point relative to canvas
 	c.mouseX = e.pageX-c.canvas.offset.left;
 	c.mouseY = e.pageY-c.canvas.offset.top;
-	c.mouseDownX = e.pageX;
-	c.mouseDownY = e.pageY;
 	
 	if(t.currentToolType === t.toolType.FILL) {
 		painting = !1;
@@ -785,7 +785,7 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 	var t = c.tools;
 	
 	if($('#drawTools-options').css('opacity') == 1){
-		if(!c.options.isWithinBounds(e.pageX, e.pageY)) {
+		if(!c.options.isWithinBounds(c.mouseDownX, c.mouseDownY)) {
 			c.options.toggleMenu();
 		}
 		return;
