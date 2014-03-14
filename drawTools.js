@@ -157,9 +157,6 @@ cleanTools["options"] = {
 	'getOffset':function () {
 		return $(this.id).offset();
 	},
-	'active':function() {
-		return ($(this.id).css('opacity') == 1);
-	},
 	'toggleMenu':function () {
 		var h = 175;	// Height of the options div
 		var opacity = $(this.id).css('opacity');
@@ -677,7 +674,7 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 	var c = cleanTools;
 	var t = c.tools;
 	
-	if(c.options.active){
+	if($('#drawTools-options').css('opacity') == 1){
 		painting = !1;
 		c.canvas.restore();
 		c.options.toggleMenu();
