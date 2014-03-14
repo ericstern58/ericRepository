@@ -789,10 +789,11 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 			c.options.toggleMenu();
 		}
 		return;
-	} else if(t.currentToolType === t.toolType.BRUSH)
+	} else if(t.currentToolType === t.toolType.BRUSH) {
 		return;
-	else if(!t.toolInUse)	// If no tool is in use, ignore event
+	} else if(!t.toolInUse)	// If no tool is in use, ignore event
 		return;
+	}
 		
 	// Translate mouse location to point relative to canvas
 	c.mouseX = e.pageX-c.canvas.offset.left;
