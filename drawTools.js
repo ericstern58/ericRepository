@@ -65,8 +65,6 @@ var cleanTools = {
 	
 	'mouseX':0, // Mouse coords
 	'mouseY':0,
-	'mouseDownPageX':0, // MouseDown in the page
-	'mouseDownPageY':0,
 	
 	'shiftDown':0,
 	
