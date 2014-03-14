@@ -585,7 +585,7 @@ cleanTools.html.init['setupCSS'] = function()
 	var cleanToolsObject = $('#' + cleanTools.id);
 	var optionsMarginTop = cleanTools.canvas.offset.top + cleanTools.canvas.height - cleanToolsObject.offset().top;
 	var optionsMarginLeft = (cleanToolsObject.width() - 420)/2;
-	alert("cleanToolsObject.width(): " + cleanToolsObject.width() + "\noptionsMarginLeft: " + optionsMarginLeft);
+	//alert("cleanToolsObject.width(): " + cleanToolsObject.width() + "\noptionsMarginLeft: " + optionsMarginLeft);
 	
 	var DTSheet = document.createElement('style');
 	DTSheet.id = cleanTools.id + 'StyleSheet'; // Give id so destructor can find it if needed
@@ -780,9 +780,12 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 	var c = cleanTools;
 	var t = c.tools;
 	
-	if(0 && $('#drawTools-options').css('opacity') == 1){
+	if($('#drawTools-options').css('opacity') == 1){
 		if(!c.options.isWithinBounds(e.pageX, e.pageY))
-			c.options.toggleMenu();
+			outputDebug("Mouse clicked Outside");
+			//c.options.toggleMenu();
+		else
+			outputDebug("Mouse clicked Inside");
 		return;
 	} else if(t.currentToolType === t.toolType.BRUSH)
 		return;
