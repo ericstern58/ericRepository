@@ -1,38 +1,3 @@
-		//var stopwatch = new StopWatch();
-		//stopwatch.start();
-		//stopwatch.stop();
-		//stopwatch.printElapsed();
-var StopWatch = function (performance) {
-    this.startTime = 0;
-    this.stopTime = 0;
-    this.running = false;
-    this.performance = performance === false ? false : !!window.performance;
-};
-StopWatch.prototype.currentTime = function () {
-    return this.performance ? window.performance.now() : new Date().getTime();
-};
-StopWatch.prototype.start = function () {
-    this.startTime = this.currentTime();
-    this.running = true;
-};
-StopWatch.prototype.stop = function () {
-    this.stopTime = this.currentTime();
-    this.running = false;
-};
-StopWatch.prototype.getElapsedMilliseconds = function () {
-    if (this.running)
-        this.stopTime = this.currentTime();
-    return this.stopTime - this.startTime;
-};
-StopWatch.prototype.getElapsedSeconds = function () {
-    return this.getElapsedMilliseconds() / 1000;
-};
-StopWatch.prototype.printElapsed = function (name) {
-    var currentName = name || 'Elapsed:';
-    console.log(currentName, '[' + this.getElapsedMilliseconds() + 'ms]', '[' + this.getElapsedSeconds() + 's]');
-    outputDebug('[' + this.getElapsedMilliseconds() + 'ms]');
-};
-
 // State variable that helps prevent double installation of script
 window.DTToolsIsCurrentlyInstalled = true;
 
@@ -42,11 +7,6 @@ var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
 var DRAWCEPTION_BRUSHES = 
 	[{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},{id: 'brush-12', size: 12},{id: 'brush-35', size: 35}];
-
-var xfasdfadf = 2+3;
-var doasfasdf = xfasdfadf +34;
-var doasdsasdffasdf = xfasdfadf +33;
-
 
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
@@ -68,8 +28,7 @@ var cleanTools = {
 	
 	'shiftDown':0,
 	
-	'eventHandlers':{},
-	
+	'eventHandlers':{}
 };
 cleanTools["canvas"] = {
     'parentObject':cleanTools,
@@ -91,7 +50,7 @@ cleanTools["canvas"] = {
 	},
 	"restore": function() {
 		this.parentObject.context.constructor.prototype.putImageData.call(this.parentObject.context, restorePoints[restorePosition], 0, 0);
-	},
+	}
 };
 cleanTools["tools"] = {
 	'currentToolType':0,
@@ -141,7 +100,7 @@ cleanTools["tools"] = {
 		} else {
 			return this.squareShiftHold(startX,startY,endX,endY);
 		}
-	},
+	}
 };
 cleanTools["options"] = {
 	'id':'#' + cleanTools.id + '-options',
@@ -182,7 +141,7 @@ cleanTools["options"] = {
 		var height = $(this.id).height();
 		//outputDebug("[x:" + x2 + ", y:" + y2 + "] [width:" + width + ", height:" + height + "]");
 		return (x2>=0 && y2>=0 && x2<width && y2<height);
-	},
+	}
 };
 cleanTools["html"] = {
 	'parentObject':cleanTools,
@@ -214,8 +173,8 @@ cleanTools["html"] = {
 		},
 		'setToolType':function(type) {
 			this.cleanToolsObject.tools.currentToolType=type;
-		},
-	},
+		}
+	}
 };
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- Drawing Algorithms ----------------------------*/
@@ -721,8 +680,7 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 		return;	// default behaviors
 	else if(!t.toolInUse)
 		return;	// If no tool is in use, ignore event
-		
-		
+	
 	// Translate mouse location to point relative to canvas
 	c.mouseX = e.pageX-c.canvas.offset.left;
 	c.mouseY = e.pageY-c.canvas.offset.top;
@@ -1050,7 +1008,6 @@ cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton
 	}
 	document.getElementById('drawTools-options-palette').innerHTML = optionsPaletteHtml;
 }
-
 // Destroys all elements, styling and javascript
 cleanTools.html['DTDestroy'] = function() 
 {
@@ -1058,7 +1015,7 @@ cleanTools.html['DTDestroy'] = function()
 	document.getElementById(cleanTools.id).remove();
 	// 2. Destroy CSS
 	document.getElementById(cleanTools.id + 'StyleSheet').remove();
-	// 3. Remove listeners (async)
+	// 3. Remove listeners
 	$(document).off('mousedown');
 	$(document).off('mousemove');
 	$(document).off('mouseup');
