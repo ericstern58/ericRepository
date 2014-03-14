@@ -780,13 +780,10 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 				c.canvas.restore();
 				t.paintMethods.drawLineChain(c.context,t.points,false,c.options.lineToolsShouldClose,fillColor);
 				t.reset(true);
-			} else {
-				return;
 			}
-		} else {
+		} else { // If user clicks out of acceptable boundaries, cancel all tool progress
 			c.canvas.restore();
 			t.reset();
-			return;
 		}
 	} else if(t.currentToolType === t.toolType.CURVE) {
 		if(c.canvas.isWithinDrawingBounds(c.mouseX,c.mouseY)){
@@ -796,13 +793,10 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 				c.canvas.restore();
 				t.paintMethods.drawSpline(c.context,t.points,0.5,c.options.lineToolsShouldClose,fillColor,false);
 				t.reset(true);
-			} else {
-				return;
 			}
-		} else {	// If user clicks out of acceptable boundaries, cancel all tool progress
+		} else { // If user clicks out of acceptable boundaries, cancel all tool progress
 			c.canvas.restore();
 			t.reset();
-			return;
 		}
 	} else if(t.currentToolType === t.toolType.RECT) {
 		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
@@ -828,11 +822,10 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 		t.reset(true);
 	}
 }
-
 cleanTools.eventHandlers["keyDown"] = function(e) {
 	var c = cleanTools;
 	var t = c.tools;
-	if(e.keyCode == 16 ) {
+	if(e.keyCode == 16 ) { // If shift is pressed
 		c.shiftDown = 1;
 		var endPointX = c.mouseX;
 		var endPointY = c.mouseY;
@@ -885,11 +878,10 @@ cleanTools.eventHandlers["keyDown"] = function(e) {
 		//alert('Keycode for that key is: ' + e.keyCode);
 	}
 }
-
 cleanTools.eventHandlers["keyUp"] = function(e) {
 	var c = cleanTools;
 	var t = c.tools;
-	if(e.keyCode == 16) {
+	if(e.keyCode == 16) { // If shift is released
 		c.shiftDown = 0;
 		var endPointX = c.mouseX;
 		var endPointY = c.mouseY;
@@ -1023,6 +1015,9 @@ cleanTools.html['DTDestroy'] = function()
 	// 4. Set the state variable to reflect DTTools uninstallation
 	window.DTToolsIsCurrentlyInstalled = false;
 	// 5. Destroy JavaScript
+	delete cleanTools.canvas;
+	delete cleanTools.html;
+	delete cleanTools;
 	document.getElementById('DTScript').remove();
 }
 cleanTools.html.init['setupCssAndHtml'] = function()
