@@ -678,6 +678,9 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 		painting = !1;
 		c.canvas.restore();
 		c.canvas.updateLocation();
+		if(!c.options.isWithinBounds(e.pageX, e.pageY)) {
+			c.options.toggleMenu();
+		}
 		return;
 	} else if(t.currentToolType === t.toolType.BRUSH)
 		return;
@@ -781,7 +784,7 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 	var c = cleanTools;
 	var t = c.tools;
 	
-	if($('#drawTools-options').css('opacity') == 1){
+	if(0 && $('#drawTools-options').css('opacity') == 1){
 		c.canvas.updateLocation();
 		if(!c.options.isWithinBounds(e.pageX, e.pageY)) {
 			c.options.toggleMenu();
