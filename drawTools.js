@@ -54,13 +54,13 @@ cleanTools["canvas"] = {
 };
 cleanTools["tools"] = {
 	'currentToolType':0,
-	'toolInUse':false,
+	'toolActive':false,
 	'points':[], // Will contain user input point sets for shapes/lines/etc
 	
 	'toolType':{BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99},
 	'reset':function(saveCanvas) {
 		this.points.length = 0;
-		this.toolInUse = false;
+		this.toolActive = false;
 		if(saveCanvas)
 			save();
 	},
@@ -640,7 +640,7 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 		return;
 	} else if(t.currentToolType === t.toolType.BRUSH)
 		return;
-	t.toolInUse = true;
+	t.toolActive = true;
 	c.canvas.updateLocation();
 	
 	// Translate mouse location to point relative to canvas
@@ -678,7 +678,7 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 	*/
 	if(t.currentToolType === t.toolType.BRUSH)
 		return;	// default behaviors
-	else if(!t.toolInUse)
+	else if(!t.toolActive)
 		return;	// If no tool is in use, ignore event
 	
 	// Translate mouse location to point relative to canvas
@@ -747,7 +747,7 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 		return;
 	} else if(t.currentToolType === t.toolType.BRUSH)
 		return;
-	else if(!t.toolInUse)	// If no tool is in use, ignore event
+	else if(!t.toolActive)	// If no tool is in use, ignore event
 		return;
 		
 	// Translate mouse location to point relative to canvas
@@ -837,7 +837,7 @@ cleanTools.eventHandlers["keyDown"] = function(e) {
 		var endPointX = c.mouseX;
 		var endPointY = c.mouseY;
 		
-		if(!t.toolInUse)
+		if(!t.toolActive)
 			return;
 		else if( t.currentToolType === t.toolType.RECT || t.currentToolType === t.toolType.ELLIPSE ) {
 			var a = t.squareShiftHold(t.points[0],t.points[1],endPointX,endPointY);
@@ -894,7 +894,7 @@ cleanTools.eventHandlers["keyUp"] = function(e) {
 		var endPointX = c.mouseX;
 		var endPointY = c.mouseY;
 		
-		if(!t.toolInUse)
+		if(!t.toolActive)
 			return;
 			
 		if( t.currentToolType === t.toolType.RECT || t.currentToolType === t.toolType.ELLIPSE ){
