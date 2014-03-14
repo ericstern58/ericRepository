@@ -870,7 +870,8 @@ cleanTools.eventHandlers["keyDown"] = function(e) {
 			if(t.points.length) {
 				t.points.length -= 2;
 				if(t.points.length == 0) {
-					t.toolInUse = false;
+					c.canvas.restore();
+					t.reset(true);
 				}
 				var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 				c.canvas.restore();
