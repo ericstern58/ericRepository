@@ -158,7 +158,7 @@ cleanTools["options"] = {
 		return $(this.id).offset();
 	},
 	'active':function() {
-		return $(this.id).css('opacity') == 1
+		return ($(this.id).css('opacity') == 1);
 	},
 	'toggleMenu':function () {
 		var h = 175;	// Height of the options div
