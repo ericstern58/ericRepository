@@ -65,6 +65,8 @@ var cleanTools = {
 	
 	'mouseX':0, // Mouse coords
 	'mouseY':0,
+	'mouseDownPageX':0, // MouseDown in the page
+	'mouseDownPageY':0,
 	
 	'shiftDown':0,
 	
@@ -674,9 +676,12 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 	var c = cleanTools;
 	var t = c.tools;
 	
-	if(0 && $('#drawTools-options').css('opacity') == 1){
+	if($('#drawTools-options').css('opacity') == 1){
 		painting = !1;
 		c.canvas.restore();
+		if(!c.options.isWithinBounds(e.pageX, e.pageY)) {
+			c.options.toggleMenu();
+		}
 		return;
 	} else if(t.currentToolType === t.toolType.BRUSH)
 		return;
@@ -686,6 +691,8 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 	// Translate mouse location to point relative to canvas
 	c.mouseX = e.pageX-c.canvas.offset.left;
 	c.mouseY = e.pageY-c.canvas.offset.top;
+	c.mouseDownX = e.pageX;
+	c.mouseDownY = e.pageY;
 	
 	if(t.currentToolType === t.toolType.FILL) {
 		painting = !1;
@@ -780,9 +787,8 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 	var c = cleanTools;
 	var t = c.tools;
 	
-	if($('#drawTools-options').css('opacity') == 1){
+	if($(0 && '#drawTools-options').css('opacity') == 1){
 		if(!c.options.isWithinBounds(e.pageX, e.pageY)) {
-			//outputDebug("Mouse clicked Outside");
 			c.options.toggleMenu();
 		}
 		return;
