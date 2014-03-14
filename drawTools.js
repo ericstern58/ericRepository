@@ -674,9 +674,10 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 	var c = cleanTools;
 	var t = c.tools;
 	
-	if(0 && $('#drawTools-options').css('opacity') == 1){
+	if($('#drawTools-options').css('opacity') == 1){
 		painting = !1;
 		c.canvas.restore();
+		c.canvas.updateLocation();
 		return;
 	} else if(t.currentToolType === t.toolType.BRUSH)
 		return;
@@ -782,7 +783,6 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 	
 	if($('#drawTools-options').css('opacity') == 1){
 		if(!c.options.isWithinBounds(e.pageX, e.pageY)) {
-			//outputDebug("Mouse clicked Outside");
 			c.options.toggleMenu();
 		}
 		return;
