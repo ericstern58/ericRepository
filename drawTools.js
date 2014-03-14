@@ -784,8 +784,6 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 		if(!c.options.isWithinBounds(e.pageX, e.pageY))
 			//outputDebug("Mouse clicked Outside");
 			c.options.toggleMenu();
-		else
-			outputDebug("Mouse clicked Inside");
 		return;
 	} else if(t.currentToolType === t.toolType.BRUSH)
 		return;
