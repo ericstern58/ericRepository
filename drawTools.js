@@ -782,10 +782,7 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 	
 	if($('#drawTools-options').css('opacity') == 1){
 		if(!c.options.isWithinBounds(e.pageX, e.pageY))
-			outputDebug("Mouse clicked Outside");
-			//c.options.toggleMenu();
-		else
-			outputDebug("Mouse clicked Inside");
+			c.options.toggleMenu();
 		return;
 	} else if(t.currentToolType === t.toolType.BRUSH)
 		return;
