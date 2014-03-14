@@ -676,7 +676,11 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 	var c = cleanTools;
 	var t = c.tools;
 	
-	if(t.currentToolType === t.toolType.BRUSH)
+	if($('#drawTools-options').css('opacity') == 1){
+		//painting = !1;
+		//c.canvas.restore();
+		return;
+	} else if(t.currentToolType === t.toolType.BRUSH)
 		return;
 	t.toolInUse = true;
 	c.canvas.updateLocation();
@@ -684,15 +688,10 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 	// Translate mouse location to point relative to canvas
 	c.mouseX = e.pageX-c.canvas.offset.left;
 	c.mouseY = e.pageY-c.canvas.offset.top;
+	c.mouseDownX = e.pageX;
+	c.mouseDownY = e.pageY;
 	
-	if($('#drawTools-options').css('opacity') == 1){
-		painting = !1;
-		c.canvas.restore();
-		t.toolInUse = false;
-		c.mouseDownX = e.pageX;
-		c.mouseDownY = e.pageY;
-		return;
-	} else if(t.currentToolType === t.toolType.FILL) {
+	if(t.currentToolType === t.toolType.FILL) {
 		painting = !1;
 		t.paintMethods.floodFill(c.context,c.mouseX,c.mouseY);
 	} else if(t.currentToolType === t.toolType.LINE) {
