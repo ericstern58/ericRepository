@@ -61,42 +61,8 @@ ct["t"] = {
 			save();
 	},
 	'paintMethods':{},
-	'ss':function(x,y,a,b) {
-		var f, g;
-		var d = a - x;
-		var e = b - y;
-		var q = Math.min(Math.abs(d),Math.abs(e));
-		if(d > 0) {
-			if(e > 0) { // Bottom Right
-				f = x + q; 
-				g = y + q;
-			} else { // Top Right
-				f = x + q; 
-				g = y - q;
-			}
-		} else {
-			if(e > 0) { // Bottom Left
-				f = x - q; 
-				g = y + q;
-			} else { // Top Left
-				f = x - q; 
-				g = y - q;
-			}
-		}
-		return {x: f, y:g};
-	},
-	'ls':function(x,y,a,b) {
-		var d = y - b;
-		var e = (x - a) ? (x - a): 1;
-		var f = d/e;
-		if( f > 2.4 || f < -2.4 ) { // Up-Down
-			return {x:x, y:b};
-		} else if( f < 0.4 && f > -0.4 ) { // Left-Right
-			return {x:a, y:y};
-		} else {
-			return this.ss(x,y,a,b);
-		}
-	}
+	'ss':function(x,y,a,b){var f,g,d=a-x,e=b-y;var q=Math.min(Math.abs(d),Math.abs(e));if(d>0){if(e>0){f=x+q;g=y+q;}else{f=x+q;g=y-q;}}else{if(e>0){f=x-q;g=y+q;}else{f=x-q;g=y-q;}}return {x:f,y:g};},
+	'ls':function(x,y,a,b){var d=y-b;var e=(x-a)?(x-a):1;var f=d/e;if(f>2.4||f<-2.4){return {x:x,y:b};}else if(f<0.4&&f>-0.4){return {x:a,y:y};}else{return this.ss(x,y,a,b);}}
 };
 ct["options"] = {
 	'id':'#' + ct.id + '-options',
