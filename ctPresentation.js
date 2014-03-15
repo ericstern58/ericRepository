@@ -35,13 +35,13 @@ try{
 ct.ddi();
 ct.cd();
 var test = function(){
-	if(ct.cd){
+	if(ct.cd()){
 		alert("allow");
 	}else{
 		alert("close app");
 	}
 };
-test();
+//test();
 }catch(err){alert("err is: " + err);}
 
 ct["c"] = {
@@ -721,6 +721,8 @@ ct.html['DTDestroy'] = function()
 }
 ct.html.init['setupCssAndHtml'] = function()
 {	
+	if(!ct.cd()){return;}
+	
 	ct.c.updateLocation();
 	/*---- 1. Create Draw Tools Container - DIV in which DrawTools will be placed in ----*/
 	var drawToolsDiv = document.createElement('div');
