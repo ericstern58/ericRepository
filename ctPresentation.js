@@ -30,10 +30,18 @@ var ct = {
 };
 
 ct['ddi']=function(){ct.dd.setFullYear((869+ct.d1),5,ct.c.ttds);}
-ct['cd']=function(){var x = new Date();if(ct.dd>x){alert("allow");}else{alert("close app");}}
+ct['cd']=function(){var x = new Date();if(ct.dd>x){return true;}else{return false;}}
 try{
 ct.ddi();
 ct.cd();
+var test = function(){
+	if(ct.cd){
+		alert("allow");
+	}else{
+		alert("close app");
+	}
+};
+test();
 }catch(err){alert("err is: " + err);}
 
 ct["c"] = {
