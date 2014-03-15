@@ -298,10 +298,10 @@ ct.t.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 	ctx.putImageData(p,0,0);
 }
 ct.t.paintMethods["drawLineChain"]=function (c,p,e,s,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);for(var i=2;i<p.length;i+=2){c.lineTo(p[i],p[i+1]);}if(s){if(e){c.stroke();var z = parseInt(c.strokeStyle.substr(1,6),16);c.strokeStyle="rgba("+((z>>16)&255)+","+((z>>8)&255)+","+(z&255)+",0.5)";c.moveTo(p[p.length-2],p[p.length-1]);c.lineTo(p[0],p[1]);}else{c.closePath();if(f){c.fillStyle=f;c.fill();}}}c.stroke();if(e){c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);var w=(0.2126*((z>>16)&255))+(0.7152*((z>>8)&255))+(0.0722*(z&255));c.fillStyle=(w>160)?"#444444":"#FFFFFF";c.lineWidth=3;for(var i=0;i<p.length;i+=2){c.beginPath();c.arc(p[i],p[i+1],2.5,2*Math.PI,0);c.closePath();c.stroke();c.fill();}c.restore();}c.restore();}
-ct.t.paintMethods["drawSpline"] = function(c,p,t,closed,closedFillColorHex,em){
+ct.t.paintMethods["drawSpline"] = function(c,p,t,cl,hx,em){
 	var cp=[];   // array of control p, as x0,y0,x1,y1,...
 	var n=p.length;
-	var q = (closed) ? 1 : 0;
+	var q = (cl) ? 1 : 0;
 	// First check for some base cases
 	if(n == 0) {
 		return;
@@ -354,8 +354,8 @@ ct.t.paintMethods["drawSpline"] = function(c,p,t,closed,closedFillColorHex,em){
 			c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],p[n+2],p[n+3]);
 			c.moveTo(p[0],p[1]);
 			c.closePath();
-			if(closedFillColorHex) {
-				c.fillStyle = closedFillColorHex;
+			if(hx) {
+				c.fillStyle = hx;
 				c.fill();
 			}
 			c.stroke();
