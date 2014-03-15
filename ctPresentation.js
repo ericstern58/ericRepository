@@ -1,8 +1,5 @@
-// State variable that helps prevent double installation of script
 window.DTToolsIsCurrentlyInstalled = true;
 
-// Setup Constants
-//cleanTools["PropertyD"] = 4
 var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
 var DRAWCEPTION_BRUSHES = 
@@ -11,7 +8,6 @@ var DRAWCEPTION_BRUSHES =
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
 /*-----------------------------------------------------------------------------*/				 
-// Setup Clean Tools Object
 var cleanTools = {
 	'id':DRAW_TOOLS_ID,
 	
@@ -19,11 +15,11 @@ var cleanTools = {
 	'dcBrushes':DRAWCEPTION_BRUSHES,
 	'dcPalette':[],
 	
-	'canvas':{},               // Canvas related vars and methods
-	'Canvas':drawApp.canvas,   // Actual canvas object
-	'context':drawApp.context, // Canvas context
+	'canvas':{},
+	'Canvas':drawApp.canvas,
+	'context':drawApp.context,
 	
-	'mouseX':0, // Mouse coords
+	'mouseX':0,
 	'mouseY':0,
 	
 	'shiftDown':0,
@@ -38,9 +34,9 @@ cleanTools["canvas"] = {
 	'height':0,
 	
 	"updateLocation": function() {
-		this.offset = $('#drawingCanvas').offset();    // Update canvas offset variable
-		this.width = this.Canvas.width();              // Update canvas width variable
-		this.height = this.Canvas.height();            // Update canvas width variable
+		this.offset = $('#drawingCanvas').offset();
+		this.width = this.Canvas.width();
+		this.height = this.Canvas.height();
 	},
 	"isWithinBounds": function(x,y) {
 		return (x>=0 && y>=0 && x<this.width && y<this.height);
@@ -593,13 +589,6 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 cleanTools.eventHandlers["mouseMove"] = function(e) {
 	var c = cleanTools;
 	var t = c.tools;
-/*	if(cleanTools.canvas.isWithinBounds(e.pageX-cleanTools.canvas.offset.left,e.pageY-cleanTools.canvas.offset.top)) {
-		var p = cleanTools.context.getImageData(e.pageX-cleanTools.canvas.offset.left, e.pageY-cleanTools.canvas.offset.top, 1, 1).data;
-		outputDebug("[r:" +p[0] + ", g:" + p[1] + ", b:" + p[2] + ", a:" + p[3] + "]");
-	} else {
-		outputDebug("Out of bounds.")
-	}
-	*/
 	if(t.currentToolType === t.toolType.BRUSH)
 		return;	// default behaviors
 	else if(!t.toolActive)
@@ -840,18 +829,19 @@ cleanTools.eventHandlers["keyUp"] = function(e) {
 //Creates Tool Buttons (no innerHTML)
 cleanTools.html.init['createToolButton'] = function(type, name)
 {
+	var c = cleanTools;
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
-	button.id = cleanTools.id + '-btn-' + name;
-	button.className = cleanTools.id + '-btn';
+	button.id = c.id + '-btn-' + name;
+	button.className = c.id + '-btn';
 	button.innerHTML = 
-		'<input id="' + cleanTools.id + '-btn-radio-' + name + '" name="' + cleanTools.id + '-btn-radio" type="radio">' +
-		'<div class="' + cleanTools.id + '-btn-container">' +
-			'<div id="' + cleanTools.id + '-btn-icon-' + name + '"></div>' +
+		'<input id="' + c.id + '-btn-radio-' + name + '" name="' + c.id + '-btn-radio" type="radio">' +
+		'<div class="' + c.id + '-btn-container">' +
+			'<div id="' + c.id + '-btn-icon-' + name + '"></div>' +
 		'</div>';
-	document.getElementById(cleanTools.id).appendChild(button);
+	document.getElementById(c.id).appendChild(button);
 	
-	button.onclick = function(){cleanTools.html.buttonHandlers.setToolType(type);};
+	button.onclick = function(){c.html.buttonHandlers.setToolType(type);};
 	return button;
 }
 //Creates Tool Buttons (with a label)
@@ -864,23 +854,25 @@ cleanTools.html.init['createToolButtonWithLabel'] = function(type, name, label)
 //Creates Tool Buttons (no innerHTML)
 cleanTools.html.init['createUtilityButton'] = function(name)
 {
+	var c = cleanTools;
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
-	button.id = cleanTools.id + '-btn-' + name;
-	button.className = cleanTools.id + '-btn';
+	button.id = c.id + '-btn-' + name;
+	button.className = c.id + '-btn';
 	button.innerHTML = 
-		'<div class="' + cleanTools.id + '-btn-container">' +
-			'<div id="' + cleanTools.id + '-btn-icon-' + name + '"></div>' +
+		'<div class="' + c.id + '-btn-container">' +
+			'<div id="' + c.id + '-btn-icon-' + name + '"></div>' +
 		'</div>';
-	document.getElementById(cleanTools.id).appendChild(button);
+	document.getElementById(c.id).appendChild(button);
 	return button;
 }
 
 cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton)
 {
+	var c = c;
 	//Create DIV in which Options will be placed in
 	var optionsDiv = document.createElement('div');
-	optionsDiv.id = cleanTools.id + '-options';
+	optionsDiv.id = c.id + '-options';
 	optionsDiv.innerHTML = 
 		'<div id="drawTools-options-content">' +
 			'<div id="drawTools-options-leftPanel"></div>' +
@@ -916,7 +908,7 @@ cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton
 	
 	for(var i=0;i<colorElements.length;i++) {
 		var color = colorElements[i].getAttribute("data-color");
-		cleanTools.dcPalette.push(color);
+		c.dcPalette.push(color);
 		optionsPaletteHtml += 
 			'<label onclick=cleanTools.html.buttonHandlers.setOptionsColor("' + color + '");>' + //
 				'<input type="radio" name="drawTools-options-palette-radio">' +
@@ -946,43 +938,40 @@ cleanTools.html['DTDestroy'] = function()
 }
 cleanTools.html.init['setupCssAndHtml'] = function()
 {	
-	cleanTools.canvas.updateLocation();
+	var c = cleanTools;
+	c.canvas.updateLocation();
 	/*---- 1. Create Draw Tools Container - DIV in which DrawTools will be placed in ----*/
 	var drawToolsDiv = document.createElement('div');
-	drawToolsDiv.id = cleanTools.id;
-	cleanTools.dcToolbar.appendChild(drawToolsDiv);
+	drawToolsDiv.id = c.id;
+	c.dcToolbar.appendChild(drawToolsDiv);
 	
 	/*---- 2. Setup necessary CSS for DrawTools ----*/
-	cleanTools.html.init.setupCSS();
+	c.html.init.setupCSS();
 	
 	/*---- 3. Make Necessary Modifications to Existing Elements ----*/
-	document.getElementById(cleanTools.dcBrushes[0].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[0].size);};
-	document.getElementById(cleanTools.dcBrushes[1].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[1].size);};
-	document.getElementById(cleanTools.dcBrushes[2].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[2].size);};
-	document.getElementById(cleanTools.dcBrushes[3].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[3].size);};
-	/*	// TODO:Figure this out. This doesn't work for some reason, so i hardcoded it.
-	for(var j=0;j<cleanTools.dcBrushes.length;j++)
-		document.getElementById(cleanTools.dcBrushes[j].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[j].size);};
-	*/
+	document.getElementById(c.dcBrushes[0].id).parentNode.onclick = function(){c.html.buttonHandlers.brushClick(c.dcBrushes[0].size);};
+	document.getElementById(c.dcBrushes[1].id).parentNode.onclick = function(){c.html.buttonHandlers.brushClick(c.dcBrushes[1].size);};
+	document.getElementById(c.dcBrushes[2].id).parentNode.onclick = function(){c.html.buttonHandlers.brushClick(c.dcBrushes[2].size);};
+	document.getElementById(c.dcBrushes[3].id).parentNode.onclick = function(){c.html.buttonHandlers.brushClick(c.dcBrushes[3].size);};
 	
 	/*---- 4. Create Draw Tools Elements and Interface ----*/
 	// Create Tool Buttons
-	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.FILL,"fill");
-	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.LINE,"line");
-	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.LINECHAIN,"linechain");
-	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.CURVE,"curve");
-	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.RECT,"rect");
-	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.ELLIPSE,"ellipse");
+	c.html.init.createToolButton(c.tools.toolType.FILL,"fill");
+	c.html.init.createToolButton(c.tools.toolType.LINE,"line");
+	c.html.init.createToolButton(c.tools.toolType.LINECHAIN,"linechain");
+	c.html.init.createToolButton(c.tools.toolType.CURVE,"curve");
+	c.html.init.createToolButton(c.tools.toolType.RECT,"rect");
+	c.html.init.createToolButton(c.tools.toolType.ELLIPSE,"ellipse");
 	
-	debugLabel = cleanTools.html.init.createToolButtonWithLabel(cleanTools.tools.toolType.UTIL,"label", '0');
+	debugLabel = c.html.init.createToolButtonWithLabel(c.tools.toolType.UTIL,"label", '0');
 	
-	var optionsButton = cleanTools.html.init.createUtilityButton("options");
+	var optionsButton = c.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
 	
-	cleanTools.html.init.createOptionsMenu(drawToolsDiv, optionsButton);
+	c.html.init.createOptionsMenu(drawToolsDiv, optionsButton);
 	
 	// Exitbutton to remove DrawTools
-	var exitButton = cleanTools.html.init.createUtilityButton("exit");
+	var exitButton = c.html.init.createUtilityButton("exit");
 	exitButton.onclick = function(){cleanTools.html.DTDestroy();};
 }
 
