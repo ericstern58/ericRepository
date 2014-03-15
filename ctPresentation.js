@@ -320,14 +320,6 @@ ct.t.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,e
 	}
 	// Find Control Points
 	for(var i=0, m = (n-4+(4*isClosedSpline));i<m;i+=2){
-		// Calculate Control Points
-		//  x0,y0,x1,y1 are the coordinates of the end (knot) pts of this segment
-		//  x2,y2 is the next knot -- not connected here but needed to calculate p2
-		//  p1 is the control point calculated here, from x1 back toward x0.
-		//  p2 is the next control point, calculated here and returned to become the 
-		//  next segment's p1.
-		//  t is the 'tension' which controls how far the control p spread.
-		//  Scaling factors: distances from this knot to the previous and following knots.
 		var x0=pts[i], y0=pts[i+1], x1=pts[i+2], y1=pts[i+3], x2=pts[i+4], y2=pts[i+5];
 		// Calculate intermediary values
 		var d01=Math.sqrt(Math.pow(x1-x0,2)+Math.pow(y1-y0,2));
@@ -349,8 +341,7 @@ ct.t.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,e
 	ctx.beginPath();
 	ctx.lineJoin="round";
 	ctx.moveTo(pts[2],pts[3]);
-	for(var i=2;i<n;i+=2)
-		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
+	for(var i=2;i<n;i+=2){ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);}
 	
 	if(isClosedSpline) {
 		if(editMode) {
@@ -374,23 +365,20 @@ ct.t.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,e
 			}
 			ctx.stroke();
 		}
-	} else { 
-		// For open curves the first and last arcs are simple quadratics.
+	} else {
 		ctx.moveTo(pts[0],pts[1]);
 		ctx.quadraticCurveTo(cp[0],cp[1],pts[2],pts[3]);
 		ctx.moveTo(pts[n-2],pts[n-1]);
 		ctx.quadraticCurveTo(cp[2*n-10],cp[2*n-9],pts[n-4],pts[n-3]);
 		ctx.stroke();
 	}
-	// Draw the knot p.
 	if(editMode){   
 		ctx.save();
-		// Determine wether to use dark or light p
-		var c = parseInt(ctx.strokeStyle.substr(1,6),16); // Get current stroke color
-		var c2 = (0.2126*((c>>16)&255)) + (0.7152*((c>>8)&255)) + (0.0722*(c&255)); // Get its 'lightness' level
-		ctx.fillStyle = (c2 > 160) ? "#444444" : "#FFFFFF"; // If (colorIsLight) ? darkGray : white;
+		var c=parseInt(ctx.strokeStyle.substr(1,6),16);
+		var c2=(0.2126*((c>>16)&255))+(0.7152*((c>>8)&255))+(0.0722*(c&255));
+		ctx.fillStyle=(c2>160)?"#444444":"#FFFFFF";
 		ctx.lineWidth=3;
-		for(var i=(2*isClosedSpline), m = (n-2+(2*isClosedSpline));i<m;i+=2){
+		for(var i=(2*isClosedSpline),m=(n-2+(2*isClosedSpline));i<m;i+=2){
 			ctx.beginPath();
 			ctx.arc(pts[i],pts[i+1],2.5,2*Math.PI,false);
 			ctx.closePath();
