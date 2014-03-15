@@ -48,7 +48,7 @@ ct["c"] = {
 		this.parentObject.context.constructor.prototype.putImageData.call(this.parentObject.context, restorePoints[restorePosition], 0, 0);
 	}
 };
-ct["tools"] = {
+ct["t"] = {
 	'currentToolType':0,
 	'toolActive':false,
 	'points':[], // Will contain user input point sets for shapes/lines/etc
@@ -148,9 +148,9 @@ ct["html"] = {
 		'ctObject':ct,
 		'brushClick':function(brushSize) {
 			drawApp.setSize(brushSize);				// Set default brush size
-			this.ctObject.tools.currentToolType = ct.tools.toolType.BRUSH;		// Update tool type
+			this.ctObject.t.currentToolType = ct.t.toolType.BRUSH;		// Update tool type
 			
-			// Visually unselect any other tools
+			// Visually unselect any other t
 			var ele = document.getElementsByName(ct.id + "-btn-radio");
 			for(var i=0;i<ele.length;i++)
 				ele[i].checked = false;
@@ -168,21 +168,21 @@ ct["html"] = {
 			}
 		},
 		'setToolType':function(type) {
-			this.ctObject.tools.currentToolType=type;
+			this.ctObject.t.currentToolType=type;
 		}
 	}
 };
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- Drawing Algorithms ----------------------------*/
 /*-----------------------------------------------------------------------------*/
-ct.tools.paintMethods["drawLine"] = function(c,x,y,a,b)
+ct.t.paintMethods["drawLine"] = function(c,x,y,a,b)
 {
 	c.beginPath();
 	c.moveTo( x, y );
 	c.lineTo( a, b);
 	c.stroke();
 }
-ct.tools.paintMethods["drawRect"] = function(c,p,f)
+ct.t.paintMethods["drawRect"] = function(c,p,f)
 {
 	c.save();
 	c.lineJoin="round";
@@ -199,7 +199,7 @@ ct.tools.paintMethods["drawRect"] = function(c,p,f)
 	c.stroke();
 	c.restore();
 }
-ct.tools.paintMethods["drawEllipse"] = function(c,p,f)
+ct.t.paintMethods["drawEllipse"] = function(c,p,f)
 {
 	var x = p[0],
 	y =  p[1],
@@ -228,7 +228,7 @@ ct.tools.paintMethods["drawEllipse"] = function(c,p,f)
 	c.stroke();
 	c.restore();
 }
-ct.tools.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
+ct.t.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 	// Round seed coords in case they happen to be float type
 	xSeed = Math.round( xSeed );
 	ySeed = Math.round( ySeed );
@@ -383,7 +383,7 @@ ct.tools.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 	}
 	ctx.putImageData(p,0,0);
 }
-ct.tools.paintMethods["drawLineChain"] = function (c,p,e,s,f)
+ct.t.paintMethods["drawLineChain"] = function (c,p,e,s,f)
 {
 	c.save();
 	c.lineJoin="round";
@@ -428,7 +428,7 @@ ct.tools.paintMethods["drawLineChain"] = function (c,p,e,s,f)
 	}
 	c.restore();
 }
-ct.tools.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,editMode){
+ct.t.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,editMode){
 	var cp=[];   // array of control points, as x0,y0,x1,y1,...
 	var n=pts.length;
 	var isClosedSpline = (closed) ? 1 : 0;
@@ -551,7 +551,7 @@ ct.html.init['setupCSS'] = function()
 /*-----------------------------------------------------------------------------*/
 ct.eventHandlers["mouseDown"] = function(e) {
 	var c = ct;
-	var t = c.tools;
+	var t = c.t;
 	
 	if($('#drawTools-options').css('opacity') == 1){
 		painting = !1;
@@ -588,7 +588,7 @@ ct.eventHandlers["mouseDown"] = function(e) {
 
 ct.eventHandlers["mouseMove"] = function(e) {
 	var c = ct;
-	var t = c.tools;
+	var t = c.t;
 	if(t.currentToolType === t.toolType.BRUSH)
 		return;	// default behaviors
 	else if(!t.toolActive)
@@ -650,7 +650,7 @@ ct.eventHandlers["mouseMove"] = function(e) {
 
 ct.eventHandlers["mouseUp"] = function(e) {
 	var c = ct;
-	var t = c.tools;
+	var t = c.t;
 	
 	if(0 && $('#drawTools-options').css('opacity') == 1){
 		c.c.updateLocation();
@@ -737,7 +737,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 }
 ct.eventHandlers["keyDown"] = function(e) {
 	var c = ct;
-	var t = c.tools;
+	var t = c.t;
 	if(e.keyCode == 16 ) { // If shift is pressed
 		c.shiftDown = 1;
 		var endPointX = c.mouseX;
@@ -793,7 +793,7 @@ ct.eventHandlers["keyDown"] = function(e) {
 }
 ct.eventHandlers["keyUp"] = function(e) {
 	var c = ct;
-	var t = c.tools;
+	var t = c.t;
 	if(e.keyCode == 16) { // If shift is released
 		c.shiftDown = 0;
 		var endPointX = c.mouseX;
@@ -952,14 +952,14 @@ ct.html.init['setupCssAndHtml'] = function()
 	
 	/*---- 4. Create Draw Tools Elements and Interface ----*/
 	// Create Tool Buttons
-	ct.html.init.createToolButton(ct.tools.toolType.FILL,"fill");
-	ct.html.init.createToolButton(ct.tools.toolType.LINE,"line");
-	ct.html.init.createToolButton(ct.tools.toolType.LINECHAIN,"linechain");
-	ct.html.init.createToolButton(ct.tools.toolType.CURVE,"curve");
-	ct.html.init.createToolButton(ct.tools.toolType.RECT,"rect");
-	ct.html.init.createToolButton(ct.tools.toolType.ELLIPSE,"ellipse");
+	ct.html.init.createToolButton(ct.t.toolType.FILL,"fill");
+	ct.html.init.createToolButton(ct.t.toolType.LINE,"line");
+	ct.html.init.createToolButton(ct.t.toolType.LINECHAIN,"linechain");
+	ct.html.init.createToolButton(ct.t.toolType.CURVE,"curve");
+	ct.html.init.createToolButton(ct.t.toolType.RECT,"rect");
+	ct.html.init.createToolButton(ct.t.toolType.ELLIPSE,"ellipse");
 	
-	debugLabel = ct.html.init.createToolButtonWithLabel(ct.tools.toolType.UTIL,"label", '0');
+	debugLabel = ct.html.init.createToolButtonWithLabel(ct.t.toolType.UTIL,"label", '0');
 	
 	var optionsButton = ct.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){ct.options.toggleMenu();};
