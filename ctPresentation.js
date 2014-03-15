@@ -51,11 +51,11 @@ ct["c"] = {
 ct["t"] = {
 	'c':0,
 	'ta':false,
-	'points':[], // Will contain user input point sets for shapes/lines/etc
+	'p':[], 
 	
 	'tt':{BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99},
 	'reset':function(saveCanvas){
-		this.points.length=0;
+		this.p.length=0;
 		this.ta=false;
 		if(saveCanvas){save();}
 	},
@@ -66,9 +66,8 @@ ct["t"] = {
 ct["options"] = {
 	'id':'#' + ct.id + '-options',
 	
-	// Fill Options
 	'useStrokeAsFill':false,
-	'fillColor':'', // Will be null if no fill for shapes
+	'fillColor':'', 
 	
 	'lineToolsShouldClose':false,
 	
@@ -78,7 +77,7 @@ ct["options"] = {
 		return $(this.id).offset();
 	},
 	'toggleMenu':function () {
-		var h = 175;	// Height of the options div
+		var h = 175;
 		var opacity = $(this.id).css('opacity');
 		
 		if(opacity == 0) {
@@ -374,10 +373,10 @@ ct.t.paintMethods["drawLineChain"] = function (c,p,e,s,f)
 		}
 	}
 	c.stroke();
-	// Draw the knot points.
+	// Draw the knot p.
 	if(e){   
 		c.save();
-		// Determine wether to use dark or light points
+		// Determine wether to use dark or light p
 		var z = parseInt(c.strokeStyle.substr(1,6),16); // Get current stroke color
 		var w = (0.2126*((z>>16)&255)) + (0.7152*((z>>8)&255)) + (0.0722*(z&255)); // Get its 'lightness' level
 		c.fillStyle = (w > 160) ? "#444444" : "#FFFFFF"; // If (colorIsLight) ? darkGray : white;
@@ -394,7 +393,7 @@ ct.t.paintMethods["drawLineChain"] = function (c,p,e,s,f)
 	c.restore();
 }
 ct.t.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,editMode){
-	var cp=[];   // array of control points, as x0,y0,x1,y1,...
+	var cp=[];   // array of control p, as x0,y0,x1,y1,...
 	var n=pts.length;
 	var isClosedSpline = (closed) ? 1 : 0;
 	// First check for some base cases
@@ -407,7 +406,7 @@ ct.t.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,e
 		ctx.lineTo( pts[2], pts[3]);
 		ctx.stroke();
 	}
-	// For closed spline: Append and prepend knots and control points to close the curve
+	// For closed spline: Append and prepend knots and control p to close the curve
 	if(isClosedSpline){
 		pts.push(pts[0],pts[1],pts[2],pts[3]);
 		pts.unshift(pts[n-1]);
@@ -421,7 +420,7 @@ ct.t.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,e
 		//  p1 is the control point calculated here, from x1 back toward x0.
 		//  p2 is the next control point, calculated here and returned to become the 
 		//  next segment's p1.
-		//  t is the 'tension' which controls how far the control points spread.
+		//  t is the 'tension' which controls how far the control p spread.
 		//  Scaling factors: distances from this knot to the previous and following knots.
 		var x0=pts[i], y0=pts[i+1], x1=pts[i+2], y1=pts[i+3], x2=pts[i+4], y2=pts[i+5];
 		// Calculate intermediary values
@@ -477,10 +476,10 @@ ct.t.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,e
 		ctx.quadraticCurveTo(cp[2*n-10],cp[2*n-9],pts[n-4],pts[n-3]);
 		ctx.stroke();
 	}
-	// Draw the knot points.
+	// Draw the knot p.
 	if(editMode){   
 		ctx.save();
-		// Determine wether to use dark or light points
+		// Determine wether to use dark or light p
 		var c = parseInt(ctx.strokeStyle.substr(1,6),16); // Get current stroke color
 		var c2 = (0.2126*((c>>16)&255)) + (0.7152*((c>>8)&255)) + (0.0722*(c&255)); // Get its 'lightness' level
 		ctx.fillStyle = (c2 > 160) ? "#444444" : "#FFFFFF"; // If (colorIsLight) ? darkGray : white;
@@ -537,17 +536,17 @@ ct.eventHandlers["mouseDown"] = function(e) {
 		t.paintMethods.floodFill(c.context,c.mouseX,c.mouseY);
 	} else if(t.c === t.tt.LINE) {
 		painting = !1;
-		t.points.push(c.mouseX,c.mouseY);
+		t.p.push(c.mouseX,c.mouseY);
 	} else if(t.c === t.tt.LINECHAIN) {
 		painting = !1;
 	} else if(t.c === t.tt.CURVE) {
 		painting = !1;
 	} else if(t.c === t.tt.RECT) {
 		painting = !1;
-		t.points.push(c.mouseX,c.mouseY);
+		t.p.push(c.mouseX,c.mouseY);
 	} else if(t.c === t.tt.ELLIPSE) {
 		painting = !1;
-		t.points.push(c.mouseX,c.mouseY);
+		t.p.push(c.mouseX,c.mouseY);
 	} 
 }
 
@@ -569,47 +568,47 @@ ct.eventHandlers["mouseMove"] = function(e) {
 		// Do nothing
 	} else if(t.c === t.tt.LINE) {
 		if(c.shiftDown) {
-			var a = t.ls(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.ls(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.paintMethods.drawLine(c.context,t.points[0],t.points[1],endPointX,endPointY);
+		t.paintMethods.drawLine(c.context,t.p[0],t.p[1],endPointX,endPointY);
 	} else if(t.c === t.tt.LINECHAIN) {
-		if(t.points.length > 0) {
+		if(t.p.length > 0) {
 			if(c.shiftDown) {
-				var a = t.ls(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
+				var a = t.ls(t.p[t.p.length-2],t.p[t.p.length-1],endPointX,endPointY);
 				endPointX = a.x;
 				endPointY = a.y;
 			}
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 			c.c.restore();
-			t.paintMethods.drawLineChain(c.context,t.points.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
+			t.paintMethods.drawLineChain(c.context,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
 		}
 	} else if(t.c === t.tt.CURVE) {
-		if(t.points.length > 0) {
+		if(t.p.length > 0) {
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 			c.c.restore();
-			t.paintMethods.drawSpline(c.context,t.points.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fillColor,true);
+			t.paintMethods.drawSpline(c.context,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fillColor,true);
 		}
 	} else if(t.c === t.tt.RECT) {
 		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 		if(c.shiftDown) {
-			var a = t.ss(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.paintMethods.drawRect(c.context,t.points.concat(endPointX,endPointY),fillColor);
+		t.paintMethods.drawRect(c.context,t.p.concat(endPointX,endPointY),fillColor);
 	} else if(t.c === t.tt.ELLIPSE) {
 		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 		if(c.shiftDown) {
-			var a = t.ss(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.paintMethods.drawEllipse(c.context,t.points.concat(endPointX,endPointY),fillColor);
+		t.paintMethods.drawEllipse(c.context,t.p.concat(endPointX,endPointY),fillColor);
 	}
 }
 
@@ -638,25 +637,25 @@ ct.eventHandlers["mouseUp"] = function(e) {
 		t.reset(true);
 	} else if(t.c === t.tt.LINE) {
 		if(c.shiftDown) {
-			var a = t.ls(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.ls(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.paintMethods.drawLine(c.context,t.points[0],t.points[1], endPointX, endPointY);
+		t.paintMethods.drawLine(c.context,t.p[0],t.p[1], endPointX, endPointY);
 		t.reset(true);
 	} else if(t.c === t.tt.LINECHAIN) {
 		if(c.c.isWithinDrawingBounds(c.mouseX,c.mouseY)){
 			if(c.shiftDown) {
-				var a = t.ls(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
+				var a = t.ls(t.p[t.p.length-2],t.p[t.p.length-1],endPointX,endPointY);
 				endPointX = a.x;
 				endPointY = a.y;
 			}
-			t.points.push(endPointX,endPointY);
+			t.p.push(endPointX,endPointY);
 			if(e.which == 3) {	// If right mouse click, finish the chain
 				var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 				c.c.restore();
-				t.paintMethods.drawLineChain(c.context,t.points,false,c.options.lineToolsShouldClose,fillColor);
+				t.paintMethods.drawLineChain(c.context,t.p,false,c.options.lineToolsShouldClose,fillColor);
 				t.reset(true);
 			}
 		} else { // If user clicks out of acceptable boundaries, cancel all tool progress
@@ -665,11 +664,11 @@ ct.eventHandlers["mouseUp"] = function(e) {
 		}
 	} else if(t.c === t.tt.CURVE) {
 		if(c.c.isWithinDrawingBounds(c.mouseX,c.mouseY)){
-			t.points.push(c.mouseX,c.mouseY);
+			t.p.push(c.mouseX,c.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 				c.c.restore();
-				t.paintMethods.drawSpline(c.context,t.points,0.5,c.options.lineToolsShouldClose,fillColor,false);
+				t.paintMethods.drawSpline(c.context,t.p,0.5,c.options.lineToolsShouldClose,fillColor,false);
 				t.reset(true);
 			}
 		} else { // If user clicks out of acceptable boundaries, cancel all tool progress
@@ -679,24 +678,24 @@ ct.eventHandlers["mouseUp"] = function(e) {
 	} else if(t.c === t.tt.RECT) {
 		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 		if(c.shiftDown) {
-			var a = t.ss(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.points.push(endPointX,endPointY);
-		t.paintMethods.drawRect(c.context,t.points,fillColor);
+		t.p.push(endPointX,endPointY);
+		t.paintMethods.drawRect(c.context,t.p,fillColor);
 		t.reset(true);
 	} else if(t.c === t.tt.ELLIPSE) {
 		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 		if(c.shiftDown) {
-			var a = t.ss(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.points.push(endPointX,endPointY);
-		t.paintMethods.drawEllipse(c.context,t.points,fillColor);
+		t.p.push(endPointX,endPointY);
+		t.paintMethods.drawEllipse(c.context,t.p,fillColor);
 		t.reset(true);
 	}
 }
@@ -711,44 +710,44 @@ ct.eventHandlers["keyDown"] = function(e) {
 		if(!t.ta)
 			return;
 		else if( t.c === t.tt.RECT || t.c === t.tt.ELLIPSE ) {
-			var a = t.ss(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 			
 			c.c.restore();
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 			if(t.c === t.tt.RECT)
-				t.paintMethods.drawRect(c.context,t.points.concat(endPointX,endPointY),fillColor);
+				t.paintMethods.drawRect(c.context,t.p.concat(endPointX,endPointY),fillColor);
 			else
-				t.paintMethods.drawEllipse(c.context,t.points.concat(endPointX,endPointY),fillColor);
+				t.paintMethods.drawEllipse(c.context,t.p.concat(endPointX,endPointY),fillColor);
 		} else if( t.c === t.tt.LINE || t.c === t.tt.LINECHAIN ) {
-			if(t.points.length > 0) {
-				var a = t.ls(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
+			if(t.p.length > 0) {
+				var a = t.ls(t.p[t.p.length-2],t.p[t.p.length-1],endPointX,endPointY);
 				endPointX = a.x;
 				endPointY = a.y;
 				
 				c.c.restore();
 				if( t.c === t.tt.LINECHAIN ) {
 					var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
-					t.paintMethods.drawLineChain(c.context,t.points.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
+					t.paintMethods.drawLineChain(c.context,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
 				} else {
-					t.paintMethods.drawLine(c.context,t.points[0],t.points[1],endPointX,endPointY);
+					t.paintMethods.drawLine(c.context,t.p[0],t.p[1],endPointX,endPointY);
 				}
 			}
 		}
 	} else if(e.keyCode == "Q".charCodeAt(0)) {
 		if(t.c === t.tt.LINECHAIN || t.c === t.tt.CURVE) {
-			if(t.points.length) {
-				t.points.length -= 2;
+			if(t.p.length) {
+				t.p.length -= 2;
 				c.c.restore();
-				if(t.points.length == 0) {
+				if(t.p.length == 0) {
 					t.reset();
 				} else {
 					var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 					if(t.c === t.tt.LINECHAIN)
-						t.paintMethods.drawLineChain(c.context,t.points.concat(c.mouseX,c.mouseY),true,c.options.lineToolsShouldClose,fillColor);
+						t.paintMethods.drawLineChain(c.context,t.p.concat(c.mouseX,c.mouseY),true,c.options.lineToolsShouldClose,fillColor);
 					else
-						t.paintMethods.drawSpline(c.context,t.points.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fillColor,true);
+						t.paintMethods.drawSpline(c.context,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fillColor,true);
 				}
 			}
 		}
@@ -771,17 +770,17 @@ ct.eventHandlers["keyUp"] = function(e) {
 			c.c.restore();
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 			if(t.c === t.tt.RECT)
-				t.paintMethods.drawRect(c.context,t.points.concat(endPointX,endPointY),fillColor);
+				t.paintMethods.drawRect(c.context,t.p.concat(endPointX,endPointY),fillColor);
 			else
-				t.paintMethods.drawEllipse(c.context,t.points.concat(endPointX,endPointY),fillColor);
+				t.paintMethods.drawEllipse(c.context,t.p.concat(endPointX,endPointY),fillColor);
 		} else if( t.c === t.tt.LINE || t.c === t.tt.LINECHAIN ) {
-			if(t.points.length > 0) {
+			if(t.p.length > 0) {
 				c.c.restore();
 				if( t.c === t.tt.LINECHAIN ) {
 					var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
-					t.paintMethods.drawLineChain(c.context,t.points.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
+					t.paintMethods.drawLineChain(c.context,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
 				} else {
-					t.paintMethods.drawLine(c.context,t.points[0],t.points[1],endPointX,endPointY);
+					t.paintMethods.drawLine(c.context,t.p[0],t.p[1],endPointX,endPointY);
 				}
 			}
 		}
