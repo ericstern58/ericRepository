@@ -15,7 +15,7 @@ var ct = {
 	'dcBrushes':DRAWCEPTION_BRUSHES,
 	'dcPalette':[],
 	
-	'canvas':{},
+	'c':{},
 	'Canvas':drawApp.canvas,
 	'context':drawApp.context,
 	
@@ -26,7 +26,7 @@ var ct = {
 	
 	'eventHandlers':{}
 };
-ct["canvas"] = {
+ct["c"] = {
     'parentObject':ct,
 	'Canvas':ct.Canvas,
 	'offset':{top:0,left:0},
@@ -233,14 +233,14 @@ ct.tools.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 	xSeed = Math.round( xSeed );
 	ySeed = Math.round( ySeed );
 	/*---------------------- Setup Procedure Variables ----------------------*/
-	// This canvas.restore() fix avoids issues with brush placing dot over flood fill seed area
-	ct.canvas.restore();
+	// This c.restore() fix avoids issues with brush placing dot over flood fill seed area
+	ct.c.restore();
 	
-	var w = ct.canvas.width;
-	var h = ct.canvas.height;
+	var w = ct.c.width;
+	var h = ct.c.height;
 	var p = ctx.getImageData(0,0,w,h);
 	var d = p.data;
-	var tci = (xSeed+ySeed*ct.canvas.width)*4;
+	var tci = (xSeed+ySeed*ct.c.width)*4;
 	var targetColor = [d[tci],d[tci+1],d[tci+2],d[tci+3]];
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];
@@ -282,7 +282,7 @@ ct.tools.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 		}
 	}
 	var test = function(x,y) {
-		return (ct.canvas.isWithinBounds(x,y) && colorCompare(targetColor,getColorFromCoords(x,y)));
+		return (ct.c.isWithinBounds(x,y) && colorCompare(targetColor,getColorFromCoords(x,y)));
 	}
 	var testEdgePoint = function(x,y,o) {
 		var a = edgeEligible(x,y);
@@ -301,7 +301,7 @@ ct.tools.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 	}
 	var edgeEligible = function(x,y) {
 		var c = getColorFromCoords(x,y);
-		return ( ct.canvas.isWithinBounds(x,y) && (!colorCompare(fillColor,c)) && (!colorCompare(targetColor,c)) );
+		return ( ct.c.isWithinBounds(x,y) && (!colorCompare(fillColor,c)) && (!colorCompare(targetColor,c)) );
 	}
 	
 	/*---------------------- Begin Procedure ----------------------*/
@@ -357,7 +357,7 @@ ct.tools.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 					else if(testEdgePoint(i,y-direction,y)) // Find Wether or not to add edge pixels
 						edgeArray.push(i,y-direction);
 				}
-				if(ct.canvas.isWithinBounds(i,y))
+				if(ct.c.isWithinBounds(i,y))
 					edgeArray.push(i,y);
 				range[j] = i-incr; // Save max fill pixel
 				
@@ -372,13 +372,13 @@ ct.tools.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 		
 		colorPixel(x,y,fillColor);
 		
-		if( (!colorCompare(fillColor,getColorFromCoords(x-1,y))) && ct.canvas.isWithinBounds(x-1,y) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x-1,y))) && ct.c.isWithinBounds(x-1,y) )
 			colorPixelBlend(x-1,y,fillColor,getColorFromCoords(x-1,y));
-		if( (!colorCompare(fillColor,getColorFromCoords(x+1,y))) && ct.canvas.isWithinBounds(x+1,y) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x+1,y))) && ct.c.isWithinBounds(x+1,y) )
 			colorPixelBlend(x+1,y,fillColor,getColorFromCoords(x+1,y));
-		if( (!colorCompare(fillColor,getColorFromCoords(x,y-1))) && ct.canvas.isWithinBounds(x,y-1) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x,y-1))) && ct.c.isWithinBounds(x,y-1) )
 			colorPixelBlend(x,y-1,fillColor,getColorFromCoords(x,y-1));
-		if( (!colorCompare(fillColor,getColorFromCoords(x,y+1))) && ct.canvas.isWithinBounds(x,y+1) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x,y+1))) && ct.c.isWithinBounds(x,y+1) )
 			colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
 	}
 	ctx.putImageData(p,0,0);
@@ -538,7 +538,7 @@ ct.html.init['setupCSS'] = function()
 {
 	// Calculate variables used in css
 	var z = $('#' + ct.id);
-	var a = ct.canvas.offset.top + ct.canvas.height - z.offset().top;
+	var a = ct.c.offset.top + ct.c.height - z.offset().top;
 	var b = (z.width() - 420)/2;
 	
 	var d = document.createElement('style');
@@ -555,17 +555,17 @@ ct.eventHandlers["mouseDown"] = function(e) {
 	
 	if($('#drawTools-options').css('opacity') == 1){
 		painting = !1;
-		c.canvas.restore();
+		c.c.restore();
 		c.options.toggleMenu();
 		return;
 	} else if(t.currentToolType === t.toolType.BRUSH)
 		return;
 	t.toolActive = true;
-	c.canvas.updateLocation();
+	c.c.updateLocation();
 	
-	// Translate mouse location to point relative to canvas
-	c.mouseX = e.pageX-c.canvas.offset.left;
-	c.mouseY = e.pageY-c.canvas.offset.top;
+	// Translate mouse location to point relative to c
+	c.mouseX = e.pageX-c.c.offset.left;
+	c.mouseY = e.pageY-c.c.offset.top;
 	
 	if(t.currentToolType === t.toolType.FILL) {
 		painting = !1;
@@ -594,9 +594,9 @@ ct.eventHandlers["mouseMove"] = function(e) {
 	else if(!t.toolActive)
 		return;	// If no tool is in use, ignore event
 	
-	// Translate mouse location to point relative to canvas
-	c.mouseX = e.pageX-c.canvas.offset.left;
-	c.mouseY = e.pageY-c.canvas.offset.top;
+	// Translate mouse location to point relative to c
+	c.mouseX = e.pageX-c.c.offset.left;
+	c.mouseY = e.pageY-c.c.offset.top;
 	var endPointX = c.mouseX;
 	var endPointY = c.mouseY;
 	
@@ -608,7 +608,7 @@ ct.eventHandlers["mouseMove"] = function(e) {
 			endPointX = a.x;
 			endPointY = a.y;
 		}
-		c.canvas.restore();
+		c.c.restore();
 		t.paintMethods.drawLine(c.context,t.points[0],t.points[1],endPointX,endPointY);
 	} else if(t.currentToolType === t.toolType.LINECHAIN) {
 		if(t.points.length > 0) {
@@ -618,13 +618,13 @@ ct.eventHandlers["mouseMove"] = function(e) {
 				endPointY = a.y;
 			}
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
-			c.canvas.restore();
+			c.c.restore();
 			t.paintMethods.drawLineChain(c.context,t.points.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
 		}
 	} else if(t.currentToolType === t.toolType.CURVE) {
 		if(t.points.length > 0) {
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
-			c.canvas.restore();
+			c.c.restore();
 			t.paintMethods.drawSpline(c.context,t.points.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fillColor,true);
 		}
 	} else if(t.currentToolType === t.toolType.RECT) {
@@ -634,7 +634,7 @@ ct.eventHandlers["mouseMove"] = function(e) {
 			endPointX = a.x;
 			endPointY = a.y;
 		}
-		c.canvas.restore();
+		c.c.restore();
 		t.paintMethods.drawRect(c.context,t.points.concat(endPointX,endPointY),fillColor);
 	} else if(t.currentToolType === t.toolType.ELLIPSE) {
 		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
@@ -643,7 +643,7 @@ ct.eventHandlers["mouseMove"] = function(e) {
 			endPointX = a.x;
 			endPointY = a.y;
 		}
-		c.canvas.restore();
+		c.c.restore();
 		t.paintMethods.drawEllipse(c.context,t.points.concat(endPointX,endPointY),fillColor);
 	}
 }
@@ -653,7 +653,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 	var t = c.tools;
 	
 	if(0 && $('#drawTools-options').css('opacity') == 1){
-		c.canvas.updateLocation();
+		c.c.updateLocation();
 		if(!c.options.isWithinBounds(e.pageX, e.pageY)) {
 			c.options.toggleMenu();
 		}
@@ -663,9 +663,9 @@ ct.eventHandlers["mouseUp"] = function(e) {
 	else if(!t.toolActive)	// If no tool is in use, ignore event
 		return;
 		
-	// Translate mouse location to point relative to canvas
-	c.mouseX = e.pageX-c.canvas.offset.left;
-	c.mouseY = e.pageY-c.canvas.offset.top;
+	// Translate mouse location to point relative to c
+	c.mouseX = e.pageX-c.c.offset.left;
+	c.mouseY = e.pageY-c.c.offset.top;
 	var endPointX = c.mouseX;
 	var endPointY = c.mouseY;
 	
@@ -677,11 +677,11 @@ ct.eventHandlers["mouseUp"] = function(e) {
 			endPointX = a.x;
 			endPointY = a.y;
 		}
-		c.canvas.restore();
+		c.c.restore();
 		t.paintMethods.drawLine(c.context,t.points[0],t.points[1], endPointX, endPointY);
 		t.reset(true);
 	} else if(t.currentToolType === t.toolType.LINECHAIN) {
-		if(c.canvas.isWithinDrawingBounds(c.mouseX,c.mouseY)){
+		if(c.c.isWithinDrawingBounds(c.mouseX,c.mouseY)){
 			if(c.shiftDown) {
 				var a = t.lineShiftHold(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
 				endPointX = a.x;
@@ -690,25 +690,25 @@ ct.eventHandlers["mouseUp"] = function(e) {
 			t.points.push(endPointX,endPointY);
 			if(e.which == 3) {	// If right mouse click, finish the chain
 				var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
-				c.canvas.restore();
+				c.c.restore();
 				t.paintMethods.drawLineChain(c.context,t.points,false,c.options.lineToolsShouldClose,fillColor);
 				t.reset(true);
 			}
 		} else { // If user clicks out of acceptable boundaries, cancel all tool progress
-			c.canvas.restore();
+			c.c.restore();
 			t.reset();
 		}
 	} else if(t.currentToolType === t.toolType.CURVE) {
-		if(c.canvas.isWithinDrawingBounds(c.mouseX,c.mouseY)){
+		if(c.c.isWithinDrawingBounds(c.mouseX,c.mouseY)){
 			t.points.push(c.mouseX,c.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
-				c.canvas.restore();
+				c.c.restore();
 				t.paintMethods.drawSpline(c.context,t.points,0.5,c.options.lineToolsShouldClose,fillColor,false);
 				t.reset(true);
 			}
 		} else { // If user clicks out of acceptable boundaries, cancel all tool progress
-			c.canvas.restore();
+			c.c.restore();
 			t.reset();
 		}
 	} else if(t.currentToolType === t.toolType.RECT) {
@@ -718,7 +718,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 			endPointX = a.x;
 			endPointY = a.y;
 		}
-		c.canvas.restore();
+		c.c.restore();
 		t.points.push(endPointX,endPointY);
 		t.paintMethods.drawRect(c.context,t.points,fillColor);
 		t.reset(true);
@@ -729,7 +729,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 			endPointX = a.x;
 			endPointY = a.y;
 		}
-		c.canvas.restore();
+		c.c.restore();
 		t.points.push(endPointX,endPointY);
 		t.paintMethods.drawEllipse(c.context,t.points,fillColor);
 		t.reset(true);
@@ -750,7 +750,7 @@ ct.eventHandlers["keyDown"] = function(e) {
 			endPointX = a.x;
 			endPointY = a.y;
 			
-			c.canvas.restore();
+			c.c.restore();
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 			if(t.currentToolType === t.toolType.RECT)
 				t.paintMethods.drawRect(c.context,t.points.concat(endPointX,endPointY),fillColor);
@@ -762,7 +762,7 @@ ct.eventHandlers["keyDown"] = function(e) {
 				endPointX = a.x;
 				endPointY = a.y;
 				
-				c.canvas.restore();
+				c.c.restore();
 				if( t.currentToolType === t.toolType.LINECHAIN ) {
 					var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 					t.paintMethods.drawLineChain(c.context,t.points.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
@@ -775,7 +775,7 @@ ct.eventHandlers["keyDown"] = function(e) {
 		if(t.currentToolType === t.toolType.LINECHAIN || t.currentToolType === t.toolType.CURVE) {
 			if(t.points.length) {
 				t.points.length -= 2;
-				c.canvas.restore();
+				c.c.restore();
 				if(t.points.length == 0) {
 					t.reset();
 				} else {
@@ -803,7 +803,7 @@ ct.eventHandlers["keyUp"] = function(e) {
 			return;
 			
 		if( t.currentToolType === t.toolType.RECT || t.currentToolType === t.toolType.ELLIPSE ){
-			c.canvas.restore();
+			c.c.restore();
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 			if(t.currentToolType === t.toolType.RECT)
 				t.paintMethods.drawRect(c.context,t.points.concat(endPointX,endPointY),fillColor);
@@ -811,7 +811,7 @@ ct.eventHandlers["keyUp"] = function(e) {
 				t.paintMethods.drawEllipse(c.context,t.points.concat(endPointX,endPointY),fillColor);
 		} else if( t.currentToolType === t.toolType.LINE || t.currentToolType === t.toolType.LINECHAIN ) {
 			if(t.points.length > 0) {
-				c.canvas.restore();
+				c.c.restore();
 				if( t.currentToolType === t.toolType.LINECHAIN ) {
 					var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 					t.paintMethods.drawLineChain(c.context,t.points.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
@@ -928,14 +928,14 @@ ct.html['DTDestroy'] = function()
 	// 4. Set the state variable to reflect DTTools uninstallation
 	window.DTToolsIsCurrentlyInstalled = false;
 	// 5. Destroy JavaScript
-	delete ct.canvas; // Delete all references to ct
+	delete ct.c; // Delete all references to ct
 	delete ct.html;
 	delete ct;
 	document.getElementById('DTScript').remove();
 }
 ct.html.init['setupCssAndHtml'] = function()
 {	
-	ct.canvas.updateLocation();
+	ct.c.updateLocation();
 	/*---- 1. Create Draw Tools Container - DIV in which DrawTools will be placed in ----*/
 	var drawToolsDiv = document.createElement('div');
 	drawToolsDiv.id = ct.id;
