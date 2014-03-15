@@ -61,7 +61,7 @@ ct["t"] = {
 			save();
 	},
 	'paintMethods':{},
-	'squareShiftHold':function(x,y,a,b) {
+	'ss':function(x,y,a,b) {
 		var f, g;
 		var d = a - x;
 		var e = b - y;
@@ -85,7 +85,7 @@ ct["t"] = {
 		}
 		return {x: f, y:g};
 	},
-	'lineShiftHold':function(x,y,a,b) {
+	'ls':function(x,y,a,b) {
 		var d = y - b;
 		var e = (x - a) ? (x - a): 1;
 		var f = d/e;
@@ -94,7 +94,7 @@ ct["t"] = {
 		} else if( f < 0.4 && f > -0.4 ) { // Left-Right
 			return {x:a, y:y};
 		} else {
-			return this.squareShiftHold(x,y,a,b);
+			return this.ss(x,y,a,b);
 		}
 	}
 };
@@ -604,7 +604,7 @@ ct.eventHandlers["mouseMove"] = function(e) {
 		// Do nothing
 	} else if(t.currentToolType === t.toolType.LINE) {
 		if(c.shiftDown) {
-			var a = t.lineShiftHold(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.ls(t.points[0],t.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
@@ -613,7 +613,7 @@ ct.eventHandlers["mouseMove"] = function(e) {
 	} else if(t.currentToolType === t.toolType.LINECHAIN) {
 		if(t.points.length > 0) {
 			if(c.shiftDown) {
-				var a = t.lineShiftHold(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
+				var a = t.ls(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
 				endPointX = a.x;
 				endPointY = a.y;
 			}
@@ -630,7 +630,7 @@ ct.eventHandlers["mouseMove"] = function(e) {
 	} else if(t.currentToolType === t.toolType.RECT) {
 		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 		if(c.shiftDown) {
-			var a = t.squareShiftHold(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.ss(t.points[0],t.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
@@ -639,7 +639,7 @@ ct.eventHandlers["mouseMove"] = function(e) {
 	} else if(t.currentToolType === t.toolType.ELLIPSE) {
 		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 		if(c.shiftDown) {
-			var a = t.squareShiftHold(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.ss(t.points[0],t.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
@@ -673,7 +673,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 		t.reset(true);
 	} else if(t.currentToolType === t.toolType.LINE) {
 		if(c.shiftDown) {
-			var a = t.lineShiftHold(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.ls(t.points[0],t.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
@@ -683,7 +683,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 	} else if(t.currentToolType === t.toolType.LINECHAIN) {
 		if(c.c.isWithinDrawingBounds(c.mouseX,c.mouseY)){
 			if(c.shiftDown) {
-				var a = t.lineShiftHold(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
+				var a = t.ls(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
 				endPointX = a.x;
 				endPointY = a.y;
 			}
@@ -714,7 +714,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 	} else if(t.currentToolType === t.toolType.RECT) {
 		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 		if(c.shiftDown) {
-			var a = t.squareShiftHold(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.ss(t.points[0],t.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
@@ -725,7 +725,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 	} else if(t.currentToolType === t.toolType.ELLIPSE) {
 		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 		if(c.shiftDown) {
-			var a = t.squareShiftHold(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.ss(t.points[0],t.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
@@ -746,7 +746,7 @@ ct.eventHandlers["keyDown"] = function(e) {
 		if(!t.toolActive)
 			return;
 		else if( t.currentToolType === t.toolType.RECT || t.currentToolType === t.toolType.ELLIPSE ) {
-			var a = t.squareShiftHold(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.ss(t.points[0],t.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 			
@@ -758,7 +758,7 @@ ct.eventHandlers["keyDown"] = function(e) {
 				t.paintMethods.drawEllipse(c.context,t.points.concat(endPointX,endPointY),fillColor);
 		} else if( t.currentToolType === t.toolType.LINE || t.currentToolType === t.toolType.LINECHAIN ) {
 			if(t.points.length > 0) {
-				var a = t.lineShiftHold(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
+				var a = t.ls(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
 				endPointX = a.x;
 				endPointY = a.y;
 				
