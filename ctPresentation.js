@@ -99,43 +99,43 @@ ct["t"] = {
 	}
 };
 ct["options"] = {
-	'id':'#' + ct.id + '-options',
-	
+	'id':'#' + cleanTools.id + '-options',
+
 	// Fill Options
 	'useStrokeAsFill':false,
 	'fillColor':'', // Will be null if no fill for shapes
-	
+
 	'lineToolsShouldClose':false,
-	
+
 	'curveTension':0.5,
-	
+
 	'getOffset':function () {
 		return $(this.id).offset();
 	},
 	'toggleMenu':function () {
 		var h = 175;	// Height of the options div
-		var o = $(this.id).css('opacity');
-		
-		if(o == 0) {
+		var opacity = $(this.id).css('opacity');
+
+		if(opacity == 0) {
 			$(this.id).stop(true, true).animate({
-				height: (h + "px"),
-				marginTop: ("-=" + h + "px"),
-				o: "1"
+			height: (h + "px"),
+			marginTop: ("-=" + h + "px"),
+			opacity: "1"
 			},200, "swing");
-		} else if(o == 1) {
+		} else if(opacity == 1) {
 			$(this.id).stop(true, true).animate({
 				height: "0px",
 				marginTop: ("+=" + h + "px"),
-				o: "0"
+				opacity: "0"
 			},200, "swing");
 		}
 	},
 	'isWithinBounds':function (x, y) {
-		var a = x - $(this.id).offset().top;
-		var b = y - $(this.id).offset().left;
-		var c = $(this.id).width();
-		var d = $(this.id).height();
-		return (a>=0 && b>=0 && a<c && b<d);
+		var x2 = x - $(this.id).offset().top;
+		var y2 = y - $(this.id).offset().left;
+		var width = $(this.id).width();
+		var height = $(this.id).height();
+		return (x2>=0 && y2>=0 && x2<width && y2<height);
 	}
 };
 ct["html"] = {
