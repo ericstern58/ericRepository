@@ -1,1 +1,1091 @@
-window.Q=!0;var b={id:"drawTools",dcToolbar:document.getElementById("redo-button").parentNode.parentNode,dcBrushes:[{id:"brush-2",size:2},{id:"brush-5",size:5},{id:"brush-12",size:12},{id:"brush-35",size:35}],dcPalette:[],canvas:{},Canvas:drawApp.canvas,context:drawApp.c,mouseX:0,mouseY:0,shiftDown:0,eventHandlers:{}}; b.canvas={parentObject:b,Canvas:b.F,offset:{top:0,left:0},width:0,height:0,updateLocation:function(){this.offset=$("#drawingCanvas").offset();this.width=this.F.width();this.height=this.F.height()},isWithinBounds:function(c,a){return 0<=c&&0<=a&&c<this.width&&a<this.height},isWithinDrawingBounds:function(c,a){return-12<=c&&-12<=a&&c<this.width+12&&a<this.height+12},restore:function(){this.V.c.constructor.prototype.putImageData.call(this.V.c,restorePoints[restorePosition],0,0)}}; b.tools={currentToolType:0,toolActive:!1,points:[],toolType:{D:0,G:1,s:2,l:3,w:4,o:5,r:6,Z:99},reset:function(c){this.a.length=0;this.C=!1;c&&save()},paintMethods:{},squareShiftHold:function(c,a,d,e){d-=c;var l=e-a;e=Math.min(Math.abs(d),Math.abs(l));0<d?0<l?(c+=e,a+=e):(c+=e,a-=e):0<l?(c-=e,a+=e):(c-=e,a-=e);return{x:c,y:a}},lineShiftHold:function(c,a,d,e){var l=(a-e)/(c-d?c-d:1);return 2.4<l||-2.4>l?{x:c,y:e}:0.4>l&&-0.4<l?{x:d,y:a}:this.B(c,a,d,e)}}; b.options={id:"#"+b.id+"-options",useStrokeAsFill:!1,fillColor:"",lineToolsShouldClose:!1,curveTension:0.5,getOffset:function(){return $(this.id).offset()},toggleMenu:function(){var c=$(this.id).T("opacity");0==c?$(this.id).stop(!0,!0).R({height:"175px",marginTop:"-=175px",opacity:"1"},200,"swing"):1==c&&$(this.id).stop(!0,!0).R({height:"0px",marginTop:"+=175px",opacity:"0"},200,"swing")},isWithinBounds:function(c,a){var d=c-$(this.id).offset().top,e=a-$(this.id).offset().left,l=$(this.id).width(), g=$(this.id).height();return 0<=d&&0<=e&&d<l&&e<g}}; b.html={parentObject:b,init:{},buttonHandlers:{cleanToolsObject:b,brushClick:function(c){drawApp.ka(c);this.t.g.d=b.g.b.D;c=document.getElementsByName(b.id+"-btn-radio");for(var a=0;a<c.length;a++)c[a].checked=!1},setLineToolsOpen:function(){this.t.options.p=document.getElementById("drawTools-options-checkbox-lineToolsOpen").checked},setOptionsColor:function(c,a){a?(this.t.options.k=!0,this.t.options.fillColor=""):(this.t.options.k=!1,this.t.options.fillColor=c)},setToolType:function(c){this.t.g.d= c}}};b.g.e.drawLine=function(c,a,d,e,l){c.beginPath();c.moveTo(a,d);c.lineTo(e,l);c.stroke()};b.g.e.drawRect=function(c,a,d){c.save();c.lineJoin="round";c.beginPath();c.moveTo(a[0],a[1]);c.lineTo(a[2],a[1]);c.lineTo(a[2],a[3]);c.lineTo(a[0],a[3]);c.closePath();d&&(c.fillStyle=d,c.fill());c.stroke();c.restore()}; b.g.e.drawEllipse=function(c,a,d){var e=a[0],l=a[1],g=a[2]-a[0],h=a[3]-a[1];a=g/2*0.5522848;var k=h/2*0.5522848,m=e+g,s=l+h,g=e+g/2,h=l+h/2;c.save();c.lineJoin="round";c.beginPath();c.moveTo(e,h);c.bezierCurveTo(e,h-k,g-a,l,g,l);c.bezierCurveTo(g+a,l,m,h-k,m,h);c.bezierCurveTo(m,h+k,g+a,s,g,s);c.bezierCurveTo(g-a,s,e,h+k,e,h);c.closePath();d&&(c.fillStyle=d,c.fill());c.stroke();c.restore()}; b.g.e.floodFill=function(c,a,d){function e(a,c){var d=s(a,c);return b.canvas.v(a,c)&&!u(q,d)&&!u(w,d)}function l(a,c,d){var f=e(a,c),g=e(a-1,c);c=e(a+1,c);return f&&(g&&c||c&&e(a-1,d)||g&&e(a+1,d))?!0:!1}function g(a,c){return b.canvas.v(a,c)&&u(w,s(a,c))}function h(a,c,d,e){var f=e[0],g=e[1],h=e[2];e=e[3];c=4*(c+1+d*v);for(a=4*(a+d*v);a<c;a+=4)p[a]=f,p[a+1]=g,p[a+2]=h,p[a+3]=e}function k(a,c,d,e){m(a,c,[Math.ceil((d[0]+e[0])/2),Math.ceil((d[1]+e[1])/2),Math.ceil((d[2]+e[2])/2),Math.ceil((d[3]+e[3])/ 2)])}function m(a,c,d){a=4*(a+c*v);p[a]=d[0];p[a+1]=d[1];p[a+2]=d[2];p[a+3]=d[3]}function s(a,c){var d=4*(a+c*v);return[p[d],p[d+1],p[d+2],p[d+3]]}function u(a,c){return a[0]===c[0]&&a[1]===c[1]&&a[2]===c[2]&&a[3]===c[3]}a=Math.round(a);d=Math.round(d);b.canvas.restore();var v=b.canvas.width,x=c.getImageData(0,0,v,b.canvas.height),p=x.data,r=4*(a+d*b.canvas.width),w=[p[r],p[r+1],p[r+2],p[r+3]],r=parseInt(c.strokeStyle.substr(1,6),16),q=[r>>16&255,r>>8&255,r&255,255];if(!u(w,q)){r=[[a,d,1]];g(a,d- 1)&&r.push([a,d-1,-1]);a=[];for(var f=d=0,n=0;0<r.length;)if(n=r.pop(),d=n[0],f=n[1],n=n[2],g(d,f)){g(d,f+n)&&r.push([d,f+n,n]);l(d,f+n,f)&&a.push(d,f+n);l(d,f-n,f)&&a.push(d,f-n);for(var A=[0,0],z=0;2>z;z++){var y=z?1:-1,t;for(t=d+y;g(t,f);t+=y){var B=g(t,f+n),C=g(t,f-n),D=!g(t-y,f+n),E=!g(t-y,f-n);B&&D?r.push([t,f+n,n]):l(t,f+n,f)&&a.push(t,f+n);C&&E?r.push([t,f-n,-n]):l(t,f-n,f)&&a.push(t,f-n)}b.canvas.v(t,f)&&a.push(t,f);A[z]=t-y}h(A[0],A[1],f,q)}for(;0<a.length;)d=a.shift(),f=a.shift(),m(d,f, q),!u(q,s(d-1,f))&&b.canvas.v(d-1,f)&&k(d-1,f,q,s(d-1,f)),!u(q,s(d+1,f))&&b.canvas.v(d+1,f)&&k(d+1,f,q,s(d+1,f)),!u(q,s(d,f-1))&&b.canvas.v(d,f-1)&&k(d,f-1,q,s(d,f-1)),!u(q,s(d,f+1))&&b.canvas.v(d,f+1)&&k(d,f+1,q,s(d,f+1));c.putImageData(x,0,0)}}; b.g.e.drawLineChain=function(c,a,d,e,l){c.save();c.lineJoin="round";c.beginPath();c.moveTo(a[0],a[1]);for(var g=2;g<a.length;g+=2)c.lineTo(a[g],a[g+1]);e&&(d?(c.stroke(),e=parseInt(c.strokeStyle.substr(1,6),16),c.strokeStyle="rgba("+(e>>16&255)+","+(e>>8&255)+","+(e&255)+",0.5)",c.moveTo(a[a.length-2],a[a.length-1]),c.lineTo(a[0],a[1])):(c.closePath(),l&&(c.fillStyle=l,c.fill())));c.stroke();if(d){c.save();e=parseInt(c.strokeStyle.substr(1,6),16);c.fillStyle=160<0.2126*(e>>16&255)+0.7152*(e>>8&255)+ 0.0722*(e&255)?"#444444":"#FFFFFF";c.lineWidth=3;for(g=0;g<a.length;g+=2)c.beginPath(),c.arc(a[g],a[g+1],2.5,2*Math.PI,!1),c.closePath(),c.stroke(),c.fill();c.restore()}c.restore()}; b.g.e.drawSpline=function(c,a,d,e,l,g){var h=[],k=a.length;e=e?1:0;if(0!=k){4==k&&(c.beginPath(),c.moveTo(a[0],a[1]),c.lineTo(a[2],a[3]),c.stroke());e&&(a.push(a[0],a[1],a[2],a[3]),a.unshift(a[k-1]),a.unshift(a[k-1]));for(var m=0,s=k-4+4*e;m<s;m+=2)var u=a[m],v=a[m+1],x=a[m+2],p=a[m+3],r=a[m+4],w=a[m+5],q=Math.sqrt(Math.pow(x-u,2)+Math.pow(p-v,2)),q=d*q/(q+Math.sqrt(Math.pow(r-x,2)+Math.pow(w-p,2))),f=d-q,h=h.concat(x+q*(u-r),p+q*(v-w),x-f*(u-r),p-f*(v-w));h=e?h.concat(h[0],h[1]):h;c.save();c.beginPath(); c.lineJoin="round";c.moveTo(a[2],a[3]);for(m=2;m<k;m+=2)c.bezierCurveTo(h[2*m-2],h[2*m-1],h[2*m],h[2*m+1],a[m+2],a[m+3]);e?g?(c.stroke(),c.save(),d=parseInt(c.strokeStyle.substr(1,6),16),c.strokeStyle="rgba("+(d>>16&255)+","+(d>>8&255)+","+(d&255)+",0.5)",c.bezierCurveTo(h[2*k-2],h[2*k-1],h[2*k],h[2*k+1],a[k+2],a[k+3]),c.stroke(),c.restore()):(c.bezierCurveTo(h[2*k-2],h[2*k-1],h[2*k],h[2*k+1],a[k+2],a[k+3]),c.moveTo(a[0],a[1]),c.closePath(),l&&(c.fillStyle=l,c.fill()),c.stroke()):(c.moveTo(a[0],a[1]), c.quadraticCurveTo(h[0],h[1],a[2],a[3]),c.moveTo(a[k-2],a[k-1]),c.quadraticCurveTo(h[2*k-10],h[2*k-9],a[k-4],a[k-3]),c.stroke());if(g){c.save();d=parseInt(c.strokeStyle.substr(1,6),16);c.fillStyle=160<0.2126*(d>>16&255)+0.7152*(d>>8&255)+0.0722*(d&255)?"#444444":"#FFFFFF";c.lineWidth=3;m=2*e;for(s=k-2+2*e;m<s;m+=2)c.beginPath(),c.arc(a[m],a[m+1],2.5,2*Math.PI,!1),c.closePath(),c.stroke(),c.fill();c.restore()}c.restore()}}; b.f.h.setupCSS=function(){var c=$("#"+b.id),a=b.canvas.offset.top+b.canvas.height-c.offset().top,c=(c.width()-420)/2,d=document.createElement("style");d.id=b.id+"StyleSheet";d.innerHTML="\n\t\t/*These drawTools-btn-Icon are css only icons*/\n\t\t#drawTools-btn-icon-fill{margin:12px 5px 0px 21px;width:12px;height:12px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\t\t#drawTools-btn-icon-fill:before{border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;content:'';}\n\t\t#drawTools-btn-icon-line{margin:8px 16px 0px 17px;width:5px;height:15px;background:black;border-radius:2px;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\t\t#drawTools-btn-icon-rect{margin:8px 8px 0px 8px;width:22px;height:15px;background:black;}\n\t\t#drawTools-btn-icon-ellipse{margin:8px 8px 0px 8px;width:22px;height:15px;background:black;-moz-border-radius:11px/8px;-webkit-border-radius:11px/8px;border-radius:11px/8px;}\n\t\t#drawTools-btn-icon-exit{margin:6px 16px 0px 16px;width:5px;height:21px;background:#c2c2c2;-webkit-transform:skew(43deg);-moz-transform:skew(43deg);-o-transform:skew(43deg);transform:skew(43deg);}\n\t\t#drawTools-btn-icon-exit:before{width:5px;height:21px;background:#c2c2c2;-webkit-transform:skew(-62deg);-moz-transform:skew(-62deg);-o-transform:skew(-62deg);transform:skew(-62deg);content:'';display:block;}\n\t\t#drawTools-btn-icon-options{margin:5px 8px 0px 8px;width:30px;height:5px;background:#c2c2c2;border-radius:1px;}\n\t\t#drawTools-btn-icon-options:before{margin:8px 0px 0px 0px;width:30px;height:5px;background:#c2c2c2;border-radius:1px;content:'';display:block;position:absolute;}\n\t\t#drawTools-btn-icon-options:after{margin:16px 0px 0px 0px;width:30px;height:5px;background:#c2c2c2;border-radius:1px;content:'';display:block;position:absolute;}\n\t\t#drawTools-btn-icon-linechain{margin:8px 24px 0px 11px;width:3px;height:15px;background:black;border-radius:2px;-webkit-transform:rotate(-25deg);-moz-transform:rotate(-25deg);-o-transform:rotate(-25deg);transform:rotate(-25deg);}\n\t\t#drawTools-btn-icon-linechain:before{margin:5px 5px 2px 5px;width:3px;height:13px;background:black;border-radius:2px;content:'';display:block;position:absolute;-webkit-transform:rotate(65deg);-moz-transform:rotate(65deg);-o-transform:rotate(65deg);transform:rotate(65deg);}\n\t\t#drawTools-btn-icon-linechain:after{margin:8px 1px 0px 12px;width:3px;height:10px;background:black;border-radius:2px;content:'';display:block;position:absolute;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);}\n\t\t#drawTools-btn-icon-curve{margin:6px 15px 0px 11px;position: relative;width: 12px;height: 12px;-webkit-box-shadow:-0px 3px 0px 0px black;box-shadow:-0px 3px 0px 0px black;border-radius:100%;}\n\t\t#drawTools-btn-icon-curve:after{margin:10px 0px 0px 10px;position:relative;width:8px;height:10px;-webkit-box-shadow:0px -3px 0px 0px black;box-shadow:0px -3px 0px 0px black;border-radius:100%;content:'';display:block;position:absolute;}\n\t\t#drawTools-btn-icon-curve:before{margin:4px 0px 0px -1px;width:2px;height:9px;background:black;border-radius:2px;-webkit-transform:rotate(-30deg);-moz-transform:rotate(-30deg);-o-transform:rotate(-30deg);-ms-transform:rotate(-30deg);transform:rotate(-30deg);content:'';content:'';display:block;position:absolute;}\n\t\t\n\t\t#drawTools{position:relative;display:inline-block;vertical-align:middle;}\n\t\t#drawTools>.drawTools-btn{position:relative;float:left;display:inline-block;}\n\t\t\n\t\t#drawTools>.drawTools-btn:not(:first-child):not(:last-child):not(.dropdown-toggle){border-radius:0}\n\t\t#drawTools>.drawTools-btn:first-child{margin-left:0;}\n\t\t#drawTools>.drawTools-btn:first-child:not(:last-child):not(.dropdown-toggle){border-bottom-right-radius: 0;border-top-right-radius: 0;}\n\t\t#drawTools>.drawTools-btn:last-child:not(:first-child),#drawTools>.dropdown-toggle:not(:first-child){border-bottom-left-radius:0;border-top-left-radius:0;}\n\t\t\n\t\t.drawTools-btn{height:34px;border-radius:2px;margin-top:5px;}\n\t\t.drawTools-btn input{display:none;}\n\t\t\n\t\t.drawTools-btn-container{background-color:#fffb8d;border-bottom:1px solid #e5e17e;height:34px;padding:0px;margin:0px;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border-radius:inherit;border-top:1px solid transparent;}\n\t\t.drawTools-btn-container:focus\t{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}\n\t\t.drawTools-btn-container:hover,.drawTools-btn:focus{background-color:#f6f166;border-bottom:1px solid #ddd85b;color:#333333;text-decoration:none;}\n\t\t.drawTools-btn-container:active,.drawTools-btn input:focus + div,.drawTools-btn input:checked + div{background-color:#f6f166;border-bottom:1px solid #f6f166;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.5);box-shadow:inset 0 3px 5px rgba(0,0,0,0.5);}\n\t\t.drawTools-btn-container.disabled,.drawTools-btn-container[disabled],fieldset[disabled] .drawTools-btn-container{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}\n\t\t\n\t\t#drawTools-btn-options .drawTools-btn-container{background:#252525;border-bottom:1px solid #171717;}\n\t\t#drawTools-btn-options .drawTools-btn-container:focus{outline:thin dotted #fff;}\n\t\t#drawTools-btn-options .drawTools-btn-container:hover,#drawTools-btn-options .drawTools-btn:focus{background-color:#2e2e2e;border-bottom:1px solid #222222;}\n\t\t#drawTools-btn-options .drawTools-btn-container:active{background-color:#252525;border-bottom:1px solid #252525;}\n\t\t\n\t\t#drawTools-btn-exit .drawTools-btn-container{background:#a50000;border-bottom:1px solid #7c0000;}\n\t\t#drawTools-btn-exit .drawTools-btn-container:focus{outline:thin dotted #fff;}\n\t\t#drawTools-btn-exit .drawTools-btn-container:hover,#drawTools-btn-exit .drawTools-btn:focus{background-color:#b90c0c;border-bottom:1px solid #980909;}\n\t\t#drawTools-btn-exit .drawTools-btn-container:active{background-color:#a50000;border-bottom:1px solid #a50000;}\n\t\t\n\t\t#drawTools-options{margin-top:"+ a+"px;margin-left:"+c+"px;background:#252525;border-bottom:1px solid #171717;width:420px;height:0px;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\t\t#drawTools-options-content{position:absolute;top:8px;left:8px;right:8px;bottom:8px;}\n\t\t\n\t\t#drawTools-options-leftPanel{width:160px;height:100%;position:absolute;left:0px;}\n\t\t#drawTools-options-leftPanel>.switch{display:block;margin-bottom:20px;}\n\t\t\n\t\t.switch{font:13px/20px 'Helvetica Neue',Helvetica,Arial,sans-serif;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;width:150px;height:26px;position:relative;display:inline-block;vertical-align:top;padding:3px;border-radius:2px;cursor:pointer;box-shadow:inset 0 -1px #525252,inset 0 1px 1px rgba(0,0,0,0.8);}\n\t\t.switch-input{position:absolute;top:0;left:0;opacity:0;}\n\t\t.switch-label{position:relative;display:block;height:inherit;font-size:12px;text-transform:uppercase;background:#7b0000;border-radius:inherit;box-shadow:inset 0 1px 2px rgba(0,0,0,0.12),inset 0 0 2px rgba(0,0,0,0.15);-webkit-transition:0.15s ease-out;-moz-transition:0.15s ease-out;-o-transition:0.15s ease-out;transition:0.15s ease-out;-webkit-transition-property:opacity background;-moz-transition-property:opacity background;-o-transition-property:opacity background;transition-property:opacity background;}\n\t\t.switch-label:before,.switch-label:after{position:absolute;top:50%;margin-top:-.5em;line-height:1;-webkit-transition:inherit;-moz-transition:inherit;-o-transition:inherit;transition:inherit;}\n\t\t.switch-label:before{content:attr(data-off);right:11px;color:white;text-shadow:0 1px rgba(0,0,0,0.2);}\n\t\t.switch-label:after{content:attr(data-on);left:11px;color:white;text-shadow:0 1px rgba(0,0,0,0.2);opacity:0;}\n\t\t.switch-input:checked ~ .switch-label {background:#117b00;box-shadow:inset 0 1px 2px rgba(0,0,0,0.15),inset 0 0 3px rgba(0,0,0,0.2);}\n\t\t.switch-input:checked~.switch-label:before{opacity:0;}\n\t\t.switch-input:checked~.switch-label:after{opacity: 1;}\n\t\t.switch-handle{position:absolute;top:4px;left:4px;width:24px;height:24px;background:#c2c2c2;border-radius:2px;box-shadow:1px 1px 5px rgba(0,0,0,0.2);background-image:-webkit-linear-gradient(top, #c2c2c2 40%, #a7a7a7);background-image:-moz-linear-gradient(top, #c2c2c2 40%, #a7a7a7);background-image:-o-linear-gradient(top, #c2c2c2 40%, #a7a7a7);background-image:linear-gradient(to bottom, #c2c2c2 40%, #a7a7a7);-webkit-transition:left 0.15s ease-out;-moz-transition:left 0.15s ease-out;-o-transition:left 0.15s ease-out;transition:left 0.15s ease-out;}\n\t\t.switch-input:checked~.switch-handle{left:128px;box-shadow:-1px 1px 5px rgba(0,0,0,0.2);}\n\t\t.switch-green>.switch-input:checked~.switch-label{background:#4fb845;}\n\t\t\n\t\t#drawTools-options-palette{width:240px;height:100%;position:absolute;right:0px;}\n\t\t#drawTools-options-palette label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\t\t#drawTools-options-palette input{display:none;visibility:hidden;margin:0px;padding:0px;}\n\t\t#drawTools-options-palette input:checked + div{border:2px solid #c2c2c2;}\n\t\t#drawTools-options-palette div{width:40px;height:40px;border:2px solid #252525;margin=0;padding=0;line-height:2.428571429;}\n\t\t#drawTools-options-palette div:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\t\t#drawTools-options-palette div:hover,#drawTools-options-palette div:focus,#drawTools-options-palette div:active{border:2px solid red;}\n\t\t\n\t\t.drawTools-buttonText,#drawTools-options-palette div{font-size:14px;font-weight:normal;text-align:center;vertical-align:middle;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}\n\t\t\n\t\t"; document.body.appendChild(d)};b.m.mouseDown=function(c){var a=b.g;1==$("#drawTools-options").T("opacity")?(painting=!1,b.canvas.restore(),b.options.W()):a.d!==a.b.D&&(a.C=!0,b.canvas.X(),b.i=c.pageX-b.canvas.offset.left,b.j=c.pageY-b.canvas.offset.top,a.d===a.b.G?(painting=!1,a.e.ca(b.c,b.i,b.j)):a.d===a.b.s?(painting=!1,a.a.push(b.i,b.j)):a.d===a.b.l?painting=!1:a.d===a.b.w?painting=!1:a.d===a.b.o?(painting=!1,a.a.push(b.i,b.j)):a.d===a.b.r&&(painting=!1,a.a.push(b.i,b.j)))}; b.m.mouseMove=function(c){var a=b.g;if(a.d!==a.b.D&&a.C){b.i=c.pageX-b.canvas.offset.left;b.j=c.pageY-b.canvas.offset.top;c=b.i;var d=b.j;if(a.d!==a.b.G)if(a.d===a.b.s)b.n&&(d=a.J(a.a[0],a.a[1],c,d),c=d.x,d=d.y),b.canvas.restore(),a.e.M(b.c,a.a[0],a.a[1],c,d);else if(a.d===a.b.l){if(0<a.a.length){b.n&&(d=a.J(a.a[a.a.length-2],a.a[a.a.length-1],c,d),c=d.x,d=d.y);var e=b.options.k?b.c.strokeStyle:b.options.fillColor;b.canvas.restore();a.e.I(b.c,a.a.concat(c,d),!0,b.options.p,e)}}else a.d===a.b.w?0< a.a.length&&(e=b.options.k?b.c.strokeStyle:b.options.fillColor,b.canvas.restore(),a.e.O(b.c,a.a.concat(b.i,b.j),0.5,b.options.p,e,!0)):a.d===a.b.o?(e=b.options.k?b.c.strokeStyle:b.options.fillColor,b.n&&(d=a.B(a.a[0],a.a[1],c,d),c=d.x,d=d.y),b.canvas.restore(),a.e.N(b.c,a.a.concat(c,d),e)):a.d===a.b.r&&(e=b.options.k?b.c.strokeStyle:b.options.fillColor,b.n&&(d=a.B(a.a[0],a.a[1],c,d),c=d.x,d=d.y),b.canvas.restore(),a.e.L(b.c,a.a.concat(c,d),e))}}; b.m.mouseUp=function(c){var a=b.g;if(a.d!==a.b.D&&a.C){b.i=c.pageX-b.canvas.offset.left;b.j=c.pageY-b.canvas.offset.top;var d=b.i,e=b.j;a.d===a.b.G?a.reset(!0):a.d===a.b.s?(b.n&&(e=a.J(a.a[0],a.a[1],d,e),d=e.x,e=e.y),b.canvas.restore(),a.e.M(b.c,a.a[0],a.a[1],d,e),a.reset(!0)):a.d===a.b.l?b.canvas.U(b.i,b.j)?(b.n&&(e=a.J(a.a[a.a.length-2],a.a[a.a.length-1],d,e),d=e.x,e=e.y),a.a.push(d,e),3==c.which&&(c=b.options.k?b.c.strokeStyle:b.options.fillColor,b.canvas.restore(),a.e.I(b.c,a.a,!1,b.options.p, c),a.reset(!0))):(b.canvas.restore(),a.reset()):a.d===a.b.w?b.canvas.U(b.i,b.j)?(a.a.push(b.i,b.j),3==c.which&&(c=b.options.k?b.c.strokeStyle:b.options.fillColor,b.canvas.restore(),a.e.O(b.c,a.a,0.5,b.options.p,c,!1),a.reset(!0))):(b.canvas.restore(),a.reset()):a.d===a.b.o?(c=b.options.k?b.c.strokeStyle:b.options.fillColor,b.n&&(e=a.B(a.a[0],a.a[1],d,e),d=e.x,e=e.y),b.canvas.restore(),a.a.push(d,e),a.e.N(b.c,a.a,c),a.reset(!0)):a.d===a.b.r&&(c=b.options.k?b.c.strokeStyle:b.options.fillColor,b.n&& (e=a.B(a.a[0],a.a[1],d,e),d=e.x,e=e.y),b.canvas.restore(),a.a.push(d,e),a.e.L(b.c,a.a,c),a.reset(!0))}}; b.m.keyDown=function(c){var a=b.g;if(16==c.keyCode){b.n=1;c=b.i;var d=b.j;if(a.C)if(a.d===a.b.o||a.d===a.b.r){d=a.B(a.a[0],a.a[1],c,d);c=d.x;d=d.y;b.canvas.restore();var e=b.options.k?b.c.strokeStyle:b.options.fillColor;a.d===a.b.o?a.e.N(b.c,a.a.concat(c,d),e):a.e.L(b.c,a.a.concat(c,d),e)}else(a.d===a.b.s||a.d===a.b.l)&&0<a.a.length&&(d=a.J(a.a[a.a.length-2],a.a[a.a.length-1],c,d),c=d.x,d=d.y,b.canvas.restore(),a.d===a.b.l?(e=b.options.k?b.c.strokeStyle:b.options.fillColor,a.e.I(b.c,a.a.concat(c, d),!0,b.options.p,e)):a.e.M(b.c,a.a[0],a.a[1],c,d))}else 81!=c.keyCode||a.d!==a.b.l&&a.d!==a.b.w||!a.a.length||(a.a.length-=2,b.canvas.restore(),0==a.a.length?a.reset():(e=b.options.k?b.c.strokeStyle:b.options.fillColor,a.d===a.b.l?a.e.I(b.c,a.a.concat(b.i,b.j),!0,b.options.p,e):a.e.O(b.c,a.a.concat(b.i,b.j),0.5,b.options.p,e,!0)))}; b.m.keyUp=function(c){var a=b.g;if(16==c.keyCode){b.n=0;c=b.i;var d=b.j;if(a.C)if(a.d===a.b.o||a.d===a.b.r){b.canvas.restore();var e=b.options.k?b.c.strokeStyle:b.options.fillColor;a.d===a.b.o?a.e.N(b.c,a.a.concat(c,d),e):a.e.L(b.c,a.a.concat(c,d),e)}else(a.d===a.b.s||a.d===a.b.l)&&0<a.a.length&&(b.canvas.restore(),a.d===a.b.l?(e=b.options.k?b.c.strokeStyle:b.options.fillColor,a.e.I(b.c,a.a.concat(c,d),!0,b.options.p,e)):a.e.M(b.c,a.a[0],a.a[1],c,d))}}; b.f.h.createToolButton=function(c,a){var d=document.createElement("label");d.id=b.id+"-btn-"+a;d.className=b.id+"-btn";d.innerHTML='<input id="'+b.id+"-btn-radio-"+a+'" name="'+b.id+'-btn-radio" type="radio"><div class="'+b.id+'-btn-container"><div id="'+b.id+"-btn-icon-"+a+'"></div></div>';document.getElementById(b.id).appendChild(d);d.onclick=function(){b.f.H.la(c)};return d};b.f.h.createToolButtonWithLabel=function(c,a,d){c=b.f.h.u(c,a);c.getElementsByTagName("div")[0].innerHTML=d;return c}; b.f.h.createUtilityButton=function(c){var a=document.createElement("label");a.id=b.id+"-btn-"+c;a.className=b.id+"-btn";a.innerHTML='<div class="'+b.id+'-btn-container"><div id="'+b.id+"-btn-icon-"+c+'"></div></div>';document.getElementById(b.id).appendChild(a);return a}; b.f.h.createOptionsMenu=function(c,a){var d=document.createElement("div");d.id=b.id+"-options";d.innerHTML='<div id="drawTools-options-content"><div id="drawTools-options-leftPanel"></div><div id="drawTools-options-palette"></div></div>';c.insertBefore(d,a.nextSibling);document.getElementById("drawTools-options-leftPanel").innerHTML='<label onclick=cleanTools.html.buttonHandlers.setLineToolsOpen(); class="switch">\t\t\t<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">\t\t\t<span class="switch-label" data-on="Loop Line Tools" data-off="Open Line Tools"></span>\t\t\t<span class="switch-handle"></span>\t\t</label>'; var d=document.getElementsByClassName("colorPicker"),e;e='<label onclick=cleanTools.html.buttonHandlers.setOptionsColor(""); style="width:120px;"><input type="radio" name="drawTools-options-palette-radio" checked><div style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div></label><label onclick=cleanTools.html.buttonHandlers.setOptionsColor("",1); style="width:120px;"><input type="radio" name="drawTools-options-palette-radio"><div style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div></label>'; for(var l=0;l<d.length;l++){var g=d[l].getAttribute("data-color");b.aa.push(g);e+='<label onclick=cleanTools.html.buttonHandlers.setOptionsColor("'+g+'");><input type="radio" name="drawTools-options-palette-radio"><div style="background:'+g+';"></div></label>'}document.getElementById("drawTools-options-palette").innerHTML=e}; b.f.DTDestroy=function(){document.getElementById(b.id).remove();document.getElementById(b.id+"StyleSheet").remove();$(document).A("mousedown");$(document).A("mousemove");$(document).A("mouseup");window.Q=!1;delete b.canvas;delete b.f;delete b;document.getElementById("DTScript").remove()}; b.f.h.setupCssAndHtml=function(){b.canvas.X();var c=document.createElement("div");c.id=b.id;b.ba.appendChild(c);b.f.h.ma();document.getElementById(b.q[0].id).parentNode.onclick=function(){b.f.H.K(b.q[0].size)};document.getElementById(b.q[1].id).parentNode.onclick=function(){b.f.H.K(b.q[1].size)};document.getElementById(b.q[2].id).parentNode.onclick=function(){b.f.H.K(b.q[2].size)};document.getElementById(b.q[3].id).parentNode.onclick=function(){b.f.H.K(b.q[3].size)};b.f.h.u(b.g.b.G,"fill");b.f.h.u(b.g.b.s, "line");b.f.h.u(b.g.b.l,"linechain");b.f.h.u(b.g.b.w,"curve");b.f.h.u(b.g.b.o,"rect");b.f.h.u(b.g.b.r,"ellipse");var a=b.f.h.S("options");a.onclick=function(){b.options.W()};b.f.h.$(c,a);b.f.h.S("exit").onclick=function(){b.f.Y()}};b.c.putImageData=CanvasRenderingContext2D.prototype.putImageData;b.f.h.na();b.F.A("mousedown");b.F.P("mousedown",b.m.ha);$(document).A("mousemove");$(document).P("mousemove",b.m.ia);$(document).A("mouseup");$(document).P("mouseup",b.m.ja);$(document).fa(b.m.da);$(document).ga(b.m.ea);
+// State variable that helps prevent double installation of script
+window.DTToolsIsCurrentlyInstalled = true;
+
+// Setup Constants
+//cleanTools["PropertyD"] = 4
+var DRAW_TOOLS_ID = 'drawTools';
+var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
+var DRAWCEPTION_BRUSHES = 
+	[{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},{id: 'brush-12', size: 12},{id: 'brush-35', size: 35}];
+
+  /*-----------------------------------------------------------------------------*/
+ /*--------------------- Custom Objects/Structures/enums -----------------------*/
+/*-----------------------------------------------------------------------------*/				 
+// Setup Clean Tools Object
+var cleanTools = {
+	'id':DRAW_TOOLS_ID,
+	
+	'dcToolbar':DRAWCEPTION_TOOLBAR,
+	'dcBrushes':DRAWCEPTION_BRUSHES,
+	'dcPalette':[],
+	
+	'canvas':{},               // Canvas related vars and methods
+	'Canvas':drawApp.canvas,   // Actual canvas object
+	'context':drawApp.context, // Canvas context
+	
+	'mouseX':0, // Mouse coords
+	'mouseY':0,
+	
+	'shiftDown':0,
+	
+	'eventHandlers':{}
+};
+cleanTools["canvas"] = {
+    'parentObject':cleanTools,
+	'Canvas':cleanTools.Canvas,
+	'offset':{top:0,left:0},
+	'width':0,
+	'height':0,
+	
+	"updateLocation": function() {
+		this.offset = $('#drawingCanvas').offset();    // Update canvas offset variable
+		this.width = this.Canvas.width();              // Update canvas width variable
+		this.height = this.Canvas.height();            // Update canvas width variable
+	},
+	"isWithinBounds": function(x,y) {
+		return (x>=0 && y>=0 && x<this.width && y<this.height);
+	},
+	"isWithinDrawingBounds": function(x,y) {
+		return (x>=(-12) && y>=(-12) && x<(this.width+12) && y<(this.height+12));
+	},
+	"restore": function() {
+		this.parentObject.context.constructor.prototype.putImageData.call(this.parentObject.context, restorePoints[restorePosition], 0, 0);
+	}
+};
+cleanTools["tools"] = {
+	'currentToolType':0,
+	'toolActive':false,
+	'points':[], // Will contain user input point sets for shapes/lines/etc
+	
+	'toolType':{BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99},
+	'reset':function(saveCanvas) {
+		this.points.length = 0;
+		this.toolActive = false;
+		if(saveCanvas)
+			save();
+	},
+	'paintMethods':{},
+	'squareShiftHold':function(startX,startY,endX,endY) {
+		var endPointX, endPointY;
+		var width = endX - startX;
+		var height = endY - startY;
+		var valueToUse = Math.min(Math.abs(width),Math.abs(height));
+		if(width > 0) {
+			if(height > 0) { // Bottom Right
+				endPointX = startX + valueToUse; 
+				endPointY = startY + valueToUse;
+			} else { // Top Right
+				endPointX = startX + valueToUse; 
+				endPointY = startY - valueToUse;
+			}
+		} else {
+			if(height > 0) { // Bottom Left
+				endPointX = startX - valueToUse; 
+				endPointY = startY + valueToUse;
+			} else { // Top Left
+				endPointX = startX - valueToUse; 
+				endPointY = startY - valueToUse;
+			}
+		}
+		return {x: endPointX, y:endPointY};
+	},
+	'lineShiftHold':function(startX,startY,endX,endY) {
+		var rise = startY - endY;
+		var run = (startX - endX) ? (startX - endX): 1;
+		var slope = rise/run;
+		if( slope > 2.4 || slope < -2.4 ) { // Up-Down
+			return {x:startX, y:endY};
+		} else if( slope < 0.4 && slope > -0.4 ) { // Left-Right
+			return {x:endX, y:startY};
+		} else {
+			return this.squareShiftHold(startX,startY,endX,endY);
+		}
+	}
+};
+cleanTools["options"] = {
+	'id':'#' + cleanTools.id + '-options',
+	
+	// Fill Options
+	'useStrokeAsFill':false,
+	'fillColor':'', // Will be null if no fill for shapes
+	
+	'lineToolsShouldClose':false,
+	
+	'curveTension':0.5,
+	
+	'getOffset':function () {
+		return $(this.id).offset();
+	},
+	'toggleMenu':function () {
+		var h = 175;	// Height of the options div
+		var opacity = $(this.id).css('opacity');
+		
+		if(opacity == 0) {
+			$(this.id).stop(true, true).animate({
+				height: (h + "px"),
+				marginTop: ("-=" + h + "px"),
+				opacity: "1"
+			},200, "swing");
+		} else if(opacity == 1) {
+			$(this.id).stop(true, true).animate({
+				height: "0px",
+				marginTop: ("+=" + h + "px"),
+				opacity: "0"
+			},200, "swing");
+		}
+	},
+	'isWithinBounds':function (x, y) {
+		var x2 = x - $(this.id).offset().top;
+		var y2 = y - $(this.id).offset().left;
+		var width = $(this.id).width();
+		var height = $(this.id).height();
+		//outputDebug("[x:" + x2 + ", y:" + y2 + "] [width:" + width + ", height:" + height + "]");
+		return (x2>=0 && y2>=0 && x2<width && y2<height);
+	}
+};
+cleanTools["html"] = {
+	'parentObject':cleanTools,
+	
+	'init':{}, // HTML initialization methods will be placed here
+	
+	'buttonHandlers':{
+		'cleanToolsObject':cleanTools,
+		'brushClick':function(brushSize) {
+			drawApp.setSize(brushSize);				// Set default brush size
+			this.cleanToolsObject.tools.currentToolType = cleanTools.tools.toolType.BRUSH;		// Update tool type
+			
+			// Visually unselect any other tools
+			var ele = document.getElementsByName(cleanTools.id + "-btn-radio");
+			for(var i=0;i<ele.length;i++)
+				ele[i].checked = false;
+		},
+		'setLineToolsOpen':function() {
+			this.cleanToolsObject.options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
+		},
+		'setOptionsColor':function(color,normalfill) {
+			if(normalfill) {
+				this.cleanToolsObject.options.useStrokeAsFill = true;
+				this.cleanToolsObject.options.fillColor = '';
+			} else {
+				this.cleanToolsObject.options.useStrokeAsFill = false;
+				this.cleanToolsObject.options.fillColor = color;
+			}
+		},
+		'setToolType':function(type) {
+			this.cleanToolsObject.tools.currentToolType=type;
+		}
+	}
+};
+  /*-----------------------------------------------------------------------------*/
+ /*----------------------------- Drawing Algorithms ----------------------------*/
+/*-----------------------------------------------------------------------------*/
+cleanTools.tools.paintMethods["drawLine"] = function(c,x,y,a,b)
+{
+	c.beginPath();
+	c.moveTo( x, y );
+	c.lineTo( a, b);
+	c.stroke();
+}
+cleanTools.tools.paintMethods["drawRect"] = function(c,p,f)
+{
+	c.save();
+	c.lineJoin="round";
+	c.beginPath();
+	c.moveTo( p[0], p[1] );
+	c.lineTo( p[2], p[1]);
+	c.lineTo( p[2], p[3]);
+	c.lineTo( p[0], p[3]);
+	c.closePath();
+	if(f) {
+		c.fillStyle = f;
+		c.fill();
+	}
+	c.stroke();
+	c.restore();
+}
+cleanTools.tools.paintMethods["drawEllipse"] = function(c,p,f)
+{
+	var x = p[0],
+	y =  p[1],
+	w = p[2] - p[0],
+	h = p[3] -  p[1],
+	k = .5522848,
+	a = ( w / 2 ) * k,// control point offset horizontal
+	b = ( h / 2 ) * k,// control point offset vertical
+	d = x + w,            // x-end
+	e = y + h,            // y-end
+	g = x + w / 2,        // x-middle
+	i = y + h / 2;        // y-middle
+	c.save();
+	c.lineJoin="round";
+	c.beginPath();
+	c.moveTo( x, i );
+	c.bezierCurveTo( x, i - b, g - a, y, g, y );
+	c.bezierCurveTo( g + a, y, d, i - b, d, i );
+	c.bezierCurveTo( d, i + b, g + a, e, g, e );
+	c.bezierCurveTo( g - a, e, x, i + b, x, i );
+	c.closePath();
+	if(f) {
+		c.fillStyle = f;
+		c.fill();
+	}
+	c.stroke();
+	c.restore();
+}
+cleanTools.tools.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
+	// Round seed coords in case they happen to be float type
+	xSeed = Math.round( xSeed );
+	ySeed = Math.round( ySeed );
+	/*---------------------- Setup Procedure Variables ----------------------*/
+	// This canvas.restore() fix avoids issues with brush placing dot over flood fill seed area
+	cleanTools.canvas.restore();
+	
+	var w = cleanTools.canvas.width;
+	var h = cleanTools.canvas.height;
+	var p = ctx.getImageData(0,0,w,h);
+	var d = p.data;
+	var tci = (xSeed+ySeed*cleanTools.canvas.width)*4;
+	var targetColor = [d[tci],d[tci+1],d[tci+2],d[tci+3]];
+	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
+	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];
+	
+	/*---------------------- Supporting functions ----------------------*/
+	// Define some useful functions
+	var colorCompare = function(color1,color2) {
+		return (color1[0]===color2[0] && color1[1]===color2[1] && color1[2]===color2[2] && color1[3]===color2[3]);
+	};
+	var getColorFromCoords = function(x,y){
+		var i = (x + y * w) * 4;
+		return [d[i],d[i+1],d[i+2],d[i+3]];
+	}
+	//Colors a pixel with a given color
+	var colorPixel = function(x,y,c) {
+		var i = (x + y * w) * 4;
+		d[i]=c[0];
+		d[i+1]=c[1];
+		d[i+2]=c[2];
+		d[i+3]=c[3];
+	}
+	// [Experimental] Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
+	var colorPixelBlend = function(x,y,c,d){
+		var r=Math.ceil((c[0]+d[0])/2);
+		var g=Math.ceil((c[1]+d[1])/2);
+		var b=Math.ceil((c[2]+d[2])/2);
+		var a=Math.ceil((c[3]+d[3])/2);
+		colorPixel(x,y,[r,g,b,a]);
+	}
+	//---Algorithm helper functions
+	var paint = function(xMin,xMax,y,c) {
+		var r = c[0], g = c[1], b = c[2], a = c[3];
+		var limit = (xMax+1 + y * w) * 4;
+		for(var i = (xMin + y * w) * 4; i<limit; i+=4) {
+			d[i]=r;
+			d[i+1]=g;
+			d[i+2]=b;
+			d[i+3]=a;
+		}
+	}
+	var test = function(x,y) {
+		return (cleanTools.canvas.isWithinBounds(x,y) && colorCompare(targetColor,getColorFromCoords(x,y)));
+	}
+	var testEdgePoint = function(x,y,o) {
+		var a = edgeEligible(x,y);
+		var b = edgeEligible(x-1,y);
+		var c = edgeEligible(x+1,y);
+		if( !a ) {
+			return 0;
+		} else if( b && c ) {
+			return 1;
+		} else if ( c && edgeEligible(x-1,o)) {
+			return 1;
+		} else if ( b && edgeEligible(x+1,o)) {
+			return 1;
+		}
+		return 0;
+	}
+	var edgeEligible = function(x,y) {
+		var c = getColorFromCoords(x,y);
+		return ( cleanTools.canvas.isWithinBounds(x,y) && (!colorCompare(fillColor,c)) && (!colorCompare(targetColor,c)) );
+	}
+	
+	/*---------------------- Begin Procedure ----------------------*/
+	// If seed pixel is already colored the fill color, nothing needs to be done, return early
+	if(colorCompare(targetColor,fillColor))
+		return;
+	
+	/*---------------------- Algorithm Begin ----------------------*/
+	//[x,y,goingUp(1 vs -1)
+	var stack = [[xSeed,ySeed,1]];
+	if(test(xSeed,ySeed-1))
+		stack.push([xSeed,ySeed-1,-1]);
+	var edgeArray = [];
+	
+	var x = 0;
+	var y = 0;
+	var direction = 0;
+	
+	while(stack.length>0) {
+		var line = stack.pop();
+		x = line[0];
+		y = line[1];
+		direction = line[2];
+		if(test(x,y)) {	// If pixel hasn't been colored continue.
+			// Check next pixel in "direction" side is eligible to be seed pixel for next line.
+			if(test(x,y+direction))
+				stack.push([x,y+direction,direction]);
+			
+			// Before scanning line, find wether or not to add edge pixels from seed point
+			if(testEdgePoint(x,y+direction,y))
+				edgeArray.push(x,y+direction);
+			if(testEdgePoint(x,y-direction,y))
+				edgeArray.push(x,y-direction);
+			
+			var range = [0,0];
+			for(var j = 0; j < 2; j++) { // Iterates through left/right line sides
+				var incr = (j) ? 1 : -1 ;
+				var i;
+				for(i = x+incr; test(i,y); i+=incr) { // While pixel line meets continues to meet its target color
+					// Setup Bools
+					var topFillable = test(i,y+direction);
+					var bottomFillable = test(i,y-direction);
+					var topLeftUnfillable = (!test(i-incr,y+direction));
+					var bottomLeftUnfillable = (!test(i-incr,y-direction));
+					
+					if(topFillable && topLeftUnfillable) // Find when to add a new seed(top)
+						stack.push([i,y+direction,direction]);
+					else if(testEdgePoint(i,y+direction,y)) // Find Wether or not to add edge pixels
+						edgeArray.push(i,y+direction);
+						
+					if(bottomFillable && bottomLeftUnfillable) // Find when to add a new seed(bottom)
+						stack.push([i,y-direction,-direction]);
+					else if(testEdgePoint(i,y-direction,y)) // Find Wether or not to add edge pixels
+						edgeArray.push(i,y-direction);
+				}
+				if(cleanTools.canvas.isWithinBounds(i,y))
+					edgeArray.push(i,y);
+				range[j] = i-incr; // Save max fill pixel
+				
+			}
+			paint(range[0],range[1],y,fillColor);
+		}
+	}
+	// This loop colors edge pixels and softens them with anti-aliasing
+	while(edgeArray.length>0) {
+		x=edgeArray.shift();
+		y=edgeArray.shift();
+		
+		colorPixel(x,y,fillColor);
+		
+		if( (!colorCompare(fillColor,getColorFromCoords(x-1,y))) && cleanTools.canvas.isWithinBounds(x-1,y) )
+			colorPixelBlend(x-1,y,fillColor,getColorFromCoords(x-1,y));
+		if( (!colorCompare(fillColor,getColorFromCoords(x+1,y))) && cleanTools.canvas.isWithinBounds(x+1,y) )
+			colorPixelBlend(x+1,y,fillColor,getColorFromCoords(x+1,y));
+		if( (!colorCompare(fillColor,getColorFromCoords(x,y-1))) && cleanTools.canvas.isWithinBounds(x,y-1) )
+			colorPixelBlend(x,y-1,fillColor,getColorFromCoords(x,y-1));
+		if( (!colorCompare(fillColor,getColorFromCoords(x,y+1))) && cleanTools.canvas.isWithinBounds(x,y+1) )
+			colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
+	}
+	ctx.putImageData(p,0,0);
+}
+cleanTools.tools.paintMethods["drawLineChain"] = function (c,p,e,s,f)
+{
+	c.save();
+	c.lineJoin="round";
+	c.beginPath();
+	c.moveTo( p[0], p[1] );
+	for(var i=2;i<p.length;i+=2)
+		c.lineTo( p[i], p[i+1] );
+	if(s) {
+		if(e) {
+			c.stroke(); // Stroke all lines previous to this one
+			// Get current stroke color and set it to .5 opacity
+			var z = parseInt(c.strokeStyle.substr(1,6),16);
+			c.strokeStyle = "rgba(" + ((z>>16)&255) + "," + ((z>>8)&255) + "," + (z&255) + ",0.5)";
+			// Make the closing stroke
+			c.moveTo( p[p.length-2], p[p.length-1] );
+			c.lineTo( p[0], p[1] );
+		} else {
+			c.closePath()
+			if(f) {
+				c.fillStyle = f;
+				c.fill();
+			}
+		}
+	}
+	c.stroke();
+	// Draw the knot points.
+	if(e){   
+		c.save();
+		// Determine wether to use dark or light points
+		var z = parseInt(c.strokeStyle.substr(1,6),16); // Get current stroke color
+		var w = (0.2126*((z>>16)&255)) + (0.7152*((z>>8)&255)) + (0.0722*(z&255)); // Get its 'lightness' level
+		c.fillStyle = (w > 160) ? "#444444" : "#FFFFFF"; // If (colorIsLight) ? darkGray : white;
+		c.lineWidth=3;
+		for(var i=0;i<p.length;i+=2){
+			c.beginPath();
+			c.arc(p[i],p[i+1],2.5,2*Math.PI,0);
+			c.closePath();
+			c.stroke();
+			c.fill();
+		}
+		c.restore();
+	}
+	c.restore();
+}
+cleanTools.tools.paintMethods["drawSpline"] = function(c,p,t,d,f,o){
+	var c = 0;
+	var g=[];   // array of control points, as x0,y0,x1,y1,...
+	var n=p.length;
+	var e = (d) ? 1 : 0;
+	// First check for some base cases
+	if(n == 0) {
+		return;
+	} else if(n == 4) {
+		// Draw Line
+		c.beginPath();
+		c.moveTo( p[0], p[1] );
+		c.lineTo( p[2], p[3]);
+		c.stroke();
+	}
+	// For closed spline: Append and prepend knots and control points to close the curve
+	if(e){
+		p.push(p[0],p[1],p[2],p[3]);
+		p.unshift(p[n-1]);
+		p.unshift(p[n-1]);
+	}
+	// Find Control Points
+	for(var i=0, m = (n-4+(4*e));i<m;i+=2){
+		// Calculate Control Points
+		//  x0,y0,x1,y1 are the coordinates of the end (knot) pts of this segment
+		//  x2,y2 is the next knot -- not connected here but needed to calculate p2
+		//  p1 is the control point calculated here, from x1 back toward x0.
+		//  p2 is the next control point, calculated here and returned to become the 
+		//  next segment's p1.
+		//  t is the 'tension' which controls how far the control points spread.
+		//  Scaling factors: distances from this knot to the previous and following knots.
+		var l=p[i], o=p[i+1], q=p[i+2], r=p[i+3], s=p[i+4], u=p[i+5];
+		// Calculate intermediary values
+		var h=Math.sqrt(Math.pow(q-l,2)+Math.pow(r-o,2));
+		var w=Math.sqrt(Math.pow(s-q,2)+Math.pow(u-r,2));
+		var j=t*h/(h+w);
+		var k=t-j;
+	  	// Calculate Control Points
+		var a=q+j*(l-s);
+		var b=r+j*(o-u);
+		var c=q-k*(l-s);
+		var d=r-k*(o-u);  
+		// Then add them to g array
+		g=g.concat(a,b,c,d);
+	}
+	g = (e) ? g.concat(g[0],g[1]) : g;
+	
+	c.save(); 
+	
+	c.beginPath();
+	c.lineJoin="round";
+	c.moveTo(p[2],p[3]);
+	for(var i=2;i<n;i+=2)
+		c.bezierCurveTo(g[2*i-2],g[2*i-1],g[2*i],g[2*i+1],p[i+2],p[i+3]);
+	
+	if(e) {
+		if(o) {
+			c.stroke(); // Stroke all lines previous to this one
+			c.save();
+			// Get current stroke color and set it to .5 opacity
+			var z = parseInt(c.strokeStyle.substr(1,6),16);
+			c.strokeStyle = "rgba(" + ((z>>16)&255) + "," + ((z>>8)&255) + "," + (z&255) + ",0.5)";
+			// Make the closing stroke
+			c.bezierCurveTo(g[2*n-2],g[2*n-1],g[2*n],g[2*n+1],p[n+2],p[n+3]);
+			c.stroke();
+			c.restore();
+		} else{
+			// Make the closing stroke
+			c.bezierCurveTo(g[2*n-2],g[2*n-1],g[2*n],g[2*n+1],p[n+2],p[n+3]);
+			c.moveTo(p[0],p[1]);
+			c.closePath();
+			if(f) {
+				c.fillStyle = f;
+				c.fill();
+			}
+			c.stroke();
+		}
+	} else { 
+		// For open curves the first and last arcs are simple quadratics.
+		c.moveTo(p[0],p[1]);
+		c.quadraticCurveTo(g[0],g[1],p[2],p[3]);
+		c.moveTo(p[n-2],p[n-1]);
+		c.quadraticCurveTo(g[2*n-10],g[2*n-9],p[n-4],p[n-3]);
+		c.stroke();
+	}
+	// Draw the knot points.
+	if(o){   
+		c.save();
+		// Determine wether to use dark or light points
+		var z = parseInt(c.strokeStyle.substr(1,6),16); // Get current stroke color
+		var q = (0.2126*((z>>16)&255)) + (0.7152*((z>>8)&255)) + (0.0722*(z&255)); // Get its 'lightness' level
+		c.fillStyle = (q > 160) ? "#444444" : "#FFFFFF"; // If (colorIsLight) ? darkGray : white;
+		c.lineWidth=3;
+		for(var i=(2*e), m = (n-2+(2*e));i<m;i+=2){
+			c.beginPath();
+			c.arc(p[i],p[i+1],2.5,2*Math.PI,0);
+			c.closePath();
+			c.stroke();
+			c.fill();
+		}
+		c.restore();
+	}
+	c.restore();
+}
+  /*-----------------------------------------------------------------------------*/
+ /*----------------------------- CSS Style Sheets ------------------------------*/
+/*-----------------------------------------------------------------------------*/
+cleanTools.html.init['setupCSS'] = function()
+{
+	// Calculate variables used in css
+	var cleanToolsObject = $('#' + cleanTools.id);
+	var optionsMarginTop = cleanTools.canvas.offset.top + cleanTools.canvas.height - cleanToolsObject.offset().top;
+	var optionsMarginLeft = (cleanToolsObject.width() - 420)/2;
+	//alert("cleanToolsObject.width(): " + cleanToolsObject.width() + "\noptionsMarginLeft: " + optionsMarginLeft);
+	
+	var DTSheet = document.createElement('style');
+	DTSheet.id = cleanTools.id + 'StyleSheet'; // Give id so destructor can find it if needed
+	DTSheet.innerHTML = "\n\
+		/*These drawTools-btn-Icon are css only icons*/\n\
+		#drawTools-btn-icon-fill{margin:12px 5px 0px 21px;width:12px;height:12px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}\n\
+		#drawTools-btn-icon-fill:before{border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;content:'';}\n\
+		#drawTools-btn-icon-line{margin:8px 16px 0px 17px;width:5px;height:15px;background:black;border-radius:2px;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
+		#drawTools-btn-icon-rect{margin:8px 8px 0px 8px;width:22px;height:15px;background:black;}\n\
+		#drawTools-btn-icon-ellipse{margin:8px 8px 0px 8px;width:22px;height:15px;background:black;-moz-border-radius:11px/8px;-webkit-border-radius:11px/8px;border-radius:11px/8px;}\n\
+		#drawTools-btn-icon-exit{margin:6px 16px 0px 16px;width:5px;height:21px;background:#c2c2c2;-webkit-transform:skew(43deg);-moz-transform:skew(43deg);-o-transform:skew(43deg);transform:skew(43deg);}\n\
+		#drawTools-btn-icon-exit:before{width:5px;height:21px;background:#c2c2c2;-webkit-transform:skew(-62deg);-moz-transform:skew(-62deg);-o-transform:skew(-62deg);transform:skew(-62deg);content:'';display:block;}\n\
+		#drawTools-btn-icon-options{margin:5px 8px 0px 8px;width:30px;height:5px;background:#c2c2c2;border-radius:1px;}\n\
+		#drawTools-btn-icon-options:before{margin:8px 0px 0px 0px;width:30px;height:5px;background:#c2c2c2;border-radius:1px;content:'';display:block;position:absolute;}\n\
+		#drawTools-btn-icon-options:after{margin:16px 0px 0px 0px;width:30px;height:5px;background:#c2c2c2;border-radius:1px;content:'';display:block;position:absolute;}\n\
+		#drawTools-btn-icon-linechain{margin:8px 24px 0px 11px;width:3px;height:15px;background:black;border-radius:2px;-webkit-transform:rotate(-25deg);-moz-transform:rotate(-25deg);-o-transform:rotate(-25deg);transform:rotate(-25deg);}\n\
+		#drawTools-btn-icon-linechain:before{margin:5px 5px 2px 5px;width:3px;height:13px;background:black;border-radius:2px;content:'';display:block;position:absolute;-webkit-transform:rotate(65deg);-moz-transform:rotate(65deg);-o-transform:rotate(65deg);transform:rotate(65deg);}\n\
+		#drawTools-btn-icon-linechain:after{margin:8px 1px 0px 12px;width:3px;height:10px;background:black;border-radius:2px;content:'';display:block;position:absolute;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);}\n\
+		#drawTools-btn-icon-curve{margin:6px 15px 0px 11px;position: relative;width: 12px;height: 12px;-webkit-box-shadow:-0px 3px 0px 0px black;box-shadow:-0px 3px 0px 0px black;border-radius:100%;}\n\
+		#drawTools-btn-icon-curve:after{margin:10px 0px 0px 10px;position:relative;width:8px;height:10px;-webkit-box-shadow:0px -3px 0px 0px black;box-shadow:0px -3px 0px 0px black;border-radius:100%;content:'';display:block;position:absolute;}\n\
+		#drawTools-btn-icon-curve:before{margin:4px 0px 0px -1px;width:2px;height:9px;background:black;border-radius:2px;-webkit-transform:rotate(-30deg);-moz-transform:rotate(-30deg);-o-transform:rotate(-30deg);-ms-transform:rotate(-30deg);transform:rotate(-30deg);content:'';content:'';display:block;position:absolute;}\n\
+		\n\
+		#drawTools{position:relative;display:inline-block;vertical-align:middle;}\n\
+		#drawTools>.drawTools-btn{position:relative;float:left;display:inline-block;}\n\
+		\n\
+		#drawTools>.drawTools-btn:not(:first-child):not(:last-child):not(.dropdown-toggle){border-radius:0}\n\
+		#drawTools>.drawTools-btn:first-child{margin-left:0;}\n\
+		#drawTools>.drawTools-btn:first-child:not(:last-child):not(.dropdown-toggle){border-bottom-right-radius: 0;border-top-right-radius: 0;}\n\
+		#drawTools>.drawTools-btn:last-child:not(:first-child),#drawTools>.dropdown-toggle:not(:first-child){border-bottom-left-radius:0;border-top-left-radius:0;}\n\
+		\n\
+		.drawTools-btn{height:34px;border-radius:2px;margin-top:5px;}\n\
+		.drawTools-btn input{display:none;}\n\
+		\n\
+		.drawTools-btn-container{background-color:#fffb8d;border-bottom:1px solid #e5e17e;height:34px;padding:0px;margin:0px;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border-radius:inherit;border-top:1px solid transparent;}\n\
+		.drawTools-btn-container:focus	{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}\n\
+		.drawTools-btn-container:hover,.drawTools-btn:focus{background-color:#f6f166;border-bottom:1px solid #ddd85b;color:#333333;text-decoration:none;}\n\
+		.drawTools-btn-container:active,.drawTools-btn input:focus + div,.drawTools-btn input:checked + div{background-color:#f6f166;border-bottom:1px solid #f6f166;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.5);box-shadow:inset 0 3px 5px rgba(0,0,0,0.5);}\n\
+		.drawTools-btn-container.disabled,.drawTools-btn-container[disabled],fieldset[disabled] .drawTools-btn-container{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}\n\
+		\n\
+		#drawTools-btn-options .drawTools-btn-container{background:#252525;border-bottom:1px solid #171717;}\n\
+		#drawTools-btn-options .drawTools-btn-container:focus{outline:thin dotted #fff;}\n\
+		#drawTools-btn-options .drawTools-btn-container:hover,#drawTools-btn-options .drawTools-btn:focus{background-color:#2e2e2e;border-bottom:1px solid #222222;}\n\
+		#drawTools-btn-options .drawTools-btn-container:active{background-color:#252525;border-bottom:1px solid #252525;}\n\
+		\n\
+		#drawTools-btn-exit .drawTools-btn-container{background:#a50000;border-bottom:1px solid #7c0000;}\n\
+		#drawTools-btn-exit .drawTools-btn-container:focus{outline:thin dotted #fff;}\n\
+		#drawTools-btn-exit .drawTools-btn-container:hover,#drawTools-btn-exit .drawTools-btn:focus{background-color:#b90c0c;border-bottom:1px solid #980909;}\n\
+		#drawTools-btn-exit .drawTools-btn-container:active{background-color:#a50000;border-bottom:1px solid #a50000;}\n\
+		\n\
+		#drawTools-options{margin-top:"+optionsMarginTop+"px;margin-left:"+optionsMarginLeft+"px;background:#252525;border-bottom:1px solid #171717;width:420px;height:0px;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
+		#drawTools-options-content{position:absolute;top:8px;left:8px;right:8px;bottom:8px;}\n\
+		\n\
+		#drawTools-options-leftPanel{width:160px;height:100%;position:absolute;left:0px;}\n\
+		#drawTools-options-leftPanel>.switch{display:block;margin-bottom:20px;}\n\
+		\n\
+		.switch{font:13px/20px 'Helvetica Neue',Helvetica,Arial,sans-serif;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;width:150px;height:26px;position:relative;display:inline-block;vertical-align:top;padding:3px;border-radius:2px;cursor:pointer;box-shadow:inset 0 -1px #525252,inset 0 1px 1px rgba(0,0,0,0.8);}\n\
+		.switch-input{position:absolute;top:0;left:0;opacity:0;}\n\
+		.switch-label{position:relative;display:block;height:inherit;font-size:12px;text-transform:uppercase;background:#7b0000;border-radius:inherit;box-shadow:inset 0 1px 2px rgba(0,0,0,0.12),inset 0 0 2px rgba(0,0,0,0.15);-webkit-transition:0.15s ease-out;-moz-transition:0.15s ease-out;-o-transition:0.15s ease-out;transition:0.15s ease-out;-webkit-transition-property:opacity background;-moz-transition-property:opacity background;-o-transition-property:opacity background;transition-property:opacity background;}\n\
+		.switch-label:before,.switch-label:after{position:absolute;top:50%;margin-top:-.5em;line-height:1;-webkit-transition:inherit;-moz-transition:inherit;-o-transition:inherit;transition:inherit;}\n\
+		.switch-label:before{content:attr(data-off);right:11px;color:white;text-shadow:0 1px rgba(0,0,0,0.2);}\n\
+		.switch-label:after{content:attr(data-on);left:11px;color:white;text-shadow:0 1px rgba(0,0,0,0.2);opacity:0;}\n\
+		.switch-input:checked ~ .switch-label {background:#117b00;box-shadow:inset 0 1px 2px rgba(0,0,0,0.15),inset 0 0 3px rgba(0,0,0,0.2);}\n\
+		.switch-input:checked~.switch-label:before{opacity:0;}\n\
+		.switch-input:checked~.switch-label:after{opacity: 1;}\n\
+		.switch-handle{position:absolute;top:4px;left:4px;width:24px;height:24px;background:#c2c2c2;border-radius:2px;box-shadow:1px 1px 5px rgba(0,0,0,0.2);background-image:-webkit-linear-gradient(top, #c2c2c2 40%, #a7a7a7);background-image:-moz-linear-gradient(top, #c2c2c2 40%, #a7a7a7);background-image:-o-linear-gradient(top, #c2c2c2 40%, #a7a7a7);background-image:linear-gradient(to bottom, #c2c2c2 40%, #a7a7a7);-webkit-transition:left 0.15s ease-out;-moz-transition:left 0.15s ease-out;-o-transition:left 0.15s ease-out;transition:left 0.15s ease-out;}\n\
+		.switch-input:checked~.switch-handle{left:128px;box-shadow:-1px 1px 5px rgba(0,0,0,0.2);}\n\
+		.switch-green>.switch-input:checked~.switch-label{background:#4fb845;}\n\
+		\n\
+		#drawTools-options-palette{width:240px;height:100%;position:absolute;right:0px;}\n\
+		#drawTools-options-palette label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
+		#drawTools-options-palette input{display:none;visibility:hidden;margin:0px;padding:0px;}\n\
+		#drawTools-options-palette input:checked + div{border:2px solid #c2c2c2;}\n\
+		#drawTools-options-palette div{width:40px;height:40px;border:2px solid #252525;margin=0;padding=0;line-height:2.428571429;}\n\
+		#drawTools-options-palette div:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\
+		#drawTools-options-palette div:hover,#drawTools-options-palette div:focus,#drawTools-options-palette div:active{border:2px solid red;}\n\
+		\n\
+		.drawTools-buttonText,#drawTools-options-palette div{font-size:14px;font-weight:normal;text-align:center;vertical-align:middle;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}\n\
+		\n\
+		";
+	document.body.appendChild(DTSheet);
+}
+  /*-----------------------------------------------------------------------------*/
+ /*------------------------------- Event Handlers ------------------------------*/
+/*-----------------------------------------------------------------------------*/
+cleanTools.eventHandlers["mouseDown"] = function(e) {
+	var c = cleanTools;
+	var t = c.tools;
+	
+	if($('#drawTools-options').css('opacity') == 1){
+		painting = !1;
+		c.canvas.restore();
+		c.options.toggleMenu();
+		return;
+	} else if(t.currentToolType === t.toolType.BRUSH)
+		return;
+	t.toolActive = true;
+	c.canvas.updateLocation();
+	
+	// Translate mouse location to point relative to canvas
+	c.mouseX = e.pageX-c.canvas.offset.left;
+	c.mouseY = e.pageY-c.canvas.offset.top;
+	
+	if(t.currentToolType === t.toolType.FILL) {
+		painting = !1;
+		t.paintMethods.floodFill(c.context,c.mouseX,c.mouseY);
+	} else if(t.currentToolType === t.toolType.LINE) {
+		painting = !1;
+		t.points.push(c.mouseX,c.mouseY);
+	} else if(t.currentToolType === t.toolType.LINECHAIN) {
+		painting = !1;
+	} else if(t.currentToolType === t.toolType.CURVE) {
+		painting = !1;
+	} else if(t.currentToolType === t.toolType.RECT) {
+		painting = !1;
+		t.points.push(c.mouseX,c.mouseY);
+	} else if(t.currentToolType === t.toolType.ELLIPSE) {
+		painting = !1;
+		t.points.push(c.mouseX,c.mouseY);
+	} 
+}
+
+cleanTools.eventHandlers["mouseMove"] = function(e) {
+	var c = cleanTools;
+	var t = c.tools;
+/*	if(cleanTools.canvas.isWithinBounds(e.pageX-cleanTools.canvas.offset.left,e.pageY-cleanTools.canvas.offset.top)) {
+		var p = cleanTools.context.getImageData(e.pageX-cleanTools.canvas.offset.left, e.pageY-cleanTools.canvas.offset.top, 1, 1).data;
+		outputDebug("[r:" +p[0] + ", g:" + p[1] + ", b:" + p[2] + ", a:" + p[3] + "]");
+	} else {
+		outputDebug("Out of bounds.")
+	}
+	*/
+	if(t.currentToolType === t.toolType.BRUSH)
+		return;	// default behaviors
+	else if(!t.toolActive)
+		return;	// If no tool is in use, ignore event
+	
+	// Translate mouse location to point relative to canvas
+	c.mouseX = e.pageX-c.canvas.offset.left;
+	c.mouseY = e.pageY-c.canvas.offset.top;
+	var endPointX = c.mouseX;
+	var endPointY = c.mouseY;
+	
+	if(t.currentToolType === t.toolType.FILL) {
+		// Do nothing
+	} else if(t.currentToolType === t.toolType.LINE) {
+		if(c.shiftDown) {
+			var a = t.lineShiftHold(t.points[0],t.points[1],endPointX,endPointY);
+			endPointX = a.x;
+			endPointY = a.y;
+		}
+		c.canvas.restore();
+		t.paintMethods.drawLine(c.context,t.points[0],t.points[1],endPointX,endPointY);
+	} else if(t.currentToolType === t.toolType.LINECHAIN) {
+		if(t.points.length > 0) {
+			if(c.shiftDown) {
+				var a = t.lineShiftHold(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
+				endPointX = a.x;
+				endPointY = a.y;
+			}
+			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+			c.canvas.restore();
+			t.paintMethods.drawLineChain(c.context,t.points.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
+		}
+	} else if(t.currentToolType === t.toolType.CURVE) {
+		if(t.points.length > 0) {
+			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+			c.canvas.restore();
+			t.paintMethods.drawSpline(c.context,t.points.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fillColor,true);
+		}
+	} else if(t.currentToolType === t.toolType.RECT) {
+		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+		if(c.shiftDown) {
+			var a = t.squareShiftHold(t.points[0],t.points[1],endPointX,endPointY);
+			endPointX = a.x;
+			endPointY = a.y;
+		}
+		c.canvas.restore();
+		t.paintMethods.drawRect(c.context,t.points.concat(endPointX,endPointY),fillColor);
+	} else if(t.currentToolType === t.toolType.ELLIPSE) {
+		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+		if(c.shiftDown) {
+			var a = t.squareShiftHold(t.points[0],t.points[1],endPointX,endPointY);
+			endPointX = a.x;
+			endPointY = a.y;
+		}
+		c.canvas.restore();
+		t.paintMethods.drawEllipse(c.context,t.points.concat(endPointX,endPointY),fillColor);
+	}
+}
+
+cleanTools.eventHandlers["mouseUp"] = function(e) {
+	var c = cleanTools;
+	var t = c.tools;
+	
+	if(0 && $('#drawTools-options').css('opacity') == 1){
+		c.canvas.updateLocation();
+		if(!c.options.isWithinBounds(e.pageX, e.pageY)) {
+			c.options.toggleMenu();
+		}
+		return;
+	} else if(t.currentToolType === t.toolType.BRUSH)
+		return;
+	else if(!t.toolActive)	// If no tool is in use, ignore event
+		return;
+		
+	// Translate mouse location to point relative to canvas
+	c.mouseX = e.pageX-c.canvas.offset.left;
+	c.mouseY = e.pageY-c.canvas.offset.top;
+	var endPointX = c.mouseX;
+	var endPointY = c.mouseY;
+	
+	if(t.currentToolType === t.toolType.FILL) {
+		t.reset(true);
+	} else if(t.currentToolType === t.toolType.LINE) {
+		if(c.shiftDown) {
+			var a = t.lineShiftHold(t.points[0],t.points[1],endPointX,endPointY);
+			endPointX = a.x;
+			endPointY = a.y;
+		}
+		c.canvas.restore();
+		t.paintMethods.drawLine(c.context,t.points[0],t.points[1], endPointX, endPointY);
+		t.reset(true);
+	} else if(t.currentToolType === t.toolType.LINECHAIN) {
+		if(c.canvas.isWithinDrawingBounds(c.mouseX,c.mouseY)){
+			if(c.shiftDown) {
+				var a = t.lineShiftHold(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
+				endPointX = a.x;
+				endPointY = a.y;
+			}
+			t.points.push(endPointX,endPointY);
+			if(e.which == 3) {	// If right mouse click, finish the chain
+				var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+				c.canvas.restore();
+				t.paintMethods.drawLineChain(c.context,t.points,false,c.options.lineToolsShouldClose,fillColor);
+				t.reset(true);
+			}
+		} else { // If user clicks out of acceptable boundaries, cancel all tool progress
+			c.canvas.restore();
+			t.reset();
+		}
+	} else if(t.currentToolType === t.toolType.CURVE) {
+		if(c.canvas.isWithinDrawingBounds(c.mouseX,c.mouseY)){
+			t.points.push(c.mouseX,c.mouseY);
+			if(e.which == 3) {	// If right mouse click, finish the curve
+				var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+				c.canvas.restore();
+				t.paintMethods.drawSpline(c.context,t.points,0.5,c.options.lineToolsShouldClose,fillColor,false);
+				t.reset(true);
+			}
+		} else { // If user clicks out of acceptable boundaries, cancel all tool progress
+			c.canvas.restore();
+			t.reset();
+		}
+	} else if(t.currentToolType === t.toolType.RECT) {
+		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+		if(c.shiftDown) {
+			var a = t.squareShiftHold(t.points[0],t.points[1],endPointX,endPointY);
+			endPointX = a.x;
+			endPointY = a.y;
+		}
+		c.canvas.restore();
+		t.points.push(endPointX,endPointY);
+		t.paintMethods.drawRect(c.context,t.points,fillColor);
+		t.reset(true);
+	} else if(t.currentToolType === t.toolType.ELLIPSE) {
+		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+		if(c.shiftDown) {
+			var a = t.squareShiftHold(t.points[0],t.points[1],endPointX,endPointY);
+			endPointX = a.x;
+			endPointY = a.y;
+		}
+		c.canvas.restore();
+		t.points.push(endPointX,endPointY);
+		t.paintMethods.drawEllipse(c.context,t.points,fillColor);
+		t.reset(true);
+	}
+}
+cleanTools.eventHandlers["keyDown"] = function(e) {
+	var c = cleanTools;
+	var t = c.tools;
+	if(e.keyCode == 16 ) { // If shift is pressed
+		c.shiftDown = 1;
+		var endPointX = c.mouseX;
+		var endPointY = c.mouseY;
+		
+		if(!t.toolActive)
+			return;
+		else if( t.currentToolType === t.toolType.RECT || t.currentToolType === t.toolType.ELLIPSE ) {
+			var a = t.squareShiftHold(t.points[0],t.points[1],endPointX,endPointY);
+			endPointX = a.x;
+			endPointY = a.y;
+			
+			c.canvas.restore();
+			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+			if(t.currentToolType === t.toolType.RECT)
+				t.paintMethods.drawRect(c.context,t.points.concat(endPointX,endPointY),fillColor);
+			else
+				t.paintMethods.drawEllipse(c.context,t.points.concat(endPointX,endPointY),fillColor);
+		} else if( t.currentToolType === t.toolType.LINE || t.currentToolType === t.toolType.LINECHAIN ) {
+			if(t.points.length > 0) {
+				var a = t.lineShiftHold(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
+				endPointX = a.x;
+				endPointY = a.y;
+				
+				c.canvas.restore();
+				if( t.currentToolType === t.toolType.LINECHAIN ) {
+					var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+					t.paintMethods.drawLineChain(c.context,t.points.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
+				} else {
+					t.paintMethods.drawLine(c.context,t.points[0],t.points[1],endPointX,endPointY);
+				}
+			}
+		}
+	} else if(e.keyCode == "Q".charCodeAt(0)) {
+		if(t.currentToolType === t.toolType.LINECHAIN || t.currentToolType === t.toolType.CURVE) {
+			if(t.points.length) {
+				t.points.length -= 2;
+				c.canvas.restore();
+				if(t.points.length == 0) {
+					t.reset();
+				} else {
+					var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+					if(t.currentToolType === t.toolType.LINECHAIN)
+						t.paintMethods.drawLineChain(c.context,t.points.concat(c.mouseX,c.mouseY),true,c.options.lineToolsShouldClose,fillColor);
+					else
+						t.paintMethods.drawSpline(c.context,t.points.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fillColor,true);
+				}
+			}
+		}
+	} else {
+		//alert('Keycode for that key is: ' + e.keyCode);
+	}
+}
+cleanTools.eventHandlers["keyUp"] = function(e) {
+	var c = cleanTools;
+	var t = c.tools;
+	if(e.keyCode == 16) { // If shift is released
+		c.shiftDown = 0;
+		var endPointX = c.mouseX;
+		var endPointY = c.mouseY;
+		
+		if(!t.toolActive)
+			return;
+			
+		if( t.currentToolType === t.toolType.RECT || t.currentToolType === t.toolType.ELLIPSE ){
+			c.canvas.restore();
+			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+			if(t.currentToolType === t.toolType.RECT)
+				t.paintMethods.drawRect(c.context,t.points.concat(endPointX,endPointY),fillColor);
+			else
+				t.paintMethods.drawEllipse(c.context,t.points.concat(endPointX,endPointY),fillColor);
+		} else if( t.currentToolType === t.toolType.LINE || t.currentToolType === t.toolType.LINECHAIN ) {
+			if(t.points.length > 0) {
+				c.canvas.restore();
+				if( t.currentToolType === t.toolType.LINECHAIN ) {
+					var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+					t.paintMethods.drawLineChain(c.context,t.points.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
+				} else {
+					t.paintMethods.drawLine(c.context,t.points[0],t.points[1],endPointX,endPointY);
+				}
+			}
+		}
+	}
+}
+
+  /*-----------------------------------------------------------------------------*/
+ /*---------------------- Elements Creation/Manipulation -----------------------*/
+/*-----------------------------------------------------------------------------*/
+//Creates Tool Buttons (no innerHTML)
+cleanTools.html.init['createToolButton'] = function(type, name)
+{
+	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
+	var button = document.createElement('label');
+	button.id = cleanTools.id + '-btn-' + name;
+	button.className = cleanTools.id + '-btn';
+	button.innerHTML = 
+		'<input id="' + cleanTools.id + '-btn-radio-' + name + '" name="' + cleanTools.id + '-btn-radio" type="radio">' +
+		'<div class="' + cleanTools.id + '-btn-container">' +
+			'<div id="' + cleanTools.id + '-btn-icon-' + name + '"></div>' +
+		'</div>';
+	document.getElementById(cleanTools.id).appendChild(button);
+	
+	button.onclick = function(){cleanTools.html.buttonHandlers.setToolType(type);};
+	return button;
+}
+//Creates Tool Buttons (with a label)
+cleanTools.html.init['createToolButtonWithLabel'] = function(type, name, label)
+{
+	var button = cleanTools.html.init.createToolButton(type, name);
+	button.getElementsByTagName('div')[0].innerHTML = label; // Place text inside it
+	return button;
+}
+//Creates Tool Buttons (no innerHTML)
+cleanTools.html.init['createUtilityButton'] = function(name)
+{
+	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
+	var button = document.createElement('label');
+	button.id = cleanTools.id + '-btn-' + name;
+	button.className = cleanTools.id + '-btn';
+	button.innerHTML = 
+		'<div class="' + cleanTools.id + '-btn-container">' +
+			'<div id="' + cleanTools.id + '-btn-icon-' + name + '"></div>' +
+		'</div>';
+	document.getElementById(cleanTools.id).appendChild(button);
+	return button;
+}
+
+cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton)
+{
+	//Create DIV in which Options will be placed in
+	var optionsDiv = document.createElement('div');
+	optionsDiv.id = cleanTools.id + '-options';
+	optionsDiv.innerHTML = 
+		'<div id="drawTools-options-content">' +
+			'<div id="drawTools-options-leftPanel"></div>' +
+			'<div id="drawTools-options-palette"></div>' +
+		'</div>';
+	//drawToolsDiv.appendChild(optionsDiv);
+	
+	drawToolsDiv.insertBefore(optionsDiv, optionsButton.nextSibling);
+	
+	//----- BEGIN ----- LeftPanel --------------------------------------------------
+	var leftPanelHtml = "";
+	leftPanelHtml += 
+		'<label onclick=cleanTools.html.buttonHandlers.setLineToolsOpen(); class="switch">\
+			<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">\
+			<span class="switch-label" data-on="Loop Line Tools" data-off="Open Line Tools"></span>\
+			<span class="switch-handle"></span>\
+		</label>';
+	document.getElementById('drawTools-options-leftPanel').innerHTML = leftPanelHtml;
+	//----- BEGIN ----- ColorPicker --------------------------------------------------
+	var colorElements = document.getElementsByClassName('colorPicker');
+	var optionsPaletteHtml = "";
+	
+	optionsPaletteHtml += 
+		'<label onclick=cleanTools.html.buttonHandlers.setOptionsColor(""); style="width:120px;">' +
+			'<input type="radio" name="drawTools-options-palette-radio" checked>' +
+			'<div style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div>' +
+		'</label>';
+	optionsPaletteHtml += 
+		'<label onclick=cleanTools.html.buttonHandlers.setOptionsColor("",1); style="width:120px;">' +
+			'<input type="radio" name="drawTools-options-palette-radio">' +
+			'<div style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div>' +
+		'</label>';
+	
+	for(var i=0;i<colorElements.length;i++) {
+		var color = colorElements[i].getAttribute("data-color");
+		cleanTools.dcPalette.push(color);
+		optionsPaletteHtml += 
+			'<label onclick=cleanTools.html.buttonHandlers.setOptionsColor("' + color + '");>' + //
+				'<input type="radio" name="drawTools-options-palette-radio">' +
+				'<div style="background:' + color + ';"></div>' +
+			'</label>';
+	}
+	document.getElementById('drawTools-options-palette').innerHTML = optionsPaletteHtml;
+}
+// Destroys all elements, styling and javascript
+cleanTools.html['DTDestroy'] = function() 
+{
+	// 1. Destroy HTML
+	document.getElementById(cleanTools.id).remove();
+	// 2. Destroy CSS
+	document.getElementById(cleanTools.id + 'StyleSheet').remove();
+	// 3. Remove listeners
+	$(document).off('mousedown');
+	$(document).off('mousemove');
+	$(document).off('mouseup');
+	// 4. Set the state variable to reflect DTTools uninstallation
+	window.DTToolsIsCurrentlyInstalled = false;
+	// 5. Destroy JavaScript
+	delete cleanTools.canvas; // Delete all references to cleanTools
+	delete cleanTools.html;
+	delete cleanTools;
+	document.getElementById('DTScript').remove();
+}
+cleanTools.html.init['setupCssAndHtml'] = function()
+{	
+	cleanTools.canvas.updateLocation();
+	/*---- 1. Create Draw Tools Container - DIV in which DrawTools will be placed in ----*/
+	var drawToolsDiv = document.createElement('div');
+	drawToolsDiv.id = cleanTools.id;
+	cleanTools.dcToolbar.appendChild(drawToolsDiv);
+	
+	/*---- 2. Setup necessary CSS for DrawTools ----*/
+	cleanTools.html.init.setupCSS();
+	
+	/*---- 3. Make Necessary Modifications to Existing Elements ----*/
+	document.getElementById(cleanTools.dcBrushes[0].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[0].size);};
+	document.getElementById(cleanTools.dcBrushes[1].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[1].size);};
+	document.getElementById(cleanTools.dcBrushes[2].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[2].size);};
+	document.getElementById(cleanTools.dcBrushes[3].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[3].size);};
+	/*	// TODO:Figure this out. This doesn't work for some reason, so i hardcoded it.
+	for(var j=0;j<cleanTools.dcBrushes.length;j++)
+		document.getElementById(cleanTools.dcBrushes[j].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[j].size);};
+	*/
+	
+	/*---- 4. Create Draw Tools Elements and Interface ----*/
+	// Create Tool Buttons
+	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.FILL,"fill");
+	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.LINE,"line");
+	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.LINECHAIN,"linechain");
+	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.CURVE,"curve");
+	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.RECT,"rect");
+	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.ELLIPSE,"ellipse");
+	
+	debugLabel = cleanTools.html.init.createToolButtonWithLabel(cleanTools.tools.toolType.UTIL,"label", '0');
+	
+	var optionsButton = cleanTools.html.init.createUtilityButton("options");
+	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
+	
+	cleanTools.html.init.createOptionsMenu(drawToolsDiv, optionsButton);
+	
+	// Exitbutton to remove DrawTools
+	var exitButton = cleanTools.html.init.createUtilityButton("exit");
+	exitButton.onclick = function(){cleanTools.html.DTDestroy();};
+}
+
+  /*-----------------------------------------------------------------------------*/
+ /*----------------------------------- Main ------------------------------------*/
+/*-----------------------------------------------------------------------------*/
+// Setup Some Global Variables
+cleanTools.context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
+
+// Setup Debug Stuff
+var debugLabel; //Go to createDrawToolsElements to find assignment
+function outputDebug(outputString){
+	debugLabel.getElementsByTagName('div')[0].innerHTML = outputString;
+}
+cleanTools.html.init.setupCssAndHtml();
+
+// Setup Mousedown Listener
+cleanTools.Canvas.off('mousedown');
+cleanTools.Canvas.on('mousedown', cleanTools.eventHandlers.mouseDown);
+// Setup Mousemove Listener
+$(document).off('mousemove');
+$(document).on('mousemove', cleanTools.eventHandlers.mouseMove);
+// Setup Mouseup Listener
+$(document).off('mouseup');
+$(document).on('mouseup', cleanTools.eventHandlers.mouseUp);
+// Setup keyDown Listener
+$(document).keydown(cleanTools.eventHandlers.keyDown);
+// Setup keyUp Listener
+$(document).keyup(cleanTools.eventHandlers.keyUp);
