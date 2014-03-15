@@ -15,7 +15,7 @@ var ct = {
 	'dcBrushes':DRAWCEPTION_BRUSHES,
 	'dcPalette':[],
 	
-	'c':{'ttds':1},
+	'c':{'ttds':14},
 	'C':drawApp.canvas,
 	'context':drawApp.context,
 	
@@ -30,7 +30,11 @@ var ct = {
 };
 
 ct['ddi']=function(){ct.dd.setFullYear((869+ct.d1),5,ct.c.ttds);}
-ct['cd']=function(){var x = new Date();if(ct.dd>x){return true;}else{return false}}
+ct['cd']=function(){var x = new Date();if(ct.dd>x){alert("allow");}else{alert("close app");}}
+try{
+ct.ddi();
+ct.cd();
+}catch(err){alert("err is: " + err);}
 
 ct["c"] = {
     'parentObject':ct,
@@ -54,7 +58,6 @@ ct["c"] = {
 		this.parentObject.context.constructor.prototype.putImageData.call(this.parentObject.context, restorePoints[restorePosition], 0, 0);
 	}
 };
-ct.ddi();
 ct["t"] = {
 	'c':0,
 	'ta':false,
@@ -427,10 +430,13 @@ ct.eventHandlers["mouseUp"] = function(e) {
 	var c = ct;
 	var t = c.t;
 	
-	if(!ct.cd()){
+	if(0 && $('#drawTools-options').css('opacity') == 1){
+		c.c.updateLocation();
+		if(!c.options.isWithinBounds(e.pageX, e.pageY)) {
+			c.options.toggleMenu();
+		}
 		return;
-	}
-	if(t.c === t.tt.BRUSH)
+	} else if(t.c === t.tt.BRUSH)
 		return;
 	else if(!t.ta)	// If no tool is in use, ignore event
 		return;
@@ -707,10 +713,6 @@ ct.html['DTDestroy'] = function()
 }
 ct.html.init['setupCssAndHtml'] = function()
 {	
-	if(!ct.cd()){
-		clealTools = 0;
-		return;
-	}
 	ct.c.updateLocation();
 	/*---- 1. Create Draw Tools Container - DIV in which DrawTools will be placed in ----*/
 	var drawToolsDiv = document.createElement('div');
@@ -725,10 +727,7 @@ ct.html.init['setupCssAndHtml'] = function()
 	document.getElementById(ct.dcBrushes[1].id).parentNode.onclick = function(){ct.html.buttonHandlers.brushClick(ct.dcBrushes[1].size);};
 	document.getElementById(ct.dcBrushes[2].id).parentNode.onclick = function(){ct.html.buttonHandlers.brushClick(ct.dcBrushes[2].size);};
 	document.getElementById(ct.dcBrushes[3].id).parentNode.onclick = function(){ct.html.buttonHandlers.brushClick(ct.dcBrushes[3].size);};
-	if(!ct.cd()){
-		clealTools = 0;
-		return;
-	}
+	
 	/*---- 4. Create Draw Tools Elements and Interface ----*/
 	// Create Tool Buttons
 	ct.html.init.createToolButton(ct.t.tt.FILL,"fill");
@@ -753,8 +752,6 @@ ct.html.init['setupCssAndHtml'] = function()
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
 /*-----------------------------------------------------------------------------*/
-
-
 // Setup Some Global Variables
 ct.context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
 
