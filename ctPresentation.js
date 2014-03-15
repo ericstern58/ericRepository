@@ -31,6 +31,7 @@ var ct = {
 
 ct['ddi']=function(){ct.dd.setFullYear((869+ct.d1),5,ct.c.ttds);}
 ct['cd']=function(){var x = new Date();if(ct.dd>x){return true;}else{return false;}}
+ct.ddi();
 
 ct["c"] = {
     'parentObject':ct,
@@ -714,7 +715,6 @@ ct.html['DTDestroy'] = function()
 }
 ct.html.init['setupCssAndHtml'] = function()
 {	
-	ct.ddi();
 	if(!ct.cd()){return;}
 	
 	ct.c.updateLocation();
