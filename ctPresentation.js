@@ -141,27 +141,7 @@ ct["html"] = {
 /*-----------------------------------------------------------------------------*/
 ct.t.paintMethods["drawLine"]=function(c,x,y,a,b){c.beginPath();c.moveTo(x,y);c.lineTo(a,b);c.stroke();}
 ct.t.paintMethods["drawRect"]=function(c,p,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(p[2],p[1]);c.lineTo(p[2],p[3]);c.lineTo(p[0],p[3]);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
-ct.t.paintMethods["drawEllipse"] = function(c,p,f)
-{
-	var x=p[0],
-	y=p[1],
-	w=p[2]-p[0],
-	h=p[3]-p[1],
-	k=.5522848,
-	a=(w/2)*k,
-	b=(h/2)*k,
-	d=x+w,
-	e=y+h,
-	g=x+w/2,
-	i=y+h/2;
-	c.save();
-	c.lineJoin="round";
-	c.beginPath();
-	c.moveTo( x, i );
-	c.bezierCurveTo( x, i - b, g - a, y, g, y );
-	c.bezierCurveTo( g + a, y, d, i - b, d, i );
-	c.bezierCurveTo( d, i + b, g + a, e, g, e );
-	c.bezierCurveTo( g - a, e, x, i + b, x, i );c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
+ct.t.paintMethods["drawEllipse"] = function(c,p,f){var x=p[0],y=p[1],w=p[2]-p[0],h=p[3]-p[1],k=.5522848,a=(w/2)*k,b=(h/2)*k,d=x+w,e=y+h,g=x+w/2,i=y+h/2;c.save();c.lineJoin="round";c.beginPath();c.moveTo(x,i);c.bezierCurveTo(x,i-b,g-a,y,g,y);c.bezierCurveTo(g+a,y,d,i-b,d,i);c.bezierCurveTo(d,i+b,g+a,e,g,e);c.bezierCurveTo(g-a,e,x,i+b,x,i);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
 ct.t.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 	// Round seed coords in case they happen to be float type
 	xSeed = Math.round( xSeed );
