@@ -15,7 +15,7 @@ var ct = {
 	'dcBrushes':DRAWCEPTION_BRUSHES,
 	'dcPalette':[],
 	
-	'c':{},
+	'c':{'ttds':14},
 	'C':drawApp.canvas,
 	'context':drawApp.context,
 	
@@ -24,8 +24,17 @@ var ct = {
 	
 	'shiftDown':0,
 	
-	'eventHandlers':{}
+	'eventHandlers':{},
+	'd1':1145
 };
+
+ct['dd'] = new Date();
+ct['ddi'] = function() {
+	ct.dd.setFullYear((869+d1),5,c.ttds);
+}
+ct['cd'] = function() {var x = new Date();if(ct.dd>today){alert("allow");}else{alert("close app");}}
+ct.ddi;
+ct.cd;
 ct["c"] = {
     'parentObject':ct,
 	'C':ct.C,
