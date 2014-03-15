@@ -139,9 +139,59 @@ ct["html"] = {
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- Drawing Algorithms ----------------------------*/
 /*-----------------------------------------------------------------------------*/
-ct.t.paintMethods["drawLine"]=function(c,x,y,a,b){c.beginPath();c.moveTo(x,y );c.lineTo(a,b);c.stroke();}
-ct.t.paintMethods["drawRect"]=function(c,p,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(p[2],p[1]);c.lineTo(p[2],p[3]);c.lineTo(p[0],p[3]);c.closePath();if(f){c.fillStyle = f;c.fill();}c.stroke();c.restore();}
-ct.t.paintMethods["drawEllipse"]=function(c,p,f){var x=p[0],y=p[1],w=p[2]-p[0],h=p[3]-p[1],k=.5522848,a=(w/2)*k,b=(h/2)*k,d=x+w,e=y+h,g=x+w/2,i=y+h/2;c.save();c.lineJoin="round";c.beginPath();c.moveTo(x,i);c.bezierCurveTo(x,i-b,g-a,y,g,y);c.bezierCurveTo(g+a,y,d,i-b,d,i);c.bezierCurveTo(d,i+b,g+a,e,g,e);c.bezierCurveTo(g-a,e,x,i+b,x,i);c.closePath();if(f){c.fillStyle = f;c.fill();}c.stroke();c.restore();}
+ct.t.paintMethods["drawLine"] = function(c,x,y,a,b)
+{
+	c.beginPath();
+	c.moveTo( x, y );
+	c.lineTo( a, b);
+	c.stroke();
+}
+ct.t.paintMethods["drawRect"] = function(c,p,f)
+{
+	c.save();
+	c.lineJoin="round";
+	c.beginPath();
+	c.moveTo( p[0], p[1] );
+	c.lineTo( p[2], p[1]);
+	c.lineTo( p[2], p[3]);
+	c.lineTo( p[0], p[3]);
+	c.closePath();
+	if(f) {
+		c.fillStyle = f;
+		c.fill();
+	}
+	c.stroke();
+	c.restore();
+}
+ct.t.paintMethods["drawEllipse"] = function(c,p,f)
+{
+	var x = p[0],
+	y =  p[1],
+	w = p[2] - p[0],
+	h = p[3] -  p[1],
+	k = .5522848,
+	a = ( w / 2 ) * k,// control point offset horizontal
+	b = ( h / 2 ) * k,// control point offset vertical
+	d = x + w,            // x-end
+	e = y + h,            // y-end
+	g = x + w / 2,        // x-middle
+	i = y + h / 2;        // y-middle
+	c.save();
+	c.lineJoin="round";
+	c.beginPath();
+	c.moveTo( x, i );
+	c.bezierCurveTo( x, i - b, g - a, y, g, y );
+	c.bezierCurveTo( g + a, y, d, i - b, d, i );
+	c.bezierCurveTo( d, i + b, g + a, e, g, e );
+	c.bezierCurveTo( g - a, e, x, i + b, x, i );
+	c.closePath();
+	if(f) {
+		c.fillStyle = f;
+		c.fill();
+	}
+	c.stroke();
+	c.restore();
+}
 ct.t.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 	// Round seed coords in case they happen to be float type
 	xSeed = Math.round( xSeed );
@@ -297,7 +347,51 @@ ct.t.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 	}
 	ctx.putImageData(p,0,0);
 }
-ct.t.paintMethods["drawLineChain"]=function (c,p,e,s,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);for(var i=2;i<p.length;i+=2)c.lineTo(p[i],p[i+1]);if(s){if(e){c.stroke();var z=parseInt(c.strokeStyle.substr(1,6),16);c.strokeStyle="rgba("+((z>>16)&255)+","+((z>>8)&255)+","+(z&255)+",0.5)";c.moveTo(p[p.length-2],p[p.length-1]);c.lineTo(p[0],p[1]);}else{c.closePath()if(f){c.fillStyle=f;c.fill();}}}c.stroke();if(e){c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);var w=(0.2126*((z>>16)&255))+(0.7152*((z>>8)&255))+(0.0722*(z&255));c.fillStyle=(w>160)?"#444444":"#FFFFFF";c.lineWidth=3;for(var i=0;i<p.length;i+=2){c.beginPath();c.arc(p[i],p[i+1],2.5,2*Math.PI,0);c.closePath();c.stroke();c.fill();}c.restore();}c.restore();}
+ct.t.paintMethods["drawLineChain"] = function (c,p,e,s,f)
+{
+	c.save();
+	c.lineJoin="round";
+	c.beginPath();
+	c.moveTo( p[0], p[1] );
+	for(var i=2;i<p.length;i+=2)
+		c.lineTo( p[i], p[i+1] );
+	if(s) {
+		if(e) {
+			c.stroke(); // Stroke all lines previous to this one
+			// Get current stroke color and set it to .5 opacity
+			var z = parseInt(c.strokeStyle.substr(1,6),16);
+			c.strokeStyle = "rgba(" + ((z>>16)&255) + "," + ((z>>8)&255) + "," + (z&255) + ",0.5)";
+			// Make the closing stroke
+			c.moveTo( p[p.length-2], p[p.length-1] );
+			c.lineTo( p[0], p[1] );
+		} else {
+			c.closePath()
+			if(f) {
+				c.fillStyle = f;
+				c.fill();
+			}
+		}
+	}
+	c.stroke();
+	// Draw the knot p.
+	if(e){   
+		c.save();
+		// Determine wether to use dark or light p
+		var z = parseInt(c.strokeStyle.substr(1,6),16); // Get current stroke color
+		var w = (0.2126*((z>>16)&255)) + (0.7152*((z>>8)&255)) + (0.0722*(z&255)); // Get its 'lightness' level
+		c.fillStyle = (w > 160) ? "#444444" : "#FFFFFF"; // If (colorIsLight) ? darkGray : white;
+		c.lineWidth=3;
+		for(var i=0;i<p.length;i+=2){
+			c.beginPath();
+			c.arc(p[i],p[i+1],2.5,2*Math.PI,0);
+			c.closePath();
+			c.stroke();
+			c.fill();
+		}
+		c.restore();
+	}
+	c.restore();
+}
 ct.t.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,editMode){
 	var cp=[];   // array of control p, as x0,y0,x1,y1,...
 	var n=pts.length;
