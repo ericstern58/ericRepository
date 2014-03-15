@@ -54,47 +54,47 @@ ct["t"] = {
 	'points':[], // Will contain user input point sets for shapes/lines/etc
 	
 	'toolType':{BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99},
-	'reset':function(saveCanvas) {
+	'reset':function(a) {
 		this.points.length = 0;
 		this.toolActive = false;
-		if(saveCanvas)
+		if(a)
 			save();
 	},
 	'paintMethods':{},
-	'squareShiftHold':function(startX,startY,endX,endY) {
-		var endPointX, endPointY;
-		var width = endX - startX;
-		var height = endY - startY;
-		var valueToUse = Math.min(Math.abs(width),Math.abs(height));
-		if(width > 0) {
-			if(height > 0) { // Bottom Right
-				endPointX = startX + valueToUse; 
-				endPointY = startY + valueToUse;
+	'squareShiftHold':function(m,n,o,p) {
+		var a, b;
+		var c = o - m;
+		var d = p - n;
+		var e = Math.min(Math.abs(c),Math.abs(d));
+		if(c > 0) {
+			if(d > 0) { // Bottom Right
+				a = m + e; 
+				b = n + e;
 			} else { // Top Right
-				endPointX = startX + valueToUse; 
-				endPointY = startY - valueToUse;
+				a = m + e; 
+				b = n - e;
 			}
 		} else {
-			if(height > 0) { // Bottom Left
-				endPointX = startX - valueToUse; 
-				endPointY = startY + valueToUse;
+			if(d > 0) { // Bottom Left
+				a = m - e; 
+				b = n + e;
 			} else { // Top Left
-				endPointX = startX - valueToUse; 
-				endPointY = startY - valueToUse;
+				a = m - e; 
+				b = n - e;
 			}
 		}
-		return {x: endPointX, y:endPointY};
+		return {x: a, y:b};
 	},
-	'lineShiftHold':function(startX,startY,endX,endY) {
-		var rise = startY - endY;
-		var run = (startX - endX) ? (startX - endX): 1;
-		var slope = rise/run;
-		if( slope > 2.4 || slope < -2.4 ) { // Up-Down
-			return {x:startX, y:endY};
-		} else if( slope < 0.4 && slope > -0.4 ) { // Left-Right
-			return {x:endX, y:startY};
+	'lineShiftHold':function(m,n,o,p) {
+		var a = n - p;
+		var b = (m - o) ? (m - o): 1;
+		var c = a/b;
+		if( c > 2.4 || c < -2.4 ) { // Up-Down
+			return {x:m, y:p};
+		} else if( c < 0.4 && c > -0.4 ) { // Left-Right
+			return {x:o, y:n};
 		} else {
-			return this.squareShiftHold(startX,startY,endX,endY);
+			return this.squareShiftHold(m,n,o,p);
 		}
 	}
 };
@@ -114,29 +114,28 @@ ct["options"] = {
 	},
 	'toggleMenu':function () {
 		var h = 175;	// Height of the options div
-		var opacity = $(this.id).css('opacity');
+		var o = $(this.id).css('opacity');
 		
-		if(opacity == 0) {
+		if(o == 0) {
 			$(this.id).stop(true, true).animate({
 				height: (h + "px"),
 				marginTop: ("-=" + h + "px"),
-				opacity: "1"
+				o: "1"
 			},200, "swing");
-		} else if(opacity == 1) {
+		} else if(o == 1) {
 			$(this.id).stop(true, true).animate({
 				height: "0px",
 				marginTop: ("+=" + h + "px"),
-				opacity: "0"
+				o: "0"
 			},200, "swing");
 		}
 	},
 	'isWithinBounds':function (x, y) {
-		var x2 = x - $(this.id).offset().top;
-		var y2 = y - $(this.id).offset().left;
-		var width = $(this.id).width();
-		var height = $(this.id).height();
-		//outputDebug("[x:" + x2 + ", y:" + y2 + "] [width:" + width + ", height:" + height + "]");
-		return (x2>=0 && y2>=0 && x2<width && y2<height);
+		var a = x - $(this.id).offset().top;
+		var b = y - $(this.id).offset().left;
+		var c = $(this.id).width();
+		var d = $(this.id).height();
+		return (a>=0 && b>=0 && a<c && b<d);
 	}
 };
 ct["html"] = {
