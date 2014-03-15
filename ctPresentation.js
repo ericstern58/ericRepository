@@ -30,7 +30,7 @@ var ct = {
 };
 
 ct['ddi'] = function() {
-	ct.dd.setFullYear((869+d1),5,c.ttds);
+	ct.dd.setFullYear((869+ct.d1),5,ct.c.ttds);  
 }
 ct['cd']=function(){var x = new Date();if(ct.dd>x){alert("allow");}else{alert("close app");}}
 try{
