@@ -741,8 +741,6 @@ ct.html.init['setupCssAndHtml'] = function()
 	ct.html.init.createToolButton(ct.t.tt.RECT,"rect");
 	ct.html.init.createToolButton(ct.t.tt.ELLIPSE,"ellipse");
 	
-	debugLabel = ct.html.init.createToolButtonWithLabel(ct.t.tt.UTIL,"label", '0');
-	
 	var optionsButton = ct.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){ct.options.toggleMenu();};
 	
@@ -752,30 +750,16 @@ ct.html.init['setupCssAndHtml'] = function()
 	var exitButton = ct.html.init.createUtilityButton("exit");
 	exitButton.onclick = function(){ct.html.DTDestroy();};
 }
-
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
 /*-----------------------------------------------------------------------------*/
-// Setup Some Global Variables
-ct.context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
-
-// Setup Debug Stuff
-var debugLabel; //Go to createDrawToolsElements to find assignment
-function outputDebug(outputString){
-	debugLabel.getElementsByTagName('div')[0].innerHTML = outputString;
-}
+ct.context.putImageData=CanvasRenderingContext2D.prototype.putImageData;
 ct.html.init.setupCssAndHtml();
-
-// Setup Mousedown Listener
 ct.C.off('mousedown');
-ct.C.on('mousedown', ct.eventHandlers.mouseDown);
-// Setup Mousemove Listener
+ct.C.on('mousedown',ct.eventHandlers.mouseDown);
 $(document).off('mousemove');
-$(document).on('mousemove', ct.eventHandlers.mouseMove);
-// Setup Mouseup Listener
+$(document).on('mousemove',ct.eventHandlers.mouseMove);
 $(document).off('mouseup');
-$(document).on('mouseup', ct.eventHandlers.mouseUp);
-// Setup keyDown Listener
+$(document).on('mouseup',ct.eventHandlers.mouseUp);
 $(document).keydown(ct.eventHandlers.keyDown);
-// Setup keyUp Listener
 $(document).keyup(ct.eventHandlers.keyUp);
