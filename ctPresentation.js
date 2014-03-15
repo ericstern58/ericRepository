@@ -327,7 +327,33 @@ ct.t.paintMethods["drawSpline"] = function(c,p,t,cl,hx,em){
 		var p2x=x1-fb*(x0-x2);
 		var p2y=y1-fb*(y0-y2);
 		cp=cp.concat(p1x,p1y,p2x,p2y);
-	}cp=(q)?cp.concat(cp[0],cp[1]):cp;c.save();c.beginPath();c.lineJoin="round";c.moveTo(p[2],p[3]);for(var i=2;i<n;i+=2){c.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],p[i+2],p[i+3]);}if(q){if(em){c.stroke();c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);c.strokeStyle="rgba("+((z>>16)&255)+","+((z>>8)&255)+","+ z&255)+",0.5)";c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],p[n+2],p[n+3]);c.stroke();c.restore();}else{c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],p[n+2],p[n+3]);c.moveTo(p[0],p[1]);c.closePath();if(hx){c.fillStyle = hx;c.fill();}c.stroke();}}else{c.moveTo(p[0],p[1]);c.quadraticCurveTo(cp[0],cp[1],p[2],p[3]);c.moveTo(p[n-2],p[n-1]);c.quadraticCurveTo(cp[2*n-10],cp[2*n-9],p[n-4],p[n-3]);c.stroke();}if(em){c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);var c2=(0.2126*((z>>16)&255))+(0.7152*((z>>8)&255))+(0.0722*(z&255));c.fillStyle=(c2>160)?"#444444":"#FFFFFF";c.lineWidth=3;for(var i=(2*q),m=(n-2+(2*q));i<m;i+=2){c.beginPath();c.arc(p[i],p[i+1],2.5,2*Math.PI,false);c.closePath();c.stroke();c.fill();}c.restore();}c.restore();
+	}
+	cp = (q) ? cp.concat(cp[0],cp[1]) : cp;
+	
+	c.save(); 
+	
+	c.beginPath();
+	c.lineJoin="round";
+	c.moveTo(p[2],p[3]);
+	for(var i=2;i<n;i+=2){c.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],p[i+2],p[i+3]);}
+	
+	if(q){if(em){c.stroke();c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);c.strokeStyle="rgba("+((z>>16)&255)+","+((z>>8)&255)+","+(z&255)+",0.5)";c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],p[n+2],p[n+3]);c.stroke();c.restore();}else{c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],p[n+2],p[n+3]);c.moveTo(p[0],p[1]);c.closePath();if(hx){c.fillStyle=hx;c.fill();}c.stroke();}}else{c.moveTo(p[0],p[1]);c.quadraticCurveTo(cp[0],cp[1],p[2],p[3]);c.moveTo(p[n-2],p[n-1]);c.quadraticCurveTo(cp[2*n-10],cp[2*n-9],p[n-4],p[n-3]);c.stroke();}
+	if(em){   
+		c.save();
+		var z=parseInt(c.strokeStyle.substr(1,6),16);
+		var c2=(0.2126*((z>>16)&255))+(0.7152*((z>>8)&255))+(0.0722*(z&255));
+		c.fillStyle=(c2>160)?"#444444":"#FFFFFF";
+		c.lineWidth=3;
+		for(var i=(2*q),m=(n-2+(2*q));i<m;i+=2){
+			c.beginPath();
+			c.arc(p[i],p[i+1],2.5,2*Math.PI,false);
+			c.closePath();
+			c.stroke();
+			c.fill();
+		}
+		c.restore();
+	}
+	c.restore();
 }
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
