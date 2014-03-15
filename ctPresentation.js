@@ -15,7 +15,7 @@ var ct = {
 	'dcBrushes':DRAWCEPTION_BRUSHES,
 	'dcPalette':[],
 	
-	'c':{},
+	'canvas':{},
 	'Canvas':drawApp.canvas,
 	'context':drawApp.context,
 	
@@ -26,7 +26,7 @@ var ct = {
 	
 	'eventHandlers':{}
 };
-ct["c"] = {
+ct["canvas"] = {
     'parentObject':ct,
 	'Canvas':ct.Canvas,
 	'offset':{top:0,left:0},
@@ -48,79 +48,79 @@ ct["c"] = {
 		this.parentObject.context.constructor.prototype.putImageData.call(this.parentObject.context, restorePoints[restorePosition], 0, 0);
 	}
 };
-ct["t"] = {
+ct["tools"] = {
 	'currentToolType':0,
 	'toolActive':false,
 	'points':[], // Will contain user input point sets for shapes/lines/etc
 	
-	'tt':{BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99},
-	'reset':function(a) {
+	'toolType':{BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99},
+	'reset':function(saveCanvas) {
 		this.points.length = 0;
 		this.toolActive = false;
-		if(a)
+		if(saveCanvas)
 			save();
 	},
 	'paintMethods':{},
-	'ss':function(m,n,o,p) {
-		var a, b;
-		var c = o - m;
-		var d = p - n;
-		var e = Math.min(Math.abs(c),Math.abs(d));
-		if(c > 0) {
-			if(d > 0) { // Bottom Right
-				a = m + e; 
-				b = n + e;
+	'squareShiftHold':function(startX,startY,endX,endY) {
+		var endPointX, endPointY;
+		var width = endX - startX;
+		var height = endY - startY;
+		var valueToUse = Math.min(Math.abs(width),Math.abs(height));
+		if(width > 0) {
+			if(height > 0) { // Bottom Right
+				endPointX = startX + valueToUse; 
+				endPointY = startY + valueToUse;
 			} else { // Top Right
-				a = m + e; 
-				b = n - e;
+				endPointX = startX + valueToUse; 
+				endPointY = startY - valueToUse;
 			}
 		} else {
-			if(d > 0) { // Bottom Left
-				a = m - e; 
-				b = n + e;
+			if(height > 0) { // Bottom Left
+				endPointX = startX - valueToUse; 
+				endPointY = startY + valueToUse;
 			} else { // Top Left
-				a = m - e; 
-				b = n - e;
+				endPointX = startX - valueToUse; 
+				endPointY = startY - valueToUse;
 			}
 		}
-		return {x: a, y:b};
+		return {x: endPointX, y:endPointY};
 	},
-	'ls':function(m,n,o,p) {
-		var a = n - p;
-		var b = (m - o) ? (m - o): 1;
-		var c = a/b;
-		if( c > 2.4 || c < -2.4 ) { // Up-Down
-			return {x:m, y:p};
-		} else if( c < 0.4 && c > -0.4 ) { // Left-Right
-			return {x:o, y:n};
+	'lineShiftHold':function(startX,startY,endX,endY) {
+		var rise = startY - endY;
+		var run = (startX - endX) ? (startX - endX): 1;
+		var slope = rise/run;
+		if( slope > 2.4 || slope < -2.4 ) { // Up-Down
+			return {x:startX, y:endY};
+		} else if( slope < 0.4 && slope > -0.4 ) { // Left-Right
+			return {x:endX, y:startY};
 		} else {
-			return this.ss(m,n,o,p);
+			return this.squareShiftHold(startX,startY,endX,endY);
 		}
 	}
 };
 ct["options"] = {
-	'id':'#' + cleanTools.id + '-options',
-
+	'id':'#' + ct.id + '-options',
+	
 	// Fill Options
 	'useStrokeAsFill':false,
 	'fillColor':'', // Will be null if no fill for shapes
-
+	
 	'lineToolsShouldClose':false,
-
+	
 	'curveTension':0.5,
-
+	
 	'getOffset':function () {
 		return $(this.id).offset();
 	},
 	'toggleMenu':function () {
 		var h = 175;	// Height of the options div
 		var opacity = $(this.id).css('opacity');
-
+		
 		if(opacity == 0) {
 			$(this.id).stop(true, true).animate({
-			height: (h + "px"),
-			marginTop: ("-=" + h + "px"),
-			opacity: "1"
+				height: (h + "px"),
+				marginTop: ("-=" + h + "px"),
+				opacity: "1"
 			},200, "swing");
 		} else if(opacity == 1) {
 			$(this.id).stop(true, true).animate({
@@ -135,6 +135,7 @@ ct["options"] = {
 		var y2 = y - $(this.id).offset().left;
 		var width = $(this.id).width();
 		var height = $(this.id).height();
+		//outputDebug("[x:" + x2 + ", y:" + y2 + "] [width:" + width + ", height:" + height + "]");
 		return (x2>=0 && y2>=0 && x2<width && y2<height);
 	}
 };
@@ -143,45 +144,45 @@ ct["html"] = {
 	
 	'init':{}, // HTML initialization methods will be placed here
 	
-	'bh':{
-		'cy':ct,
-		'bc':function(brushSize) {
+	'buttonHandlers':{
+		'ctObject':ct,
+		'brushClick':function(brushSize) {
 			drawApp.setSize(brushSize);				// Set default brush size
-			this.cy.t.currentToolType = ct.t.tt.BRUSH;		// Update tool type
+			this.ctObject.tools.currentToolType = ct.tools.toolType.BRUSH;		// Update tool type
 			
-			// Visually unselect any other t
+			// Visually unselect any other tools
 			var ele = document.getElementsByName(ct.id + "-btn-radio");
 			for(var i=0;i<ele.length;i++)
 				ele[i].checked = false;
 		},
-		'sl':function() {
-			this.cy.options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
+		'setLineToolsOpen':function() {
+			this.ctObject.options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
 		},
-		'so':function(color,normalfill) {
+		'setOptionsColor':function(color,normalfill) {
 			if(normalfill) {
-				this.cy.options.useStrokeAsFill = true;
-				this.cy.options.fillColor = '';
+				this.ctObject.options.useStrokeAsFill = true;
+				this.ctObject.options.fillColor = '';
 			} else {
-				this.cy.options.useStrokeAsFill = false;
-				this.cy.options.fillColor = color;
+				this.ctObject.options.useStrokeAsFill = false;
+				this.ctObject.options.fillColor = color;
 			}
 		},
-		'st':function(type) {
-			this.cy.t.currentToolType=type;
+		'setToolType':function(type) {
+			this.ctObject.tools.currentToolType=type;
 		}
 	}
 };
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- Drawing Algorithms ----------------------------*/
 /*-----------------------------------------------------------------------------*/
-ct.t.paintMethods["drawLine"] = function(c,x,y,a,b)
+ct.tools.paintMethods["drawLine"] = function(c,x,y,a,b)
 {
 	c.beginPath();
 	c.moveTo( x, y );
 	c.lineTo( a, b);
 	c.stroke();
 }
-ct.t.paintMethods["drawRect"] = function(c,p,f)
+ct.tools.paintMethods["drawRect"] = function(c,p,f)
 {
 	c.save();
 	c.lineJoin="round";
@@ -198,7 +199,7 @@ ct.t.paintMethods["drawRect"] = function(c,p,f)
 	c.stroke();
 	c.restore();
 }
-ct.t.paintMethods["drawEllipse"] = function(c,p,f)
+ct.tools.paintMethods["drawEllipse"] = function(c,p,f)
 {
 	var x = p[0],
 	y =  p[1],
@@ -227,19 +228,19 @@ ct.t.paintMethods["drawEllipse"] = function(c,p,f)
 	c.stroke();
 	c.restore();
 }
-ct.t.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
+ct.tools.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 	// Round seed coords in case they happen to be float type
 	xSeed = Math.round( xSeed );
 	ySeed = Math.round( ySeed );
 	/*---------------------- Setup Procedure Variables ----------------------*/
-	// This c.restore() fix avoids issues with brush placing dot over flood fill seed area
-	ct.c.restore();
+	// This canvas.restore() fix avoids issues with brush placing dot over flood fill seed area
+	ct.canvas.restore();
 	
-	var w = ct.c.width;
-	var h = ct.c.height;
+	var w = ct.canvas.width;
+	var h = ct.canvas.height;
 	var p = ctx.getImageData(0,0,w,h);
 	var d = p.data;
-	var tci = (xSeed+ySeed*ct.c.width)*4;
+	var tci = (xSeed+ySeed*ct.canvas.width)*4;
 	var targetColor = [d[tci],d[tci+1],d[tci+2],d[tci+3]];
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];
@@ -281,7 +282,7 @@ ct.t.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 		}
 	}
 	var test = function(x,y) {
-		return (ct.c.isWithinBounds(x,y) && colorCompare(targetColor,getColorFromCoords(x,y)));
+		return (ct.canvas.isWithinBounds(x,y) && colorCompare(targetColor,getColorFromCoords(x,y)));
 	}
 	var testEdgePoint = function(x,y,o) {
 		var a = edgeEligible(x,y);
@@ -300,7 +301,7 @@ ct.t.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 	}
 	var edgeEligible = function(x,y) {
 		var c = getColorFromCoords(x,y);
-		return ( ct.c.isWithinBounds(x,y) && (!colorCompare(fillColor,c)) && (!colorCompare(targetColor,c)) );
+		return ( ct.canvas.isWithinBounds(x,y) && (!colorCompare(fillColor,c)) && (!colorCompare(targetColor,c)) );
 	}
 	
 	/*---------------------- Begin Procedure ----------------------*/
@@ -356,7 +357,7 @@ ct.t.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 					else if(testEdgePoint(i,y-direction,y)) // Find Wether or not to add edge pixels
 						edgeArray.push(i,y-direction);
 				}
-				if(ct.c.isWithinBounds(i,y))
+				if(ct.canvas.isWithinBounds(i,y))
 					edgeArray.push(i,y);
 				range[j] = i-incr; // Save max fill pixel
 				
@@ -371,18 +372,18 @@ ct.t.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 		
 		colorPixel(x,y,fillColor);
 		
-		if( (!colorCompare(fillColor,getColorFromCoords(x-1,y))) && ct.c.isWithinBounds(x-1,y) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x-1,y))) && ct.canvas.isWithinBounds(x-1,y) )
 			colorPixelBlend(x-1,y,fillColor,getColorFromCoords(x-1,y));
-		if( (!colorCompare(fillColor,getColorFromCoords(x+1,y))) && ct.c.isWithinBounds(x+1,y) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x+1,y))) && ct.canvas.isWithinBounds(x+1,y) )
 			colorPixelBlend(x+1,y,fillColor,getColorFromCoords(x+1,y));
-		if( (!colorCompare(fillColor,getColorFromCoords(x,y-1))) && ct.c.isWithinBounds(x,y-1) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x,y-1))) && ct.canvas.isWithinBounds(x,y-1) )
 			colorPixelBlend(x,y-1,fillColor,getColorFromCoords(x,y-1));
-		if( (!colorCompare(fillColor,getColorFromCoords(x,y+1))) && ct.c.isWithinBounds(x,y+1) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x,y+1))) && ct.canvas.isWithinBounds(x,y+1) )
 			colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
 	}
 	ctx.putImageData(p,0,0);
 }
-ct.t.paintMethods["drawLineChain"] = function (c,p,e,s,f)
+ct.tools.paintMethods["drawLineChain"] = function (c,p,e,s,f)
 {
 	c.save();
 	c.lineJoin="round";
@@ -427,7 +428,7 @@ ct.t.paintMethods["drawLineChain"] = function (c,p,e,s,f)
 	}
 	c.restore();
 }
-ct.t.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,editMode){
+ct.tools.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,editMode){
 	var cp=[];   // array of control points, as x0,y0,x1,y1,...
 	var n=pts.length;
 	var isClosedSpline = (closed) ? 1 : 0;
@@ -537,7 +538,7 @@ ct.html.init['setupCSS'] = function()
 {
 	// Calculate variables used in css
 	var z = $('#' + ct.id);
-	var a = ct.c.offset.top + ct.c.height - z.offset().top;
+	var a = ct.canvas.offset.top + ct.canvas.height - z.offset().top;
 	var b = (z.width() - 420)/2;
 	
 	var d = document.createElement('style');
@@ -550,36 +551,36 @@ ct.html.init['setupCSS'] = function()
 /*-----------------------------------------------------------------------------*/
 ct.eventHandlers["mouseDown"] = function(e) {
 	var c = ct;
-	var t = c.t;
+	var t = c.tools;
 	
 	if($('#drawTools-options').css('opacity') == 1){
 		painting = !1;
-		c.c.restore();
+		c.canvas.restore();
 		c.options.toggleMenu();
 		return;
-	} else if(t.currentToolType === t.tt.BRUSH)
+	} else if(t.currentToolType === t.toolType.BRUSH)
 		return;
 	t.toolActive = true;
-	c.c.updateLocation();
+	c.canvas.updateLocation();
 	
-	// Translate mouse location to point relative to c
-	c.mouseX = e.pageX-c.c.offset.left;
-	c.mouseY = e.pageY-c.c.offset.top;
+	// Translate mouse location to point relative to canvas
+	c.mouseX = e.pageX-c.canvas.offset.left;
+	c.mouseY = e.pageY-c.canvas.offset.top;
 	
-	if(t.currentToolType === t.tt.FILL) {
+	if(t.currentToolType === t.toolType.FILL) {
 		painting = !1;
 		t.paintMethods.floodFill(c.context,c.mouseX,c.mouseY);
-	} else if(t.currentToolType === t.tt.LINE) {
+	} else if(t.currentToolType === t.toolType.LINE) {
 		painting = !1;
 		t.points.push(c.mouseX,c.mouseY);
-	} else if(t.currentToolType === t.tt.LINECHAIN) {
+	} else if(t.currentToolType === t.toolType.LINECHAIN) {
 		painting = !1;
-	} else if(t.currentToolType === t.tt.CURVE) {
+	} else if(t.currentToolType === t.toolType.CURVE) {
 		painting = !1;
-	} else if(t.currentToolType === t.tt.RECT) {
+	} else if(t.currentToolType === t.toolType.RECT) {
 		painting = !1;
 		t.points.push(c.mouseX,c.mouseY);
-	} else if(t.currentToolType === t.tt.ELLIPSE) {
+	} else if(t.currentToolType === t.toolType.ELLIPSE) {
 		painting = !1;
 		t.points.push(c.mouseX,c.mouseY);
 	} 
@@ -587,148 +588,148 @@ ct.eventHandlers["mouseDown"] = function(e) {
 
 ct.eventHandlers["mouseMove"] = function(e) {
 	var c = ct;
-	var t = c.t;
-	if(t.currentToolType === t.tt.BRUSH)
+	var t = c.tools;
+	if(t.currentToolType === t.toolType.BRUSH)
 		return;	// default behaviors
 	else if(!t.toolActive)
 		return;	// If no tool is in use, ignore event
 	
-	// Translate mouse location to point relative to c
-	c.mouseX = e.pageX-c.c.offset.left;
-	c.mouseY = e.pageY-c.c.offset.top;
+	// Translate mouse location to point relative to canvas
+	c.mouseX = e.pageX-c.canvas.offset.left;
+	c.mouseY = e.pageY-c.canvas.offset.top;
 	var endPointX = c.mouseX;
 	var endPointY = c.mouseY;
 	
-	if(t.currentToolType === t.tt.FILL) {
+	if(t.currentToolType === t.toolType.FILL) {
 		// Do nothing
-	} else if(t.currentToolType === t.tt.LINE) {
+	} else if(t.currentToolType === t.toolType.LINE) {
 		if(c.shiftDown) {
-			var a = t.ls(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.lineShiftHold(t.points[0],t.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
-		c.c.restore();
+		c.canvas.restore();
 		t.paintMethods.drawLine(c.context,t.points[0],t.points[1],endPointX,endPointY);
-	} else if(t.currentToolType === t.tt.LINECHAIN) {
+	} else if(t.currentToolType === t.toolType.LINECHAIN) {
 		if(t.points.length > 0) {
 			if(c.shiftDown) {
-				var a = t.ls(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
+				var a = t.lineShiftHold(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
 				endPointX = a.x;
 				endPointY = a.y;
 			}
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
-			c.c.restore();
+			c.canvas.restore();
 			t.paintMethods.drawLineChain(c.context,t.points.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
 		}
-	} else if(t.currentToolType === t.tt.CURVE) {
+	} else if(t.currentToolType === t.toolType.CURVE) {
 		if(t.points.length > 0) {
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
-			c.c.restore();
+			c.canvas.restore();
 			t.paintMethods.drawSpline(c.context,t.points.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fillColor,true);
 		}
-	} else if(t.currentToolType === t.tt.RECT) {
+	} else if(t.currentToolType === t.toolType.RECT) {
 		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 		if(c.shiftDown) {
-			var a = t.ss(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.squareShiftHold(t.points[0],t.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
-		c.c.restore();
+		c.canvas.restore();
 		t.paintMethods.drawRect(c.context,t.points.concat(endPointX,endPointY),fillColor);
-	} else if(t.currentToolType === t.tt.ELLIPSE) {
+	} else if(t.currentToolType === t.toolType.ELLIPSE) {
 		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 		if(c.shiftDown) {
-			var a = t.ss(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.squareShiftHold(t.points[0],t.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
-		c.c.restore();
+		c.canvas.restore();
 		t.paintMethods.drawEllipse(c.context,t.points.concat(endPointX,endPointY),fillColor);
 	}
 }
 
 ct.eventHandlers["mouseUp"] = function(e) {
 	var c = ct;
-	var t = c.t;
+	var t = c.tools;
 	
 	if(0 && $('#drawTools-options').css('opacity') == 1){
-		c.c.updateLocation();
+		c.canvas.updateLocation();
 		if(!c.options.isWithinBounds(e.pageX, e.pageY)) {
 			c.options.toggleMenu();
 		}
 		return;
-	} else if(t.currentToolType === t.tt.BRUSH)
+	} else if(t.currentToolType === t.toolType.BRUSH)
 		return;
 	else if(!t.toolActive)	// If no tool is in use, ignore event
 		return;
 		
-	// Translate mouse location to point relative to c
-	c.mouseX = e.pageX-c.c.offset.left;
-	c.mouseY = e.pageY-c.c.offset.top;
+	// Translate mouse location to point relative to canvas
+	c.mouseX = e.pageX-c.canvas.offset.left;
+	c.mouseY = e.pageY-c.canvas.offset.top;
 	var endPointX = c.mouseX;
 	var endPointY = c.mouseY;
 	
-	if(t.currentToolType === t.tt.FILL) {
+	if(t.currentToolType === t.toolType.FILL) {
 		t.reset(true);
-	} else if(t.currentToolType === t.tt.LINE) {
+	} else if(t.currentToolType === t.toolType.LINE) {
 		if(c.shiftDown) {
-			var a = t.ls(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.lineShiftHold(t.points[0],t.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
-		c.c.restore();
+		c.canvas.restore();
 		t.paintMethods.drawLine(c.context,t.points[0],t.points[1], endPointX, endPointY);
 		t.reset(true);
-	} else if(t.currentToolType === t.tt.LINECHAIN) {
-		if(c.c.isWithinDrawingBounds(c.mouseX,c.mouseY)){
+	} else if(t.currentToolType === t.toolType.LINECHAIN) {
+		if(c.canvas.isWithinDrawingBounds(c.mouseX,c.mouseY)){
 			if(c.shiftDown) {
-				var a = t.ls(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
+				var a = t.lineShiftHold(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
 				endPointX = a.x;
 				endPointY = a.y;
 			}
 			t.points.push(endPointX,endPointY);
 			if(e.which == 3) {	// If right mouse click, finish the chain
 				var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
-				c.c.restore();
+				c.canvas.restore();
 				t.paintMethods.drawLineChain(c.context,t.points,false,c.options.lineToolsShouldClose,fillColor);
 				t.reset(true);
 			}
 		} else { // If user clicks out of acceptable boundaries, cancel all tool progress
-			c.c.restore();
+			c.canvas.restore();
 			t.reset();
 		}
-	} else if(t.currentToolType === t.tt.CURVE) {
-		if(c.c.isWithinDrawingBounds(c.mouseX,c.mouseY)){
+	} else if(t.currentToolType === t.toolType.CURVE) {
+		if(c.canvas.isWithinDrawingBounds(c.mouseX,c.mouseY)){
 			t.points.push(c.mouseX,c.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
-				c.c.restore();
+				c.canvas.restore();
 				t.paintMethods.drawSpline(c.context,t.points,0.5,c.options.lineToolsShouldClose,fillColor,false);
 				t.reset(true);
 			}
 		} else { // If user clicks out of acceptable boundaries, cancel all tool progress
-			c.c.restore();
+			c.canvas.restore();
 			t.reset();
 		}
-	} else if(t.currentToolType === t.tt.RECT) {
+	} else if(t.currentToolType === t.toolType.RECT) {
 		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 		if(c.shiftDown) {
-			var a = t.ss(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.squareShiftHold(t.points[0],t.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
-		c.c.restore();
+		c.canvas.restore();
 		t.points.push(endPointX,endPointY);
 		t.paintMethods.drawRect(c.context,t.points,fillColor);
 		t.reset(true);
-	} else if(t.currentToolType === t.tt.ELLIPSE) {
+	} else if(t.currentToolType === t.toolType.ELLIPSE) {
 		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 		if(c.shiftDown) {
-			var a = t.ss(t.points[0],t.points[1],endPointX,endPointY);
+			var a = t.squareShiftHold(t.points[0],t.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
-		c.c.restore();
+		c.canvas.restore();
 		t.points.push(endPointX,endPointY);
 		t.paintMethods.drawEllipse(c.context,t.points,fillColor);
 		t.reset(true);
@@ -736,7 +737,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 }
 ct.eventHandlers["keyDown"] = function(e) {
 	var c = ct;
-	var t = c.t;
+	var t = c.tools;
 	if(e.keyCode == 16 ) { // If shift is pressed
 		c.shiftDown = 1;
 		var endPointX = c.mouseX;
@@ -744,25 +745,25 @@ ct.eventHandlers["keyDown"] = function(e) {
 		
 		if(!t.toolActive)
 			return;
-		else if( t.currentToolType === t.tt.RECT || t.currentToolType === t.tt.ELLIPSE ) {
-			var a = t.ss(t.points[0],t.points[1],endPointX,endPointY);
+		else if( t.currentToolType === t.toolType.RECT || t.currentToolType === t.toolType.ELLIPSE ) {
+			var a = t.squareShiftHold(t.points[0],t.points[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 			
-			c.c.restore();
+			c.canvas.restore();
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
-			if(t.currentToolType === t.tt.RECT)
+			if(t.currentToolType === t.toolType.RECT)
 				t.paintMethods.drawRect(c.context,t.points.concat(endPointX,endPointY),fillColor);
 			else
 				t.paintMethods.drawEllipse(c.context,t.points.concat(endPointX,endPointY),fillColor);
-		} else if( t.currentToolType === t.tt.LINE || t.currentToolType === t.tt.LINECHAIN ) {
+		} else if( t.currentToolType === t.toolType.LINE || t.currentToolType === t.toolType.LINECHAIN ) {
 			if(t.points.length > 0) {
-				var a = t.ls(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
+				var a = t.lineShiftHold(t.points[t.points.length-2],t.points[t.points.length-1],endPointX,endPointY);
 				endPointX = a.x;
 				endPointY = a.y;
 				
-				c.c.restore();
-				if( t.currentToolType === t.tt.LINECHAIN ) {
+				c.canvas.restore();
+				if( t.currentToolType === t.toolType.LINECHAIN ) {
 					var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 					t.paintMethods.drawLineChain(c.context,t.points.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
 				} else {
@@ -771,15 +772,15 @@ ct.eventHandlers["keyDown"] = function(e) {
 			}
 		}
 	} else if(e.keyCode == "Q".charCodeAt(0)) {
-		if(t.currentToolType === t.tt.LINECHAIN || t.currentToolType === t.tt.CURVE) {
+		if(t.currentToolType === t.toolType.LINECHAIN || t.currentToolType === t.toolType.CURVE) {
 			if(t.points.length) {
 				t.points.length -= 2;
-				c.c.restore();
+				c.canvas.restore();
 				if(t.points.length == 0) {
 					t.reset();
 				} else {
 					var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
-					if(t.currentToolType === t.tt.LINECHAIN)
+					if(t.currentToolType === t.toolType.LINECHAIN)
 						t.paintMethods.drawLineChain(c.context,t.points.concat(c.mouseX,c.mouseY),true,c.options.lineToolsShouldClose,fillColor);
 					else
 						t.paintMethods.drawSpline(c.context,t.points.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fillColor,true);
@@ -792,7 +793,7 @@ ct.eventHandlers["keyDown"] = function(e) {
 }
 ct.eventHandlers["keyUp"] = function(e) {
 	var c = ct;
-	var t = c.t;
+	var t = c.tools;
 	if(e.keyCode == 16) { // If shift is released
 		c.shiftDown = 0;
 		var endPointX = c.mouseX;
@@ -801,17 +802,17 @@ ct.eventHandlers["keyUp"] = function(e) {
 		if(!t.toolActive)
 			return;
 			
-		if( t.currentToolType === t.tt.RECT || t.currentToolType === t.tt.ELLIPSE ){
-			c.c.restore();
+		if( t.currentToolType === t.toolType.RECT || t.currentToolType === t.toolType.ELLIPSE ){
+			c.canvas.restore();
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
-			if(t.currentToolType === t.tt.RECT)
+			if(t.currentToolType === t.toolType.RECT)
 				t.paintMethods.drawRect(c.context,t.points.concat(endPointX,endPointY),fillColor);
 			else
 				t.paintMethods.drawEllipse(c.context,t.points.concat(endPointX,endPointY),fillColor);
-		} else if( t.currentToolType === t.tt.LINE || t.currentToolType === t.tt.LINECHAIN ) {
+		} else if( t.currentToolType === t.toolType.LINE || t.currentToolType === t.toolType.LINECHAIN ) {
 			if(t.points.length > 0) {
-				c.c.restore();
-				if( t.currentToolType === t.tt.LINECHAIN ) {
+				c.canvas.restore();
+				if( t.currentToolType === t.toolType.LINECHAIN ) {
 					var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 					t.paintMethods.drawLineChain(c.context,t.points.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
 				} else {
@@ -839,7 +840,7 @@ ct.html.init['createToolButton'] = function(type, name)
 		'</div>';
 	document.getElementById(ct.id).appendChild(button);
 	
-	button.onclick = function(){ct.html.bh.st(type);};
+	button.onclick = function(){ct.html.buttonHandlers.setToolType(type);};
 	return button;
 }
 //Creates Tool Buttons (with a label)
@@ -881,7 +882,7 @@ ct.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton)
 	//----- BEGIN ----- LeftPanel --------------------------------------------------
 	var leftPanelHtml = "";
 	leftPanelHtml += 
-		'<label onclick=ct.html.bh.sl(); class="switch">\
+		'<label onclick=ct.html.buttonHandlers.setLineToolsOpen(); class="switch">\
 			<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">\
 			<span class="switch-label" data-on="Loop Line Tools" data-off="Open Line Tools"></span>\
 			<span class="switch-handle"></span>\
@@ -892,12 +893,12 @@ ct.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton)
 	var optionsPaletteHtml = "";
 	
 	optionsPaletteHtml += 
-		'<label onclick=ct.html.bh.so(""); style="width:120px;">' +
+		'<label onclick=ct.html.buttonHandlers.setOptionsColor(""); style="width:120px;">' +
 			'<input type="radio" name="drawTools-options-palette-radio" checked>' +
 			'<div style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div>' +
 		'</label>';
 	optionsPaletteHtml += 
-		'<label onclick=ct.html.bh.so("",1); style="width:120px;">' +
+		'<label onclick=ct.html.buttonHandlers.setOptionsColor("",1); style="width:120px;">' +
 			'<input type="radio" name="drawTools-options-palette-radio">' +
 			'<div style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div>' +
 		'</label>';
@@ -906,7 +907,7 @@ ct.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton)
 		var color = colorElements[i].getAttribute("data-color");
 		ct.dcPalette.push(color);
 		optionsPaletteHtml += 
-			'<label onclick=ct.html.bh.so("' + color + '");>' + //
+			'<label onclick=ct.html.buttonHandlers.setOptionsColor("' + color + '");>' + //
 				'<input type="radio" name="drawTools-options-palette-radio">' +
 				'<div style="background:' + color + ';"></div>' +
 			'</label>';
@@ -927,14 +928,14 @@ ct.html['DTDestroy'] = function()
 	// 4. Set the state variable to reflect DTTools uninstallation
 	window.DTToolsIsCurrentlyInstalled = false;
 	// 5. Destroy JavaScript
-	delete ct.c; // Delete all references to ct
+	delete ct.canvas; // Delete all references to ct
 	delete ct.html;
 	delete ct;
 	document.getElementById('DTScript').remove();
 }
 ct.html.init['setupCssAndHtml'] = function()
 {	
-	ct.c.updateLocation();
+	ct.canvas.updateLocation();
 	/*---- 1. Create Draw Tools Container - DIV in which DrawTools will be placed in ----*/
 	var drawToolsDiv = document.createElement('div');
 	drawToolsDiv.id = ct.id;
@@ -944,21 +945,21 @@ ct.html.init['setupCssAndHtml'] = function()
 	ct.html.init.setupCSS();
 	
 	/*---- 3. Make Necessary Modifications to Existing Elements ----*/
-	document.getElementById(ct.dcBrushes[0].id).parentNode.onclick = function(){ct.html.bh.bc(ct.dcBrushes[0].size);};
-	document.getElementById(ct.dcBrushes[1].id).parentNode.onclick = function(){ct.html.bh.bc(ct.dcBrushes[1].size);};
-	document.getElementById(ct.dcBrushes[2].id).parentNode.onclick = function(){ct.html.bh.bc(ct.dcBrushes[2].size);};
-	document.getElementById(ct.dcBrushes[3].id).parentNode.onclick = function(){ct.html.bh.bc(ct.dcBrushes[3].size);};
+	document.getElementById(ct.dcBrushes[0].id).parentNode.onclick = function(){ct.html.buttonHandlers.brushClick(ct.dcBrushes[0].size);};
+	document.getElementById(ct.dcBrushes[1].id).parentNode.onclick = function(){ct.html.buttonHandlers.brushClick(ct.dcBrushes[1].size);};
+	document.getElementById(ct.dcBrushes[2].id).parentNode.onclick = function(){ct.html.buttonHandlers.brushClick(ct.dcBrushes[2].size);};
+	document.getElementById(ct.dcBrushes[3].id).parentNode.onclick = function(){ct.html.buttonHandlers.brushClick(ct.dcBrushes[3].size);};
 	
 	/*---- 4. Create Draw Tools Elements and Interface ----*/
 	// Create Tool Buttons
-	ct.html.init.createToolButton(ct.t.tt.FILL,"fill");
-	ct.html.init.createToolButton(ct.t.tt.LINE,"line");
-	ct.html.init.createToolButton(ct.t.tt.LINECHAIN,"linechain");
-	ct.html.init.createToolButton(ct.t.tt.CURVE,"curve");
-	ct.html.init.createToolButton(ct.t.tt.RECT,"rect");
-	ct.html.init.createToolButton(ct.t.tt.ELLIPSE,"ellipse");
+	ct.html.init.createToolButton(ct.tools.toolType.FILL,"fill");
+	ct.html.init.createToolButton(ct.tools.toolType.LINE,"line");
+	ct.html.init.createToolButton(ct.tools.toolType.LINECHAIN,"linechain");
+	ct.html.init.createToolButton(ct.tools.toolType.CURVE,"curve");
+	ct.html.init.createToolButton(ct.tools.toolType.RECT,"rect");
+	ct.html.init.createToolButton(ct.tools.toolType.ELLIPSE,"ellipse");
 	
-	debugLabel = ct.html.init.createToolButtonWithLabel(ct.t.tt.UTIL,"label", '0');
+	debugLabel = ct.html.init.createToolButtonWithLabel(ct.tools.toolType.UTIL,"label", '0');
 	
 	var optionsButton = ct.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){ct.options.toggleMenu();};
