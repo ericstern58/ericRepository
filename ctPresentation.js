@@ -301,7 +301,7 @@ ct.t.paintMethods["drawLineChain"]=function (c,p,e,s,f){c.save();c.lineJoin="rou
 ct.t.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,editMode){
 	var cp=[];   // array of control p, as x0,y0,x1,y1,...
 	var n=pts.length;
-	var isClosedSpline = (closed) ? 1 : 0;
+	var q = (closed) ? 1 : 0;
 	// First check for some base cases
 	if(n == 0) {
 		return;
@@ -313,13 +313,13 @@ ct.t.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,e
 		ctx.stroke();
 	}
 	// For closed spline: Append and prepend knots and control p to close the curve
-	if(isClosedSpline){
+	if(q){
 		pts.push(pts[0],pts[1],pts[2],pts[3]);
 		pts.unshift(pts[n-1]);
 		pts.unshift(pts[n-1]);
 	}
 	// Find Control Points
-	for(var i=0, m = (n-4+(4*isClosedSpline));i<m;i+=2){
+	for(var i=0, m = (n-4+(4*q));i<m;i+=2){
 		var x0=pts[i], y0=pts[i+1], x1=pts[i+2], y1=pts[i+3], x2=pts[i+4], y2=pts[i+5];
 		// Calculate intermediary values
 		var d01=Math.sqrt(Math.pow(x1-x0,2)+Math.pow(y1-y0,2));
@@ -334,7 +334,7 @@ ct.t.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,e
 		// Then add them to cp array
 		cp=cp.concat(p1x,p1y,p2x,p2y);
 	}
-	cp = (isClosedSpline) ? cp.concat(cp[0],cp[1]) : cp;
+	cp = (q) ? cp.concat(cp[0],cp[1]) : cp;
 	
 	ctx.save(); 
 	
@@ -343,13 +343,13 @@ ct.t.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,e
 	ctx.moveTo(pts[2],pts[3]);
 	for(var i=2;i<n;i+=2){ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);}
 	
-	if(isClosedSpline) {
+	if(q) {
 		if(editMode) {
 			ctx.stroke(); // Stroke all lines previous to this one
 			ctx.save();
 			// Get current stroke color and set it to .5 opacity
-			var c = parseInt(ctx.strokeStyle.substr(1,6),16);
-			ctx.strokeStyle = "rgba(" + ((c>>16)&255) + "," + ((c>>8)&255) + "," + (c&255) + ",0.5)";
+			var z = parseInt(ctx.strokeStyle.substr(1,6),16);
+			ctx.strokeStyle = "rgba(" + ((z>>16)&255) + "," + ((z>>8)&255) + "," + (z&255) + ",0.5)";
 			// Make the closing stroke
 			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
 			ctx.stroke();
@@ -374,11 +374,11 @@ ct.t.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,e
 	}
 	if(editMode){   
 		ctx.save();
-		var c=parseInt(ctx.strokeStyle.substr(1,6),16);
-		var c2=(0.2126*((c>>16)&255))+(0.7152*((c>>8)&255))+(0.0722*(c&255));
+		var z=parseInt(ctx.strokeStyle.substr(1,6),16);
+		var c2=(0.2126*((z>>16)&255))+(0.7152*((z>>8)&255))+(0.0722*(z&255));
 		ctx.fillStyle=(c2>160)?"#444444":"#FFFFFF";
 		ctx.lineWidth=3;
-		for(var i=(2*isClosedSpline),m=(n-2+(2*isClosedSpline));i<m;i+=2){
+		for(var i=(2*q),m=(n-2+(2*q));i<m;i+=2){
 			ctx.beginPath();
 			ctx.arc(pts[i],pts[i+1],2.5,2*Math.PI,false);
 			ctx.closePath();
