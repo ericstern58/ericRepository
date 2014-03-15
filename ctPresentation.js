@@ -432,29 +432,28 @@ cleanTools.tools.paintMethods["drawLineChain"] = function (c,p,e,s,f)
 	}
 	c.restore();
 }
-cleanTools.tools.paintMethods["drawSpline"] = function(c,p,t,d,f,o){
-	var c = 0;
-	var g=[];   // array of control points, as x0,y0,x1,y1,...
-	var n=p.length;
-	var e = (d) ? 1 : 0;
+cleanTools.tools.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,editMode){
+	var cp=[];   // array of control points, as x0,y0,x1,y1,...
+	var n=pts.length;
+	var isClosedSpline = (closed) ? 1 : 0;
 	// First check for some base cases
 	if(n == 0) {
 		return;
 	} else if(n == 4) {
 		// Draw Line
-		c.beginPath();
-		c.moveTo( p[0], p[1] );
-		c.lineTo( p[2], p[3]);
-		c.stroke();
+		ctx.beginPath();
+		ctx.moveTo( pts[0], pts[1] );
+		ctx.lineTo( pts[2], pts[3]);
+		ctx.stroke();
 	}
 	// For closed spline: Append and prepend knots and control points to close the curve
-	if(e){
-		p.push(p[0],p[1],p[2],p[3]);
-		p.unshift(p[n-1]);
-		p.unshift(p[n-1]);
+	if(isClosedSpline){
+		pts.push(pts[0],pts[1],pts[2],pts[3]);
+		pts.unshift(pts[n-1]);
+		pts.unshift(pts[n-1]);
 	}
 	// Find Control Points
-	for(var i=0, m = (n-4+(4*e));i<m;i+=2){
+	for(var i=0, m = (n-4+(4*isClosedSpline));i<m;i+=2){
 		// Calculate Control Points
 		//  x0,y0,x1,y1 are the coordinates of the end (knot) pts of this segment
 		//  x2,y2 is the next knot -- not connected here but needed to calculate p2
@@ -463,78 +462,78 @@ cleanTools.tools.paintMethods["drawSpline"] = function(c,p,t,d,f,o){
 		//  next segment's p1.
 		//  t is the 'tension' which controls how far the control points spread.
 		//  Scaling factors: distances from this knot to the previous and following knots.
-		var l=p[i], o=p[i+1], q=p[i+2], r=p[i+3], s=p[i+4], u=p[i+5];
+		var x0=pts[i], y0=pts[i+1], x1=pts[i+2], y1=pts[i+3], x2=pts[i+4], y2=pts[i+5];
 		// Calculate intermediary values
-		var h=Math.sqrt(Math.pow(q-l,2)+Math.pow(r-o,2));
-		var w=Math.sqrt(Math.pow(s-q,2)+Math.pow(u-r,2));
-		var j=t*h/(h+w);
-		var k=t-j;
+		var d01=Math.sqrt(Math.pow(x1-x0,2)+Math.pow(y1-y0,2));
+		var d12=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));
+		var fa=t*d01/(d01+d12);
+		var fb=t-fa;
 	  	// Calculate Control Points
-		var a=q+j*(l-s);
-		var b=r+j*(o-u);
-		var c=q-k*(l-s);
-		var d=r-k*(o-u);  
-		// Then add them to g array
-		g=g.concat(a,b,c,d);
+		var p1x=x1+fa*(x0-x2);
+		var p1y=y1+fa*(y0-y2);
+		var p2x=x1-fb*(x0-x2);
+		var p2y=y1-fb*(y0-y2);  
+		// Then add them to cp array
+		cp=cp.concat(p1x,p1y,p2x,p2y);
 	}
-	g = (e) ? g.concat(g[0],g[1]) : g;
+	cp = (isClosedSpline) ? cp.concat(cp[0],cp[1]) : cp;
 	
-	c.save(); 
+	ctx.save(); 
 	
-	c.beginPath();
-	c.lineJoin="round";
-	c.moveTo(p[2],p[3]);
+	ctx.beginPath();
+	ctx.lineJoin="round";
+	ctx.moveTo(pts[2],pts[3]);
 	for(var i=2;i<n;i+=2)
-		c.bezierCurveTo(g[2*i-2],g[2*i-1],g[2*i],g[2*i+1],p[i+2],p[i+3]);
+		ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);
 	
-	if(e) {
-		if(o) {
-			c.stroke(); // Stroke all lines previous to this one
-			c.save();
+	if(isClosedSpline) {
+		if(editMode) {
+			ctx.stroke(); // Stroke all lines previous to this one
+			ctx.save();
 			// Get current stroke color and set it to .5 opacity
-			var z = parseInt(c.strokeStyle.substr(1,6),16);
-			c.strokeStyle = "rgba(" + ((z>>16)&255) + "," + ((z>>8)&255) + "," + (z&255) + ",0.5)";
+			var c = parseInt(ctx.strokeStyle.substr(1,6),16);
+			ctx.strokeStyle = "rgba(" + ((c>>16)&255) + "," + ((c>>8)&255) + "," + (c&255) + ",0.5)";
 			// Make the closing stroke
-			c.bezierCurveTo(g[2*n-2],g[2*n-1],g[2*n],g[2*n+1],p[n+2],p[n+3]);
-			c.stroke();
-			c.restore();
+			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
+			ctx.stroke();
+			ctx.restore();
 		} else{
 			// Make the closing stroke
-			c.bezierCurveTo(g[2*n-2],g[2*n-1],g[2*n],g[2*n+1],p[n+2],p[n+3]);
-			c.moveTo(p[0],p[1]);
-			c.closePath();
-			if(f) {
-				c.fillStyle = f;
-				c.fill();
+			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
+			ctx.moveTo(pts[0],pts[1]);
+			ctx.closePath();
+			if(closedFillColorHex) {
+				ctx.fillStyle = closedFillColorHex;
+				ctx.fill();
 			}
-			c.stroke();
+			ctx.stroke();
 		}
 	} else { 
 		// For open curves the first and last arcs are simple quadratics.
-		c.moveTo(p[0],p[1]);
-		c.quadraticCurveTo(g[0],g[1],p[2],p[3]);
-		c.moveTo(p[n-2],p[n-1]);
-		c.quadraticCurveTo(g[2*n-10],g[2*n-9],p[n-4],p[n-3]);
-		c.stroke();
+		ctx.moveTo(pts[0],pts[1]);
+		ctx.quadraticCurveTo(cp[0],cp[1],pts[2],pts[3]);
+		ctx.moveTo(pts[n-2],pts[n-1]);
+		ctx.quadraticCurveTo(cp[2*n-10],cp[2*n-9],pts[n-4],pts[n-3]);
+		ctx.stroke();
 	}
 	// Draw the knot points.
-	if(o){   
-		c.save();
+	if(editMode){   
+		ctx.save();
 		// Determine wether to use dark or light points
-		var z = parseInt(c.strokeStyle.substr(1,6),16); // Get current stroke color
-		var q = (0.2126*((z>>16)&255)) + (0.7152*((z>>8)&255)) + (0.0722*(z&255)); // Get its 'lightness' level
-		c.fillStyle = (q > 160) ? "#444444" : "#FFFFFF"; // If (colorIsLight) ? darkGray : white;
-		c.lineWidth=3;
-		for(var i=(2*e), m = (n-2+(2*e));i<m;i+=2){
-			c.beginPath();
-			c.arc(p[i],p[i+1],2.5,2*Math.PI,0);
-			c.closePath();
-			c.stroke();
-			c.fill();
+		var c = parseInt(ctx.strokeStyle.substr(1,6),16); // Get current stroke color
+		var c2 = (0.2126*((c>>16)&255)) + (0.7152*((c>>8)&255)) + (0.0722*(c&255)); // Get its 'lightness' level
+		ctx.fillStyle = (c2 > 160) ? "#444444" : "#FFFFFF"; // If (colorIsLight) ? darkGray : white;
+		ctx.lineWidth=3;
+		for(var i=(2*isClosedSpline), m = (n-2+(2*isClosedSpline));i<m;i+=2){
+			ctx.beginPath();
+			ctx.arc(pts[i],pts[i+1],2.5,2*Math.PI,false);
+			ctx.closePath();
+			ctx.stroke();
+			ctx.fill();
 		}
-		c.restore();
+		ctx.restore();
 	}
-	c.restore();
+	ctx.restore();
 }
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
