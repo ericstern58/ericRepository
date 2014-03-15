@@ -869,7 +869,7 @@ cleanTools.html.init['createUtilityButton'] = function(name)
 
 cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton)
 {
-	var c = c;
+	var c = cleanTools;
 	//Create DIV in which Options will be placed in
 	var optionsDiv = document.createElement('div');
 	optionsDiv.id = c.id + '-options';
