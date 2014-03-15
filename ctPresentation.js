@@ -298,7 +298,7 @@ ct.t.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 	ctx.putImageData(p,0,0);
 }
 ct.t.paintMethods["drawLineChain"]=function (c,p,e,s,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);for(var i=2;i<p.length;i+=2){c.lineTo(p[i],p[i+1]);}if(s){if(e){c.stroke();var z = parseInt(c.strokeStyle.substr(1,6),16);c.strokeStyle="rgba("+((z>>16)&255)+","+((z>>8)&255)+","+(z&255)+",0.5)";c.moveTo(p[p.length-2],p[p.length-1]);c.lineTo(p[0],p[1]);}else{c.closePath();if(f){c.fillStyle=f;c.fill();}}}c.stroke();if(e){c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);var w=(0.2126*((z>>16)&255))+(0.7152*((z>>8)&255))+(0.0722*(z&255));c.fillStyle=(w>160)?"#444444":"#FFFFFF";c.lineWidth=3;for(var i=0;i<p.length;i+=2){c.beginPath();c.arc(p[i],p[i+1],2.5,2*Math.PI,0);c.closePath();c.stroke();c.fill();}c.restore();}c.restore();}
-ct.t.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,editMode){
+ct.t.paintMethods["drawSpline"] = function(c,pts,t,closed,closedFillColorHex,editMode){
 	var cp=[];   // array of control p, as x0,y0,x1,y1,...
 	var n=pts.length;
 	var q = (closed) ? 1 : 0;
@@ -307,10 +307,10 @@ ct.t.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,e
 		return;
 	} else if(n == 4) {
 		// Draw Line
-		ctx.beginPath();
-		ctx.moveTo( pts[0], pts[1] );
-		ctx.lineTo( pts[2], pts[3]);
-		ctx.stroke();
+		c.beginPath();
+		c.moveTo( pts[0], pts[1] );
+		c.lineTo( pts[2], pts[3]);
+		c.stroke();
 	}
 	// For closed spline: Append and prepend knots and control p to close the curve
 	if(q){
@@ -336,58 +336,58 @@ ct.t.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,e
 	}
 	cp = (q) ? cp.concat(cp[0],cp[1]) : cp;
 	
-	ctx.save(); 
+	c.save(); 
 	
-	ctx.beginPath();
-	ctx.lineJoin="round";
-	ctx.moveTo(pts[2],pts[3]);
-	for(var i=2;i<n;i+=2){ctx.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);}
+	c.beginPath();
+	c.lineJoin="round";
+	c.moveTo(pts[2],pts[3]);
+	for(var i=2;i<n;i+=2){c.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);}
 	
 	if(q) {
 		if(editMode) {
-			ctx.stroke(); // Stroke all lines previous to this one
-			ctx.save();
+			c.stroke(); // Stroke all lines previous to this one
+			c.save();
 			// Get current stroke color and set it to .5 opacity
-			var z = parseInt(ctx.strokeStyle.substr(1,6),16);
-			ctx.strokeStyle = "rgba(" + ((z>>16)&255) + "," + ((z>>8)&255) + "," + (z&255) + ",0.5)";
+			var z = parseInt(c.strokeStyle.substr(1,6),16);
+			c.strokeStyle = "rgba(" + ((z>>16)&255) + "," + ((z>>8)&255) + "," + (z&255) + ",0.5)";
 			// Make the closing stroke
-			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
-			ctx.stroke();
-			ctx.restore();
+			c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
+			c.stroke();
+			c.restore();
 		} else{
 			// Make the closing stroke
-			ctx.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
-			ctx.moveTo(pts[0],pts[1]);
-			ctx.closePath();
+			c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
+			c.moveTo(pts[0],pts[1]);
+			c.closePath();
 			if(closedFillColorHex) {
-				ctx.fillStyle = closedFillColorHex;
-				ctx.fill();
+				c.fillStyle = closedFillColorHex;
+				c.fill();
 			}
-			ctx.stroke();
+			c.stroke();
 		}
 	} else {
-		ctx.moveTo(pts[0],pts[1]);
-		ctx.quadraticCurveTo(cp[0],cp[1],pts[2],pts[3]);
-		ctx.moveTo(pts[n-2],pts[n-1]);
-		ctx.quadraticCurveTo(cp[2*n-10],cp[2*n-9],pts[n-4],pts[n-3]);
-		ctx.stroke();
+		c.moveTo(pts[0],pts[1]);
+		c.quadraticCurveTo(cp[0],cp[1],pts[2],pts[3]);
+		c.moveTo(pts[n-2],pts[n-1]);
+		c.quadraticCurveTo(cp[2*n-10],cp[2*n-9],pts[n-4],pts[n-3]);
+		c.stroke();
 	}
 	if(editMode){   
-		ctx.save();
-		var z=parseInt(ctx.strokeStyle.substr(1,6),16);
+		c.save();
+		var z=parseInt(c.strokeStyle.substr(1,6),16);
 		var c2=(0.2126*((z>>16)&255))+(0.7152*((z>>8)&255))+(0.0722*(z&255));
-		ctx.fillStyle=(c2>160)?"#444444":"#FFFFFF";
-		ctx.lineWidth=3;
+		c.fillStyle=(c2>160)?"#444444":"#FFFFFF";
+		c.lineWidth=3;
 		for(var i=(2*q),m=(n-2+(2*q));i<m;i+=2){
-			ctx.beginPath();
-			ctx.arc(pts[i],pts[i+1],2.5,2*Math.PI,false);
-			ctx.closePath();
-			ctx.stroke();
-			ctx.fill();
+			c.beginPath();
+			c.arc(pts[i],pts[i+1],2.5,2*Math.PI,false);
+			c.closePath();
+			c.stroke();
+			c.fill();
 		}
-		ctx.restore();
+		c.restore();
 	}
-	ctx.restore();
+	c.restore();
 }
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
