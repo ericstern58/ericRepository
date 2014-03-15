@@ -8,7 +8,7 @@ var DRAWCEPTION_BRUSHES =
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
 /*-----------------------------------------------------------------------------*/				 
-var cleanTools = {
+var ct = {
 	'id':DRAW_TOOLS_ID,
 	
 	'dcToolbar':DRAWCEPTION_TOOLBAR,
@@ -26,9 +26,9 @@ var cleanTools = {
 	
 	'eventHandlers':{}
 };
-cleanTools["canvas"] = {
-    'parentObject':cleanTools,
-	'Canvas':cleanTools.Canvas,
+ct["canvas"] = {
+    'parentObject':ct,
+	'Canvas':ct.Canvas,
 	'offset':{top:0,left:0},
 	'width':0,
 	'height':0,
@@ -48,7 +48,7 @@ cleanTools["canvas"] = {
 		this.parentObject.context.constructor.prototype.putImageData.call(this.parentObject.context, restorePoints[restorePosition], 0, 0);
 	}
 };
-cleanTools["tools"] = {
+ct["tools"] = {
 	'currentToolType':0,
 	'toolActive':false,
 	'points':[], // Will contain user input point sets for shapes/lines/etc
@@ -98,8 +98,8 @@ cleanTools["tools"] = {
 		}
 	}
 };
-cleanTools["options"] = {
-	'id':'#' + cleanTools.id + '-options',
+ct["options"] = {
+	'id':'#' + ct.id + '-options',
 	
 	// Fill Options
 	'useStrokeAsFill':false,
@@ -139,50 +139,50 @@ cleanTools["options"] = {
 		return (x2>=0 && y2>=0 && x2<width && y2<height);
 	}
 };
-cleanTools["html"] = {
-	'parentObject':cleanTools,
+ct["html"] = {
+	'parentObject':ct,
 	
 	'init':{}, // HTML initialization methods will be placed here
 	
 	'buttonHandlers':{
-		'cleanToolsObject':cleanTools,
+		'ctObject':ct,
 		'brushClick':function(brushSize) {
 			drawApp.setSize(brushSize);				// Set default brush size
-			this.cleanToolsObject.tools.currentToolType = cleanTools.tools.toolType.BRUSH;		// Update tool type
+			this.ctObject.tools.currentToolType = ct.tools.toolType.BRUSH;		// Update tool type
 			
 			// Visually unselect any other tools
-			var ele = document.getElementsByName(cleanTools.id + "-btn-radio");
+			var ele = document.getElementsByName(ct.id + "-btn-radio");
 			for(var i=0;i<ele.length;i++)
 				ele[i].checked = false;
 		},
 		'setLineToolsOpen':function() {
-			this.cleanToolsObject.options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
+			this.ctObject.options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
 		},
 		'setOptionsColor':function(color,normalfill) {
 			if(normalfill) {
-				this.cleanToolsObject.options.useStrokeAsFill = true;
-				this.cleanToolsObject.options.fillColor = '';
+				this.ctObject.options.useStrokeAsFill = true;
+				this.ctObject.options.fillColor = '';
 			} else {
-				this.cleanToolsObject.options.useStrokeAsFill = false;
-				this.cleanToolsObject.options.fillColor = color;
+				this.ctObject.options.useStrokeAsFill = false;
+				this.ctObject.options.fillColor = color;
 			}
 		},
 		'setToolType':function(type) {
-			this.cleanToolsObject.tools.currentToolType=type;
+			this.ctObject.tools.currentToolType=type;
 		}
 	}
 };
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- Drawing Algorithms ----------------------------*/
 /*-----------------------------------------------------------------------------*/
-cleanTools.tools.paintMethods["drawLine"] = function(c,x,y,a,b)
+ct.tools.paintMethods["drawLine"] = function(c,x,y,a,b)
 {
 	c.beginPath();
 	c.moveTo( x, y );
 	c.lineTo( a, b);
 	c.stroke();
 }
-cleanTools.tools.paintMethods["drawRect"] = function(c,p,f)
+ct.tools.paintMethods["drawRect"] = function(c,p,f)
 {
 	c.save();
 	c.lineJoin="round";
@@ -199,7 +199,7 @@ cleanTools.tools.paintMethods["drawRect"] = function(c,p,f)
 	c.stroke();
 	c.restore();
 }
-cleanTools.tools.paintMethods["drawEllipse"] = function(c,p,f)
+ct.tools.paintMethods["drawEllipse"] = function(c,p,f)
 {
 	var x = p[0],
 	y =  p[1],
@@ -228,19 +228,19 @@ cleanTools.tools.paintMethods["drawEllipse"] = function(c,p,f)
 	c.stroke();
 	c.restore();
 }
-cleanTools.tools.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
+ct.tools.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 	// Round seed coords in case they happen to be float type
 	xSeed = Math.round( xSeed );
 	ySeed = Math.round( ySeed );
 	/*---------------------- Setup Procedure Variables ----------------------*/
 	// This canvas.restore() fix avoids issues with brush placing dot over flood fill seed area
-	cleanTools.canvas.restore();
+	ct.canvas.restore();
 	
-	var w = cleanTools.canvas.width;
-	var h = cleanTools.canvas.height;
+	var w = ct.canvas.width;
+	var h = ct.canvas.height;
 	var p = ctx.getImageData(0,0,w,h);
 	var d = p.data;
-	var tci = (xSeed+ySeed*cleanTools.canvas.width)*4;
+	var tci = (xSeed+ySeed*ct.canvas.width)*4;
 	var targetColor = [d[tci],d[tci+1],d[tci+2],d[tci+3]];
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];
@@ -282,7 +282,7 @@ cleanTools.tools.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 		}
 	}
 	var test = function(x,y) {
-		return (cleanTools.canvas.isWithinBounds(x,y) && colorCompare(targetColor,getColorFromCoords(x,y)));
+		return (ct.canvas.isWithinBounds(x,y) && colorCompare(targetColor,getColorFromCoords(x,y)));
 	}
 	var testEdgePoint = function(x,y,o) {
 		var a = edgeEligible(x,y);
@@ -301,7 +301,7 @@ cleanTools.tools.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 	}
 	var edgeEligible = function(x,y) {
 		var c = getColorFromCoords(x,y);
-		return ( cleanTools.canvas.isWithinBounds(x,y) && (!colorCompare(fillColor,c)) && (!colorCompare(targetColor,c)) );
+		return ( ct.canvas.isWithinBounds(x,y) && (!colorCompare(fillColor,c)) && (!colorCompare(targetColor,c)) );
 	}
 	
 	/*---------------------- Begin Procedure ----------------------*/
@@ -357,7 +357,7 @@ cleanTools.tools.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 					else if(testEdgePoint(i,y-direction,y)) // Find Wether or not to add edge pixels
 						edgeArray.push(i,y-direction);
 				}
-				if(cleanTools.canvas.isWithinBounds(i,y))
+				if(ct.canvas.isWithinBounds(i,y))
 					edgeArray.push(i,y);
 				range[j] = i-incr; // Save max fill pixel
 				
@@ -372,18 +372,18 @@ cleanTools.tools.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 		
 		colorPixel(x,y,fillColor);
 		
-		if( (!colorCompare(fillColor,getColorFromCoords(x-1,y))) && cleanTools.canvas.isWithinBounds(x-1,y) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x-1,y))) && ct.canvas.isWithinBounds(x-1,y) )
 			colorPixelBlend(x-1,y,fillColor,getColorFromCoords(x-1,y));
-		if( (!colorCompare(fillColor,getColorFromCoords(x+1,y))) && cleanTools.canvas.isWithinBounds(x+1,y) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x+1,y))) && ct.canvas.isWithinBounds(x+1,y) )
 			colorPixelBlend(x+1,y,fillColor,getColorFromCoords(x+1,y));
-		if( (!colorCompare(fillColor,getColorFromCoords(x,y-1))) && cleanTools.canvas.isWithinBounds(x,y-1) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x,y-1))) && ct.canvas.isWithinBounds(x,y-1) )
 			colorPixelBlend(x,y-1,fillColor,getColorFromCoords(x,y-1));
-		if( (!colorCompare(fillColor,getColorFromCoords(x,y+1))) && cleanTools.canvas.isWithinBounds(x,y+1) )
+		if( (!colorCompare(fillColor,getColorFromCoords(x,y+1))) && ct.canvas.isWithinBounds(x,y+1) )
 			colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
 	}
 	ctx.putImageData(p,0,0);
 }
-cleanTools.tools.paintMethods["drawLineChain"] = function (c,p,e,s,f)
+ct.tools.paintMethods["drawLineChain"] = function (c,p,e,s,f)
 {
 	c.save();
 	c.lineJoin="round";
@@ -428,7 +428,7 @@ cleanTools.tools.paintMethods["drawLineChain"] = function (c,p,e,s,f)
 	}
 	c.restore();
 }
-cleanTools.tools.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,editMode){
+ct.tools.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,editMode){
 	var cp=[];   // array of control points, as x0,y0,x1,y1,...
 	var n=pts.length;
 	var isClosedSpline = (closed) ? 1 : 0;
@@ -534,23 +534,23 @@ cleanTools.tools.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFi
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
 /*-----------------------------------------------------------------------------*/
-cleanTools.html.init['setupCSS'] = function()
+ct.html.init['setupCSS'] = function()
 {
 	// Calculate variables used in css
-	var z = $('#' + cleanTools.id);
-	var a = cleanTools.canvas.offset.top + cleanTools.canvas.height - z.offset().top;
+	var z = $('#' + ct.id);
+	var a = ct.canvas.offset.top + ct.canvas.height - z.offset().top;
 	var b = (z.width() - 420)/2;
 	
 	var d = document.createElement('style');
-	d.id = cleanTools.id + 'StyleSheet';
+	d.id = ct.id + 'StyleSheet';
 	d.innerHTML = "#drawTools-btn-icon-fill{margin:12px 5px 0px 21px;width:12px;height:12px;background:black;border-bottom-right-radius:2px;border-bottom-left-radius:2px;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-ms-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);-webkit-transform-origin:0 100%;-moz-transform-origin:0 100%;-ms-transform-origin:0 100%;-o-transform-origin:0 100%;transform-origin:0 100%;}#drawTools-btn-icon-fill:before{border-bottom:5px solid black;border-left:8px solid transparent;border-right:8px solid transparent;display:block;position:absolute;top:-6px;left:-6px;content:'';}#drawTools-btn-icon-line{margin:8px 16px 0px 17px;width:5px;height:15px;background:black;border-radius:2px;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}#drawTools-btn-icon-rect{margin:8px 8px 0px 8px;width:22px;height:15px;background:black;}#drawTools-btn-icon-ellipse{margin:8px 8px 0px 8px;width:22px;height:15px;background:black;-moz-border-radius:11px/8px;-webkit-border-radius:11px/8px;border-radius:11px/8px;}#drawTools-btn-icon-exit{margin:6px 16px 0px 16px;width:5px;height:21px;background:#c2c2c2;-webkit-transform:skew(43deg);-moz-transform:skew(43deg);-o-transform:skew(43deg);transform:skew(43deg);}#drawTools-btn-icon-exit:before{width:5px;height:21px;background:#c2c2c2;-webkit-transform:skew(-62deg);-moz-transform:skew(-62deg);-o-transform:skew(-62deg);transform:skew(-62deg);content:'';display:block;}#drawTools-btn-icon-options{margin:5px 8px 0px 8px;width:30px;height:5px;background:#c2c2c2;border-radius:1px;}#drawTools-btn-icon-options:before{margin:8px 0px 0px 0px;width:30px;height:5px;background:#c2c2c2;border-radius:1px;content:'';display:block;position:absolute;}#drawTools-btn-icon-options:after{margin:16px 0px 0px 0px;width:30px;height:5px;background:#c2c2c2;border-radius:1px;content:'';display:block;position:absolute;}#drawTools-btn-icon-linechain{margin:8px 24px 0px 11px;width:3px;height:15px;background:black;border-radius:2px;-webkit-transform:rotate(-25deg);-moz-transform:rotate(-25deg);-o-transform:rotate(-25deg);transform:rotate(-25deg);}#drawTools-btn-icon-linechain:before{margin:5px 5px 2px 5px;width:3px;height:13px;background:black;border-radius:2px;content:'';display:block;position:absolute;-webkit-transform:rotate(65deg);-moz-transform:rotate(65deg);-o-transform:rotate(65deg);transform:rotate(65deg);}#drawTools-btn-icon-linechain:after{margin:8px 1px 0px 12px;width:3px;height:10px;background:black;border-radius:2px;content:'';display:block;position:absolute;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);}#drawTools-btn-icon-curve{margin:6px 15px 0px 11px;position: relative;width: 12px;height: 12px;-webkit-box-shadow:-0px 3px 0px 0px black;box-shadow:-0px 3px 0px 0px black;border-radius:100%;}#drawTools-btn-icon-curve:after{margin:10px 0px 0px 10px;position:relative;width:8px;height:10px;-webkit-box-shadow:0px -3px 0px 0px black;box-shadow:0px -3px 0px 0px black;border-radius:100%;content:'';display:block;position:absolute;}#drawTools-btn-icon-curve:before{margin:4px 0px 0px -1px;width:2px;height:9px;background:black;border-radius:2px;-webkit-transform:rotate(-30deg);-moz-transform:rotate(-30deg);-o-transform:rotate(-30deg);-ms-transform:rotate(-30deg);transform:rotate(-30deg);content:'';content:'';display:block;position:absolute;}#drawTools{position:relative;display:inline-block;vertical-align:middle;}#drawTools>.drawTools-btn{position:relative;float:left;display:inline-block;}#drawTools>.drawTools-btn:not(:first-child):not(:last-child):not(.dropdown-toggle){border-radius:0}#drawTools>.drawTools-btn:first-child{margin-left:0;}#drawTools>.drawTools-btn:first-child:not(:last-child):not(.dropdown-toggle){border-bottom-right-radius: 0;border-top-right-radius: 0;}#drawTools>.drawTools-btn:last-child:not(:first-child),#drawTools>.dropdown-toggle:not(:first-child){border-bottom-left-radius:0;border-top-left-radius:0;}.drawTools-btn{height:34px;border-radius:2px;margin-top:5px;}.drawTools-btn input{display:none;}.drawTools-btn-container{background-color:#fffb8d;border-bottom:1px solid #e5e17e;height:34px;padding:0px;margin:0px;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border-radius:inherit;border-top:1px solid transparent;}.drawTools-btn-container:focus	{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}.drawTools-btn-container:hover,.drawTools-btn:focus{background-color:#f6f166;border-bottom:1px solid #ddd85b;color:#333333;text-decoration:none;}.drawTools-btn-container:active,.drawTools-btn input:focus + div,.drawTools-btn input:checked + div{background-color:#f6f166;border-bottom:1px solid #f6f166;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.5);box-shadow:inset 0 3px 5px rgba(0,0,0,0.5);}.drawTools-btn-container.disabled,.drawTools-btn-container[disabled],fieldset[disabled] .drawTools-btn-container{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}#drawTools-btn-options .drawTools-btn-container{background:#252525;border-bottom:1px solid #171717;}#drawTools-btn-options .drawTools-btn-container:focus{outline:thin dotted #fff;}#drawTools-btn-options .drawTools-btn-container:hover,#drawTools-btn-options .drawTools-btn:focus{background-color:#2e2e2e;border-bottom:1px solid #222222;}#drawTools-btn-options .drawTools-btn-container:active{background-color:#252525;border-bottom:1px solid #252525;}#drawTools-btn-exit .drawTools-btn-container{background:#a50000;border-bottom:1px solid #7c0000;}#drawTools-btn-exit .drawTools-btn-container:focus{outline:thin dotted #fff;}#drawTools-btn-exit .drawTools-btn-container:hover,#drawTools-btn-exit .drawTools-btn:focus{background-color:#b90c0c;border-bottom:1px solid #980909;}#drawTools-btn-exit .drawTools-btn-container:active{background-color:#a50000;border-bottom:1px solid #a50000;}#drawTools-options{margin-top:"+a+"px;margin-left:"+b+"px;background:#252525;border-bottom:1px solid #171717;width:420px;height:0px;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}#drawTools-options-content{position:absolute;top:8px;left:8px;right:8px;bottom:8px;}#drawTools-options-leftPanel{width:160px;height:100%;position:absolute;left:0px;}#drawTools-options-leftPanel>.switch{display:block;margin-bottom:20px;}.switch{font:13px/20px 'Helvetica Neue',Helvetica,Arial,sans-serif;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;width:150px;height:26px;position:relative;display:inline-block;vertical-align:top;padding:3px;border-radius:2px;cursor:pointer;box-shadow:inset 0 -1px #525252,inset 0 1px 1px rgba(0,0,0,0.8);}.switch-input{position:absolute;top:0;left:0;opacity:0;}.switch-label{position:relative;display:block;height:inherit;font-size:12px;text-transform:uppercase;background:#7b0000;border-radius:inherit;box-shadow:inset 0 1px 2px rgba(0,0,0,0.12),inset 0 0 2px rgba(0,0,0,0.15);-webkit-transition:0.15s ease-out;-moz-transition:0.15s ease-out;-o-transition:0.15s ease-out;transition:0.15s ease-out;-webkit-transition-property:opacity background;-moz-transition-property:opacity background;-o-transition-property:opacity background;transition-property:opacity background;}.switch-label:before,.switch-label:after{position:absolute;top:50%;margin-top:-.5em;line-height:1;-webkit-transition:inherit;-moz-transition:inherit;-o-transition:inherit;transition:inherit;}.switch-label:before{content:attr(data-off);right:11px;color:white;text-shadow:0 1px rgba(0,0,0,0.2);}.switch-label:after{content:attr(data-on);left:11px;color:white;text-shadow:0 1px rgba(0,0,0,0.2);opacity:0;}.switch-input:checked ~ .switch-label {background:#117b00;box-shadow:inset 0 1px 2px rgba(0,0,0,0.15),inset 0 0 3px rgba(0,0,0,0.2);}.switch-input:checked~.switch-label:before{opacity:0;}.switch-input:checked~.switch-label:after{opacity: 1;}.switch-handle{position:absolute;top:4px;left:4px;width:24px;height:24px;background:#c2c2c2;border-radius:2px;box-shadow:1px 1px 5px rgba(0,0,0,0.2);background-image:-webkit-linear-gradient(top, #c2c2c2 40%, #a7a7a7);background-image:-moz-linear-gradient(top, #c2c2c2 40%, #a7a7a7);background-image:-o-linear-gradient(top, #c2c2c2 40%, #a7a7a7);background-image:linear-gradient(to bottom, #c2c2c2 40%, #a7a7a7);-webkit-transition:left 0.15s ease-out;-moz-transition:left 0.15s ease-out;-o-transition:left 0.15s ease-out;transition:left 0.15s ease-out;}.switch-input:checked~.switch-handle{left:128px;box-shadow:-1px 1px 5px rgba(0,0,0,0.2);}.switch-green>.switch-input:checked~.switch-label{background:#4fb845;}#drawTools-options-palette{width:240px;height:100%;position:absolute;right:0px;}#drawTools-options-palette label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}#drawTools-options-palette input{display:none;visibility:hidden;margin:0px;padding:0px;}#drawTools-options-palette input:checked + div{border:2px solid #c2c2c2;}#drawTools-options-palette div{width:40px;height:40px;border:2px solid #252525;margin=0;padding=0;line-height:2.428571429;}#drawTools-options-palette div:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}#drawTools-options-palette div:hover,#drawTools-options-palette div:focus,#drawTools-options-palette div:active{border:2px solid red;}.drawTools-buttonText,#drawTools-options-palette div{font-size:14px;font-weight:normal;text-align:center;vertical-align:middle;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}";
 	document.body.appendChild(d);
 }
   /*-----------------------------------------------------------------------------*/
  /*------------------------------- Event Handlers ------------------------------*/
 /*-----------------------------------------------------------------------------*/
-cleanTools.eventHandlers["mouseDown"] = function(e) {
-	var c = cleanTools;
+ct.eventHandlers["mouseDown"] = function(e) {
+	var c = ct;
 	var t = c.tools;
 	
 	if($('#drawTools-options').css('opacity') == 1){
@@ -586,8 +586,8 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 	} 
 }
 
-cleanTools.eventHandlers["mouseMove"] = function(e) {
-	var c = cleanTools;
+ct.eventHandlers["mouseMove"] = function(e) {
+	var c = ct;
 	var t = c.tools;
 	if(t.currentToolType === t.toolType.BRUSH)
 		return;	// default behaviors
@@ -648,8 +648,8 @@ cleanTools.eventHandlers["mouseMove"] = function(e) {
 	}
 }
 
-cleanTools.eventHandlers["mouseUp"] = function(e) {
-	var c = cleanTools;
+ct.eventHandlers["mouseUp"] = function(e) {
+	var c = ct;
 	var t = c.tools;
 	
 	if(0 && $('#drawTools-options').css('opacity') == 1){
@@ -735,8 +735,8 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 		t.reset(true);
 	}
 }
-cleanTools.eventHandlers["keyDown"] = function(e) {
-	var c = cleanTools;
+ct.eventHandlers["keyDown"] = function(e) {
+	var c = ct;
 	var t = c.tools;
 	if(e.keyCode == 16 ) { // If shift is pressed
 		c.shiftDown = 1;
@@ -791,8 +791,8 @@ cleanTools.eventHandlers["keyDown"] = function(e) {
 		//alert('Keycode for that key is: ' + e.keyCode);
 	}
 }
-cleanTools.eventHandlers["keyUp"] = function(e) {
-	var c = cleanTools;
+ct.eventHandlers["keyUp"] = function(e) {
+	var c = ct;
 	var t = c.tools;
 	if(e.keyCode == 16) { // If shift is released
 		c.shiftDown = 0;
@@ -827,49 +827,49 @@ cleanTools.eventHandlers["keyUp"] = function(e) {
  /*---------------------- Elements Creation/Manipulation -----------------------*/
 /*-----------------------------------------------------------------------------*/
 //Creates Tool Buttons (no innerHTML)
-cleanTools.html.init['createToolButton'] = function(type, name)
+ct.html.init['createToolButton'] = function(type, name)
 {
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
-	button.id = cleanTools.id + '-btn-' + name;
-	button.className = cleanTools.id + '-btn';
+	button.id = ct.id + '-btn-' + name;
+	button.className = ct.id + '-btn';
 	button.innerHTML = 
-		'<input id="' + cleanTools.id + '-btn-radio-' + name + '" name="' + cleanTools.id + '-btn-radio" type="radio">' +
-		'<div class="' + cleanTools.id + '-btn-container">' +
-			'<div id="' + cleanTools.id + '-btn-icon-' + name + '"></div>' +
+		'<input id="' + ct.id + '-btn-radio-' + name + '" name="' + ct.id + '-btn-radio" type="radio">' +
+		'<div class="' + ct.id + '-btn-container">' +
+			'<div id="' + ct.id + '-btn-icon-' + name + '"></div>' +
 		'</div>';
-	document.getElementById(cleanTools.id).appendChild(button);
+	document.getElementById(ct.id).appendChild(button);
 	
-	button.onclick = function(){cleanTools.html.buttonHandlers.setToolType(type);};
+	button.onclick = function(){ct.html.buttonHandlers.setToolType(type);};
 	return button;
 }
 //Creates Tool Buttons (with a label)
-cleanTools.html.init['createToolButtonWithLabel'] = function(type, name, label)
+ct.html.init['createToolButtonWithLabel'] = function(type, name, label)
 {
-	var button = cleanTools.html.init.createToolButton(type, name);
+	var button = ct.html.init.createToolButton(type, name);
 	button.getElementsByTagName('div')[0].innerHTML = label; // Place text inside it
 	return button;
 }
 //Creates Tool Buttons (no innerHTML)
-cleanTools.html.init['createUtilityButton'] = function(name)
+ct.html.init['createUtilityButton'] = function(name)
 {
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
 	var button = document.createElement('label');
-	button.id = cleanTools.id + '-btn-' + name;
-	button.className = cleanTools.id + '-btn';
+	button.id = ct.id + '-btn-' + name;
+	button.className = ct.id + '-btn';
 	button.innerHTML = 
-		'<div class="' + cleanTools.id + '-btn-container">' +
-			'<div id="' + cleanTools.id + '-btn-icon-' + name + '"></div>' +
+		'<div class="' + ct.id + '-btn-container">' +
+			'<div id="' + ct.id + '-btn-icon-' + name + '"></div>' +
 		'</div>';
-	document.getElementById(cleanTools.id).appendChild(button);
+	document.getElementById(ct.id).appendChild(button);
 	return button;
 }
 
-cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton)
+ct.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton)
 {
 	//Create DIV in which Options will be placed in
 	var optionsDiv = document.createElement('div');
-	optionsDiv.id = cleanTools.id + '-options';
+	optionsDiv.id = ct.id + '-options';
 	optionsDiv.innerHTML = 
 		'<div id="drawTools-options-content">' +
 			'<div id="drawTools-options-leftPanel"></div>' +
@@ -882,7 +882,7 @@ cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton
 	//----- BEGIN ----- LeftPanel --------------------------------------------------
 	var leftPanelHtml = "";
 	leftPanelHtml += 
-		'<label onclick=cleanTools.html.buttonHandlers.setLineToolsOpen(); class="switch">\
+		'<label onclick=ct.html.buttonHandlers.setLineToolsOpen(); class="switch">\
 			<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">\
 			<span class="switch-label" data-on="Loop Line Tools" data-off="Open Line Tools"></span>\
 			<span class="switch-handle"></span>\
@@ -893,21 +893,21 @@ cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton
 	var optionsPaletteHtml = "";
 	
 	optionsPaletteHtml += 
-		'<label onclick=cleanTools.html.buttonHandlers.setOptionsColor(""); style="width:120px;">' +
+		'<label onclick=ct.html.buttonHandlers.setOptionsColor(""); style="width:120px;">' +
 			'<input type="radio" name="drawTools-options-palette-radio" checked>' +
 			'<div style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div>' +
 		'</label>';
 	optionsPaletteHtml += 
-		'<label onclick=cleanTools.html.buttonHandlers.setOptionsColor("",1); style="width:120px;">' +
+		'<label onclick=ct.html.buttonHandlers.setOptionsColor("",1); style="width:120px;">' +
 			'<input type="radio" name="drawTools-options-palette-radio">' +
 			'<div style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div>' +
 		'</label>';
 	
 	for(var i=0;i<colorElements.length;i++) {
 		var color = colorElements[i].getAttribute("data-color");
-		cleanTools.dcPalette.push(color);
+		ct.dcPalette.push(color);
 		optionsPaletteHtml += 
-			'<label onclick=cleanTools.html.buttonHandlers.setOptionsColor("' + color + '");>' + //
+			'<label onclick=ct.html.buttonHandlers.setOptionsColor("' + color + '");>' + //
 				'<input type="radio" name="drawTools-options-palette-radio">' +
 				'<div style="background:' + color + ';"></div>' +
 			'</label>';
@@ -915,12 +915,12 @@ cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton
 	document.getElementById('drawTools-options-palette').innerHTML = optionsPaletteHtml;
 }
 // Destroys all elements, styling and javascript
-cleanTools.html['DTDestroy'] = function() 
+ct.html['DTDestroy'] = function() 
 {
 	// 1. Destroy HTML
-	document.getElementById(cleanTools.id).remove();
+	document.getElementById(ct.id).remove();
 	// 2. Destroy CSS
-	document.getElementById(cleanTools.id + 'StyleSheet').remove();
+	document.getElementById(ct.id + 'StyleSheet').remove();
 	// 3. Remove listeners
 	$(document).off('mousedown');
 	$(document).off('mousemove');
@@ -928,76 +928,72 @@ cleanTools.html['DTDestroy'] = function()
 	// 4. Set the state variable to reflect DTTools uninstallation
 	window.DTToolsIsCurrentlyInstalled = false;
 	// 5. Destroy JavaScript
-	delete cleanTools.canvas; // Delete all references to cleanTools
-	delete cleanTools.html;
-	delete cleanTools;
+	delete ct.canvas; // Delete all references to ct
+	delete ct.html;
+	delete ct;
 	document.getElementById('DTScript').remove();
 }
-cleanTools.html.init['setupCssAndHtml'] = function()
+ct.html.init['setupCssAndHtml'] = function()
 {	
-	cleanTools.canvas.updateLocation();
+	ct.canvas.updateLocation();
 	/*---- 1. Create Draw Tools Container - DIV in which DrawTools will be placed in ----*/
 	var drawToolsDiv = document.createElement('div');
-	drawToolsDiv.id = cleanTools.id;
-	cleanTools.dcToolbar.appendChild(drawToolsDiv);
+	drawToolsDiv.id = ct.id;
+	ct.dcToolbar.appendChild(drawToolsDiv);
 	
 	/*---- 2. Setup necessary CSS for DrawTools ----*/
-	cleanTools.html.init.setupCSS();
+	ct.html.init.setupCSS();
 	
 	/*---- 3. Make Necessary Modifications to Existing Elements ----*/
-	document.getElementById(cleanTools.dcBrushes[0].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[0].size);};
-	document.getElementById(cleanTools.dcBrushes[1].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[1].size);};
-	document.getElementById(cleanTools.dcBrushes[2].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[2].size);};
-	document.getElementById(cleanTools.dcBrushes[3].id).parentNode.onclick = function(){cleanTools.html.buttonHandlers.brushClick(cleanTools.dcBrushes[3].size);};
-	/*	// TODO:Figure this out. This doesn't work for some reason, so i hardcoded it.
-	for(var j=0;j<cleanTools.dcBrushes.length;j++)
-		document.getElementById(cleanTools.dcBrushes[j].id).parentNode.onclick = function(){selectBrushAUX(cleanTools.dcBrushes[j].size);};
-	*/
+	document.getElementById(ct.dcBrushes[0].id).parentNode.onclick = function(){ct.html.buttonHandlers.brushClick(ct.dcBrushes[0].size);};
+	document.getElementById(ct.dcBrushes[1].id).parentNode.onclick = function(){ct.html.buttonHandlers.brushClick(ct.dcBrushes[1].size);};
+	document.getElementById(ct.dcBrushes[2].id).parentNode.onclick = function(){ct.html.buttonHandlers.brushClick(ct.dcBrushes[2].size);};
+	document.getElementById(ct.dcBrushes[3].id).parentNode.onclick = function(){ct.html.buttonHandlers.brushClick(ct.dcBrushes[3].size);};
 	
 	/*---- 4. Create Draw Tools Elements and Interface ----*/
 	// Create Tool Buttons
-	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.FILL,"fill");
-	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.LINE,"line");
-	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.LINECHAIN,"linechain");
-	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.CURVE,"curve");
-	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.RECT,"rect");
-	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.ELLIPSE,"ellipse");
+	ct.html.init.createToolButton(ct.tools.toolType.FILL,"fill");
+	ct.html.init.createToolButton(ct.tools.toolType.LINE,"line");
+	ct.html.init.createToolButton(ct.tools.toolType.LINECHAIN,"linechain");
+	ct.html.init.createToolButton(ct.tools.toolType.CURVE,"curve");
+	ct.html.init.createToolButton(ct.tools.toolType.RECT,"rect");
+	ct.html.init.createToolButton(ct.tools.toolType.ELLIPSE,"ellipse");
 	
-	debugLabel = cleanTools.html.init.createToolButtonWithLabel(cleanTools.tools.toolType.UTIL,"label", '0');
+	debugLabel = ct.html.init.createToolButtonWithLabel(ct.tools.toolType.UTIL,"label", '0');
 	
-	var optionsButton = cleanTools.html.init.createUtilityButton("options");
-	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
+	var optionsButton = ct.html.init.createUtilityButton("options");
+	optionsButton.onclick = function(){ct.options.toggleMenu();};
 	
-	cleanTools.html.init.createOptionsMenu(drawToolsDiv, optionsButton);
+	ct.html.init.createOptionsMenu(drawToolsDiv, optionsButton);
 	
 	// Exitbutton to remove DrawTools
-	var exitButton = cleanTools.html.init.createUtilityButton("exit");
-	exitButton.onclick = function(){cleanTools.html.DTDestroy();};
+	var exitButton = ct.html.init.createUtilityButton("exit");
+	exitButton.onclick = function(){ct.html.DTDestroy();};
 }
 
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
 /*-----------------------------------------------------------------------------*/
 // Setup Some Global Variables
-cleanTools.context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
+ct.context.putImageData = CanvasRenderingContext2D.prototype.putImageData;
 
 // Setup Debug Stuff
 var debugLabel; //Go to createDrawToolsElements to find assignment
 function outputDebug(outputString){
 	debugLabel.getElementsByTagName('div')[0].innerHTML = outputString;
 }
-cleanTools.html.init.setupCssAndHtml();
+ct.html.init.setupCssAndHtml();
 
 // Setup Mousedown Listener
-cleanTools.Canvas.off('mousedown');
-cleanTools.Canvas.on('mousedown', cleanTools.eventHandlers.mouseDown);
+ct.Canvas.off('mousedown');
+ct.Canvas.on('mousedown', ct.eventHandlers.mouseDown);
 // Setup Mousemove Listener
 $(document).off('mousemove');
-$(document).on('mousemove', cleanTools.eventHandlers.mouseMove);
+$(document).on('mousemove', ct.eventHandlers.mouseMove);
 // Setup Mouseup Listener
 $(document).off('mouseup');
-$(document).on('mouseup', cleanTools.eventHandlers.mouseUp);
+$(document).on('mouseup', ct.eventHandlers.mouseUp);
 // Setup keyDown Listener
-$(document).keydown(cleanTools.eventHandlers.keyDown);
+$(document).keydown(ct.eventHandlers.keyDown);
 // Setup keyUp Listener
-$(document).keyup(cleanTools.eventHandlers.keyUp);
+$(document).keyup(ct.eventHandlers.keyUp);
