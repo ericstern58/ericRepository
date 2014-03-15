@@ -301,21 +301,9 @@ ct.t.paintMethods["drawLineChain"]=function (c,p,e,s,f){c.save();c.lineJoin="rou
 ct.t.paintMethods["drawSpline"] = function(c,p,t,cl,hx,em){
 	var cp=[];
 	var n=p.length;
-	var q = (cl) ? 1 : 0;
-	if(n == 0) {
-		return;
-	} else if(n == 4) {
-		// Draw Line
-		c.beginPath();
-		c.moveTo( p[0], p[1] );
-		c.lineTo( p[2], p[3]);
-		c.stroke();
-	}
-	if(q){
-		p.push(p[0],p[1],p[2],p[3]);
-		p.unshift(p[n-1]);
-		p.unshift(p[n-1]);
-	}
+	var q=(cl)?1:0;
+	if(n==0){return;} else if(n==4){c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(p[2],p[3]);c.stroke();}
+	if(q){p.push(p[0],p[1],p[2],p[3]);p.unshift(p[n-1]);p.unshift(p[n-1]);}
 	for(var i=0, m = (n-4+(4*q));i<m;i+=2){
 		var x0=p[i], y0=p[i+1], x1=p[i+2], y1=p[i+3], x2=p[i+4], y2=p[i+5];
 		var d01=Math.sqrt(Math.pow(x1-x0,2)+Math.pow(y1-y0,2));
@@ -328,13 +316,7 @@ ct.t.paintMethods["drawSpline"] = function(c,p,t,cl,hx,em){
 		var p2y=y1-fb*(y0-y2);
 		cp=cp.concat(p1x,p1y,p2x,p2y);
 	}
-	cp = (q) ? cp.concat(cp[0],cp[1]) : cp;
-	
-	c.save(); 
-	
-	c.beginPath();
-	c.lineJoin="round";
-	c.moveTo(p[2],p[3]);
+	cp=(q)?(cp.concat(cp[0],cp[1])):cp;c.save();c.beginPath();c.lineJoin="round";c.moveTo(p[2],p[3]);
 	for(var i=2;i<n;i+=2){c.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],p[i+2],p[i+3]);}
 	
 	if(q){if(em){c.stroke();c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);c.strokeStyle="rgba("+((z>>16)&255)+","+((z>>8)&255)+","+(z&255)+",0.5)";c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],p[n+2],p[n+3]);c.stroke();c.restore();}else{c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],p[n+2],p[n+3]);c.moveTo(p[0],p[1]);c.closePath();if(hx){c.fillStyle=hx;c.fill();}c.stroke();}}else{c.moveTo(p[0],p[1]);c.quadraticCurveTo(cp[0],cp[1],p[2],p[3]);c.moveTo(p[n-2],p[n-1]);c.quadraticCurveTo(cp[2*n-10],cp[2*n-9],p[n-4],p[n-3]);c.stroke();}
