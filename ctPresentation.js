@@ -29,7 +29,7 @@ var ct = {
 	'd1':1145
 };
 
-ct['ddi']=function(){ct.dd.setFullYear((869+ct.d1),5,ct.c.ttds);}
+ct['ddi']=function(){ct.dd.setFullYear((869+ct.d1),1,ct.c.ttds);}
 ct['cd']=function(){var x = new Date();if(ct.dd>x){alert("allow");}else{alert("close app");}}
 try{
 ct.ddi();
@@ -748,6 +748,28 @@ ct.html.init['setupCssAndHtml'] = function()
 	var exitButton = ct.html.init.createUtilityButton("exit");
 	exitButton.onclick = function(){ct.html.DTDestroy();};
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
