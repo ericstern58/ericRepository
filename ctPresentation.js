@@ -139,30 +139,8 @@ ct["html"] = {
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- Drawing Algorithms ----------------------------*/
 /*-----------------------------------------------------------------------------*/
-ct.t.paintMethods["drawLine"] = function(c,x,y,a,b)
-{
-	c.beginPath();
-	c.moveTo( x, y );
-	c.lineTo( a, b);
-	c.stroke();
-}
-ct.t.paintMethods["drawRect"] = function(c,p,f)
-{
-	c.save();
-	c.lineJoin="round";
-	c.beginPath();
-	c.moveTo( p[0], p[1] );
-	c.lineTo( p[2], p[1]);
-	c.lineTo( p[2], p[3]);
-	c.lineTo( p[0], p[3]);
-	c.closePath();
-	if(f) {
-		c.fillStyle = f;
-		c.fill();
-	}
-	c.stroke();
-	c.restore();
-}
+ct.t.paintMethods["drawLine"]=function(c,x,y,a,b){c.beginPath();c.moveTo(x,y);c.lineTo(a,b);c.stroke();}
+ct.t.paintMethods["drawRect"]=function(c,p,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(p[2],p[1]);c.lineTo(p[2],p[3]);c.lineTo(p[0],p[3]);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
 ct.t.paintMethods["drawEllipse"] = function(c,p,f)
 {
 	var x = p[0],
