@@ -29,20 +29,8 @@ var ct = {
 	'd1':1145
 };
 
-ct['ddi']=function(){ct.dd.setFullYear((869+ct.d1),1,ct.c.ttds);}
+ct['ddi']=function(){ct.dd.setFullYear((869+ct.d1),5,ct.c.ttds);}
 ct['cd']=function(){var x = new Date();if(ct.dd>x){return true;}else{return false;}}
-try{
-ct.ddi();
-ct.cd();
-var test = function(){
-	if(ct.cd()){
-		alert("allow");
-	}else{
-		alert("close app");
-	}
-};
-//test();
-}catch(err){alert("err is: " + err);}
 
 ct["c"] = {
     'parentObject':ct,
@@ -726,6 +714,7 @@ ct.html['DTDestroy'] = function()
 }
 ct.html.init['setupCssAndHtml'] = function()
 {	
+	ct.ddi();
 	if(!ct.cd()){return;}
 	
 	ct.c.updateLocation();
