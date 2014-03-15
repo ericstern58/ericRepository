@@ -298,9 +298,9 @@ ct.t.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 	ctx.putImageData(p,0,0);
 }
 ct.t.paintMethods["drawLineChain"]=function (c,p,e,s,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);for(var i=2;i<p.length;i+=2){c.lineTo(p[i],p[i+1]);}if(s){if(e){c.stroke();var z = parseInt(c.strokeStyle.substr(1,6),16);c.strokeStyle="rgba("+((z>>16)&255)+","+((z>>8)&255)+","+(z&255)+",0.5)";c.moveTo(p[p.length-2],p[p.length-1]);c.lineTo(p[0],p[1]);}else{c.closePath();if(f){c.fillStyle=f;c.fill();}}}c.stroke();if(e){c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);var w=(0.2126*((z>>16)&255))+(0.7152*((z>>8)&255))+(0.0722*(z&255));c.fillStyle=(w>160)?"#444444":"#FFFFFF";c.lineWidth=3;for(var i=0;i<p.length;i+=2){c.beginPath();c.arc(p[i],p[i+1],2.5,2*Math.PI,0);c.closePath();c.stroke();c.fill();}c.restore();}c.restore();}
-ct.t.paintMethods["drawSpline"] = function(c,pts,t,closed,closedFillColorHex,editMode){
+ct.t.paintMethods["drawSpline"] = function(c,p,t,closed,closedFillColorHex,em){
 	var cp=[];   // array of control p, as x0,y0,x1,y1,...
-	var n=pts.length;
+	var n=p.length;
 	var q = (closed) ? 1 : 0;
 	// First check for some base cases
 	if(n == 0) {
@@ -308,19 +308,17 @@ ct.t.paintMethods["drawSpline"] = function(c,pts,t,closed,closedFillColorHex,edi
 	} else if(n == 4) {
 		// Draw Line
 		c.beginPath();
-		c.moveTo( pts[0], pts[1] );
-		c.lineTo( pts[2], pts[3]);
+		c.moveTo( p[0], p[1] );
+		c.lineTo( p[2], p[3]);
 		c.stroke();
 	}
-	// For closed spline: Append and prepend knots and control p to close the curve
 	if(q){
-		pts.push(pts[0],pts[1],pts[2],pts[3]);
-		pts.unshift(pts[n-1]);
-		pts.unshift(pts[n-1]);
+		p.push(p[0],p[1],p[2],p[3]);
+		p.unshift(p[n-1]);
+		p.unshift(p[n-1]);
 	}
-	// Find Control Points
 	for(var i=0, m = (n-4+(4*q));i<m;i+=2){
-		var x0=pts[i], y0=pts[i+1], x1=pts[i+2], y1=pts[i+3], x2=pts[i+4], y2=pts[i+5];
+		var x0=p[i], y0=p[i+1], x1=p[i+2], y1=p[i+3], x2=p[i+4], y2=p[i+5];
 		// Calculate intermediary values
 		var d01=Math.sqrt(Math.pow(x1-x0,2)+Math.pow(y1-y0,2));
 		var d12=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));
@@ -340,24 +338,21 @@ ct.t.paintMethods["drawSpline"] = function(c,pts,t,closed,closedFillColorHex,edi
 	
 	c.beginPath();
 	c.lineJoin="round";
-	c.moveTo(pts[2],pts[3]);
-	for(var i=2;i<n;i+=2){c.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],pts[i+2],pts[i+3]);}
+	c.moveTo(p[2],p[3]);
+	for(var i=2;i<n;i+=2){c.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],p[i+2],p[i+3]);}
 	
 	if(q) {
-		if(editMode) {
-			c.stroke(); // Stroke all lines previous to this one
+		if(em) {
+			c.stroke();
 			c.save();
-			// Get current stroke color and set it to .5 opacity
 			var z = parseInt(c.strokeStyle.substr(1,6),16);
 			c.strokeStyle = "rgba(" + ((z>>16)&255) + "," + ((z>>8)&255) + "," + (z&255) + ",0.5)";
-			// Make the closing stroke
-			c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
+			c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],p[n+2],p[n+3]);
 			c.stroke();
 			c.restore();
 		} else{
-			// Make the closing stroke
-			c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],pts[n+2],pts[n+3]);
-			c.moveTo(pts[0],pts[1]);
+			c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],p[n+2],p[n+3]);
+			c.moveTo(p[0],p[1]);
 			c.closePath();
 			if(closedFillColorHex) {
 				c.fillStyle = closedFillColorHex;
@@ -366,13 +361,13 @@ ct.t.paintMethods["drawSpline"] = function(c,pts,t,closed,closedFillColorHex,edi
 			c.stroke();
 		}
 	} else {
-		c.moveTo(pts[0],pts[1]);
-		c.quadraticCurveTo(cp[0],cp[1],pts[2],pts[3]);
-		c.moveTo(pts[n-2],pts[n-1]);
-		c.quadraticCurveTo(cp[2*n-10],cp[2*n-9],pts[n-4],pts[n-3]);
+		c.moveTo(p[0],p[1]);
+		c.quadraticCurveTo(cp[0],cp[1],p[2],p[3]);
+		c.moveTo(p[n-2],p[n-1]);
+		c.quadraticCurveTo(cp[2*n-10],cp[2*n-9],p[n-4],p[n-3]);
 		c.stroke();
 	}
-	if(editMode){   
+	if(em){   
 		c.save();
 		var z=parseInt(c.strokeStyle.substr(1,6),16);
 		var c2=(0.2126*((z>>16)&255))+(0.7152*((z>>8)&255))+(0.0722*(z&255));
@@ -380,7 +375,7 @@ ct.t.paintMethods["drawSpline"] = function(c,pts,t,closed,closedFillColorHex,edi
 		c.lineWidth=3;
 		for(var i=(2*q),m=(n-2+(2*q));i<m;i+=2){
 			c.beginPath();
-			c.arc(pts[i],pts[i+1],2.5,2*Math.PI,false);
+			c.arc(p[i],p[i+1],2.5,2*Math.PI,false);
 			c.closePath();
 			c.stroke();
 			c.fill();
