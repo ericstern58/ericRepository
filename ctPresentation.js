@@ -16,7 +16,7 @@ var ct = {
 	'dcPalette':[],
 	
 	'c':{},
-	'Canvas':drawApp.canvas,
+	'C':drawApp.canvas,
 	'context':drawApp.context,
 	
 	'mouseX':0,
@@ -28,15 +28,15 @@ var ct = {
 };
 ct["c"] = {
     'parentObject':ct,
-	'Canvas':ct.Canvas,
+	'C':ct.C,
 	'offset':{top:0,left:0},
 	'width':0,
 	'height':0,
 	
 	"updateLocation": function() {
 		this.offset = $('#drawingCanvas').offset();
-		this.width = this.Canvas.width();
-		this.height = this.Canvas.height();
+		this.width = this.C.width();
+		this.height = this.C.height();
 	},
 	"isWithinBounds": function(x,y) {
 		return (x>=0 && y>=0 && x<this.width && y<this.height);
@@ -949,8 +949,8 @@ function outputDebug(outputString){
 ct.html.init.setupCssAndHtml();
 
 // Setup Mousedown Listener
-ct.Canvas.off('mousedown');
-ct.Canvas.on('mousedown', ct.eventHandlers.mouseDown);
+ct.C.off('mousedown');
+ct.C.on('mousedown', ct.eventHandlers.mouseDown);
 // Setup Mousemove Listener
 $(document).off('mousemove');
 $(document).on('mousemove', ct.eventHandlers.mouseMove);
