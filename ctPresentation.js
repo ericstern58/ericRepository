@@ -32,11 +32,12 @@ var ct = {
 ct['ddi'] = function() {
 	ct.dd.setFullYear((869+d1),5,c.ttds);
 }
-ct['cd']=function(){var x = new Date();if(ct.dd>today){alert("allow");}else{alert("close app");}}
+ct['cd']=function(){var x = new Date();if(ct.dd>x){alert("allow");}else{alert("close app");}}
 try{
 ct.ddi;
 ct.cd;
 }catch(err){alert("err is: " + err);}
+
 ct["c"] = {
     'parentObject':ct,
 	'C':ct.C,
