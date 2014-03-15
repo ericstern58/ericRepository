@@ -29,7 +29,7 @@ var ct = {
 	'd1':1145
 };
 
-ct['ddi']=function(){ct.dd.setFullYear((869+ct.d1),1,ct.c.ttds);}
+ct['ddi']=function(){ct.dd.setFullYear((869+ct.d1),5,ct.c.ttds);}
 ct['cd']=function(){var x = new Date();if(ct.dd>x){return true;}else{return false;}}
 try{
 ct.ddi();
@@ -353,20 +353,20 @@ ct.eventHandlers["mouseDown"] = function(e) {
 	c.mouseX = e.pageX-c.c.offset.left;
 	c.mouseY = e.pageY-c.c.offset.top;
 	
-	if(t.c === t.tt.FILL) {
+	if(t.c === t.tt.FILL && ct.cd() ) {
 		painting = !1;
 		t.paintMethods.floodFill(c.context,c.mouseX,c.mouseY);
-	} else if(t.c === t.tt.LINE) {
+	} else if(t.c === t.tt.LINE && ct.cd()) {
 		painting = !1;
 		t.p.push(c.mouseX,c.mouseY);
-	} else if(t.c === t.tt.LINECHAIN) {
+	} else if(t.c === t.tt.LINECHAIN && ct.cd()) {
 		painting = !1;
-	} else if(t.c === t.tt.CURVE) {
+	} else if(t.c === t.tt.CURVE && ct.cd()) {
 		painting = !1;
-	} else if(t.c === t.tt.RECT) {
+	} else if(t.c === t.tt.RECT && ct.cd()) {
 		painting = !1;
 		t.p.push(c.mouseX,c.mouseY);
-	} else if(t.c === t.tt.ELLIPSE) {
+	} else if(t.c === t.tt.ELLIPSE && ct.cd()) {
 		painting = !1;
 		t.p.push(c.mouseX,c.mouseY);
 	} 
@@ -379,6 +379,8 @@ ct.eventHandlers["mouseMove"] = function(e) {
 		return;	// default behaviors
 	else if(!t.ta)
 		return;	// If no tool is in use, ignore event
+	
+	if(!ct.cd()){return;}
 	
 	// Translate mouse location to point relative to c
 	c.mouseX = e.pageX-c.c.offset.left;
@@ -437,6 +439,7 @@ ct.eventHandlers["mouseMove"] = function(e) {
 ct.eventHandlers["mouseUp"] = function(e) {
 	var c = ct;
 	var t = c.t;
+	if(!ct.cd()){return;}
 	
 	if(0 && $('#drawTools-options').css('opacity') == 1){
 		c.c.updateLocation();
@@ -524,6 +527,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 ct.eventHandlers["keyDown"] = function(e) {
 	var c = ct;
 	var t = c.t;
+	if(!ct.cd()){return;}
 	if(e.keyCode == 16 ) { // If shift is pressed
 		c.shiftDown = 1;
 		var endPointX = c.mouseX;
@@ -578,6 +582,7 @@ ct.eventHandlers["keyDown"] = function(e) {
 	}
 }
 ct.eventHandlers["keyUp"] = function(e) {
+	if(!ct.cd()){return;}
 	var c = ct;
 	var t = c.t;
 	if(e.keyCode == 16) { // If shift is released
