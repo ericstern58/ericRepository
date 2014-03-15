@@ -61,40 +61,40 @@ ct["t"] = {
 			save();
 	},
 	'paintMethods':{},
-	'squareShiftHold':function(startX,startY,endX,endY) {
-		var endPointX, endPointY;
-		var width = endX - startX;
-		var height = endY - startY;
-		var valueToUse = Math.min(Math.abs(width),Math.abs(height));
-		if(width > 0) {
-			if(height > 0) { // Bottom Right
-				endPointX = startX + valueToUse; 
-				endPointY = startY + valueToUse;
+	'squareShiftHold':function(x,y,a,b) {
+		var f, g;
+		var d = a - x;
+		var e = b - y;
+		var q = Math.min(Math.abs(d),Math.abs(e));
+		if(d > 0) {
+			if(e > 0) { // Bottom Right
+				f = x + q; 
+				g = y + q;
 			} else { // Top Right
-				endPointX = startX + valueToUse; 
-				endPointY = startY - valueToUse;
+				f = x + q; 
+				g = y - q;
 			}
 		} else {
-			if(height > 0) { // Bottom Left
-				endPointX = startX - valueToUse; 
-				endPointY = startY + valueToUse;
+			if(e > 0) { // Bottom Left
+				f = x - q; 
+				g = y + q;
 			} else { // Top Left
-				endPointX = startX - valueToUse; 
-				endPointY = startY - valueToUse;
+				f = x - q; 
+				g = y - q;
 			}
 		}
-		return {x: endPointX, y:endPointY};
+		return {x: f, y:g};
 	},
-	'lineShiftHold':function(startX,startY,endX,endY) {
-		var rise = startY - endY;
-		var run = (startX - endX) ? (startX - endX): 1;
-		var slope = rise/run;
-		if( slope > 2.4 || slope < -2.4 ) { // Up-Down
-			return {x:startX, y:endY};
-		} else if( slope < 0.4 && slope > -0.4 ) { // Left-Right
-			return {x:endX, y:startY};
+	'lineShiftHold':function(x,y,a,b) {
+		var d = y - b;
+		var e = (x - a) ? (x - a): 1;
+		var f = d/e;
+		if( f > 2.4 || f < -2.4 ) { // Up-Down
+			return {x:x, y:b};
+		} else if( f < 0.4 && f > -0.4 ) { // Left-Right
+			return {x:a, y:y};
 		} else {
-			return this.squareShiftHold(startX,startY,endX,endY);
+			return this.squareShiftHold(x,y,a,b);
 		}
 	}
 };
