@@ -297,16 +297,10 @@ ct.t.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 	}
 	ctx.putImageData(p,0,0);
 }
-ct.t.paintMethods["drawLineChain"] = function (c,p,e,s,f)
-{
-	c.save();
-	c.lineJoin="round";
-	c.beginPath();
-	c.moveTo( p[0], p[1] );
-	for(var i=2;i<p.length;i+=2)
-		c.lineTo( p[i], p[i+1] );
-	if(s) {
-		if(e) {
+ct.t.paintMethods["drawLineChain"]=function (c,p,e,s,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);
+	for(var i=2;i<p.length;i+=2){c.lineTo(p[i],p[i+1]);}
+	if(s){
+		if(e){
 			c.stroke(); // Stroke all lines previous to this one
 			// Get current stroke color and set it to .5 opacity
 			var z = parseInt(c.strokeStyle.substr(1,6),16);
@@ -330,18 +324,7 @@ ct.t.paintMethods["drawLineChain"] = function (c,p,e,s,f)
 		var z = parseInt(c.strokeStyle.substr(1,6),16); // Get current stroke color
 		var w = (0.2126*((z>>16)&255)) + (0.7152*((z>>8)&255)) + (0.0722*(z&255)); // Get its 'lightness' level
 		c.fillStyle = (w > 160) ? "#444444" : "#FFFFFF"; // If (colorIsLight) ? darkGray : white;
-		c.lineWidth=3;
-		for(var i=0;i<p.length;i+=2){
-			c.beginPath();
-			c.arc(p[i],p[i+1],2.5,2*Math.PI,0);
-			c.closePath();
-			c.stroke();
-			c.fill();
-		}
-		c.restore();
-	}
-	c.restore();
-}
+		c.lineWidth=3;for(var i=0;i<p.length;i+=2){c.beginPath();c.arc(p[i],p[i+1],2.5,2*Math.PI,0);c.closePath();c.stroke();c.fill();}c.restore();}c.restore();}
 ct.t.paintMethods["drawSpline"] = function(ctx,pts,t,closed,closedFillColorHex,editMode){
 	var cp=[];   // array of control p, as x0,y0,x1,y1,...
 	var n=pts.length;
