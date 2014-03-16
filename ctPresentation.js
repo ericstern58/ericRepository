@@ -185,44 +185,24 @@ ct.t.pm["ff"] = function(ctx,nb,mb){
 		x = line[0];
 		y = line[1];
 		drc = line[2];
-		if(ts(x,y)) {	// If pixel hasn't been colored continue.
-			// Check next pixel in "drc" side is eligible to be seed pixel for next line.
-			if(ts(x,y+drc))
-				sag.push([x,y+drc,drc]);
-			
-			// Before scanning line, find wether or not to add edge pixels from seed point
-			if(tsep(x,y+drc,y))
-				ear.push(x,y+drc);
-			if(tsep(x,y-drc,y))
-				ear.push(x,y-drc);
-			
-			var range = [0,0];
-			for(var j = 0; j < 2; j++) { // Iterates through left/right line sides
-				var incr = (j) ? 1 : -1 ;
+		if(ts(x,y)){
+			if(ts(x,y+drc)){sag.push([x,y+drc,drc]);}
+			if(tsep(x,y+drc,y)){ear.push(x,y+drc);}
+			if(tsep(x,y-drc,y)){ear.push(x,y-drc);}
+			var rge = [0,0];
+			for(var j=0;j<2;j++){
+				var incr=(j)?1:-1;
 				var i;
-				for(i = x+incr; ts(i,y); i+=incr) { // While pixel line meets continues to meet its target color
-					// Setup Bools
-					var topFillable = ts(i,y+drc);
-					var bottomFillable = ts(i,y-drc);
-					var topLeftUnfillable = (!ts(i-incr,y+drc));
-					var bottomLeftUnfillable = (!ts(i-incr,y-drc));
-					
-					if(topFillable && topLeftUnfillable) // Find when to add a new seed(top)
-						sag.push([i,y+drc,drc]);
-					else if(tsep(i,y+drc,y)) // Find Wether or not to add edge pixels
-						ear.push(i,y+drc);
-						
-					if(bottomFillable && bottomLeftUnfillable) // Find when to add a new seed(bottom)
-						sag.push([i,y-drc,-drc]);
-					else if(tsep(i,y-drc,y)) // Find Wether or not to add edge pixels
-						ear.push(i,y-drc);
-				}
-				if(ct.c.iwb(i,y))
-					ear.push(i,y);
-				range[j] = i-incr; // Save max fill pixel
-				
+				for(i=x+incr;ts(i,y);i+=incr){
+					var topFillable=ts(i,y+drc);
+					var bottomFillable=ts(i,y-drc);
+					var topLeftUnfillable=(!ts(i-incr,y+drc));
+					var bottomLeftUnfillable=(!ts(i-incr,y-drc));
+					if(topFillable && topLeftUnfillable){sag.push([i,y+drc,drc]);}else if(tsep(i,y+drc,y)){ear.push(i,y+drc);}
+					if(bottomFillable && bottomLeftUnfillable){sag.push([i,y-drc,-drc]);}else if(tsep(i,y-drc,y)){ear.push(i,y-drc);}
+				}if(ct.c.iwb(i,y)){ear.push(i,y);}rge[j]=i-incr;
 			}
-			pt(range[0],range[1],y,fc);
+			pt(rge[0],rge[1],y,fc);
 		}
 	}
 	// This loop colors edge pixels and softens them with anti-aliasing
