@@ -149,10 +149,10 @@ ct["html"] = {
 ct.t.paintMethods["dl"]=function(c,x,y,a,b){c.beginPath();c.moveTo(x,y);c.lineTo(a,b);c.stroke();}
 ct.t.paintMethods["dr"]=function(c,p,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(p[2],p[1]);c.lineTo(p[2],p[3]);c.lineTo(p[0],p[3]);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
 ct.t.paintMethods["de"] = function(c,p,f){var x=p[0],y=p[1],w=p[2]-p[0],h=p[3]-p[1],k=.5522848,a=(w/2)*k,b=(h/2)*k,d=x+w,e=y+h,g=x+w/2,i=y+h/2;c.save();c.lineJoin="round";c.beginPath();c.moveTo(x,i);c.bezierCurveTo(x,i-b,g-a,y,g,y);c.bezierCurveTo(g+a,y,d,i-b,d,i);c.bezierCurveTo(d,i+b,g+a,e,g,e);c.bezierCurveTo(g-a,e,x,i+b,x,i);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
-ct.t.paintMethods["ff"] = function(dq,rs,jd){
+ct.t.paintMethods["ff"] = function(dq,xSeed,ySeed){
 	// Round seed coords in case they happen to be float type
-	rs = Math.round( rs );
-	jd = Math.round( jd );
+	xSeed = Math.round( xSeed );
+	ySeed = Math.round( ySeed );
 	/*---------------------- Setup Procedure Variables ----------------------*/
 	// This c.restore() fix avoids issues with brush placing dot over flood fill seed area
 	ct.c.restore();
@@ -161,7 +161,7 @@ ct.t.paintMethods["ff"] = function(dq,rs,jd){
 	var h = ct.c.height;
 	var p = dq.getImageData(0,0,w,h);
 	var d = p.data;
-	var tci = (rs+jd*ct.c.width)*4;
+	var tci = (xSeed+ySeed*ct.c.width)*4;
 	var tcl = [d[tci],d[tci+1],d[tci+2],d[tci+3]];
 	var c = parseInt(dq.strokeStyle.substr(1,6),16);
 	var fc = [(c>>16)&255,(c>>8)&255,c&255,255];
@@ -202,7 +202,7 @@ ct.t.paintMethods["ff"] = function(dq,rs,jd){
 			d[i+3]=a;
 		}
 	}
-	var pl = function(x,y) {
+	var test = function(x,y) {
 		return (ct.c.iwb(x,y) && cc(tcl,gcfc(x,y)));
 	}
 	var tep = function(x,y,o) {
@@ -232,64 +232,64 @@ ct.t.paintMethods["ff"] = function(dq,rs,jd){
 	
 	/*---------------------- Algorithm Begin ----------------------*/
 	//[x,y,goingUp(1 vs -1)
-	var sk = [[rs,jd,1]];
-	if(pl(rs,jd-1))
-		sk.push([rs,jd-1,-1]);
-	var ea = [];
+	var stack = [[xSeed,ySeed,1]];
+	if(test(xSeed,ySeed-1))
+		stack.push([xSeed,ySeed-1,-1]);
+	var edgeArray = [];
 	
 	var x = 0;
 	var y = 0;
-	var dn = 0;
+	var direction = 0;
 	
-	while(sk.length>0) {
-		var line = sk.pop();
+	while(stack.length>0) {
+		var line = stack.pop();
 		x = line[0];
 		y = line[1];
-		dn = line[2];
-		if(pl(x,y)) {	// If pixel hasn't been colored continue.
-			// Check next pixel in "dn" side is eligible to be seed pixel for next line.
-			if(pl(x,y+dn))
-				sk.push([x,y+dn,dn]);
+		direction = line[2];
+		if(test(x,y)) {	// If pixel hasn't been colored continue.
+			// Check next pixel in "direction" side is eligible to be seed pixel for next line.
+			if(test(x,y+direction))
+				stack.push([x,y+direction,direction]);
 			
 			// Before scanning line, find wether or not to add edge pixels from seed point
-			if(tep(x,y+dn,y))
-				ea.push(x,y+dn);
-			if(tep(x,y-dn,y))
-				ea.push(x,y-dn);
+			if(tep(x,y+direction,y))
+				edgeArray.push(x,y+direction);
+			if(tep(x,y-direction,y))
+				edgeArray.push(x,y-direction);
 			
-			var rg = [0,0];
+			var range = [0,0];
 			for(var j = 0; j < 2; j++) { // Iterates through left/right line sides
-				var ir = (j) ? 1 : -1 ;
+				var incr = (j) ? 1 : -1 ;
 				var i;
-				for(i = x+ir; pl(i,y); i+=ir) { // While pixel line meets continues to meet its target color
+				for(i = x+incr; test(i,y); i+=incr) { // While pixel line meets continues to meet its target color
 					// Setup Bools
-					var topFillable = pl(i,y+dn);
-					var bottomFillable = pl(i,y-dn);
-					var topLeftUnfillable = (!pl(i-ir,y+dn));
-					var bottomLeftUnfillable = (!pl(i-ir,y-dn));
+					var topFillable = test(i,y+direction);
+					var bottomFillable = test(i,y-direction);
+					var topLeftUnfillable = (!test(i-incr,y+direction));
+					var bottomLeftUnfillable = (!test(i-incr,y-direction));
 					
 					if(topFillable && topLeftUnfillable) // Find when to add a new seed(top)
-						sk.push([i,y+dn,dn]);
-					else if(tep(i,y+dn,y)) // Find Wether or not to add edge pixels
-						ea.push(i,y+dn);
+						stack.push([i,y+direction,direction]);
+					else if(tep(i,y+direction,y)) // Find Wether or not to add edge pixels
+						edgeArray.push(i,y+direction);
 						
 					if(bottomFillable && bottomLeftUnfillable) // Find when to add a new seed(bottom)
-						sk.push([i,y-dn,-dn]);
-					else if(tep(i,y-dn,y)) // Find Wether or not to add edge pixels
-						ea.push(i,y-dn);
+						stack.push([i,y-direction,-direction]);
+					else if(tep(i,y-direction,y)) // Find Wether or not to add edge pixels
+						edgeArray.push(i,y-direction);
 				}
 				if(ct.c.iwb(i,y))
-					ea.push(i,y);
-				rg[j] = i-ir; // Save max fill pixel
+					edgeArray.push(i,y);
+				range[j] = i-incr; // Save max fill pixel
 				
 			}
-			paint(rg[0],rg[1],y,fc);
+			paint(range[0],range[1],y,fc);
 		}
 	}
 	// This loop colors edge pixels and softens them with anti-aliasing
-	while(ea.length>0) {
-		x=ea.shift();
-		y=ea.shift();
+	while(edgeArray.length>0) {
+		x=edgeArray.shift();
+		y=edgeArray.shift();
 		
 		cp(x,y,fc);
 		
