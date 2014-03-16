@@ -40,7 +40,7 @@ ct["c"] = {
 	'width':0,
 	'height':0,
 	
-	"updateLocation": function() {
+	"ul": function() {
 		this.offset = $('#drawingCanvas').offset();
 		this.width = this.C.width();
 		this.height = this.C.height();
@@ -61,39 +61,39 @@ ct["t"] = {
 	'p':[], 
 	
 	'tt':{BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99},
-	'reset':function(saveCanvas){
+	'rs':function(saveCanvas){
 		this.p.length=0;
 		this.ta=false;
 		if(saveCanvas){save();}
 	},
-	'paintMethods':{},
+	'pm':{},
 	'ss':function(x,y,a,b){var f,g,d=a-x,e=b-y;var q=Math.min(Math.abs(d),Math.abs(e));if(d>0){if(e>0){f=x+q;g=y+q;}else{f=x+q;g=y-q;}}else{if(e>0){f=x-q;g=y+q;}else{f=x-q;g=y-q;}}return {x:f,y:g};},
 	'ls':function(x,y,a,b){var d=y-b;var e=(x-a)?(x-a):1;var f=d/e;if(f>2.4||f<-2.4){return {x:x,y:b};}else if(f<0.4&&f>-0.4){return {x:a,y:y};}else{return this.ss(x,y,a,b);}}
 };
 ct["options"] = {
 	'id':'#' + ct.id + '-options',
 	
-	'useStrokeAsFill':false,
+	'usaf':false,
 	'fc':'', 
 	
-	'lineToolsShouldClose':false,
+	'ltsc':false,
 	
-	'curveTension':0.5,
+	'cut':0.5,
 	
 	'getOffset':function () {
 		return $(this.id).offset();
 	},
-	'toggleMenu':function () {
+	'tm':function () {
 		var h = 175;
-		var opacity = $(this.id).css('opacity');
+		var op = $(this.id).css('opacity');
 		
-		if(opacity == 0) {
+		if(op == 0) {
 			$(this.id).stop(true, true).animate({
 				height: (h + "px"),
 				marginTop: ("-=" + h + "px"),
 				opacity: "1"
 			},200, "swing");
-		} else if(opacity == 1) {
+		} else if(op == 1) {
 			$(this.id).stop(true, true).animate({
 				height: "0px",
 				marginTop: ("+=" + h + "px"),
@@ -115,7 +115,7 @@ ct["html"] = {
 	
 	'init':{}, // HTML initialization methods will be placed here
 	
-	'buttonHandlers':{
+	'bh':{
 		'cto':ct,
 		'bc':function(brushSize) {
 			drawApp.setSize(brushSize);				// Set default brush size
@@ -126,19 +126,19 @@ ct["html"] = {
 			for(var i=0;i<ele.length;i++)
 				ele[i].checked = false;
 		},
-		'setLineToolsOpen':function() {
-			this.cto.options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
+		'slto':function() {
+			this.cto.options.ltsc = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
 		},
-		'setOptionsColor':function(color,normalfill) {
+		'soc':function(color,normalfill) {
 			if(normalfill) {
-				this.cto.options.useStrokeAsFill = true;
+				this.cto.options.usaf = true;
 				this.cto.options.fc = '';
 			} else {
-				this.cto.options.useStrokeAsFill = false;
+				this.cto.options.usaf = false;
 				this.cto.options.fc = color;
 			}
 		},
-		'setToolType':function(type) {
+		'stt':function(type) {
 			this.cto.t.c=type;
 		}
 	}
@@ -146,10 +146,10 @@ ct["html"] = {
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- Drawing Algorithms ----------------------------*/
 /*-----------------------------------------------------------------------------*/
-ct.t.paintMethods["dl"]=function(c,x,y,a,b){c.beginPath();c.moveTo(x,y);c.lineTo(a,b);c.stroke();}
-ct.t.paintMethods["dr"]=function(c,p,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(p[2],p[1]);c.lineTo(p[2],p[3]);c.lineTo(p[0],p[3]);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
-ct.t.paintMethods["de"] = function(c,p,f){var x=p[0],y=p[1],w=p[2]-p[0],h=p[3]-p[1],k=.5522848,a=(w/2)*k,b=(h/2)*k,d=x+w,e=y+h,g=x+w/2,i=y+h/2;c.save();c.lineJoin="round";c.beginPath();c.moveTo(x,i);c.bezierCurveTo(x,i-b,g-a,y,g,y);c.bezierCurveTo(g+a,y,d,i-b,d,i);c.bezierCurveTo(d,i+b,g+a,e,g,e);c.bezierCurveTo(g-a,e,x,i+b,x,i);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
-ct.t.paintMethods["ff"] = function(ctx,xSeed,ySeed){
+ct.t.pm["dl"]=function(c,x,y,a,b){c.beginPath();c.moveTo(x,y);c.lineTo(a,b);c.stroke();}
+ct.t.pm["dr"]=function(c,p,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(p[2],p[1]);c.lineTo(p[2],p[3]);c.lineTo(p[0],p[3]);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
+ct.t.pm["de"] = function(c,p,f){var x=p[0],y=p[1],w=p[2]-p[0],h=p[3]-p[1],k=.5522848,a=(w/2)*k,b=(h/2)*k,d=x+w,e=y+h,g=x+w/2,i=y+h/2;c.save();c.lineJoin="round";c.beginPath();c.moveTo(x,i);c.bezierCurveTo(x,i-b,g-a,y,g,y);c.bezierCurveTo(g+a,y,d,i-b,d,i);c.bezierCurveTo(d,i+b,g+a,e,g,e);c.bezierCurveTo(g-a,e,x,i+b,x,i);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
+ct.t.pm["ff"] = function(ctx,xSeed,ySeed){
 	// Round seed coords in case they happen to be float type
 	xSeed = Math.round( xSeed );
 	ySeed = Math.round( ySeed );
@@ -304,8 +304,8 @@ ct.t.paintMethods["ff"] = function(ctx,xSeed,ySeed){
 	}
 	ctx.putImageData(p,0,0);
 }
-ct.t.paintMethods["dc"]=function (c,p,e,s,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);for(var i=2;i<p.length;i+=2){c.lineTo(p[i],p[i+1]);}if(s){if(e){c.stroke();var z = parseInt(c.strokeStyle.substr(1,6),16);c.strokeStyle="rgba("+((z>>16)&255)+","+((z>>8)&255)+","+(z&255)+",0.5)";c.moveTo(p[p.length-2],p[p.length-1]);c.lineTo(p[0],p[1]);}else{c.closePath();if(f){c.fillStyle=f;c.fill();}}}c.stroke();if(e){c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);var w=(0.2126*((z>>16)&255))+(0.7152*((z>>8)&255))+(0.0722*(z&255));c.fillStyle=(w>160)?"#444444":"#FFFFFF";c.lineWidth=3;for(var i=0;i<p.length;i+=2){c.beginPath();c.arc(p[i],p[i+1],2.5,2*Math.PI,0);c.closePath();c.stroke();c.fill();}c.restore();}c.restore();}
-ct.t.paintMethods["ds"] = function(c,p,t,cl,hx,em){var cp=[];var n=p.length;var q=(cl)?1:0;if(n==0){return;} else if(n==4){c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(p[2],p[3]);c.stroke();}if(q){p.push(p[0],p[1],p[2],p[3]);p.unshift(p[n-1]);p.unshift(p[n-1]);}for(var i=0,m =(n-4+(4*q));i<m;i+=2){var x0=p[i],y0=p[i+1],x1=p[i+2],y1=p[i+3],x2=p[i+4],y2=p[i+5];var d01=Math.sqrt(Math.pow(x1-x0,2)+Math.pow(y1-y0,2));var d12=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));var fa=t*d01/(d01+d12);var fb=t-fa;var p1x=x1+fa*(x0-x2);var p1y=y1+fa*(y0-y2);var p2x=x1-fb*(x0-x2);var p2y=y1-fb*(y0-y2);cp=cp.concat(p1x,p1y,p2x,p2y);}cp=(q)?(cp.concat(cp[0],cp[1])):cp;c.save();c.beginPath();c.lineJoin="round";c.moveTo(p[2],p[3]);for(var i=2;i<n;i+=2){c.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],p[i+2],p[i+3]);}if(q){if(em){c.stroke();c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);c.strokeStyle="rgba("+((z>>16)&255)+","+((z>>8)&255)+","+(z&255)+",0.5)";c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],p[n+2],p[n+3]);c.stroke();c.restore();}else{c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],p[n+2],p[n+3]);c.moveTo(p[0],p[1]);c.closePath();if(hx){c.fillStyle=hx;c.fill();}c.stroke();}}else{c.moveTo(p[0],p[1]);c.quadraticCurveTo(cp[0],cp[1],p[2],p[3]);c.moveTo(p[n-2],p[n-1]);c.quadraticCurveTo(cp[2*n-10],cp[2*n-9],p[n-4],p[n-3]);c.stroke();}if(em){c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);var c2=(0.2126*((z>>16)&255))+(0.7152*((z>>8)&255))+(0.0722*(z&255));c.fillStyle=(c2>160)?"#444444":"#FFFFFF";c.lineWidth=3;for(var i=(2*q),m=(n-2+(2*q));i<m;i+=2){c.beginPath();c.arc(p[i],p[i+1],2.5,2*Math.PI,false);c.closePath();c.stroke();c.fill();}c.restore();}c.restore();}
+ct.t.pm["dc"]=function (c,p,e,s,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);for(var i=2;i<p.length;i+=2){c.lineTo(p[i],p[i+1]);}if(s){if(e){c.stroke();var z = parseInt(c.strokeStyle.substr(1,6),16);c.strokeStyle="rgba("+((z>>16)&255)+","+((z>>8)&255)+","+(z&255)+",0.5)";c.moveTo(p[p.length-2],p[p.length-1]);c.lineTo(p[0],p[1]);}else{c.closePath();if(f){c.fillStyle=f;c.fill();}}}c.stroke();if(e){c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);var w=(0.2126*((z>>16)&255))+(0.7152*((z>>8)&255))+(0.0722*(z&255));c.fillStyle=(w>160)?"#444444":"#FFFFFF";c.lineWidth=3;for(var i=0;i<p.length;i+=2){c.beginPath();c.arc(p[i],p[i+1],2.5,2*Math.PI,0);c.closePath();c.stroke();c.fill();}c.restore();}c.restore();}
+ct.t.pm["ds"] = function(c,p,t,cl,hx,em){var cp=[];var n=p.length;var q=(cl)?1:0;if(n==0){return;} else if(n==4){c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(p[2],p[3]);c.stroke();}if(q){p.push(p[0],p[1],p[2],p[3]);p.unshift(p[n-1]);p.unshift(p[n-1]);}for(var i=0,m =(n-4+(4*q));i<m;i+=2){var x0=p[i],y0=p[i+1],x1=p[i+2],y1=p[i+3],x2=p[i+4],y2=p[i+5];var d01=Math.sqrt(Math.pow(x1-x0,2)+Math.pow(y1-y0,2));var d12=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));var fa=t*d01/(d01+d12);var fb=t-fa;var p1x=x1+fa*(x0-x2);var p1y=y1+fa*(y0-y2);var p2x=x1-fb*(x0-x2);var p2y=y1-fb*(y0-y2);cp=cp.concat(p1x,p1y,p2x,p2y);}cp=(q)?(cp.concat(cp[0],cp[1])):cp;c.save();c.beginPath();c.lineJoin="round";c.moveTo(p[2],p[3]);for(var i=2;i<n;i+=2){c.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],p[i+2],p[i+3]);}if(q){if(em){c.stroke();c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);c.strokeStyle="rgba("+((z>>16)&255)+","+((z>>8)&255)+","+(z&255)+",0.5)";c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],p[n+2],p[n+3]);c.stroke();c.restore();}else{c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],p[n+2],p[n+3]);c.moveTo(p[0],p[1]);c.closePath();if(hx){c.fillStyle=hx;c.fill();}c.stroke();}}else{c.moveTo(p[0],p[1]);c.quadraticCurveTo(cp[0],cp[1],p[2],p[3]);c.moveTo(p[n-2],p[n-1]);c.quadraticCurveTo(cp[2*n-10],cp[2*n-9],p[n-4],p[n-3]);c.stroke();}if(em){c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);var c2=(0.2126*((z>>16)&255))+(0.7152*((z>>8)&255))+(0.0722*(z&255));c.fillStyle=(c2>160)?"#444444":"#FFFFFF";c.lineWidth=3;for(var i=(2*q),m=(n-2+(2*q));i<m;i+=2){c.beginPath();c.arc(p[i],p[i+1],2.5,2*Math.PI,false);c.closePath();c.stroke();c.fill();}c.restore();}c.restore();}
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
 /*-----------------------------------------------------------------------------*/
@@ -331,12 +331,12 @@ ct.eh["mouseDown"] = function(e) {
 	if($('#drawTools-options').css('opacity') == 1){
 		painting = !1;
 		c.c.restore();
-		c.options.toggleMenu();
+		c.options.tm();
 		return;
 	} else if(t.c === t.tt.BRUSH)
 		return;
 	t.ta = true;
-	c.c.updateLocation();
+	c.c.ul();
 	
 	// Translate mouse location to point relative to c
 	c.mouseX = e.pageX-c.c.offset.left;
@@ -344,7 +344,7 @@ ct.eh["mouseDown"] = function(e) {
 	
 	if(t.c === t.tt.FILL && ct.cd() ) {
 		painting = !1;
-		t.paintMethods.ff(c.cn,c.mouseX,c.mouseY);
+		t.pm.ff(c.cn,c.mouseX,c.mouseY);
 	} else if(t.c === t.tt.LINE && ct.cd()) {
 		painting = !1;
 		t.p.push(c.mouseX,c.mouseY);
@@ -386,7 +386,7 @@ ct.eh["mouseMove"] = function(e) {
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.paintMethods.dl(c.cn,t.p[0],t.p[1],endPointX,endPointY);
+		t.pm.dl(c.cn,t.p[0],t.p[1],endPointX,endPointY);
 	} else if(t.c === t.tt.LINECHAIN) {
 		if(t.p.length > 0) {
 			if(c.sd) {
@@ -394,34 +394,34 @@ ct.eh["mouseMove"] = function(e) {
 				endPointX = a.x;
 				endPointY = a.y;
 			}
-			var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
+			var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
 			c.c.restore();
-			t.paintMethods.dc(c.cn,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fc);
+			t.pm.dc(c.cn,t.p.concat(endPointX,endPointY),true,c.options.ltsc,fc);
 		}
 	} else if(t.c === t.tt.CURVE) {
 		if(t.p.length > 0) {
-			var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
+			var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
 			c.c.restore();
-			t.paintMethods.ds(c.cn,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fc,true);
+			t.pm.ds(c.cn,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.ltsc,fc,true);
 		}
 	} else if(t.c === t.tt.RECT) {
-		var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
+		var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
 		if(c.sd) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.paintMethods.dr(c.cn,t.p.concat(endPointX,endPointY),fc);
+		t.pm.dr(c.cn,t.p.concat(endPointX,endPointY),fc);
 	} else if(t.c === t.tt.ELLIPSE) {
-		var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
+		var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
 		if(c.sd) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.paintMethods.de(c.cn,t.p.concat(endPointX,endPointY),fc);
+		t.pm.de(c.cn,t.p.concat(endPointX,endPointY),fc);
 	}
 }
 
@@ -431,9 +431,9 @@ ct.eh["mouseUp"] = function(e) {
 	if(!ct.cd()){return;}
 	
 	if(0 && $('#drawTools-options').css('opacity') == 1){
-		c.c.updateLocation();
+		c.c.ul();
 		if(!c.options.iwb(e.pageX, e.pageY)) {
-			c.options.toggleMenu();
+			c.options.tm();
 		}
 		return;
 	} else if(t.c === t.tt.BRUSH)
@@ -448,7 +448,7 @@ ct.eh["mouseUp"] = function(e) {
 	var endPointY = c.mouseY;
 	
 	if(t.c === t.tt.FILL) {
-		t.reset(true);
+		t.rs(true);
 	} else if(t.c === t.tt.LINE) {
 		if(c.sd) {
 			var a = t.ls(t.p[0],t.p[1],endPointX,endPointY);
@@ -456,8 +456,8 @@ ct.eh["mouseUp"] = function(e) {
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.paintMethods.dl(c.cn,t.p[0],t.p[1], endPointX, endPointY);
-		t.reset(true);
+		t.pm.dl(c.cn,t.p[0],t.p[1], endPointX, endPointY);
+		t.rs(true);
 	} else if(t.c === t.tt.LINECHAIN) {
 		if(c.c.iwd(c.mouseX,c.mouseY)){
 			if(c.sd) {
@@ -467,30 +467,30 @@ ct.eh["mouseUp"] = function(e) {
 			}
 			t.p.push(endPointX,endPointY);
 			if(e.which == 3) {	// If right mouse click, finish the chain
-				var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
+				var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
 				c.c.restore();
-				t.paintMethods.dc(c.cn,t.p,false,c.options.lineToolsShouldClose,fc);
-				t.reset(true);
+				t.pm.dc(c.cn,t.p,false,c.options.ltsc,fc);
+				t.rs(true);
 			}
 		} else { // If user clicks out of acceptable boundaries, cancel all tool progress
 			c.c.restore();
-			t.reset();
+			t.rs();
 		}
 	} else if(t.c === t.tt.CURVE) {
 		if(c.c.iwd(c.mouseX,c.mouseY)){
 			t.p.push(c.mouseX,c.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the curve
-				var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
+				var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
 				c.c.restore();
-				t.paintMethods.ds(c.cn,t.p,0.5,c.options.lineToolsShouldClose,fc,false);
-				t.reset(true);
+				t.pm.ds(c.cn,t.p,0.5,c.options.ltsc,fc,false);
+				t.rs(true);
 			}
 		} else { // If user clicks out of acceptable boundaries, cancel all tool progress
 			c.c.restore();
-			t.reset();
+			t.rs();
 		}
 	} else if(t.c === t.tt.RECT) {
-		var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
+		var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
 		if(c.sd) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
@@ -498,10 +498,10 @@ ct.eh["mouseUp"] = function(e) {
 		}
 		c.c.restore();
 		t.p.push(endPointX,endPointY);
-		t.paintMethods.dr(c.cn,t.p,fc);
-		t.reset(true);
+		t.pm.dr(c.cn,t.p,fc);
+		t.rs(true);
 	} else if(t.c === t.tt.ELLIPSE) {
-		var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
+		var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
 		if(c.sd) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
@@ -509,8 +509,8 @@ ct.eh["mouseUp"] = function(e) {
 		}
 		c.c.restore();
 		t.p.push(endPointX,endPointY);
-		t.paintMethods.de(c.cn,t.p,fc);
-		t.reset(true);
+		t.pm.de(c.cn,t.p,fc);
+		t.rs(true);
 	}
 }
 ct.eh["keyDown"] = function(e) {
@@ -530,11 +530,11 @@ ct.eh["keyDown"] = function(e) {
 			endPointY = a.y;
 			
 			c.c.restore();
-			var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
+			var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
 			if(t.c === t.tt.RECT)
-				t.paintMethods.dr(c.cn,t.p.concat(endPointX,endPointY),fc);
+				t.pm.dr(c.cn,t.p.concat(endPointX,endPointY),fc);
 			else
-				t.paintMethods.de(c.cn,t.p.concat(endPointX,endPointY),fc);
+				t.pm.de(c.cn,t.p.concat(endPointX,endPointY),fc);
 		} else if( t.c === t.tt.LINE || t.c === t.tt.LINECHAIN ) {
 			if(t.p.length > 0) {
 				var a = t.ls(t.p[t.p.length-2],t.p[t.p.length-1],endPointX,endPointY);
@@ -543,10 +543,10 @@ ct.eh["keyDown"] = function(e) {
 				
 				c.c.restore();
 				if( t.c === t.tt.LINECHAIN ) {
-					var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
-					t.paintMethods.dc(c.cn,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fc);
+					var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
+					t.pm.dc(c.cn,t.p.concat(endPointX,endPointY),true,c.options.ltsc,fc);
 				} else {
-					t.paintMethods.dl(c.cn,t.p[0],t.p[1],endPointX,endPointY);
+					t.pm.dl(c.cn,t.p[0],t.p[1],endPointX,endPointY);
 				}
 			}
 		}
@@ -556,13 +556,13 @@ ct.eh["keyDown"] = function(e) {
 				t.p.length -= 2;
 				c.c.restore();
 				if(t.p.length == 0) {
-					t.reset();
+					t.rs();
 				} else {
-					var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
+					var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
 					if(t.c === t.tt.LINECHAIN)
-						t.paintMethods.dc(c.cn,t.p.concat(c.mouseX,c.mouseY),true,c.options.lineToolsShouldClose,fc);
+						t.pm.dc(c.cn,t.p.concat(c.mouseX,c.mouseY),true,c.options.ltsc,fc);
 					else
-						t.paintMethods.ds(c.cn,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fc,true);
+						t.pm.ds(c.cn,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.ltsc,fc,true);
 				}
 			}
 		}
@@ -584,19 +584,19 @@ ct.eh["keyUp"] = function(e) {
 			
 		if( t.c === t.tt.RECT || t.c === t.tt.ELLIPSE ){
 			c.c.restore();
-			var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
+			var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
 			if(t.c === t.tt.RECT)
-				t.paintMethods.dr(c.cn,t.p.concat(endPointX,endPointY),fc);
+				t.pm.dr(c.cn,t.p.concat(endPointX,endPointY),fc);
 			else
-				t.paintMethods.de(c.cn,t.p.concat(endPointX,endPointY),fc);
+				t.pm.de(c.cn,t.p.concat(endPointX,endPointY),fc);
 		} else if( t.c === t.tt.LINE || t.c === t.tt.LINECHAIN ) {
 			if(t.p.length > 0) {
 				c.c.restore();
 				if( t.c === t.tt.LINECHAIN ) {
-					var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
-					t.paintMethods.dc(c.cn,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fc);
+					var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
+					t.pm.dc(c.cn,t.p.concat(endPointX,endPointY),true,c.options.ltsc,fc);
 				} else {
-					t.paintMethods.dl(c.cn,t.p[0],t.p[1],endPointX,endPointY);
+					t.pm.dl(c.cn,t.p[0],t.p[1],endPointX,endPointY);
 				}
 			}
 		}
@@ -620,7 +620,7 @@ ct.html.init['createToolButton'] = function(type, name)
 		'</div>';
 	document.getElementById(ct.id).appendChild(button);
 	
-	button.onclick = function(){ct.html.buttonHandlers.setToolType(type);};
+	button.onclick = function(){ct.html.bh.stt(type);};
 	return button;
 }
 //Creates Tool Buttons (with a label)
@@ -662,7 +662,7 @@ ct.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton)
 	//----- BEGIN ----- LeftPanel --------------------------------------------------
 	var leftPanelHtml = "";
 	leftPanelHtml += 
-		'<label onclick=ct.html.buttonHandlers.setLineToolsOpen(); class="switch">\
+		'<label onclick=ct.html.bh.slto(); class="switch">\
 			<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">\
 			<span class="switch-label" data-on="Loop Line Tools" data-off="Open Line Tools"></span>\
 			<span class="switch-handle"></span>\
@@ -673,12 +673,12 @@ ct.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton)
 	var optionsPaletteHtml = "";
 	
 	optionsPaletteHtml += 
-		'<label onclick=ct.html.buttonHandlers.setOptionsColor(""); style="width:120px;">' +
+		'<label onclick=ct.html.bh.soc(""); style="width:120px;">' +
 			'<input type="radio" name="drawTools-options-palette-radio" checked>' +
 			'<div style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div>' +
 		'</label>';
 	optionsPaletteHtml += 
-		'<label onclick=ct.html.buttonHandlers.setOptionsColor("",1); style="width:120px;">' +
+		'<label onclick=ct.html.bh.soc("",1); style="width:120px;">' +
 			'<input type="radio" name="drawTools-options-palette-radio">' +
 			'<div style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div>' +
 		'</label>';
@@ -687,7 +687,7 @@ ct.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton)
 		var color = colorElements[i].getAttribute("data-color");
 		ct.dcPalette.push(color);
 		optionsPaletteHtml += 
-			'<label onclick=ct.html.buttonHandlers.setOptionsColor("' + color + '");>' + //
+			'<label onclick=ct.html.bh.soc("' + color + '");>' + //
 				'<input type="radio" name="drawTools-options-palette-radio">' +
 				'<div style="background:' + color + ';"></div>' +
 			'</label>';
@@ -717,7 +717,7 @@ ct.html.init['setupCssAndHtml'] = function()
 {	
 	if(!ct.cd()){return;}
 	
-	ct.c.updateLocation();
+	ct.c.ul();
 	/*---- 1. Create Draw Tools Container - DIV in which DrawTools will be placed in ----*/
 	var drawToolsDiv = document.createElement('div');
 	drawToolsDiv.id = ct.id;
@@ -727,10 +727,10 @@ ct.html.init['setupCssAndHtml'] = function()
 	ct.html.init.setupCSS();
 	
 	/*---- 3. Make Necessary Modifications to Existing Elements ----*/
-	document.getElementById(ct.dcBrushes[0].id).parentNode.onclick = function(){ct.html.buttonHandlers.bc(ct.dcBrushes[0].size);};
-	document.getElementById(ct.dcBrushes[1].id).parentNode.onclick = function(){ct.html.buttonHandlers.bc(ct.dcBrushes[1].size);};
-	document.getElementById(ct.dcBrushes[2].id).parentNode.onclick = function(){ct.html.buttonHandlers.bc(ct.dcBrushes[2].size);};
-	document.getElementById(ct.dcBrushes[3].id).parentNode.onclick = function(){ct.html.buttonHandlers.bc(ct.dcBrushes[3].size);};
+	document.getElementById(ct.dcBrushes[0].id).parentNode.onclick = function(){ct.html.bh.bc(ct.dcBrushes[0].size);};
+	document.getElementById(ct.dcBrushes[1].id).parentNode.onclick = function(){ct.html.bh.bc(ct.dcBrushes[1].size);};
+	document.getElementById(ct.dcBrushes[2].id).parentNode.onclick = function(){ct.html.bh.bc(ct.dcBrushes[2].size);};
+	document.getElementById(ct.dcBrushes[3].id).parentNode.onclick = function(){ct.html.bh.bc(ct.dcBrushes[3].size);};
 	
 	/*---- 4. Create Draw Tools Elements and Interface ----*/
 	// Create Tool Buttons
@@ -742,7 +742,7 @@ ct.html.init['setupCssAndHtml'] = function()
 	ct.html.init.createToolButton(ct.t.tt.ELLIPSE,"ellipse");
 	
 	var optionsButton = ct.html.init.createUtilityButton("options");
-	optionsButton.onclick = function(){ct.options.toggleMenu();};
+	optionsButton.onclick = function(){ct.options.tm();};
 	
 	ct.html.init.createOptionsMenu(drawToolsDiv, optionsButton);
 	
