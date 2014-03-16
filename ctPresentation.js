@@ -173,33 +173,28 @@ ct.t.pm["ff"] = function(ctx,nb,mb){
 	var tsep=function(x,y,o){var a=elg(x,y);var b=elg(x-1,y);var c=elg(x+1,y);if(!a){return 0;}else if(b && c){return 1;}else if(c && elg(x-1,o)){return 1;}else if(b && elg(x+1,o)){return 1;}return 0;}
 	var elg=function(x,y){var c=gcfc(x,y);return (ct.c.iwb(x,y) && (!cc(fc,c)) && (!cc(tgc,c)));}
 	if(cc(tgc,fc)){return;}
+	var sag=[[nb,mb,1]];
+	if(ts(nb,mb-1)){sag.push([nb,mb-1,-1]);}
+	var ear=[];
 	
-	/*---------------------- Algorithm Begin ----------------------*/
-	//[x,y,goingUp(1 vs -1)
-	var stack = [[nb,mb,1]];
-	if(ts(nb,mb-1))
-		stack.push([nb,mb-1,-1]);
-	var edgeArray = [];
-	
-	var x = 0;
-	var y = 0;
-	var direction = 0;
-	
-	while(stack.length>0) {
-		var line = stack.pop();
+	var x=0;
+	var y=0;
+	var drc=0;
+	while(sag.length>0){
+		var line=sag.pop();
 		x = line[0];
 		y = line[1];
-		direction = line[2];
+		drc = line[2];
 		if(ts(x,y)) {	// If pixel hasn't been colored continue.
-			// Check next pixel in "direction" side is eligible to be seed pixel for next line.
-			if(ts(x,y+direction))
-				stack.push([x,y+direction,direction]);
+			// Check next pixel in "drc" side is eligible to be seed pixel for next line.
+			if(ts(x,y+drc))
+				sag.push([x,y+drc,drc]);
 			
 			// Before scanning line, find wether or not to add edge pixels from seed point
-			if(tsep(x,y+direction,y))
-				edgeArray.push(x,y+direction);
-			if(tsep(x,y-direction,y))
-				edgeArray.push(x,y-direction);
+			if(tsep(x,y+drc,y))
+				ear.push(x,y+drc);
+			if(tsep(x,y-drc,y))
+				ear.push(x,y-drc);
 			
 			var range = [0,0];
 			for(var j = 0; j < 2; j++) { // Iterates through left/right line sides
@@ -207,23 +202,23 @@ ct.t.pm["ff"] = function(ctx,nb,mb){
 				var i;
 				for(i = x+incr; ts(i,y); i+=incr) { // While pixel line meets continues to meet its target color
 					// Setup Bools
-					var topFillable = ts(i,y+direction);
-					var bottomFillable = ts(i,y-direction);
-					var topLeftUnfillable = (!ts(i-incr,y+direction));
-					var bottomLeftUnfillable = (!ts(i-incr,y-direction));
+					var topFillable = ts(i,y+drc);
+					var bottomFillable = ts(i,y-drc);
+					var topLeftUnfillable = (!ts(i-incr,y+drc));
+					var bottomLeftUnfillable = (!ts(i-incr,y-drc));
 					
 					if(topFillable && topLeftUnfillable) // Find when to add a new seed(top)
-						stack.push([i,y+direction,direction]);
-					else if(tsep(i,y+direction,y)) // Find Wether or not to add edge pixels
-						edgeArray.push(i,y+direction);
+						sag.push([i,y+drc,drc]);
+					else if(tsep(i,y+drc,y)) // Find Wether or not to add edge pixels
+						ear.push(i,y+drc);
 						
 					if(bottomFillable && bottomLeftUnfillable) // Find when to add a new seed(bottom)
-						stack.push([i,y-direction,-direction]);
-					else if(tsep(i,y-direction,y)) // Find Wether or not to add edge pixels
-						edgeArray.push(i,y-direction);
+						sag.push([i,y-drc,-drc]);
+					else if(tsep(i,y-drc,y)) // Find Wether or not to add edge pixels
+						ear.push(i,y-drc);
 				}
 				if(ct.c.iwb(i,y))
-					edgeArray.push(i,y);
+					ear.push(i,y);
 				range[j] = i-incr; // Save max fill pixel
 				
 			}
@@ -231,9 +226,9 @@ ct.t.pm["ff"] = function(ctx,nb,mb){
 		}
 	}
 	// This loop colors edge pixels and softens them with anti-aliasing
-	while(edgeArray.length>0) {
-		x=edgeArray.shift();
-		y=edgeArray.shift();
+	while(ear.length>0) {
+		x=ear.shift();
+		y=ear.shift();
 		
 		cp(x,y,fc);
 		
