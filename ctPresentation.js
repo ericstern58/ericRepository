@@ -149,10 +149,10 @@ ct["ht"] = {
 ct.t.pm["dl"]=function(c,x,y,a,b){c.beginPath();c.moveTo(x,y);c.lineTo(a,b);c.stroke();}
 ct.t.pm["dr"]=function(c,p,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(p[2],p[1]);c.lineTo(p[2],p[3]);c.lineTo(p[0],p[3]);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
 ct.t.pm["de"] = function(c,p,f){var x=p[0],y=p[1],w=p[2]-p[0],h=p[3]-p[1],k=.5522848,a=(w/2)*k,b=(h/2)*k,d=x+w,e=y+h,g=x+w/2,i=y+h/2;c.save();c.lineJoin="round";c.beginPath();c.moveTo(x,i);c.bezierCurveTo(x,i-b,g-a,y,g,y);c.bezierCurveTo(g+a,y,d,i-b,d,i);c.bezierCurveTo(d,i+b,g+a,e,g,e);c.bezierCurveTo(g-a,e,x,i+b,x,i);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
-ct.t.pm["ff"] = function(ctx,xSeed,ySeed){
+ct.t.pm["ff"] = function(ctx,nb,mb){
 	// Round seed coords in case they happen to be float type
-	xSeed = Math.round( xSeed );
-	ySeed = Math.round( ySeed );
+	nb = Math.round( nb );
+	mb = Math.round( mb );
 	/*---------------------- Setup Procedure Variables ----------------------*/
 	// This c.restore() fix avoids issues with brush placing dot over flood fill seed area
 	ct.c.restore();
@@ -161,8 +161,8 @@ ct.t.pm["ff"] = function(ctx,xSeed,ySeed){
 	var h = ct.c.height;
 	var p = ctx.getImageData(0,0,w,h);
 	var d = p.data;
-	var tci = (xSeed+ySeed*ct.c.width)*4;
-	var targetColor = [d[tci],d[tci+1],d[tci+2],d[tci+3]];
+	var tci = (nb+mb*ct.c.width)*4;
+	var tgc = [d[tci],d[tci+1],d[tci+2],d[tci+3]];
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 	var fc = [(c>>16)&255,(c>>8)&255,c&255,255];
 	
@@ -192,7 +192,7 @@ ct.t.pm["ff"] = function(ctx,xSeed,ySeed){
 		cp(x,y,[r,g,b,a]);
 	}
 	//---Algorithm helper functions
-	var paint = function(xMin,xMax,y,c) {
+	var pt = function(xMin,xMax,y,c) {
 		var r = c[0], g = c[1], b = c[2], a = c[3];
 		var limit = (xMax+1 + y * w) * 4;
 		for(var i = (xMin + y * w) * 4; i<limit; i+=4) {
@@ -203,7 +203,7 @@ ct.t.pm["ff"] = function(ctx,xSeed,ySeed){
 		}
 	}
 	var test = function(x,y) {
-		return (ct.c.iwb(x,y) && cc(targetColor,gcfc(x,y)));
+		return (ct.c.iwb(x,y) && cc(tgc,gcfc(x,y)));
 	}
 	var testEdgePoint = function(x,y,o) {
 		var a = edgeEligible(x,y);
@@ -222,19 +222,19 @@ ct.t.pm["ff"] = function(ctx,xSeed,ySeed){
 	}
 	var edgeEligible = function(x,y) {
 		var c = gcfc(x,y);
-		return ( ct.c.iwb(x,y) && (!cc(fc,c)) && (!cc(targetColor,c)) );
+		return ( ct.c.iwb(x,y) && (!cc(fc,c)) && (!cc(tgc,c)) );
 	}
 	
 	/*---------------------- Begin Procedure ----------------------*/
 	// If seed pixel is already colored the fill color, nothing needs to be done, return early
-	if(cc(targetColor,fc))
+	if(cc(tgc,fc))
 		return;
 	
 	/*---------------------- Algorithm Begin ----------------------*/
 	//[x,y,goingUp(1 vs -1)
-	var stack = [[xSeed,ySeed,1]];
-	if(test(xSeed,ySeed-1))
-		stack.push([xSeed,ySeed-1,-1]);
+	var stack = [[nb,mb,1]];
+	if(test(nb,mb-1))
+		stack.push([nb,mb-1,-1]);
 	var edgeArray = [];
 	
 	var x = 0;
@@ -283,7 +283,7 @@ ct.t.pm["ff"] = function(ctx,xSeed,ySeed){
 				range[j] = i-incr; // Save max fill pixel
 				
 			}
-			paint(range[0],range[1],y,fc);
+			pt(range[0],range[1],y,fc);
 		}
 	}
 	// This loop colors edge pixels and softens them with anti-aliasing
