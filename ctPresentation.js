@@ -37,19 +37,19 @@ ct["c"] = {
     'po':ct,
 	'C':ct.C,
 	'offset':{top:0,left:0},
-	'width':0,
+	'wh':0,
 	'height':0,
 	
 	"ul": function() {
 		this.offset = $('#drawingCanvas').offset();
-		this.width = this.C.width();
+		this.wh = this.C.width();
 		this.height = this.C.height();
 	},
 	"iwb": function(x,y) {
-		return (x>=0 && y>=0 && x<this.width && y<this.height);
+		return (x>=0 && y>=0 && x<this.wh && y<this.height);
 	},
 	"iwd": function(x,y) {
-		return (x>=(-12) && y>=(-12) && x<(this.width+12) && y<(this.height+12));
+		return (x>=(-12) && y>=(-12) && x<(this.wh+12) && y<(this.height+12));
 	},
 	"restore": function() {
 		this.po.cn.constructor.prototype.putImageData.call(this.po.cn, restorePoints[restorePosition], 0, 0);
@@ -104,10 +104,9 @@ ct["options"] = {
 	'iwb':function (x, y) {
 		var x2 = x - $(this.id).offset().top;
 		var y2 = y - $(this.id).offset().left;
-		var width = $(this.id).width();
+		var wh = $(this.id).width();
 		var height = $(this.id).height();
-		//outputDebug("[x:" + x2 + ", y:" + y2 + "] [width:" + width + ", height:" + height + "]");
-		return (x2>=0 && y2>=0 && x2<width && y2<height);
+		return (x2>=0 && y2>=0 && x2<wh && y2<height);
 	}
 };
 ct["ht"] = {
@@ -157,11 +156,11 @@ ct.t.pm["ff"] = function(ctx,nb,mb){
 	// This c.restore() fix avoids issues with brush placing dot over flood fill seed area
 	ct.c.restore();
 	
-	var w = ct.c.width;
+	var w = ct.c.wh;
 	var h = ct.c.height;
 	var p = ctx.getImageData(0,0,w,h);
 	var d = p.data;
-	var tci = (nb+mb*ct.c.width)*4;
+	var tci = (nb+mb*ct.c.wh)*4;
 	var tgc = [d[tci],d[tci+1],d[tci+2],d[tci+3]];
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 	var fc = [(c>>16)&255,(c>>8)&255,c&255,255];
