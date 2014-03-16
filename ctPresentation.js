@@ -17,7 +17,7 @@ var ct = {
 	
 	'c':{'ttds':14},
 	'C':drawApp.canvas,
-	'context':drawApp.context,
+	'cn':drawApp.context,
 	
 	'mouseX':0,
 	'mouseY':0,
@@ -52,7 +52,7 @@ ct["c"] = {
 		return (x>=(-12) && y>=(-12) && x<(this.width+12) && y<(this.height+12));
 	},
 	"restore": function() {
-		this.parentObject.context.constructor.prototype.putImageData.call(this.parentObject.context, restorePoints[restorePosition], 0, 0);
+		this.parentObject.cn.constructor.prototype.putImageData.call(this.parentObject.cn, restorePoints[restorePosition], 0, 0);
 	}
 };
 ct["t"] = {
@@ -344,7 +344,7 @@ ct.eventHandlers["mouseDown"] = function(e) {
 	
 	if(t.c === t.tt.FILL && ct.cd() ) {
 		painting = !1;
-		t.paintMethods.ff(c.context,c.mouseX,c.mouseY);
+		t.paintMethods.ff(c.cn,c.mouseX,c.mouseY);
 	} else if(t.c === t.tt.LINE && ct.cd()) {
 		painting = !1;
 		t.p.push(c.mouseX,c.mouseY);
@@ -386,7 +386,7 @@ ct.eventHandlers["mouseMove"] = function(e) {
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.paintMethods.dl(c.context,t.p[0],t.p[1],endPointX,endPointY);
+		t.paintMethods.dl(c.cn,t.p[0],t.p[1],endPointX,endPointY);
 	} else if(t.c === t.tt.LINECHAIN) {
 		if(t.p.length > 0) {
 			if(c.shiftDown) {
@@ -394,34 +394,34 @@ ct.eventHandlers["mouseMove"] = function(e) {
 				endPointX = a.x;
 				endPointY = a.y;
 			}
-			var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
+			var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
 			c.c.restore();
-			t.paintMethods.dc(c.context,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fc);
+			t.paintMethods.dc(c.cn,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fc);
 		}
 	} else if(t.c === t.tt.CURVE) {
 		if(t.p.length > 0) {
-			var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
+			var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
 			c.c.restore();
-			t.paintMethods.ds(c.context,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fc,true);
+			t.paintMethods.ds(c.cn,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fc,true);
 		}
 	} else if(t.c === t.tt.RECT) {
-		var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
+		var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
 		if(c.shiftDown) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.paintMethods.dr(c.context,t.p.concat(endPointX,endPointY),fc);
+		t.paintMethods.dr(c.cn,t.p.concat(endPointX,endPointY),fc);
 	} else if(t.c === t.tt.ELLIPSE) {
-		var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
+		var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
 		if(c.shiftDown) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.paintMethods.de(c.context,t.p.concat(endPointX,endPointY),fc);
+		t.paintMethods.de(c.cn,t.p.concat(endPointX,endPointY),fc);
 	}
 }
 
@@ -456,7 +456,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.paintMethods.dl(c.context,t.p[0],t.p[1], endPointX, endPointY);
+		t.paintMethods.dl(c.cn,t.p[0],t.p[1], endPointX, endPointY);
 		t.reset(true);
 	} else if(t.c === t.tt.LINECHAIN) {
 		if(c.c.isWithinDrawingBounds(c.mouseX,c.mouseY)){
@@ -467,9 +467,9 @@ ct.eventHandlers["mouseUp"] = function(e) {
 			}
 			t.p.push(endPointX,endPointY);
 			if(e.which == 3) {	// If right mouse click, finish the chain
-				var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
+				var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
 				c.c.restore();
-				t.paintMethods.dc(c.context,t.p,false,c.options.lineToolsShouldClose,fc);
+				t.paintMethods.dc(c.cn,t.p,false,c.options.lineToolsShouldClose,fc);
 				t.reset(true);
 			}
 		} else { // If user clicks out of acceptable boundaries, cancel all tool progress
@@ -480,9 +480,9 @@ ct.eventHandlers["mouseUp"] = function(e) {
 		if(c.c.isWithinDrawingBounds(c.mouseX,c.mouseY)){
 			t.p.push(c.mouseX,c.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the curve
-				var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
+				var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
 				c.c.restore();
-				t.paintMethods.ds(c.context,t.p,0.5,c.options.lineToolsShouldClose,fc,false);
+				t.paintMethods.ds(c.cn,t.p,0.5,c.options.lineToolsShouldClose,fc,false);
 				t.reset(true);
 			}
 		} else { // If user clicks out of acceptable boundaries, cancel all tool progress
@@ -490,7 +490,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 			t.reset();
 		}
 	} else if(t.c === t.tt.RECT) {
-		var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
+		var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
 		if(c.shiftDown) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
@@ -498,10 +498,10 @@ ct.eventHandlers["mouseUp"] = function(e) {
 		}
 		c.c.restore();
 		t.p.push(endPointX,endPointY);
-		t.paintMethods.dr(c.context,t.p,fc);
+		t.paintMethods.dr(c.cn,t.p,fc);
 		t.reset(true);
 	} else if(t.c === t.tt.ELLIPSE) {
-		var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
+		var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
 		if(c.shiftDown) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
@@ -509,7 +509,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 		}
 		c.c.restore();
 		t.p.push(endPointX,endPointY);
-		t.paintMethods.de(c.context,t.p,fc);
+		t.paintMethods.de(c.cn,t.p,fc);
 		t.reset(true);
 	}
 }
@@ -530,11 +530,11 @@ ct.eventHandlers["keyDown"] = function(e) {
 			endPointY = a.y;
 			
 			c.c.restore();
-			var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
+			var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
 			if(t.c === t.tt.RECT)
-				t.paintMethods.dr(c.context,t.p.concat(endPointX,endPointY),fc);
+				t.paintMethods.dr(c.cn,t.p.concat(endPointX,endPointY),fc);
 			else
-				t.paintMethods.de(c.context,t.p.concat(endPointX,endPointY),fc);
+				t.paintMethods.de(c.cn,t.p.concat(endPointX,endPointY),fc);
 		} else if( t.c === t.tt.LINE || t.c === t.tt.LINECHAIN ) {
 			if(t.p.length > 0) {
 				var a = t.ls(t.p[t.p.length-2],t.p[t.p.length-1],endPointX,endPointY);
@@ -543,10 +543,10 @@ ct.eventHandlers["keyDown"] = function(e) {
 				
 				c.c.restore();
 				if( t.c === t.tt.LINECHAIN ) {
-					var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
-					t.paintMethods.dc(c.context,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fc);
+					var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
+					t.paintMethods.dc(c.cn,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fc);
 				} else {
-					t.paintMethods.dl(c.context,t.p[0],t.p[1],endPointX,endPointY);
+					t.paintMethods.dl(c.cn,t.p[0],t.p[1],endPointX,endPointY);
 				}
 			}
 		}
@@ -558,11 +558,11 @@ ct.eventHandlers["keyDown"] = function(e) {
 				if(t.p.length == 0) {
 					t.reset();
 				} else {
-					var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
+					var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
 					if(t.c === t.tt.LINECHAIN)
-						t.paintMethods.dc(c.context,t.p.concat(c.mouseX,c.mouseY),true,c.options.lineToolsShouldClose,fc);
+						t.paintMethods.dc(c.cn,t.p.concat(c.mouseX,c.mouseY),true,c.options.lineToolsShouldClose,fc);
 					else
-						t.paintMethods.ds(c.context,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fc,true);
+						t.paintMethods.ds(c.cn,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fc,true);
 				}
 			}
 		}
@@ -584,19 +584,19 @@ ct.eventHandlers["keyUp"] = function(e) {
 			
 		if( t.c === t.tt.RECT || t.c === t.tt.ELLIPSE ){
 			c.c.restore();
-			var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
+			var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
 			if(t.c === t.tt.RECT)
-				t.paintMethods.dr(c.context,t.p.concat(endPointX,endPointY),fc);
+				t.paintMethods.dr(c.cn,t.p.concat(endPointX,endPointY),fc);
 			else
-				t.paintMethods.de(c.context,t.p.concat(endPointX,endPointY),fc);
+				t.paintMethods.de(c.cn,t.p.concat(endPointX,endPointY),fc);
 		} else if( t.c === t.tt.LINE || t.c === t.tt.LINECHAIN ) {
 			if(t.p.length > 0) {
 				c.c.restore();
 				if( t.c === t.tt.LINECHAIN ) {
-					var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
-					t.paintMethods.dc(c.context,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fc);
+					var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
+					t.paintMethods.dc(c.cn,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fc);
 				} else {
-					t.paintMethods.dl(c.context,t.p[0],t.p[1],endPointX,endPointY);
+					t.paintMethods.dl(c.cn,t.p[0],t.p[1],endPointX,endPointY);
 				}
 			}
 		}
@@ -753,7 +753,7 @@ ct.html.init['setupCssAndHtml'] = function()
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
 /*-----------------------------------------------------------------------------*/
-ct.context.putImageData=CanvasRenderingContext2D.prototype.putImageData;
+ct.cn.putImageData=CanvasRenderingContext2D.prototype.putImageData;
 ct.html.init.setupCssAndHtml();
 ct.C.off('mousedown');
 ct.C.on('mousedown',ct.eventHandlers.mouseDown);
