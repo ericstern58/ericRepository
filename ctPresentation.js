@@ -74,7 +74,7 @@ ct["options"] = {
 	'id':'#' + ct.id + '-options',
 	
 	'useStrokeAsFill':false,
-	'fillColor':'', 
+	'fc':'', 
 	
 	'lineToolsShouldClose':false,
 	
@@ -132,10 +132,10 @@ ct["html"] = {
 		'setOptionsColor':function(color,normalfill) {
 			if(normalfill) {
 				this.ctObject.options.useStrokeAsFill = true;
-				this.ctObject.options.fillColor = '';
+				this.ctObject.options.fc = '';
 			} else {
 				this.ctObject.options.useStrokeAsFill = false;
-				this.ctObject.options.fillColor = color;
+				this.ctObject.options.fc = color;
 			}
 		},
 		'setToolType':function(type) {
@@ -164,7 +164,7 @@ ct.t.paintMethods["ff"] = function(ctx,xSeed,ySeed){
 	var tci = (xSeed+ySeed*ct.c.width)*4;
 	var targetColor = [d[tci],d[tci+1],d[tci+2],d[tci+3]];
 	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
-	var fillColor = [(c>>16)&255,(c>>8)&255,c&255,255];
+	var fc = [(c>>16)&255,(c>>8)&255,c&255,255];
 	
 	/*---------------------- Supporting functions ----------------------*/
 	// Define some useful functions
@@ -222,12 +222,12 @@ ct.t.paintMethods["ff"] = function(ctx,xSeed,ySeed){
 	}
 	var edgeEligible = function(x,y) {
 		var c = gcfc(x,y);
-		return ( ct.c.isWithinBounds(x,y) && (!colorCompare(fillColor,c)) && (!colorCompare(targetColor,c)) );
+		return ( ct.c.isWithinBounds(x,y) && (!colorCompare(fc,c)) && (!colorCompare(targetColor,c)) );
 	}
 	
 	/*---------------------- Begin Procedure ----------------------*/
 	// If seed pixel is already colored the fill color, nothing needs to be done, return early
-	if(colorCompare(targetColor,fillColor))
+	if(colorCompare(targetColor,fc))
 		return;
 	
 	/*---------------------- Algorithm Begin ----------------------*/
@@ -283,7 +283,7 @@ ct.t.paintMethods["ff"] = function(ctx,xSeed,ySeed){
 				range[j] = i-incr; // Save max fill pixel
 				
 			}
-			paint(range[0],range[1],y,fillColor);
+			paint(range[0],range[1],y,fc);
 		}
 	}
 	// This loop colors edge pixels and softens them with anti-aliasing
@@ -291,16 +291,16 @@ ct.t.paintMethods["ff"] = function(ctx,xSeed,ySeed){
 		x=edgeArray.shift();
 		y=edgeArray.shift();
 		
-		colorPixel(x,y,fillColor);
+		colorPixel(x,y,fc);
 		
-		if( (!colorCompare(fillColor,gcfc(x-1,y))) && ct.c.isWithinBounds(x-1,y) )
-			cpb(x-1,y,fillColor,gcfc(x-1,y));
-		if( (!colorCompare(fillColor,gcfc(x+1,y))) && ct.c.isWithinBounds(x+1,y) )
-			cpb(x+1,y,fillColor,gcfc(x+1,y));
-		if( (!colorCompare(fillColor,gcfc(x,y-1))) && ct.c.isWithinBounds(x,y-1) )
-			cpb(x,y-1,fillColor,gcfc(x,y-1));
-		if( (!colorCompare(fillColor,gcfc(x,y+1))) && ct.c.isWithinBounds(x,y+1) )
-			cpb(x,y+1,fillColor,gcfc(x,y+1));
+		if( (!colorCompare(fc,gcfc(x-1,y))) && ct.c.isWithinBounds(x-1,y) )
+			cpb(x-1,y,fc,gcfc(x-1,y));
+		if( (!colorCompare(fc,gcfc(x+1,y))) && ct.c.isWithinBounds(x+1,y) )
+			cpb(x+1,y,fc,gcfc(x+1,y));
+		if( (!colorCompare(fc,gcfc(x,y-1))) && ct.c.isWithinBounds(x,y-1) )
+			cpb(x,y-1,fc,gcfc(x,y-1));
+		if( (!colorCompare(fc,gcfc(x,y+1))) && ct.c.isWithinBounds(x,y+1) )
+			cpb(x,y+1,fc,gcfc(x,y+1));
 	}
 	ctx.putImageData(p,0,0);
 }
@@ -394,34 +394,34 @@ ct.eventHandlers["mouseMove"] = function(e) {
 				endPointX = a.x;
 				endPointY = a.y;
 			}
-			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+			var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
 			c.c.restore();
-			t.paintMethods.dc(c.context,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
+			t.paintMethods.dc(c.context,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fc);
 		}
 	} else if(t.c === t.tt.CURVE) {
 		if(t.p.length > 0) {
-			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+			var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
 			c.c.restore();
-			t.paintMethods.ds(c.context,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fillColor,true);
+			t.paintMethods.ds(c.context,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fc,true);
 		}
 	} else if(t.c === t.tt.RECT) {
-		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+		var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
 		if(c.shiftDown) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.paintMethods.dr(c.context,t.p.concat(endPointX,endPointY),fillColor);
+		t.paintMethods.dr(c.context,t.p.concat(endPointX,endPointY),fc);
 	} else if(t.c === t.tt.ELLIPSE) {
-		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+		var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
 		if(c.shiftDown) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.paintMethods.de(c.context,t.p.concat(endPointX,endPointY),fillColor);
+		t.paintMethods.de(c.context,t.p.concat(endPointX,endPointY),fc);
 	}
 }
 
@@ -467,9 +467,9 @@ ct.eventHandlers["mouseUp"] = function(e) {
 			}
 			t.p.push(endPointX,endPointY);
 			if(e.which == 3) {	// If right mouse click, finish the chain
-				var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+				var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
 				c.c.restore();
-				t.paintMethods.dc(c.context,t.p,false,c.options.lineToolsShouldClose,fillColor);
+				t.paintMethods.dc(c.context,t.p,false,c.options.lineToolsShouldClose,fc);
 				t.reset(true);
 			}
 		} else { // If user clicks out of acceptable boundaries, cancel all tool progress
@@ -480,9 +480,9 @@ ct.eventHandlers["mouseUp"] = function(e) {
 		if(c.c.isWithinDrawingBounds(c.mouseX,c.mouseY)){
 			t.p.push(c.mouseX,c.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the curve
-				var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+				var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
 				c.c.restore();
-				t.paintMethods.ds(c.context,t.p,0.5,c.options.lineToolsShouldClose,fillColor,false);
+				t.paintMethods.ds(c.context,t.p,0.5,c.options.lineToolsShouldClose,fc,false);
 				t.reset(true);
 			}
 		} else { // If user clicks out of acceptable boundaries, cancel all tool progress
@@ -490,7 +490,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 			t.reset();
 		}
 	} else if(t.c === t.tt.RECT) {
-		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+		var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
 		if(c.shiftDown) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
@@ -498,10 +498,10 @@ ct.eventHandlers["mouseUp"] = function(e) {
 		}
 		c.c.restore();
 		t.p.push(endPointX,endPointY);
-		t.paintMethods.dr(c.context,t.p,fillColor);
+		t.paintMethods.dr(c.context,t.p,fc);
 		t.reset(true);
 	} else if(t.c === t.tt.ELLIPSE) {
-		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+		var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
 		if(c.shiftDown) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
@@ -509,7 +509,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 		}
 		c.c.restore();
 		t.p.push(endPointX,endPointY);
-		t.paintMethods.de(c.context,t.p,fillColor);
+		t.paintMethods.de(c.context,t.p,fc);
 		t.reset(true);
 	}
 }
@@ -530,11 +530,11 @@ ct.eventHandlers["keyDown"] = function(e) {
 			endPointY = a.y;
 			
 			c.c.restore();
-			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+			var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
 			if(t.c === t.tt.RECT)
-				t.paintMethods.dr(c.context,t.p.concat(endPointX,endPointY),fillColor);
+				t.paintMethods.dr(c.context,t.p.concat(endPointX,endPointY),fc);
 			else
-				t.paintMethods.de(c.context,t.p.concat(endPointX,endPointY),fillColor);
+				t.paintMethods.de(c.context,t.p.concat(endPointX,endPointY),fc);
 		} else if( t.c === t.tt.LINE || t.c === t.tt.LINECHAIN ) {
 			if(t.p.length > 0) {
 				var a = t.ls(t.p[t.p.length-2],t.p[t.p.length-1],endPointX,endPointY);
@@ -543,8 +543,8 @@ ct.eventHandlers["keyDown"] = function(e) {
 				
 				c.c.restore();
 				if( t.c === t.tt.LINECHAIN ) {
-					var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
-					t.paintMethods.dc(c.context,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
+					var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
+					t.paintMethods.dc(c.context,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fc);
 				} else {
 					t.paintMethods.dl(c.context,t.p[0],t.p[1],endPointX,endPointY);
 				}
@@ -558,11 +558,11 @@ ct.eventHandlers["keyDown"] = function(e) {
 				if(t.p.length == 0) {
 					t.reset();
 				} else {
-					var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+					var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
 					if(t.c === t.tt.LINECHAIN)
-						t.paintMethods.dc(c.context,t.p.concat(c.mouseX,c.mouseY),true,c.options.lineToolsShouldClose,fillColor);
+						t.paintMethods.dc(c.context,t.p.concat(c.mouseX,c.mouseY),true,c.options.lineToolsShouldClose,fc);
 					else
-						t.paintMethods.ds(c.context,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fillColor,true);
+						t.paintMethods.ds(c.context,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fc,true);
 				}
 			}
 		}
@@ -584,17 +584,17 @@ ct.eventHandlers["keyUp"] = function(e) {
 			
 		if( t.c === t.tt.RECT || t.c === t.tt.ELLIPSE ){
 			c.c.restore();
-			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
+			var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
 			if(t.c === t.tt.RECT)
-				t.paintMethods.dr(c.context,t.p.concat(endPointX,endPointY),fillColor);
+				t.paintMethods.dr(c.context,t.p.concat(endPointX,endPointY),fc);
 			else
-				t.paintMethods.de(c.context,t.p.concat(endPointX,endPointY),fillColor);
+				t.paintMethods.de(c.context,t.p.concat(endPointX,endPointY),fc);
 		} else if( t.c === t.tt.LINE || t.c === t.tt.LINECHAIN ) {
 			if(t.p.length > 0) {
 				c.c.restore();
 				if( t.c === t.tt.LINECHAIN ) {
-					var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
-					t.paintMethods.dc(c.context,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
+					var fc = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fc;
+					t.paintMethods.dc(c.context,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fc);
 				} else {
 					t.paintMethods.dl(c.context,t.p[0],t.p[1],endPointX,endPointY);
 				}
