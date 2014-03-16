@@ -192,7 +192,7 @@ ct.t.paintMethods["ff"] = function(dq,rs,jd){
 		cp(x,y,[r,g,b,a]);
 	}
 	//---Algorithm helper functions
-	var yb = function(a,b,y,c) {
+	var paint = function(a,b,y,c) {
 		var r = c[0], g = c[1], b = c[2], a = c[3];
 		var l = (b+1 + y * w) * 4;
 		for(var i = (a + y * w) * 4; i<l; i+=4) {
@@ -283,7 +283,7 @@ ct.t.paintMethods["ff"] = function(dq,rs,jd){
 				rg[j] = i-ir; // Save max fill pixel
 				
 			}
-			yb(rg[0],rg[1],y,fc);
+			paint(rg[0],rg[1],y,fc);
 		}
 	}
 	// This loop colors edge pixels and softens them with anti-aliasing
