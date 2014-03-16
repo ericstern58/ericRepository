@@ -156,55 +156,23 @@ ct.t.pm["ff"] = function(ctx,nb,mb){
 	// This c.restore() fix avoids issues with brush placing dot over flood fill seed area
 	ct.c.restore();
 	
-	var w = ct.c.wh;
-	var h = ct.c.hg;
-	var p = ctx.getImageData(0,0,w,h);
-	var d = p.data;
-	var tci = (nb+mb*ct.c.wh)*4;
-	var tgc = [d[tci],d[tci+1],d[tci+2],d[tci+3]];
-	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
-	var fc = [(c>>16)&255,(c>>8)&255,c&255,255];
-	
-	/*---------------------- Supporting functions ----------------------*/
-	// Define some useful functions
-	var cc = function(color1,color2) {
-		return (color1[0]===color2[0] && color1[1]===color2[1] && color1[2]===color2[2] && color1[3]===color2[3]);
-	};
-	var gcfc = function(x,y){
-		var i = (x + y * w) * 4;
-		return [d[i],d[i+1],d[i+2],d[i+3]];
-	}
-	//Colors a pixel with a given color
+	var w=ct.c.wh;
+	var h=ct.c.hg;
+	var p=ctx.getImageData(0,0,w,h);
+	var d=p.data;
+	var tci=(nb+mb*ct.c.wh)*4;
+	var tgc=[d[tci],d[tci+1],d[tci+2],d[tci+3]];
+	var c=parseInt(ctx.strokeStyle.substr(1,6),16);
+	var fc=[(c>>16)&255,(c>>8)&255,c&255,255];
+	var cc=function(a,b){return (a[0]===b[0] && a[1]===b[1] && a[2]===b[2] && a[3]===b[3]);};
+	var gcfc=function(x,y){var i=(x+y*w)*4;return [d[i],d[i+1],d[i+2],d[i+3]];}
 	var cp=function(x,y,c){var i=(x+y*w)*4;d[i]=c[0];d[i+1]=c[1];d[i+2]=c[2];d[i+3]=c[3];}
-	// [Experimental] Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
 	var cpb=function(x,y,c,d){var r=Math.ceil((c[0]+d[0])/2);var g=Math.ceil((c[1]+d[1])/2);var b=Math.ceil((c[2]+d[2])/2);var a=Math.ceil((c[3]+d[3])/2);cp(x,y,[r,g,b,a]);}
-	//---Algorithm helper functions
 	var pt=function(xMin,xMax,y,c){var r = c[0], g = c[1], b = c[2], a = c[3];var limit = (xMax+1 + y * w) * 4;for(var i=(xMin+y*w)*4;i<limit;i+=4){d[i]=r;d[i+1]=g;d[i+2]=b;d[i+3]=a;}}
 	var ts=function(x,y){return (ct.c.iwb(x,y) && cc(tgc,gcfc(x,y)));}
-	var tsep=function(x,y,o){
-		var a=elg(x,y);
-		var b=elg(x-1,y);
-		var c=elg(x+1,y);
-		if( !a ) {
-			return 0;
-		} else if( b && c ) {
-			return 1;
-		} else if ( c && elg(x-1,o)) {
-			return 1;
-		} else if ( b && elg(x+1,o)) {
-			return 1;
-		}
-		return 0;
-	}
-	var elg = function(x,y) {
-		var c = gcfc(x,y);
-		return ( ct.c.iwb(x,y) && (!cc(fc,c)) && (!cc(tgc,c)) );
-	}
-	
-	/*---------------------- Begin Procedure ----------------------*/
-	// If seed pixel is already colored the fill color, nothing needs to be done, return early
-	if(cc(tgc,fc))
-		return;
+	var tsep=function(x,y,o){var a=elg(x,y);var b=elg(x-1,y);var c=elg(x+1,y);if(!a){return 0;}else if(b && c){return 1;}else if(c && elg(x-1,o)){return 1;}else if(b && elg(x+1,o)){return 1;}return 0;}
+	var elg=function(x,y){var c=gcfc(x,y);return (ct.c.iwb(x,y) && (!cc(fc,c)) && (!cc(tgc,c)));}
+	if(cc(tgc,fc)){return;}
 	
 	/*---------------------- Algorithm Begin ----------------------*/
 	//[x,y,goingUp(1 vs -1)
