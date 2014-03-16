@@ -45,7 +45,7 @@ ct["c"] = {
 		this.width = this.C.width();
 		this.height = this.C.height();
 	},
-	"isWithinBounds": function(x,y) {
+	"iwb": function(x,y) {
 		return (x>=0 && y>=0 && x<this.width && y<this.height);
 	},
 	"isWithinDrawingBounds": function(x,y) {
@@ -101,7 +101,7 @@ ct["options"] = {
 			},200, "swing");
 		}
 	},
-	'isWithinBounds':function (x, y) {
+	'iwb':function (x, y) {
 		var x2 = x - $(this.id).offset().top;
 		var y2 = y - $(this.id).offset().left;
 		var width = $(this.id).width();
@@ -176,7 +176,7 @@ ct.t.paintMethods["ff"] = function(ctx,xSeed,ySeed){
 		return [d[i],d[i+1],d[i+2],d[i+3]];
 	}
 	//Colors a pixel with a given color
-	var colorPixel = function(x,y,c) {
+	var cp = function(x,y,c) {
 		var i = (x + y * w) * 4;
 		d[i]=c[0];
 		d[i+1]=c[1];
@@ -189,7 +189,7 @@ ct.t.paintMethods["ff"] = function(ctx,xSeed,ySeed){
 		var g=Math.ceil((c[1]+d[1])/2);
 		var b=Math.ceil((c[2]+d[2])/2);
 		var a=Math.ceil((c[3]+d[3])/2);
-		colorPixel(x,y,[r,g,b,a]);
+		cp(x,y,[r,g,b,a]);
 	}
 	//---Algorithm helper functions
 	var paint = function(xMin,xMax,y,c) {
@@ -203,7 +203,7 @@ ct.t.paintMethods["ff"] = function(ctx,xSeed,ySeed){
 		}
 	}
 	var test = function(x,y) {
-		return (ct.c.isWithinBounds(x,y) && colorCompare(targetColor,gcfc(x,y)));
+		return (ct.c.iwb(x,y) && colorCompare(targetColor,gcfc(x,y)));
 	}
 	var testEdgePoint = function(x,y,o) {
 		var a = edgeEligible(x,y);
@@ -222,7 +222,7 @@ ct.t.paintMethods["ff"] = function(ctx,xSeed,ySeed){
 	}
 	var edgeEligible = function(x,y) {
 		var c = gcfc(x,y);
-		return ( ct.c.isWithinBounds(x,y) && (!colorCompare(fc,c)) && (!colorCompare(targetColor,c)) );
+		return ( ct.c.iwb(x,y) && (!colorCompare(fc,c)) && (!colorCompare(targetColor,c)) );
 	}
 	
 	/*---------------------- Begin Procedure ----------------------*/
@@ -278,7 +278,7 @@ ct.t.paintMethods["ff"] = function(ctx,xSeed,ySeed){
 					else if(testEdgePoint(i,y-direction,y)) // Find Wether or not to add edge pixels
 						edgeArray.push(i,y-direction);
 				}
-				if(ct.c.isWithinBounds(i,y))
+				if(ct.c.iwb(i,y))
 					edgeArray.push(i,y);
 				range[j] = i-incr; // Save max fill pixel
 				
@@ -291,15 +291,15 @@ ct.t.paintMethods["ff"] = function(ctx,xSeed,ySeed){
 		x=edgeArray.shift();
 		y=edgeArray.shift();
 		
-		colorPixel(x,y,fc);
+		cp(x,y,fc);
 		
-		if( (!colorCompare(fc,gcfc(x-1,y))) && ct.c.isWithinBounds(x-1,y) )
+		if( (!colorCompare(fc,gcfc(x-1,y))) && ct.c.iwb(x-1,y) )
 			cpb(x-1,y,fc,gcfc(x-1,y));
-		if( (!colorCompare(fc,gcfc(x+1,y))) && ct.c.isWithinBounds(x+1,y) )
+		if( (!colorCompare(fc,gcfc(x+1,y))) && ct.c.iwb(x+1,y) )
 			cpb(x+1,y,fc,gcfc(x+1,y));
-		if( (!colorCompare(fc,gcfc(x,y-1))) && ct.c.isWithinBounds(x,y-1) )
+		if( (!colorCompare(fc,gcfc(x,y-1))) && ct.c.iwb(x,y-1) )
 			cpb(x,y-1,fc,gcfc(x,y-1));
-		if( (!colorCompare(fc,gcfc(x,y+1))) && ct.c.isWithinBounds(x,y+1) )
+		if( (!colorCompare(fc,gcfc(x,y+1))) && ct.c.iwb(x,y+1) )
 			cpb(x,y+1,fc,gcfc(x,y+1));
 	}
 	ctx.putImageData(p,0,0);
@@ -432,7 +432,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 	
 	if(0 && $('#drawTools-options').css('opacity') == 1){
 		c.c.updateLocation();
-		if(!c.options.isWithinBounds(e.pageX, e.pageY)) {
+		if(!c.options.iwb(e.pageX, e.pageY)) {
 			c.options.toggleMenu();
 		}
 		return;
