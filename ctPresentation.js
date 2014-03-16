@@ -60,7 +60,7 @@ ct["t"] = {
 	'ta':false,
 	'p':[], 
 	
-	'tt':{BRUSH:0,FILL:1,LINE:2,LINECHAIN:3,CURVE:4,RECT:5,ELLIPSE:6,UTIL:99},
+	'tt':{a:0,b:1,c:2,d:3,e:4,f:5,g:6,h:99},
 	'rs':function(saveCanvas){
 		this.p.length=0;
 		this.ta=false;
@@ -119,7 +119,7 @@ ct["html"] = {
 		'cto':ct,
 		'bc':function(brushSize) {
 			drawApp.setSize(brushSize);				// Set default brush size
-			this.cto.t.c = ct.t.tt.BRUSH;		// Update tool type
+			this.cto.t.c = ct.t.tt.a;		// Update tool type
 			
 			// Visually unselect any other t
 			var ele = document.getElementsByName(ct.id + "-btn-radio");
@@ -322,7 +322,7 @@ ct.eh["mouseDown"] = function(e) {
 		c.c.restore();
 		c.options.tm();
 		return;
-	} else if(t.c === t.tt.BRUSH)
+	} else if(t.c === t.tt.a)
 		return;
 	t.ta = true;
 	c.c.ul();
@@ -331,20 +331,20 @@ ct.eh["mouseDown"] = function(e) {
 	c.mouseX = e.pageX-c.c.offset.left;
 	c.mouseY = e.pageY-c.c.offset.top;
 	
-	if(t.c === t.tt.FILL && ct.cd() ) {
+	if(t.c === t.tt.b && ct.cd() ) {
 		painting = !1;
 		t.pm.ff(c.cn,c.mouseX,c.mouseY);
-	} else if(t.c === t.tt.LINE && ct.cd()) {
+	} else if(t.c === t.tt.c && ct.cd()) {
 		painting = !1;
 		t.p.push(c.mouseX,c.mouseY);
-	} else if(t.c === t.tt.LINECHAIN && ct.cd()) {
+	} else if(t.c === t.tt.d && ct.cd()) {
 		painting = !1;
-	} else if(t.c === t.tt.CURVE && ct.cd()) {
+	} else if(t.c === t.tt.e && ct.cd()) {
 		painting = !1;
-	} else if(t.c === t.tt.RECT && ct.cd()) {
+	} else if(t.c === t.tt.f && ct.cd()) {
 		painting = !1;
 		t.p.push(c.mouseX,c.mouseY);
-	} else if(t.c === t.tt.ELLIPSE && ct.cd()) {
+	} else if(t.c === t.tt.g && ct.cd()) {
 		painting = !1;
 		t.p.push(c.mouseX,c.mouseY);
 	} 
@@ -353,7 +353,7 @@ ct.eh["mouseDown"] = function(e) {
 ct.eh["mouseMove"] = function(e) {
 	var c = ct;
 	var t = c.t;
-	if(t.c === t.tt.BRUSH)
+	if(t.c === t.tt.a)
 		return;	// default behaviors
 	else if(!t.ta)
 		return;	// If no tool is in use, ignore event
@@ -366,9 +366,9 @@ ct.eh["mouseMove"] = function(e) {
 	var endPointX = c.mouseX;
 	var endPointY = c.mouseY;
 	
-	if(t.c === t.tt.FILL) {
+	if(t.c === t.tt.b) {
 		// Do nothing
-	} else if(t.c === t.tt.LINE) {
+	} else if(t.c === t.tt.c) {
 		if(c.sd) {
 			var a = t.ls(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
@@ -376,7 +376,7 @@ ct.eh["mouseMove"] = function(e) {
 		}
 		c.c.restore();
 		t.pm.dl(c.cn,t.p[0],t.p[1],endPointX,endPointY);
-	} else if(t.c === t.tt.LINECHAIN) {
+	} else if(t.c === t.tt.d) {
 		if(t.p.length > 0) {
 			if(c.sd) {
 				var a = t.ls(t.p[t.p.length-2],t.p[t.p.length-1],endPointX,endPointY);
@@ -387,13 +387,13 @@ ct.eh["mouseMove"] = function(e) {
 			c.c.restore();
 			t.pm.dc(c.cn,t.p.concat(endPointX,endPointY),true,c.options.ltsc,fc);
 		}
-	} else if(t.c === t.tt.CURVE) {
+	} else if(t.c === t.tt.e) {
 		if(t.p.length > 0) {
 			var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
 			c.c.restore();
 			t.pm.ds(c.cn,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.ltsc,fc,true);
 		}
-	} else if(t.c === t.tt.RECT) {
+	} else if(t.c === t.tt.f) {
 		var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
 		if(c.sd) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
@@ -402,7 +402,7 @@ ct.eh["mouseMove"] = function(e) {
 		}
 		c.c.restore();
 		t.pm.dr(c.cn,t.p.concat(endPointX,endPointY),fc);
-	} else if(t.c === t.tt.ELLIPSE) {
+	} else if(t.c === t.tt.g) {
 		var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
 		if(c.sd) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
@@ -425,7 +425,7 @@ ct.eh["mouseUp"] = function(e) {
 			c.options.tm();
 		}
 		return;
-	} else if(t.c === t.tt.BRUSH)
+	} else if(t.c === t.tt.a)
 		return;
 	else if(!t.ta)	// If no tool is in use, ignore event
 		return;
@@ -436,9 +436,9 @@ ct.eh["mouseUp"] = function(e) {
 	var endPointX = c.mouseX;
 	var endPointY = c.mouseY;
 	
-	if(t.c === t.tt.FILL) {
+	if(t.c === t.tt.b) {
 		t.rs(true);
-	} else if(t.c === t.tt.LINE) {
+	} else if(t.c === t.tt.c) {
 		if(c.sd) {
 			var a = t.ls(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
@@ -447,7 +447,7 @@ ct.eh["mouseUp"] = function(e) {
 		c.c.restore();
 		t.pm.dl(c.cn,t.p[0],t.p[1], endPointX, endPointY);
 		t.rs(true);
-	} else if(t.c === t.tt.LINECHAIN) {
+	} else if(t.c === t.tt.d) {
 		if(c.c.iwd(c.mouseX,c.mouseY)){
 			if(c.sd) {
 				var a = t.ls(t.p[t.p.length-2],t.p[t.p.length-1],endPointX,endPointY);
@@ -465,7 +465,7 @@ ct.eh["mouseUp"] = function(e) {
 			c.c.restore();
 			t.rs();
 		}
-	} else if(t.c === t.tt.CURVE) {
+	} else if(t.c === t.tt.e) {
 		if(c.c.iwd(c.mouseX,c.mouseY)){
 			t.p.push(c.mouseX,c.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the curve
@@ -478,7 +478,7 @@ ct.eh["mouseUp"] = function(e) {
 			c.c.restore();
 			t.rs();
 		}
-	} else if(t.c === t.tt.RECT) {
+	} else if(t.c === t.tt.f) {
 		var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
 		if(c.sd) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
@@ -489,7 +489,7 @@ ct.eh["mouseUp"] = function(e) {
 		t.p.push(endPointX,endPointY);
 		t.pm.dr(c.cn,t.p,fc);
 		t.rs(true);
-	} else if(t.c === t.tt.ELLIPSE) {
+	} else if(t.c === t.tt.g) {
 		var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
 		if(c.sd) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
@@ -513,25 +513,25 @@ ct.eh["keyDown"] = function(e) {
 		
 		if(!t.ta)
 			return;
-		else if( t.c === t.tt.RECT || t.c === t.tt.ELLIPSE ) {
+		else if( t.c === t.tt.f || t.c === t.tt.g ) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
 			
 			c.c.restore();
 			var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
-			if(t.c === t.tt.RECT)
+			if(t.c === t.tt.f)
 				t.pm.dr(c.cn,t.p.concat(endPointX,endPointY),fc);
 			else
 				t.pm.de(c.cn,t.p.concat(endPointX,endPointY),fc);
-		} else if( t.c === t.tt.LINE || t.c === t.tt.LINECHAIN ) {
+		} else if( t.c === t.tt.c || t.c === t.tt.d ) {
 			if(t.p.length > 0) {
 				var a = t.ls(t.p[t.p.length-2],t.p[t.p.length-1],endPointX,endPointY);
 				endPointX = a.x;
 				endPointY = a.y;
 				
 				c.c.restore();
-				if( t.c === t.tt.LINECHAIN ) {
+				if( t.c === t.tt.d ) {
 					var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
 					t.pm.dc(c.cn,t.p.concat(endPointX,endPointY),true,c.options.ltsc,fc);
 				} else {
@@ -540,7 +540,7 @@ ct.eh["keyDown"] = function(e) {
 			}
 		}
 	} else if(e.keyCode == "Q".charCodeAt(0)) {
-		if(t.c === t.tt.LINECHAIN || t.c === t.tt.CURVE) {
+		if(t.c === t.tt.d || t.c === t.tt.e) {
 			if(t.p.length) {
 				t.p.length -= 2;
 				c.c.restore();
@@ -548,7 +548,7 @@ ct.eh["keyDown"] = function(e) {
 					t.rs();
 				} else {
 					var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
-					if(t.c === t.tt.LINECHAIN)
+					if(t.c === t.tt.d)
 						t.pm.dc(c.cn,t.p.concat(c.mouseX,c.mouseY),true,c.options.ltsc,fc);
 					else
 						t.pm.ds(c.cn,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.ltsc,fc,true);
@@ -571,17 +571,17 @@ ct.eh["keyUp"] = function(e) {
 		if(!t.ta)
 			return;
 			
-		if( t.c === t.tt.RECT || t.c === t.tt.ELLIPSE ){
+		if( t.c === t.tt.f || t.c === t.tt.g ){
 			c.c.restore();
 			var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
-			if(t.c === t.tt.RECT)
+			if(t.c === t.tt.f)
 				t.pm.dr(c.cn,t.p.concat(endPointX,endPointY),fc);
 			else
 				t.pm.de(c.cn,t.p.concat(endPointX,endPointY),fc);
-		} else if( t.c === t.tt.LINE || t.c === t.tt.LINECHAIN ) {
+		} else if( t.c === t.tt.c || t.c === t.tt.d ) {
 			if(t.p.length > 0) {
 				c.c.restore();
-				if( t.c === t.tt.LINECHAIN ) {
+				if( t.c === t.tt.d ) {
 					var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
 					t.pm.dc(c.cn,t.p.concat(endPointX,endPointY),true,c.options.ltsc,fc);
 				} else {
@@ -723,12 +723,12 @@ ct.html.init['setupCssAndHtml'] = function()
 	
 	/*---- 4. Create Draw Tools Elements and Interface ----*/
 	// Create Tool Buttons
-	ct.html.init.createToolButton(ct.t.tt.FILL,"fill");
-	ct.html.init.createToolButton(ct.t.tt.LINE,"line");
-	ct.html.init.createToolButton(ct.t.tt.LINECHAIN,"linechain");
-	ct.html.init.createToolButton(ct.t.tt.CURVE,"curve");
-	ct.html.init.createToolButton(ct.t.tt.RECT,"rect");
-	ct.html.init.createToolButton(ct.t.tt.ELLIPSE,"ellipse");
+	ct.html.init.createToolButton(ct.t.tt.b,"fill");
+	ct.html.init.createToolButton(ct.t.tt.c,"line");
+	ct.html.init.createToolButton(ct.t.tt.d,"linechain");
+	ct.html.init.createToolButton(ct.t.tt.e,"curve");
+	ct.html.init.createToolButton(ct.t.tt.f,"rect");
+	ct.html.init.createToolButton(ct.t.tt.g,"ellipse");
 	
 	var optionsButton = ct.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){ct.options.tm();};
