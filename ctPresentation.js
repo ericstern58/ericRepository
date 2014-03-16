@@ -22,10 +22,10 @@ var ct = {
 	'mouseX':0,
 	'mouseY':0,
 	
-	'shiftDown':0,
+	'sd':0,
 	'dd':new Date(),
 	
-	'eventHandlers':{},
+	'eh':{},
 	'd1':1145
 };
 
@@ -324,7 +324,7 @@ ct.html.init['setupCSS'] = function()
   /*-----------------------------------------------------------------------------*/
  /*------------------------------- Event Handlers ------------------------------*/
 /*-----------------------------------------------------------------------------*/
-ct.eventHandlers["mouseDown"] = function(e) {
+ct.eh["mouseDown"] = function(e) {
 	var c = ct;
 	var t = c.t;
 	
@@ -361,7 +361,7 @@ ct.eventHandlers["mouseDown"] = function(e) {
 	} 
 }
 
-ct.eventHandlers["mouseMove"] = function(e) {
+ct.eh["mouseMove"] = function(e) {
 	var c = ct;
 	var t = c.t;
 	if(t.c === t.tt.BRUSH)
@@ -380,7 +380,7 @@ ct.eventHandlers["mouseMove"] = function(e) {
 	if(t.c === t.tt.FILL) {
 		// Do nothing
 	} else if(t.c === t.tt.LINE) {
-		if(c.shiftDown) {
+		if(c.sd) {
 			var a = t.ls(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
@@ -389,7 +389,7 @@ ct.eventHandlers["mouseMove"] = function(e) {
 		t.paintMethods.dl(c.cn,t.p[0],t.p[1],endPointX,endPointY);
 	} else if(t.c === t.tt.LINECHAIN) {
 		if(t.p.length > 0) {
-			if(c.shiftDown) {
+			if(c.sd) {
 				var a = t.ls(t.p[t.p.length-2],t.p[t.p.length-1],endPointX,endPointY);
 				endPointX = a.x;
 				endPointY = a.y;
@@ -406,7 +406,7 @@ ct.eventHandlers["mouseMove"] = function(e) {
 		}
 	} else if(t.c === t.tt.RECT) {
 		var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
-		if(c.shiftDown) {
+		if(c.sd) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
@@ -415,7 +415,7 @@ ct.eventHandlers["mouseMove"] = function(e) {
 		t.paintMethods.dr(c.cn,t.p.concat(endPointX,endPointY),fc);
 	} else if(t.c === t.tt.ELLIPSE) {
 		var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
-		if(c.shiftDown) {
+		if(c.sd) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
@@ -425,7 +425,7 @@ ct.eventHandlers["mouseMove"] = function(e) {
 	}
 }
 
-ct.eventHandlers["mouseUp"] = function(e) {
+ct.eh["mouseUp"] = function(e) {
 	var c = ct;
 	var t = c.t;
 	if(!ct.cd()){return;}
@@ -450,7 +450,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 	if(t.c === t.tt.FILL) {
 		t.reset(true);
 	} else if(t.c === t.tt.LINE) {
-		if(c.shiftDown) {
+		if(c.sd) {
 			var a = t.ls(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
@@ -460,7 +460,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 		t.reset(true);
 	} else if(t.c === t.tt.LINECHAIN) {
 		if(c.c.isWithinDrawingBounds(c.mouseX,c.mouseY)){
-			if(c.shiftDown) {
+			if(c.sd) {
 				var a = t.ls(t.p[t.p.length-2],t.p[t.p.length-1],endPointX,endPointY);
 				endPointX = a.x;
 				endPointY = a.y;
@@ -491,7 +491,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 		}
 	} else if(t.c === t.tt.RECT) {
 		var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
-		if(c.shiftDown) {
+		if(c.sd) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
@@ -502,7 +502,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 		t.reset(true);
 	} else if(t.c === t.tt.ELLIPSE) {
 		var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
-		if(c.shiftDown) {
+		if(c.sd) {
 			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
 			endPointX = a.x;
 			endPointY = a.y;
@@ -513,12 +513,12 @@ ct.eventHandlers["mouseUp"] = function(e) {
 		t.reset(true);
 	}
 }
-ct.eventHandlers["keyDown"] = function(e) {
+ct.eh["keyDown"] = function(e) {
 	var c = ct;
 	var t = c.t;
 	if(!ct.cd()){return;}
 	if(e.keyCode == 16 ) { // If shift is pressed
-		c.shiftDown = 1;
+		c.sd = 1;
 		var endPointX = c.mouseX;
 		var endPointY = c.mouseY;
 		
@@ -570,12 +570,12 @@ ct.eventHandlers["keyDown"] = function(e) {
 		//alert('Keycode for that key is: ' + e.keyCode);
 	}
 }
-ct.eventHandlers["keyUp"] = function(e) {
+ct.eh["keyUp"] = function(e) {
 	if(!ct.cd()){return;}
 	var c = ct;
 	var t = c.t;
 	if(e.keyCode == 16) { // If shift is released
-		c.shiftDown = 0;
+		c.sd = 0;
 		var endPointX = c.mouseX;
 		var endPointY = c.mouseY;
 		
@@ -756,10 +756,10 @@ ct.html.init['setupCssAndHtml'] = function()
 ct.cn.putImageData=CanvasRenderingContext2D.prototype.putImageData;
 ct.html.init.setupCssAndHtml();
 ct.C.off('mousedown');
-ct.C.on('mousedown',ct.eventHandlers.mouseDown);
+ct.C.on('mousedown',ct.eh.mouseDown);
 $(document).off('mousemove');
-$(document).on('mousemove',ct.eventHandlers.mouseMove);
+$(document).on('mousemove',ct.eh.mouseMove);
 $(document).off('mouseup');
-$(document).on('mouseup',ct.eventHandlers.mouseUp);
-$(document).keydown(ct.eventHandlers.keyDown);
-$(document).keyup(ct.eventHandlers.keyUp);
+$(document).on('mouseup',ct.eh.mouseUp);
+$(document).keydown(ct.eh.keyDown);
+$(document).keyup(ct.eh.keyUp);
