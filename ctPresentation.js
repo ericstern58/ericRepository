@@ -146,10 +146,10 @@ ct["html"] = {
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- Drawing Algorithms ----------------------------*/
 /*-----------------------------------------------------------------------------*/
-ct.t.paintMethods["drawLine"]=function(c,x,y,a,b){c.beginPath();c.moveTo(x,y);c.lineTo(a,b);c.stroke();}
-ct.t.paintMethods["drawRect"]=function(c,p,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(p[2],p[1]);c.lineTo(p[2],p[3]);c.lineTo(p[0],p[3]);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
-ct.t.paintMethods["drawEllipse"] = function(c,p,f){var x=p[0],y=p[1],w=p[2]-p[0],h=p[3]-p[1],k=.5522848,a=(w/2)*k,b=(h/2)*k,d=x+w,e=y+h,g=x+w/2,i=y+h/2;c.save();c.lineJoin="round";c.beginPath();c.moveTo(x,i);c.bezierCurveTo(x,i-b,g-a,y,g,y);c.bezierCurveTo(g+a,y,d,i-b,d,i);c.bezierCurveTo(d,i+b,g+a,e,g,e);c.bezierCurveTo(g-a,e,x,i+b,x,i);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
-ct.t.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
+ct.t.paintMethods["dl"]=function(c,x,y,a,b){c.beginPath();c.moveTo(x,y);c.lineTo(a,b);c.stroke();}
+ct.t.paintMethods["dr"]=function(c,p,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(p[2],p[1]);c.lineTo(p[2],p[3]);c.lineTo(p[0],p[3]);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
+ct.t.paintMethods["de"] = function(c,p,f){var x=p[0],y=p[1],w=p[2]-p[0],h=p[3]-p[1],k=.5522848,a=(w/2)*k,b=(h/2)*k,d=x+w,e=y+h,g=x+w/2,i=y+h/2;c.save();c.lineJoin="round";c.beginPath();c.moveTo(x,i);c.bezierCurveTo(x,i-b,g-a,y,g,y);c.bezierCurveTo(g+a,y,d,i-b,d,i);c.bezierCurveTo(d,i+b,g+a,e,g,e);c.bezierCurveTo(g-a,e,x,i+b,x,i);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
+ct.t.paintMethods["ff"] = function(ctx,xSeed,ySeed){
 	// Round seed coords in case they happen to be float type
 	xSeed = Math.round( xSeed );
 	ySeed = Math.round( ySeed );
@@ -171,7 +171,7 @@ ct.t.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 	var colorCompare = function(color1,color2) {
 		return (color1[0]===color2[0] && color1[1]===color2[1] && color1[2]===color2[2] && color1[3]===color2[3]);
 	};
-	var getColorFromCoords = function(x,y){
+	var gcfc = function(x,y){
 		var i = (x + y * w) * 4;
 		return [d[i],d[i+1],d[i+2],d[i+3]];
 	}
@@ -184,7 +184,7 @@ ct.t.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 		d[i+3]=c[3];
 	}
 	// [Experimental] Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
-	var colorPixelBlend = function(x,y,c,d){
+	var cpb = function(x,y,c,d){
 		var r=Math.ceil((c[0]+d[0])/2);
 		var g=Math.ceil((c[1]+d[1])/2);
 		var b=Math.ceil((c[2]+d[2])/2);
@@ -203,7 +203,7 @@ ct.t.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 		}
 	}
 	var test = function(x,y) {
-		return (ct.c.isWithinBounds(x,y) && colorCompare(targetColor,getColorFromCoords(x,y)));
+		return (ct.c.isWithinBounds(x,y) && colorCompare(targetColor,gcfc(x,y)));
 	}
 	var testEdgePoint = function(x,y,o) {
 		var a = edgeEligible(x,y);
@@ -221,7 +221,7 @@ ct.t.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 		return 0;
 	}
 	var edgeEligible = function(x,y) {
-		var c = getColorFromCoords(x,y);
+		var c = gcfc(x,y);
 		return ( ct.c.isWithinBounds(x,y) && (!colorCompare(fillColor,c)) && (!colorCompare(targetColor,c)) );
 	}
 	
@@ -293,19 +293,19 @@ ct.t.paintMethods["floodFill"] = function(ctx,xSeed,ySeed){
 		
 		colorPixel(x,y,fillColor);
 		
-		if( (!colorCompare(fillColor,getColorFromCoords(x-1,y))) && ct.c.isWithinBounds(x-1,y) )
-			colorPixelBlend(x-1,y,fillColor,getColorFromCoords(x-1,y));
-		if( (!colorCompare(fillColor,getColorFromCoords(x+1,y))) && ct.c.isWithinBounds(x+1,y) )
-			colorPixelBlend(x+1,y,fillColor,getColorFromCoords(x+1,y));
-		if( (!colorCompare(fillColor,getColorFromCoords(x,y-1))) && ct.c.isWithinBounds(x,y-1) )
-			colorPixelBlend(x,y-1,fillColor,getColorFromCoords(x,y-1));
-		if( (!colorCompare(fillColor,getColorFromCoords(x,y+1))) && ct.c.isWithinBounds(x,y+1) )
-			colorPixelBlend(x,y+1,fillColor,getColorFromCoords(x,y+1));
+		if( (!colorCompare(fillColor,gcfc(x-1,y))) && ct.c.isWithinBounds(x-1,y) )
+			cpb(x-1,y,fillColor,gcfc(x-1,y));
+		if( (!colorCompare(fillColor,gcfc(x+1,y))) && ct.c.isWithinBounds(x+1,y) )
+			cpb(x+1,y,fillColor,gcfc(x+1,y));
+		if( (!colorCompare(fillColor,gcfc(x,y-1))) && ct.c.isWithinBounds(x,y-1) )
+			cpb(x,y-1,fillColor,gcfc(x,y-1));
+		if( (!colorCompare(fillColor,gcfc(x,y+1))) && ct.c.isWithinBounds(x,y+1) )
+			cpb(x,y+1,fillColor,gcfc(x,y+1));
 	}
 	ctx.putImageData(p,0,0);
 }
-ct.t.paintMethods["drawLineChain"]=function (c,p,e,s,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);for(var i=2;i<p.length;i+=2){c.lineTo(p[i],p[i+1]);}if(s){if(e){c.stroke();var z = parseInt(c.strokeStyle.substr(1,6),16);c.strokeStyle="rgba("+((z>>16)&255)+","+((z>>8)&255)+","+(z&255)+",0.5)";c.moveTo(p[p.length-2],p[p.length-1]);c.lineTo(p[0],p[1]);}else{c.closePath();if(f){c.fillStyle=f;c.fill();}}}c.stroke();if(e){c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);var w=(0.2126*((z>>16)&255))+(0.7152*((z>>8)&255))+(0.0722*(z&255));c.fillStyle=(w>160)?"#444444":"#FFFFFF";c.lineWidth=3;for(var i=0;i<p.length;i+=2){c.beginPath();c.arc(p[i],p[i+1],2.5,2*Math.PI,0);c.closePath();c.stroke();c.fill();}c.restore();}c.restore();}
-ct.t.paintMethods["drawSpline"] = function(c,p,t,cl,hx,em){var cp=[];var n=p.length;var q=(cl)?1:0;if(n==0){return;} else if(n==4){c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(p[2],p[3]);c.stroke();}if(q){p.push(p[0],p[1],p[2],p[3]);p.unshift(p[n-1]);p.unshift(p[n-1]);}for(var i=0,m =(n-4+(4*q));i<m;i+=2){var x0=p[i],y0=p[i+1],x1=p[i+2],y1=p[i+3],x2=p[i+4],y2=p[i+5];var d01=Math.sqrt(Math.pow(x1-x0,2)+Math.pow(y1-y0,2));var d12=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));var fa=t*d01/(d01+d12);var fb=t-fa;var p1x=x1+fa*(x0-x2);var p1y=y1+fa*(y0-y2);var p2x=x1-fb*(x0-x2);var p2y=y1-fb*(y0-y2);cp=cp.concat(p1x,p1y,p2x,p2y);}cp=(q)?(cp.concat(cp[0],cp[1])):cp;c.save();c.beginPath();c.lineJoin="round";c.moveTo(p[2],p[3]);for(var i=2;i<n;i+=2){c.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],p[i+2],p[i+3]);}if(q){if(em){c.stroke();c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);c.strokeStyle="rgba("+((z>>16)&255)+","+((z>>8)&255)+","+(z&255)+",0.5)";c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],p[n+2],p[n+3]);c.stroke();c.restore();}else{c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],p[n+2],p[n+3]);c.moveTo(p[0],p[1]);c.closePath();if(hx){c.fillStyle=hx;c.fill();}c.stroke();}}else{c.moveTo(p[0],p[1]);c.quadraticCurveTo(cp[0],cp[1],p[2],p[3]);c.moveTo(p[n-2],p[n-1]);c.quadraticCurveTo(cp[2*n-10],cp[2*n-9],p[n-4],p[n-3]);c.stroke();}if(em){c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);var c2=(0.2126*((z>>16)&255))+(0.7152*((z>>8)&255))+(0.0722*(z&255));c.fillStyle=(c2>160)?"#444444":"#FFFFFF";c.lineWidth=3;for(var i=(2*q),m=(n-2+(2*q));i<m;i+=2){c.beginPath();c.arc(p[i],p[i+1],2.5,2*Math.PI,false);c.closePath();c.stroke();c.fill();}c.restore();}c.restore();}
+ct.t.paintMethods["dc"]=function (c,p,e,s,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);for(var i=2;i<p.length;i+=2){c.lineTo(p[i],p[i+1]);}if(s){if(e){c.stroke();var z = parseInt(c.strokeStyle.substr(1,6),16);c.strokeStyle="rgba("+((z>>16)&255)+","+((z>>8)&255)+","+(z&255)+",0.5)";c.moveTo(p[p.length-2],p[p.length-1]);c.lineTo(p[0],p[1]);}else{c.closePath();if(f){c.fillStyle=f;c.fill();}}}c.stroke();if(e){c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);var w=(0.2126*((z>>16)&255))+(0.7152*((z>>8)&255))+(0.0722*(z&255));c.fillStyle=(w>160)?"#444444":"#FFFFFF";c.lineWidth=3;for(var i=0;i<p.length;i+=2){c.beginPath();c.arc(p[i],p[i+1],2.5,2*Math.PI,0);c.closePath();c.stroke();c.fill();}c.restore();}c.restore();}
+ct.t.paintMethods["ds"] = function(c,p,t,cl,hx,em){var cp=[];var n=p.length;var q=(cl)?1:0;if(n==0){return;} else if(n==4){c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(p[2],p[3]);c.stroke();}if(q){p.push(p[0],p[1],p[2],p[3]);p.unshift(p[n-1]);p.unshift(p[n-1]);}for(var i=0,m =(n-4+(4*q));i<m;i+=2){var x0=p[i],y0=p[i+1],x1=p[i+2],y1=p[i+3],x2=p[i+4],y2=p[i+5];var d01=Math.sqrt(Math.pow(x1-x0,2)+Math.pow(y1-y0,2));var d12=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));var fa=t*d01/(d01+d12);var fb=t-fa;var p1x=x1+fa*(x0-x2);var p1y=y1+fa*(y0-y2);var p2x=x1-fb*(x0-x2);var p2y=y1-fb*(y0-y2);cp=cp.concat(p1x,p1y,p2x,p2y);}cp=(q)?(cp.concat(cp[0],cp[1])):cp;c.save();c.beginPath();c.lineJoin="round";c.moveTo(p[2],p[3]);for(var i=2;i<n;i+=2){c.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],p[i+2],p[i+3]);}if(q){if(em){c.stroke();c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);c.strokeStyle="rgba("+((z>>16)&255)+","+((z>>8)&255)+","+(z&255)+",0.5)";c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],p[n+2],p[n+3]);c.stroke();c.restore();}else{c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],p[n+2],p[n+3]);c.moveTo(p[0],p[1]);c.closePath();if(hx){c.fillStyle=hx;c.fill();}c.stroke();}}else{c.moveTo(p[0],p[1]);c.quadraticCurveTo(cp[0],cp[1],p[2],p[3]);c.moveTo(p[n-2],p[n-1]);c.quadraticCurveTo(cp[2*n-10],cp[2*n-9],p[n-4],p[n-3]);c.stroke();}if(em){c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);var c2=(0.2126*((z>>16)&255))+(0.7152*((z>>8)&255))+(0.0722*(z&255));c.fillStyle=(c2>160)?"#444444":"#FFFFFF";c.lineWidth=3;for(var i=(2*q),m=(n-2+(2*q));i<m;i+=2){c.beginPath();c.arc(p[i],p[i+1],2.5,2*Math.PI,false);c.closePath();c.stroke();c.fill();}c.restore();}c.restore();}
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- CSS Style Sheets ------------------------------*/
 /*-----------------------------------------------------------------------------*/
@@ -344,7 +344,7 @@ ct.eventHandlers["mouseDown"] = function(e) {
 	
 	if(t.c === t.tt.FILL && ct.cd() ) {
 		painting = !1;
-		t.paintMethods.floodFill(c.context,c.mouseX,c.mouseY);
+		t.paintMethods.ff(c.context,c.mouseX,c.mouseY);
 	} else if(t.c === t.tt.LINE && ct.cd()) {
 		painting = !1;
 		t.p.push(c.mouseX,c.mouseY);
@@ -386,7 +386,7 @@ ct.eventHandlers["mouseMove"] = function(e) {
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.paintMethods.drawLine(c.context,t.p[0],t.p[1],endPointX,endPointY);
+		t.paintMethods.dl(c.context,t.p[0],t.p[1],endPointX,endPointY);
 	} else if(t.c === t.tt.LINECHAIN) {
 		if(t.p.length > 0) {
 			if(c.shiftDown) {
@@ -396,13 +396,13 @@ ct.eventHandlers["mouseMove"] = function(e) {
 			}
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 			c.c.restore();
-			t.paintMethods.drawLineChain(c.context,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
+			t.paintMethods.dc(c.context,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
 		}
 	} else if(t.c === t.tt.CURVE) {
 		if(t.p.length > 0) {
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 			c.c.restore();
-			t.paintMethods.drawSpline(c.context,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fillColor,true);
+			t.paintMethods.ds(c.context,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fillColor,true);
 		}
 	} else if(t.c === t.tt.RECT) {
 		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
@@ -412,7 +412,7 @@ ct.eventHandlers["mouseMove"] = function(e) {
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.paintMethods.drawRect(c.context,t.p.concat(endPointX,endPointY),fillColor);
+		t.paintMethods.dr(c.context,t.p.concat(endPointX,endPointY),fillColor);
 	} else if(t.c === t.tt.ELLIPSE) {
 		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 		if(c.shiftDown) {
@@ -421,7 +421,7 @@ ct.eventHandlers["mouseMove"] = function(e) {
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.paintMethods.drawEllipse(c.context,t.p.concat(endPointX,endPointY),fillColor);
+		t.paintMethods.de(c.context,t.p.concat(endPointX,endPointY),fillColor);
 	}
 }
 
@@ -456,7 +456,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 			endPointY = a.y;
 		}
 		c.c.restore();
-		t.paintMethods.drawLine(c.context,t.p[0],t.p[1], endPointX, endPointY);
+		t.paintMethods.dl(c.context,t.p[0],t.p[1], endPointX, endPointY);
 		t.reset(true);
 	} else if(t.c === t.tt.LINECHAIN) {
 		if(c.c.isWithinDrawingBounds(c.mouseX,c.mouseY)){
@@ -469,7 +469,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 			if(e.which == 3) {	// If right mouse click, finish the chain
 				var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 				c.c.restore();
-				t.paintMethods.drawLineChain(c.context,t.p,false,c.options.lineToolsShouldClose,fillColor);
+				t.paintMethods.dc(c.context,t.p,false,c.options.lineToolsShouldClose,fillColor);
 				t.reset(true);
 			}
 		} else { // If user clicks out of acceptable boundaries, cancel all tool progress
@@ -482,7 +482,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 				c.c.restore();
-				t.paintMethods.drawSpline(c.context,t.p,0.5,c.options.lineToolsShouldClose,fillColor,false);
+				t.paintMethods.ds(c.context,t.p,0.5,c.options.lineToolsShouldClose,fillColor,false);
 				t.reset(true);
 			}
 		} else { // If user clicks out of acceptable boundaries, cancel all tool progress
@@ -498,7 +498,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 		}
 		c.c.restore();
 		t.p.push(endPointX,endPointY);
-		t.paintMethods.drawRect(c.context,t.p,fillColor);
+		t.paintMethods.dr(c.context,t.p,fillColor);
 		t.reset(true);
 	} else if(t.c === t.tt.ELLIPSE) {
 		var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
@@ -509,7 +509,7 @@ ct.eventHandlers["mouseUp"] = function(e) {
 		}
 		c.c.restore();
 		t.p.push(endPointX,endPointY);
-		t.paintMethods.drawEllipse(c.context,t.p,fillColor);
+		t.paintMethods.de(c.context,t.p,fillColor);
 		t.reset(true);
 	}
 }
@@ -532,9 +532,9 @@ ct.eventHandlers["keyDown"] = function(e) {
 			c.c.restore();
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 			if(t.c === t.tt.RECT)
-				t.paintMethods.drawRect(c.context,t.p.concat(endPointX,endPointY),fillColor);
+				t.paintMethods.dr(c.context,t.p.concat(endPointX,endPointY),fillColor);
 			else
-				t.paintMethods.drawEllipse(c.context,t.p.concat(endPointX,endPointY),fillColor);
+				t.paintMethods.de(c.context,t.p.concat(endPointX,endPointY),fillColor);
 		} else if( t.c === t.tt.LINE || t.c === t.tt.LINECHAIN ) {
 			if(t.p.length > 0) {
 				var a = t.ls(t.p[t.p.length-2],t.p[t.p.length-1],endPointX,endPointY);
@@ -544,9 +544,9 @@ ct.eventHandlers["keyDown"] = function(e) {
 				c.c.restore();
 				if( t.c === t.tt.LINECHAIN ) {
 					var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
-					t.paintMethods.drawLineChain(c.context,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
+					t.paintMethods.dc(c.context,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
 				} else {
-					t.paintMethods.drawLine(c.context,t.p[0],t.p[1],endPointX,endPointY);
+					t.paintMethods.dl(c.context,t.p[0],t.p[1],endPointX,endPointY);
 				}
 			}
 		}
@@ -560,9 +560,9 @@ ct.eventHandlers["keyDown"] = function(e) {
 				} else {
 					var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 					if(t.c === t.tt.LINECHAIN)
-						t.paintMethods.drawLineChain(c.context,t.p.concat(c.mouseX,c.mouseY),true,c.options.lineToolsShouldClose,fillColor);
+						t.paintMethods.dc(c.context,t.p.concat(c.mouseX,c.mouseY),true,c.options.lineToolsShouldClose,fillColor);
 					else
-						t.paintMethods.drawSpline(c.context,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fillColor,true);
+						t.paintMethods.ds(c.context,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.lineToolsShouldClose,fillColor,true);
 				}
 			}
 		}
@@ -586,17 +586,17 @@ ct.eventHandlers["keyUp"] = function(e) {
 			c.c.restore();
 			var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
 			if(t.c === t.tt.RECT)
-				t.paintMethods.drawRect(c.context,t.p.concat(endPointX,endPointY),fillColor);
+				t.paintMethods.dr(c.context,t.p.concat(endPointX,endPointY),fillColor);
 			else
-				t.paintMethods.drawEllipse(c.context,t.p.concat(endPointX,endPointY),fillColor);
+				t.paintMethods.de(c.context,t.p.concat(endPointX,endPointY),fillColor);
 		} else if( t.c === t.tt.LINE || t.c === t.tt.LINECHAIN ) {
 			if(t.p.length > 0) {
 				c.c.restore();
 				if( t.c === t.tt.LINECHAIN ) {
 					var fillColor = (c.options.useStrokeAsFill) ? c.context.strokeStyle : c.options.fillColor;
-					t.paintMethods.drawLineChain(c.context,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
+					t.paintMethods.dc(c.context,t.p.concat(endPointX,endPointY),true,c.options.lineToolsShouldClose,fillColor);
 				} else {
-					t.paintMethods.drawLine(c.context,t.p[0],t.p[1],endPointX,endPointY);
+					t.paintMethods.dl(c.context,t.p[0],t.p[1],endPointX,endPointY);
 				}
 			}
 		}
