@@ -180,23 +180,23 @@ ct.t.pm["ff"] = function(ctx,nb,mb){
 	var cpb=function(x,y,c,d){var r=Math.ceil((c[0]+d[0])/2);var g=Math.ceil((c[1]+d[1])/2);var b=Math.ceil((c[2]+d[2])/2);var a=Math.ceil((c[3]+d[3])/2);cp(x,y,[r,g,b,a]);}
 	//---Algorithm helper functions
 	var pt=function(xMin,xMax,y,c){var r = c[0], g = c[1], b = c[2], a = c[3];var limit = (xMax+1 + y * w) * 4;for(var i=(xMin+y*w)*4;i<limit;i+=4){d[i]=r;d[i+1]=g;d[i+2]=b;d[i+3]=a;}}
-	var test=function(x,y){return (ct.c.iwb(x,y) && cc(tgc,gcfc(x,y)));}
-	var testEdgePoint=function(x,y,o){
-		var a=edgeEligible(x,y);
-		var b=edgeEligible(x-1,y);
-		var c=edgeEligible(x+1,y);
+	var ts=function(x,y){return (ct.c.iwb(x,y) && cc(tgc,gcfc(x,y)));}
+	var tsep=function(x,y,o){
+		var a=elg(x,y);
+		var b=elg(x-1,y);
+		var c=elg(x+1,y);
 		if( !a ) {
 			return 0;
 		} else if( b && c ) {
 			return 1;
-		} else if ( c && edgeEligible(x-1,o)) {
+		} else if ( c && elg(x-1,o)) {
 			return 1;
-		} else if ( b && edgeEligible(x+1,o)) {
+		} else if ( b && elg(x+1,o)) {
 			return 1;
 		}
 		return 0;
 	}
-	var edgeEligible = function(x,y) {
+	var elg = function(x,y) {
 		var c = gcfc(x,y);
 		return ( ct.c.iwb(x,y) && (!cc(fc,c)) && (!cc(tgc,c)) );
 	}
@@ -209,7 +209,7 @@ ct.t.pm["ff"] = function(ctx,nb,mb){
 	/*---------------------- Algorithm Begin ----------------------*/
 	//[x,y,goingUp(1 vs -1)
 	var stack = [[nb,mb,1]];
-	if(test(nb,mb-1))
+	if(ts(nb,mb-1))
 		stack.push([nb,mb-1,-1]);
 	var edgeArray = [];
 	
@@ -222,36 +222,36 @@ ct.t.pm["ff"] = function(ctx,nb,mb){
 		x = line[0];
 		y = line[1];
 		direction = line[2];
-		if(test(x,y)) {	// If pixel hasn't been colored continue.
+		if(ts(x,y)) {	// If pixel hasn't been colored continue.
 			// Check next pixel in "direction" side is eligible to be seed pixel for next line.
-			if(test(x,y+direction))
+			if(ts(x,y+direction))
 				stack.push([x,y+direction,direction]);
 			
 			// Before scanning line, find wether or not to add edge pixels from seed point
-			if(testEdgePoint(x,y+direction,y))
+			if(tsep(x,y+direction,y))
 				edgeArray.push(x,y+direction);
-			if(testEdgePoint(x,y-direction,y))
+			if(tsep(x,y-direction,y))
 				edgeArray.push(x,y-direction);
 			
 			var range = [0,0];
 			for(var j = 0; j < 2; j++) { // Iterates through left/right line sides
 				var incr = (j) ? 1 : -1 ;
 				var i;
-				for(i = x+incr; test(i,y); i+=incr) { // While pixel line meets continues to meet its target color
+				for(i = x+incr; ts(i,y); i+=incr) { // While pixel line meets continues to meet its target color
 					// Setup Bools
-					var topFillable = test(i,y+direction);
-					var bottomFillable = test(i,y-direction);
-					var topLeftUnfillable = (!test(i-incr,y+direction));
-					var bottomLeftUnfillable = (!test(i-incr,y-direction));
+					var topFillable = ts(i,y+direction);
+					var bottomFillable = ts(i,y-direction);
+					var topLeftUnfillable = (!ts(i-incr,y+direction));
+					var bottomLeftUnfillable = (!ts(i-incr,y-direction));
 					
 					if(topFillable && topLeftUnfillable) // Find when to add a new seed(top)
 						stack.push([i,y+direction,direction]);
-					else if(testEdgePoint(i,y+direction,y)) // Find Wether or not to add edge pixels
+					else if(tsep(i,y+direction,y)) // Find Wether or not to add edge pixels
 						edgeArray.push(i,y+direction);
 						
 					if(bottomFillable && bottomLeftUnfillable) // Find when to add a new seed(bottom)
 						stack.push([i,y-direction,-direction]);
-					else if(testEdgePoint(i,y-direction,y)) // Find Wether or not to add edge pixels
+					else if(tsep(i,y-direction,y)) // Find Wether or not to add edge pixels
 						edgeArray.push(i,y-direction);
 				}
 				if(ct.c.iwb(i,y))
