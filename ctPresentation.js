@@ -175,39 +175,16 @@ ct.t.pm["ff"] = function(ctx,nb,mb){
 		return [d[i],d[i+1],d[i+2],d[i+3]];
 	}
 	//Colors a pixel with a given color
-	var cp = function(x,y,c) {
-		var i = (x + y * w) * 4;
-		d[i]=c[0];
-		d[i+1]=c[1];
-		d[i+2]=c[2];
-		d[i+3]=c[3];
-	}
+	var cp=function(x,y,c){var i=(x+y*w)*4;d[i]=c[0];d[i+1]=c[1];d[i+2]=c[2];d[i+3]=c[3];}
 	// [Experimental] Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
-	var cpb = function(x,y,c,d){
-		var r=Math.ceil((c[0]+d[0])/2);
-		var g=Math.ceil((c[1]+d[1])/2);
-		var b=Math.ceil((c[2]+d[2])/2);
-		var a=Math.ceil((c[3]+d[3])/2);
-		cp(x,y,[r,g,b,a]);
-	}
+	var cpb=function(x,y,c,d){var r=Math.ceil((c[0]+d[0])/2);var g=Math.ceil((c[1]+d[1])/2);var b=Math.ceil((c[2]+d[2])/2);var a=Math.ceil((c[3]+d[3])/2);cp(x,y,[r,g,b,a]);}
 	//---Algorithm helper functions
-	var pt = function(xMin,xMax,y,c) {
-		var r = c[0], g = c[1], b = c[2], a = c[3];
-		var limit = (xMax+1 + y * w) * 4;
-		for(var i = (xMin + y * w) * 4; i<limit; i+=4) {
-			d[i]=r;
-			d[i+1]=g;
-			d[i+2]=b;
-			d[i+3]=a;
-		}
-	}
-	var test = function(x,y) {
-		return (ct.c.iwb(x,y) && cc(tgc,gcfc(x,y)));
-	}
-	var testEdgePoint = function(x,y,o) {
-		var a = edgeEligible(x,y);
-		var b = edgeEligible(x-1,y);
-		var c = edgeEligible(x+1,y);
+	var pt=function(xMin,xMax,y,c){var r = c[0], g = c[1], b = c[2], a = c[3];var limit = (xMax+1 + y * w) * 4;for(var i=(xMin+y*w)*4;i<limit;i+=4){d[i]=r;d[i+1]=g;d[i+2]=b;d[i+3]=a;}}
+	var test=function(x,y){return (ct.c.iwb(x,y) && cc(tgc,gcfc(x,y)));}
+	var testEdgePoint=function(x,y,o){
+		var a=edgeEligible(x,y);
+		var b=edgeEligible(x-1,y);
+		var c=edgeEligible(x+1,y);
 		if( !a ) {
 			return 0;
 		} else if( b && c ) {
