@@ -34,7 +34,7 @@ ct['cd']=function(){var x = new Date();if(ct.dd>x){return true;}else{return fals
 ct.ddi();
 
 ct["c"] = {
-    'parentObject':ct,
+    'po':ct,
 	'C':ct.C,
 	'offset':{top:0,left:0},
 	'width':0,
@@ -48,11 +48,11 @@ ct["c"] = {
 	"iwb": function(x,y) {
 		return (x>=0 && y>=0 && x<this.width && y<this.height);
 	},
-	"isWithinDrawingBounds": function(x,y) {
+	"iwd": function(x,y) {
 		return (x>=(-12) && y>=(-12) && x<(this.width+12) && y<(this.height+12));
 	},
 	"restore": function() {
-		this.parentObject.cn.constructor.prototype.putImageData.call(this.parentObject.cn, restorePoints[restorePosition], 0, 0);
+		this.po.cn.constructor.prototype.putImageData.call(this.po.cn, restorePoints[restorePosition], 0, 0);
 	}
 };
 ct["t"] = {
@@ -111,15 +111,15 @@ ct["options"] = {
 	}
 };
 ct["html"] = {
-	'parentObject':ct,
+	'po':ct,
 	
 	'init':{}, // HTML initialization methods will be placed here
 	
 	'buttonHandlers':{
-		'ctObject':ct,
-		'brushClick':function(brushSize) {
+		'cto':ct,
+		'bc':function(brushSize) {
 			drawApp.setSize(brushSize);				// Set default brush size
-			this.ctObject.t.c = ct.t.tt.BRUSH;		// Update tool type
+			this.cto.t.c = ct.t.tt.BRUSH;		// Update tool type
 			
 			// Visually unselect any other t
 			var ele = document.getElementsByName(ct.id + "-btn-radio");
@@ -127,19 +127,19 @@ ct["html"] = {
 				ele[i].checked = false;
 		},
 		'setLineToolsOpen':function() {
-			this.ctObject.options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
+			this.cto.options.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
 		},
 		'setOptionsColor':function(color,normalfill) {
 			if(normalfill) {
-				this.ctObject.options.useStrokeAsFill = true;
-				this.ctObject.options.fc = '';
+				this.cto.options.useStrokeAsFill = true;
+				this.cto.options.fc = '';
 			} else {
-				this.ctObject.options.useStrokeAsFill = false;
-				this.ctObject.options.fc = color;
+				this.cto.options.useStrokeAsFill = false;
+				this.cto.options.fc = color;
 			}
 		},
 		'setToolType':function(type) {
-			this.ctObject.t.c=type;
+			this.cto.t.c=type;
 		}
 	}
 };
@@ -459,7 +459,7 @@ ct.eh["mouseUp"] = function(e) {
 		t.paintMethods.dl(c.cn,t.p[0],t.p[1], endPointX, endPointY);
 		t.reset(true);
 	} else if(t.c === t.tt.LINECHAIN) {
-		if(c.c.isWithinDrawingBounds(c.mouseX,c.mouseY)){
+		if(c.c.iwd(c.mouseX,c.mouseY)){
 			if(c.sd) {
 				var a = t.ls(t.p[t.p.length-2],t.p[t.p.length-1],endPointX,endPointY);
 				endPointX = a.x;
@@ -477,7 +477,7 @@ ct.eh["mouseUp"] = function(e) {
 			t.reset();
 		}
 	} else if(t.c === t.tt.CURVE) {
-		if(c.c.isWithinDrawingBounds(c.mouseX,c.mouseY)){
+		if(c.c.iwd(c.mouseX,c.mouseY)){
 			t.p.push(c.mouseX,c.mouseY);
 			if(e.which == 3) {	// If right mouse click, finish the curve
 				var fc = (c.options.useStrokeAsFill) ? c.cn.strokeStyle : c.options.fc;
@@ -727,10 +727,10 @@ ct.html.init['setupCssAndHtml'] = function()
 	ct.html.init.setupCSS();
 	
 	/*---- 3. Make Necessary Modifications to Existing Elements ----*/
-	document.getElementById(ct.dcBrushes[0].id).parentNode.onclick = function(){ct.html.buttonHandlers.brushClick(ct.dcBrushes[0].size);};
-	document.getElementById(ct.dcBrushes[1].id).parentNode.onclick = function(){ct.html.buttonHandlers.brushClick(ct.dcBrushes[1].size);};
-	document.getElementById(ct.dcBrushes[2].id).parentNode.onclick = function(){ct.html.buttonHandlers.brushClick(ct.dcBrushes[2].size);};
-	document.getElementById(ct.dcBrushes[3].id).parentNode.onclick = function(){ct.html.buttonHandlers.brushClick(ct.dcBrushes[3].size);};
+	document.getElementById(ct.dcBrushes[0].id).parentNode.onclick = function(){ct.html.buttonHandlers.bc(ct.dcBrushes[0].size);};
+	document.getElementById(ct.dcBrushes[1].id).parentNode.onclick = function(){ct.html.buttonHandlers.bc(ct.dcBrushes[1].size);};
+	document.getElementById(ct.dcBrushes[2].id).parentNode.onclick = function(){ct.html.buttonHandlers.bc(ct.dcBrushes[2].size);};
+	document.getElementById(ct.dcBrushes[3].id).parentNode.onclick = function(){ct.html.buttonHandlers.bc(ct.dcBrushes[3].size);};
 	
 	/*---- 4. Create Draw Tools Elements and Interface ----*/
 	// Create Tool Buttons
