@@ -205,6 +205,7 @@ ct.t.pm["ff"] = function(ctx,nb,mb){
 			pt(rge[0],rge[1],y,fc);
 		}
 	}
+	// This loop colors edge pixels and softens them with anti-aliasing
 	while(ear.length>0){x=ear.shift();y=ear.shift();cp(x,y,fc);
 		if((!cc(fc,gcfc(x-1,y))) && ct.c.iwb(x-1,y)){cpb(x-1,y,fc,gcfc(x-1,y));}
 		if((!cc(fc,gcfc(x+1,y))) && ct.c.iwb(x+1,y)){cpb(x+1,y,fc,gcfc(x+1,y));}
