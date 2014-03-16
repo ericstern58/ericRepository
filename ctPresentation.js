@@ -149,7 +149,7 @@ ct["html"] = {
 ct.t.paintMethods["dl"]=function(c,x,y,a,b){c.beginPath();c.moveTo(x,y);c.lineTo(a,b);c.stroke();}
 ct.t.paintMethods["dr"]=function(c,p,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(p[2],p[1]);c.lineTo(p[2],p[3]);c.lineTo(p[0],p[3]);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
 ct.t.paintMethods["de"] = function(c,p,f){var x=p[0],y=p[1],w=p[2]-p[0],h=p[3]-p[1],k=.5522848,a=(w/2)*k,b=(h/2)*k,d=x+w,e=y+h,g=x+w/2,i=y+h/2;c.save();c.lineJoin="round";c.beginPath();c.moveTo(x,i);c.bezierCurveTo(x,i-b,g-a,y,g,y);c.bezierCurveTo(g+a,y,d,i-b,d,i);c.bezierCurveTo(d,i+b,g+a,e,g,e);c.bezierCurveTo(g-a,e,x,i+b,x,i);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
-ct.t.paintMethods["ff"] = function(dq,xSeed,ySeed){
+ct.t.paintMethods["ff"] = function(ctx,xSeed,ySeed){
 	// Round seed coords in case they happen to be float type
 	xSeed = Math.round( xSeed );
 	ySeed = Math.round( ySeed );
@@ -159,11 +159,11 @@ ct.t.paintMethods["ff"] = function(dq,xSeed,ySeed){
 	
 	var w = ct.c.width;
 	var h = ct.c.height;
-	var p = dq.getImageData(0,0,w,h);
+	var p = ctx.getImageData(0,0,w,h);
 	var d = p.data;
 	var tci = (xSeed+ySeed*ct.c.width)*4;
-	var tcl = [d[tci],d[tci+1],d[tci+2],d[tci+3]];
-	var c = parseInt(dq.strokeStyle.substr(1,6),16);
+	var targetColor = [d[tci],d[tci+1],d[tci+2],d[tci+3]];
+	var c = parseInt(ctx.strokeStyle.substr(1,6),16);
 	var fc = [(c>>16)&255,(c>>8)&255,c&255,255];
 	
 	/*---------------------- Supporting functions ----------------------*/
@@ -184,7 +184,7 @@ ct.t.paintMethods["ff"] = function(dq,xSeed,ySeed){
 		d[i+3]=c[3];
 	}
 	// [Experimental] Colors a pixel with a blend of 2 colors (helpful for assimilating anti-aliasing)
-	var cpb=function(x,y,c,d){
+	var cpb = function(x,y,c,d){
 		var r=Math.ceil((c[0]+d[0])/2);
 		var g=Math.ceil((c[1]+d[1])/2);
 		var b=Math.ceil((c[2]+d[2])/2);
@@ -192,10 +192,10 @@ ct.t.paintMethods["ff"] = function(dq,xSeed,ySeed){
 		cp(x,y,[r,g,b,a]);
 	}
 	//---Algorithm helper functions
-	var paint = function(a,b,y,c) {
+	var paint = function(xMin,xMax,y,c) {
 		var r = c[0], g = c[1], b = c[2], a = c[3];
-		var l = (b+1 + y * w) * 4;
-		for(var i = (a + y * w) * 4; i<l; i+=4) {
+		var limit = (xMax+1 + y * w) * 4;
+		for(var i = (xMin + y * w) * 4; i<limit; i+=4) {
 			d[i]=r;
 			d[i+1]=g;
 			d[i+2]=b;
@@ -203,31 +203,31 @@ ct.t.paintMethods["ff"] = function(dq,xSeed,ySeed){
 		}
 	}
 	var test = function(x,y) {
-		return (ct.c.iwb(x,y) && cc(tcl,gcfc(x,y)));
+		return (ct.c.iwb(x,y) && cc(targetColor,gcfc(x,y)));
 	}
-	var tep = function(x,y,o) {
-		var a = ee(x,y);
-		var b = ee(x-1,y);
-		var c = ee(x+1,y);
+	var testEdgePoint = function(x,y,o) {
+		var a = edgeEligible(x,y);
+		var b = edgeEligible(x-1,y);
+		var c = edgeEligible(x+1,y);
 		if( !a ) {
 			return 0;
 		} else if( b && c ) {
 			return 1;
-		} else if ( c && ee(x-1,o)) {
+		} else if ( c && edgeEligible(x-1,o)) {
 			return 1;
-		} else if ( b && ee(x+1,o)) {
+		} else if ( b && edgeEligible(x+1,o)) {
 			return 1;
 		}
 		return 0;
 	}
-	var ee = function(x,y) {
+	var edgeEligible = function(x,y) {
 		var c = gcfc(x,y);
-		return ( ct.c.iwb(x,y) && (!cc(fc,c)) && (!cc(tcl,c)) );
+		return ( ct.c.iwb(x,y) && (!cc(fc,c)) && (!cc(targetColor,c)) );
 	}
 	
 	/*---------------------- Begin Procedure ----------------------*/
 	// If seed pixel is already colored the fill color, nothing needs to be done, return early
-	if(cc(tcl,fc))
+	if(cc(targetColor,fc))
 		return;
 	
 	/*---------------------- Algorithm Begin ----------------------*/
@@ -252,9 +252,9 @@ ct.t.paintMethods["ff"] = function(dq,xSeed,ySeed){
 				stack.push([x,y+direction,direction]);
 			
 			// Before scanning line, find wether or not to add edge pixels from seed point
-			if(tep(x,y+direction,y))
+			if(testEdgePoint(x,y+direction,y))
 				edgeArray.push(x,y+direction);
-			if(tep(x,y-direction,y))
+			if(testEdgePoint(x,y-direction,y))
 				edgeArray.push(x,y-direction);
 			
 			var range = [0,0];
@@ -270,12 +270,12 @@ ct.t.paintMethods["ff"] = function(dq,xSeed,ySeed){
 					
 					if(topFillable && topLeftUnfillable) // Find when to add a new seed(top)
 						stack.push([i,y+direction,direction]);
-					else if(tep(i,y+direction,y)) // Find Wether or not to add edge pixels
+					else if(testEdgePoint(i,y+direction,y)) // Find Wether or not to add edge pixels
 						edgeArray.push(i,y+direction);
 						
 					if(bottomFillable && bottomLeftUnfillable) // Find when to add a new seed(bottom)
 						stack.push([i,y-direction,-direction]);
-					else if(tep(i,y-direction,y)) // Find Wether or not to add edge pixels
+					else if(testEdgePoint(i,y-direction,y)) // Find Wether or not to add edge pixels
 						edgeArray.push(i,y-direction);
 				}
 				if(ct.c.iwb(i,y))
@@ -302,7 +302,7 @@ ct.t.paintMethods["ff"] = function(dq,xSeed,ySeed){
 		if( (!cc(fc,gcfc(x,y+1))) && ct.c.iwb(x,y+1) )
 			cpb(x,y+1,fc,gcfc(x,y+1));
 	}
-	dq.putImageData(p,0,0);
+	ctx.putImageData(p,0,0);
 }
 ct.t.paintMethods["dc"]=function (c,p,e,s,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);for(var i=2;i<p.length;i+=2){c.lineTo(p[i],p[i+1]);}if(s){if(e){c.stroke();var z = parseInt(c.strokeStyle.substr(1,6),16);c.strokeStyle="rgba("+((z>>16)&255)+","+((z>>8)&255)+","+(z&255)+",0.5)";c.moveTo(p[p.length-2],p[p.length-1]);c.lineTo(p[0],p[1]);}else{c.closePath();if(f){c.fillStyle=f;c.fill();}}}c.stroke();if(e){c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);var w=(0.2126*((z>>16)&255))+(0.7152*((z>>8)&255))+(0.0722*(z&255));c.fillStyle=(w>160)?"#444444":"#FFFFFF";c.lineWidth=3;for(var i=0;i<p.length;i+=2){c.beginPath();c.arc(p[i],p[i+1],2.5,2*Math.PI,0);c.closePath();c.stroke();c.fill();}c.restore();}c.restore();}
 ct.t.paintMethods["ds"] = function(c,p,t,cl,hx,em){var cp=[];var n=p.length;var q=(cl)?1:0;if(n==0){return;} else if(n==4){c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(p[2],p[3]);c.stroke();}if(q){p.push(p[0],p[1],p[2],p[3]);p.unshift(p[n-1]);p.unshift(p[n-1]);}for(var i=0,m =(n-4+(4*q));i<m;i+=2){var x0=p[i],y0=p[i+1],x1=p[i+2],y1=p[i+3],x2=p[i+4],y2=p[i+5];var d01=Math.sqrt(Math.pow(x1-x0,2)+Math.pow(y1-y0,2));var d12=Math.sqrt(Math.pow(x2-x1,2)+Math.pow(y2-y1,2));var fa=t*d01/(d01+d12);var fb=t-fa;var p1x=x1+fa*(x0-x2);var p1y=y1+fa*(y0-y2);var p2x=x1-fb*(x0-x2);var p2y=y1-fb*(y0-y2);cp=cp.concat(p1x,p1y,p2x,p2y);}cp=(q)?(cp.concat(cp[0],cp[1])):cp;c.save();c.beginPath();c.lineJoin="round";c.moveTo(p[2],p[3]);for(var i=2;i<n;i+=2){c.bezierCurveTo(cp[2*i-2],cp[2*i-1],cp[2*i],cp[2*i+1],p[i+2],p[i+3]);}if(q){if(em){c.stroke();c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);c.strokeStyle="rgba("+((z>>16)&255)+","+((z>>8)&255)+","+(z&255)+",0.5)";c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],p[n+2],p[n+3]);c.stroke();c.restore();}else{c.bezierCurveTo(cp[2*n-2],cp[2*n-1],cp[2*n],cp[2*n+1],p[n+2],p[n+3]);c.moveTo(p[0],p[1]);c.closePath();if(hx){c.fillStyle=hx;c.fill();}c.stroke();}}else{c.moveTo(p[0],p[1]);c.quadraticCurveTo(cp[0],cp[1],p[2],p[3]);c.moveTo(p[n-2],p[n-1]);c.quadraticCurveTo(cp[2*n-10],cp[2*n-9],p[n-4],p[n-3]);c.stroke();}if(em){c.save();var z=parseInt(c.strokeStyle.substr(1,6),16);var c2=(0.2126*((z>>16)&255))+(0.7152*((z>>8)&255))+(0.0722*(z&255));c.fillStyle=(c2>160)?"#444444":"#FFFFFF";c.lineWidth=3;for(var i=(2*q),m=(n-2+(2*q));i<m;i+=2){c.beginPath();c.arc(p[i],p[i+1],2.5,2*Math.PI,false);c.closePath();c.stroke();c.fill();}c.restore();}c.restore();}
