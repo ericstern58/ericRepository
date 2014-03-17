@@ -182,29 +182,15 @@ ct.eh["keyUp"]=function(e){if(!ct.cd()){return;}var c=ct;var t=c.t;if(e.keyCode=
 ct.ht.init['createToolButton']=function(type,name){var b=document.createElement('label');b.id=ct.id+'-btn-'+name;b.className=ct.id+'-btn';b.innerHTML='<input id="'+ct.id+'-btn-radio-'+name+'" name="'+ct.id+'-btn-radio" type="radio">'+'<div class="'+ct.id+'-btn-container">'+'<div id="'+ct.id+'-btn-icon-'+name+'"></div>'+'</div>';document.getElementById(ct.id).appendChild(b);b.onclick=function(){ct.ht.bh.stt(type);};return b;}
 ct.ht.init['createToolButtonWithLabel']=function(type, name, label){var b=ct.ht.init.createToolButton(type,name);b.getElementsByTagName('div')[0].innerHTML = label;return b;}
 ct.ht.init['createUtilityButton']=function(name){var b = document.createElement('label');b.id=ct.id+'-btn-'+name;b.className=ct.id+'-btn';b.innerHTML='<div class="'+ct.id+'-btn-container">'+'<div id="'+ct.id+'-btn-icon-'+name+'"></div>'+'</div>';document.getElementById(ct.id).appendChild(b);return b;}
-ct.ht.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton)
-{
-	//Create DIV in which Options will be placed in
-	var optionsDiv = document.createElement('div');
-	optionsDiv.id = ct.id + '-options';
-	optionsDiv.innerHTML = 
-		'<div id="drawTools-options-content">' +
-			'<div id="drawTools-options-leftPanel"></div>' +
-			'<div id="drawTools-options-palette"></div>' +
-		'</div>';
-	//drawToolsDiv.appendChild(optionsDiv);
-	
-	drawToolsDiv.insertBefore(optionsDiv, optionsButton.nextSibling);
-	
-	//----- BEGIN ----- LeftPanel --------------------------------------------------
-	var leftPanelHtml = "";
-	leftPanelHtml += 
+ct.ht.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton){var od=document.createElement('div');od.id=ct.id+'-options';od.innerHTML='<div id="drawTools-options-content">'+'<div id="drawTools-options-leftPanel"></div>'+'<div id="drawTools-options-palette"></div>'+'</div>';drawToolsDiv.insertBefore(od, optionsButton.nextSibling);
+	var lph="";
+	lph+= 
 		'<label onclick=ct.ht.bh.slto(); class="switch">\
 			<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">\
 			<span class="switch-label" data-on="Loop Line Tools" data-off="Open Line Tools"></span>\
 			<span class="switch-handle"></span>\
 		</label>';
-	document.getElementById('drawTools-options-leftPanel').innerHTML = leftPanelHtml;
+	document.getElementById('drawTools-options-leftPanel').innerHTML = lph;
 	//----- BEGIN ----- ColorPicker --------------------------------------------------
 	var colorElements = document.getElementsByClassName('colorPicker');
 	var optionsPaletteHtml = "";
