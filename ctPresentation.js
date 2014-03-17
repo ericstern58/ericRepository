@@ -170,70 +170,7 @@ ct.ht.init['setupCSS']=function(){var z=$('#'+ct.id),a=ct.c.offset.top+ct.c.hg-z
  /*------------------------------- Event Handlers ------------------------------*/
 /*-----------------------------------------------------------------------------*/
 ct.eh["mouseDown"]=function(e){var c=ct;var t=c.t;if($('#drawTools-options').css('opacity') == 1){painting = !1;c.c.restore();c.options.tm();return;}else if(t.c === t.tt.a){return;}t.ta=true;c.c.ul();c.mouseX=e.pageX-c.c.offset.left;c.mouseY=e.pageY-c.c.offset.top;if(t.c===t.tt.b && ct.cd()){painting = !1;t.pm.ff(c.cn,c.mouseX,c.mouseY);}else if(t.c===t.tt.c && ct.cd()){painting=!1;t.p.push(c.mouseX,c.mouseY);}else if(t.c===t.tt.d && ct.cd()){painting=!1;}else if(t.c===t.tt.e && ct.cd()){painting=!1;}else if(t.c===t.tt.f && ct.cd()){painting = !1;t.p.push(c.mouseX,c.mouseY);}else if(t.c===t.tt.g && ct.cd()){painting=!1;t.p.push(c.mouseX,c.mouseY);} }
-
-ct.eh["mouseMove"] = function(e) {
-	var c = ct;
-	var t = c.t;
-	if(t.c === t.tt.a)
-		return;	// default behaviors
-	else if(!t.ta)
-		return;	// If no tool is in use, ignore event
-	
-	if(!ct.cd()){return;}
-	
-	// Translate mouse location to point relative to c
-	c.mouseX = e.pageX-c.c.offset.left;
-	c.mouseY = e.pageY-c.c.offset.top;
-	var endPointX = c.mouseX;
-	var endPointY = c.mouseY;
-	
-	if(t.c === t.tt.b) {
-		// Do nothing
-	} else if(t.c === t.tt.c) {
-		if(c.sd) {
-			var a = t.ls(t.p[0],t.p[1],endPointX,endPointY);
-			endPointX = a.x;
-			endPointY = a.y;
-		}
-		c.c.restore();
-		t.pm.dl(c.cn,t.p[0],t.p[1],endPointX,endPointY);
-	} else if(t.c === t.tt.d) {
-		if(t.p.length > 0) {
-			if(c.sd) {
-				var a = t.ls(t.p[t.p.length-2],t.p[t.p.length-1],endPointX,endPointY);
-				endPointX = a.x;
-				endPointY = a.y;
-			}
-			var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
-			c.c.restore();
-			t.pm.dc(c.cn,t.p.concat(endPointX,endPointY),true,c.options.ltsc,fc);
-		}
-	} else if(t.c === t.tt.e) {
-		if(t.p.length > 0) {
-			var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
-			c.c.restore();
-			t.pm.ds(c.cn,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.ltsc,fc,true);
-		}
-	} else if(t.c === t.tt.f) {
-		var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
-		if(c.sd) {
-			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
-			endPointX = a.x;
-			endPointY = a.y;
-		}
-		c.c.restore();
-		t.pm.dr(c.cn,t.p.concat(endPointX,endPointY),fc);
-	} else if(t.c === t.tt.g) {
-		var fc = (c.options.usaf) ? c.cn.strokeStyle : c.options.fc;
-		if(c.sd) {
-			var a = t.ss(t.p[0],t.p[1],endPointX,endPointY);
-			endPointX = a.x;
-			endPointY = a.y;
-		}
-		c.c.restore();
-		t.pm.de(c.cn,t.p.concat(endPointX,endPointY),fc);
-	}
-}
+ct.eh["mouseMove"]=function(e){var c=ct;var t=c.t;if(t.c===t.tt.a){return;}else if(!t.ta){return;}if(!ct.cd()){return;}c.mouseX=e.pageX-c.c.offset.left;c.mouseY=e.pageY-c.c.offset.top;var endPointX=c.mouseX;var endPointY=c.mouseY;if(t.c===t.tt.b){}else if(t.c === t.tt.c){if(c.sd){var a=t.ls(t.p[0],t.p[1],endPointX,endPointY);endPointX=a.x;endPointY=a.y;}c.c.restore();t.pm.dl(c.cn,t.p[0],t.p[1],endPointX,endPointY);}else if(t.c===t.tt.d){if(t.p.length > 0){if(c.sd){var a=t.ls(t.p[t.p.length-2],t.p[t.p.length-1],endPointX,endPointY);endPointX=a.x;endPointY=a.y;}var fc=(c.options.usaf)?c.cn.strokeStyle:c.options.fc;c.c.restore();t.pm.dc(c.cn,t.p.concat(endPointX,endPointY),true,c.options.ltsc,fc);}}else if(t.c===t.tt.e){if(t.p.length>0) {var fc=(c.options.usaf)?c.cn.strokeStyle:c.options.fc;c.c.restore();t.pm.ds(c.cn,t.p.concat(c.mouseX,c.mouseY),0.5,c.options.ltsc,fc,true);}}else if(t.c===t.tt.f){var fc=(c.options.usaf)?c.cn.strokeStyle:c.options.fc;if(c.sd){var a=t.ss(t.p[0],t.p[1],endPointX,endPointY);endPointX=a.x;endPointY=a.y;}c.c.restore();t.pm.dr(c.cn,t.p.concat(endPointX,endPointY),fc);}else if(t.c===t.tt.g){var fc=(c.options.usaf)?c.cn.strokeStyle:c.options.fc;if(c.sd){var a=t.ss(t.p[0],t.p[1],endPointX,endPointY);endPointX=a.x;endPointY=a.y;}c.c.restore();t.pm.de(c.cn,t.p.concat(endPointX,endPointY),fc);}}
 
 ct.eh["mouseUp"] = function(e) {
 	var c = ct;
