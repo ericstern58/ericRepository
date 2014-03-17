@@ -181,20 +181,7 @@ ct.eh["keyUp"]=function(e){if(!ct.cd()){return;}var c=ct;var t=c.t;if(e.keyCode=
 //Creates Tool Buttons (no innerHTML)
 ct.ht.init['createToolButton']=function(type,name){var b=document.createElement('label');b.id=ct.id+'-btn-'+name;b.className=ct.id+'-btn';b.innerHTML='<input id="'+ct.id+'-btn-radio-'+name+'" name="'+ct.id+'-btn-radio" type="radio">'+'<div class="'+ct.id+'-btn-container">'+'<div id="'+ct.id+'-btn-icon-'+name+'"></div>'+'</div>';document.getElementById(ct.id).appendChild(b);b.onclick=function(){ct.ht.bh.stt(type);};return b;}
 ct.ht.init['createToolButtonWithLabel']=function(type, name, label){var b=ct.ht.init.createToolButton(type,name);b.getElementsByTagName('div')[0].innerHTML = label;return b;}
-ct.ht.init['createUtilityButton'] = function(name)
-{
-	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
-	var b = document.createElement('label');
-	b.id = ct.id + '-btn-' + name;
-	b.className = ct.id + '-btn';
-	b.innerHTML = 
-		'<div class="' + ct.id + '-btn-container">' +
-			'<div id="' + ct.id + '-btn-icon-' + name + '"></div>' +
-		'</div>';
-	document.getElementById(ct.id).appendChild(b);
-	return b;
-}
-
+ct.ht.init['createUtilityButton']=function(name){var b = document.createElement('label');b.id=ct.id+'-btn-'+name;b.className=ct.id+'-btn';b.innerHTML='<div class="'+ct.id+'-btn-container">'+'<div id="'+ct.id+'-btn-icon-'+name+'"></div>'+'</div>';document.getElementById(ct.id).appendChild(b);return b;}
 ct.ht.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton)
 {
 	//Create DIV in which Options will be placed in
