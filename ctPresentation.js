@@ -177,18 +177,7 @@ ct.t.pm["ff"]=function(ctx,nb,mb){nb = Math.round( nb );mb = Math.round(mb);ct.c
 			if(tsep(x,y+drc,y)){ear.push(x,y+drc);}
 			if(tsep(x,y-drc,y)){ear.push(x,y-drc);}
 			var rge = [0,0];
-			for(var j=0;j<2;j++){
-				var incr=(j)?1:-1;
-				var i;
-				for(i=x+incr;ts(i,y);i+=incr){
-					var tf=ts(i,y+drc);
-					var bf=ts(i,y-drc);
-					var tlu=(!ts(i-incr,y+drc));
-					var blu=(!ts(i-incr,y-drc));
-					if(tf && tlu){sag.push([i,y+drc,drc]);}else if(tsep(i,y+drc,y)){ear.push(i,y+drc);}
-					if(bf && blu){sag.push([i,y-drc,-drc]);}else if(tsep(i,y-drc,y)){ear.push(i,y-drc);}
-				}if(ct.c.iwb(i,y)){ear.push(i,y);}rge[j]=i-incr;
-			}
+			for(var j=0;j<2;j++){var incr=(j)?1:-1;var i;for(i=x+incr;ts(i,y);i+=incr){var tf=ts(i,y+drc);var bf=ts(i,y-drc);var tlu=(!ts(i-incr,y+drc));var blu=(!ts(i-incr,y-drc));if(tf && tlu){sag.push([i,y+drc,drc]);}else if(tsep(i,y+drc,y)){ear.push(i,y+drc);}if(bf && blu){sag.push([i,y-drc,-drc]);}else if(tsep(i,y-drc,y)){ear.push(i,y-drc);}}if(ct.c.iwb(i,y)){ear.push(i,y);}rge[j]=i-incr;}
 			pt(rge[0],rge[1],y,fc);
 		}
 	}
