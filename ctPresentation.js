@@ -182,60 +182,8 @@ ct.eh["keyUp"]=function(e){if(!ct.cd()){return;}var c=ct;var t=c.t;if(e.keyCode=
 ct.ht.init['createToolButton']=function(type,name){var b=document.createElement('label');b.id=ct.id+'-btn-'+name;b.className=ct.id+'-btn';b.innerHTML='<input id="'+ct.id+'-btn-radio-'+name+'" name="'+ct.id+'-btn-radio" type="radio">'+'<div class="'+ct.id+'-btn-container">'+'<div id="'+ct.id+'-btn-icon-'+name+'"></div>'+'</div>';document.getElementById(ct.id).appendChild(b);b.onclick=function(){ct.ht.bh.stt(type);};return b;}
 ct.ht.init['createToolButtonWithLabel']=function(type, name, label){var b=ct.ht.init.createToolButton(type,name);b.getElementsByTagName('div')[0].innerHTML = label;return b;}
 ct.ht.init['createUtilityButton']=function(name){var b = document.createElement('label');b.id=ct.id+'-btn-'+name;b.className=ct.id+'-btn';b.innerHTML='<div class="'+ct.id+'-btn-container">'+'<div id="'+ct.id+'-btn-icon-'+name+'"></div>'+'</div>';document.getElementById(ct.id).appendChild(b);return b;}
-ct.ht.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton){var od=document.createElement('div');od.id=ct.id+'-options';od.innerHTML='<div id="drawTools-options-content">'+'<div id="drawTools-options-leftPanel"></div>'+'<div id="drawTools-options-palette"></div>'+'</div>';drawToolsDiv.insertBefore(od, optionsButton.nextSibling);
-	var lph="";
-	lph+= 
-		'<label onclick=ct.ht.bh.slto(); class="switch">\
-			<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">\
-			<span class="switch-label" data-on="Loop Line Tools" data-off="Open Line Tools"></span>\
-			<span class="switch-handle"></span>\
-		</label>';
-	document.getElementById('drawTools-options-leftPanel').innerHTML = lph;
-	//----- BEGIN ----- ColorPicker --------------------------------------------------
-	var colorElements = document.getElementsByClassName('colorPicker');
-	var optionsPaletteHtml = "";
-	
-	optionsPaletteHtml += 
-		'<label onclick=ct.ht.bh.soc(""); style="width:120px;">' +
-			'<input type="radio" name="drawTools-options-palette-radio" checked>' +
-			'<div style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div>' +
-		'</label>';
-	optionsPaletteHtml += 
-		'<label onclick=ct.ht.bh.soc("",1); style="width:120px;">' +
-			'<input type="radio" name="drawTools-options-palette-radio">' +
-			'<div style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div>' +
-		'</label>';
-	
-	for(var i=0;i<colorElements.length;i++) {
-		var color = colorElements[i].getAttribute("data-color");
-		ct.dcPalette.push(color);
-		optionsPaletteHtml += 
-			'<label onclick=ct.ht.bh.soc("' + color + '");>' + //
-				'<input type="radio" name="drawTools-options-palette-radio">' +
-				'<div style="background:' + color + ';"></div>' +
-			'</label>';
-	}
-	document.getElementById('drawTools-options-palette').innerHTML = optionsPaletteHtml;
-}
-// Destroys all elements, styling and javascript
-ct.ht['DTDestroy'] = function() 
-{
-	// 1. Destroy HTML
-	document.getElementById(ct.id).remove();
-	// 2. Destroy CSS
-	document.getElementById(ct.id + 'StyleSheet').remove();
-	// 3. Remove listeners
-	$(document).off('mousedown');
-	$(document).off('mousemove');
-	$(document).off('mouseup');
-	// 4. Set the state variable to reflect DTTools uninstallation
-	window.DTToolsIsCurrentlyInstalled = false;
-	// 5. Destroy JavaScript
-	delete ct.c; // Delete all references to ct
-	delete ct.ht;
-	delete ct;
-	document.getElementById('DTScript').remove();
-}
+ct.ht.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton){var od=document.createElement('div');od.id=ct.id+'-options';od.innerHTML='<div id="drawTools-options-content">'+'<div id="drawTools-options-leftPanel"></div>'+'<div id="drawTools-options-palette"></div>'+'</div>';drawToolsDiv.insertBefore(od, optionsButton.nextSibling);var lph="";lph+='<label onclick=ct.ht.bh.slto(); class="switch"><input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen"><span class="switch-label" data-on="Loop Line Tools" data-off="Open Line Tools"></span><span class="switch-handle"></span></label>';document.getElementById('drawTools-options-leftPanel').innerHTML = lph;var colorElements=document.getElementsByClassName('colorPicker');var optionsPaletteHtml="";optionsPaletteHtml+='<label onclick=ct.ht.bh.soc(""); style="width:120px;"><input type="radio" name="drawTools-options-palette-radio" checked><div style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div></label>';optionsPaletteHtml+='<label onclick=ct.ht.bh.soc("",1); style="width:120px;"><input type="radio" name="drawTools-options-palette-radio"><div style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div></label>';for(var i=0;i<colorElements.length;i++){var color = colorElements[i].getAttribute("data-color");ct.dcPalette.push(color);optionsPaletteHtml+='<label onclick=ct.ht.bh.soc("'+color+'");><input type="radio" name="drawTools-options-palette-radio"><div style="background:'+color+';"></div></label>';}document.getElementById('drawTools-options-palette').innerHTML=optionsPaletteHtml;}
+ct.ht['DTDestroy']=function(){document.getElementById(ct.id).remove();document.getElementById(ct.id+'StyleSheet').remove();$(document).off('mousedown');$(document).off('mousemove');$(document).off('mouseup');window.DTToolsIsCurrentlyInstalled=false;delete ct.c;delete ct.ht;delete ct;document.getElementById('DTScript').remove();}
 ct.ht.init['setupCssAndHtml'] = function()
 {	
 	if(!ct.cd()){return;}
