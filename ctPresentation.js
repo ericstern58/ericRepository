@@ -109,42 +109,7 @@ ct["options"] = {
 		return (x2>=0 && y2>=0 && x2<wh && y2<hg);
 	}
 };
-ct["ht"] = {
-	'po':ct,
-	
-	'init':{}, // HTML initialization methods will be placed here
-	
-	'bh':{
-		'cto':ct,
-		'bc':function(brushSize) {
-			drawApp.setSize(brushSize);				// Set default brush size
-			this.cto.t.c = ct.t.tt.a;		// Update tool type
-			
-			// Visually unselect any other t
-			var ele = document.getElementsByName(ct.id + "-btn-radio");
-			for(var i=0;i<ele.length;i++)
-				ele[i].checked = false;
-		},
-		'slto':function() {
-			this.cto.options.ltsc = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
-		},
-		'soc':function(color,normalfill) {
-			if(normalfill) {
-				this.cto.options.usaf = true;
-				this.cto.options.fc = '';
-			} else {
-				this.cto.options.usaf = false;
-				this.cto.options.fc = color;
-			}
-		},
-		'stt':function(type) {
-			this.cto.t.c=type;
-		}
-	}
-};
-  /*-----------------------------------------------------------------------------*/
- /*----------------------------- Drawing Algorithms ----------------------------*/
-/*-----------------------------------------------------------------------------*/
+ct["ht"]={'po':ct,'init':{},'bh':{'cto':ct,'bc':function(brushSize){drawApp.setSize(brushSize);this.cto.t.c=ct.t.tt.a;var ele=document.getElementsByName(ct.id+"-btn-radio");for(var i=0;i<ele.length;i++){ele[i].checked = false;}},'slto':function(){this.cto.options.ltsc=document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;},'soc':function(color,normalfill){if(normalfill){this.cto.options.usaf=true;this.cto.options.fc='';}else{this.cto.options.usaf=false;this.cto.options.fc=color;}},'stt':function(type){this.cto.t.c=type;}}};
 ct.t.pm["dl"]=function(c,x,y,a,b){c.beginPath();c.moveTo(x,y);c.lineTo(a,b);c.stroke();}
 ct.t.pm["dr"]=function(c,p,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(p[2],p[1]);c.lineTo(p[2],p[3]);c.lineTo(p[0],p[3]);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
 ct.t.pm["de"] = function(c,p,f){var x=p[0],y=p[1],w=p[2]-p[0],h=p[3]-p[1],k=.5522848,a=(w/2)*k,b=(h/2)*k,d=x+w,e=y+h,g=x+w/2,i=y+h/2;c.save();c.lineJoin="round";c.beginPath();c.moveTo(x,i);c.bezierCurveTo(x,i-b,g-a,y,g,y);c.bezierCurveTo(g+a,y,d,i-b,d,i);c.bezierCurveTo(d,i+b,g+a,e,g,e);c.bezierCurveTo(g-a,e,x,i+b,x,i);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
