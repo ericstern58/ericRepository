@@ -148,20 +148,7 @@ ct["ht"] = {
 ct.t.pm["dl"]=function(c,x,y,a,b){c.beginPath();c.moveTo(x,y);c.lineTo(a,b);c.stroke();}
 ct.t.pm["dr"]=function(c,p,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(p[2],p[1]);c.lineTo(p[2],p[3]);c.lineTo(p[0],p[3]);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
 ct.t.pm["de"] = function(c,p,f){var x=p[0],y=p[1],w=p[2]-p[0],h=p[3]-p[1],k=.5522848,a=(w/2)*k,b=(h/2)*k,d=x+w,e=y+h,g=x+w/2,i=y+h/2;c.save();c.lineJoin="round";c.beginPath();c.moveTo(x,i);c.bezierCurveTo(x,i-b,g-a,y,g,y);c.bezierCurveTo(g+a,y,d,i-b,d,i);c.bezierCurveTo(d,i+b,g+a,e,g,e);c.bezierCurveTo(g-a,e,x,i+b,x,i);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
-ct.t.pm["ff"] = function(ctx,nb,mb){
-	// Round seed coords in case they happen to be float type
-	nb = Math.round( nb );
-	mb = Math.round( mb );
-	/*---------------------- Setup Procedure Variables ----------------------*/
-	// This c.restore() fix avoids issues with brush placing dot over flood fill seed area
-	ct.c.restore();
-	
-	var w=ct.c.wh;
-	var h=ct.c.hg;
-	var p=ctx.getImageData(0,0,w,h);
-	var d=p.data;
-	var tci=(nb+mb*ct.c.wh)*4;
-	var tgc=[d[tci],d[tci+1],d[tci+2],d[tci+3]];
+ct.t.pm["ff"]=function(ctx,nb,mb){nb = Math.round( nb );mb = Math.round(mb);ct.c.restore();var w=ct.c.wh;var h=ct.c.hg;var p=ctx.getImageData(0,0,w,h);var d=p.data;var tci=(nb+mb*ct.c.wh)*4;var tgc=[d[tci],d[tci+1],d[tci+2],d[tci+3]];
 	var c=parseInt(ctx.strokeStyle.substr(1,6),16);
 	var fc=[(c>>16)&255,(c>>8)&255,c&255,255];
 	var cc=function(a,b){return (a[0]===b[0] && a[1]===b[1] && a[2]===b[2] && a[3]===b[3]);};
@@ -199,7 +186,7 @@ ct.t.pm["ff"] = function(ctx,nb,mb){
 					var tlu=(!ts(i-incr,y+drc));
 					var blu=(!ts(i-incr,y-drc));
 					if(tf && tlu){sag.push([i,y+drc,drc]);}else if(tsep(i,y+drc,y)){ear.push(i,y+drc);}
-					if(bottomFillable && blu){sag.push([i,y-drc,-drc]);}else if(tsep(i,y-drc,y)){ear.push(i,y-drc);}
+					if(bf && blu){sag.push([i,y-drc,-drc]);}else if(tsep(i,y-drc,y)){ear.push(i,y-drc);}
 				}if(ct.c.iwb(i,y)){ear.push(i,y);}rge[j]=i-incr;
 			}
 			pt(rge[0],rge[1],y,fc);
