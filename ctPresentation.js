@@ -70,45 +70,7 @@ ct["t"] = {
 	'ss':function(x,y,a,b){var f,g,d=a-x,e=b-y;var q=Math.min(Math.abs(d),Math.abs(e));if(d>0){if(e>0){f=x+q;g=y+q;}else{f=x+q;g=y-q;}}else{if(e>0){f=x-q;g=y+q;}else{f=x-q;g=y-q;}}return {x:f,y:g};},
 	'ls':function(x,y,a,b){var d=y-b;var e=(x-a)?(x-a):1;var f=d/e;if(f>2.4||f<-2.4){return {x:x,y:b};}else if(f<0.4&&f>-0.4){return {x:a,y:y};}else{return this.ss(x,y,a,b);}}
 };
-ct["options"] = {
-	'id':'#' + ct.id + '-options',
-	
-	'usaf':false,
-	'fc':'', 
-	
-	'ltsc':false,
-	
-	'cut':0.5,
-	
-	'getOffset':function () {
-		return $(this.id).offset();
-	},
-	'tm':function () {
-		var h = 175;
-		var op = $(this.id).css('opacity');
-		
-		if(op == 0) {
-			$(this.id).stop(true, true).animate({
-				height: (h + "px"),
-				marginTop: ("-=" + h + "px"),
-				opacity: "1"
-			},200, "swing");
-		} else if(op == 1) {
-			$(this.id).stop(true, true).animate({
-				height: "0px",
-				marginTop: ("+=" + h + "px"),
-				opacity: "0"
-			},200, "swing");
-		}
-	},
-	'iwb':function (x, y) {
-		var x2 = x - $(this.id).offset().top;
-		var y2 = y - $(this.id).offset().left;
-		var wh = $(this.id).width();
-		var hg = $(this.id).height();
-		return (x2>=0 && y2>=0 && x2<wh && y2<hg);
-	}
-};
+ct["options"]={'id':'#'+ct.id+'-options','usaf':false,'fc':'', 'ltsc':false,'cut':0.5,'getOffset':function(){return $(this.id).offset();},'tm':function(){var h=175;var op=$(this.id).css('opacity');if(op==0){$(this.id).stop(true,true).animate({height:(h+"px"),marginTop:("-="+h+"px"),opacity:"1"},200,"swing");}else if(op==1){$(this.id).stop(true,true).animate({height:"0px",marginTop:("+="+h+"px"),opacity: "0"},200,"swing");}},'iwb':function(x,y){var x2=x-$(this.id).offset().top;var y2=y-$(this.id).offset().left;var wh=$(this.id).width();var hg=$(this.id).height();return (x2>=0 && y2>=0 && x2<wh && y2<hg);}};
 ct["ht"]={'po':ct,'init':{},'bh':{'cto':ct,'bc':function(brushSize){drawApp.setSize(brushSize);this.cto.t.c=ct.t.tt.a;var ele=document.getElementsByName(ct.id+"-btn-radio");for(var i=0;i<ele.length;i++){ele[i].checked = false;}},'slto':function(){this.cto.options.ltsc=document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;},'soc':function(color,normalfill){if(normalfill){this.cto.options.usaf=true;this.cto.options.fc='';}else{this.cto.options.usaf=false;this.cto.options.fc=color;}},'stt':function(type){this.cto.t.c=type;}}};
 ct.t.pm["dl"]=function(c,x,y,a,b){c.beginPath();c.moveTo(x,y);c.lineTo(a,b);c.stroke();}
 ct.t.pm["dr"]=function(c,p,f){c.save();c.lineJoin="round";c.beginPath();c.moveTo(p[0],p[1]);c.lineTo(p[2],p[1]);c.lineTo(p[2],p[3]);c.lineTo(p[0],p[3]);c.closePath();if(f){c.fillStyle=f;c.fill();}c.stroke();c.restore();}
