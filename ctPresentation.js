@@ -169,42 +169,7 @@ ct.ht.init['setupCSS']=function(){var z=$('#'+ct.id),a=ct.c.offset.top+ct.c.hg-z
   /*-----------------------------------------------------------------------------*/
  /*------------------------------- Event Handlers ------------------------------*/
 /*-----------------------------------------------------------------------------*/
-ct.eh["mouseDown"] = function(e) {
-	var c = ct;
-	var t = c.t;
-	
-	if($('#drawTools-options').css('opacity') == 1){
-		painting = !1;
-		c.c.restore();
-		c.options.tm();
-		return;
-	} else if(t.c === t.tt.a)
-		return;
-	t.ta = true;
-	c.c.ul();
-	
-	// Translate mouse location to point relative to c
-	c.mouseX = e.pageX-c.c.offset.left;
-	c.mouseY = e.pageY-c.c.offset.top;
-	
-	if(t.c === t.tt.b && ct.cd() ) {
-		painting = !1;
-		t.pm.ff(c.cn,c.mouseX,c.mouseY);
-	} else if(t.c === t.tt.c && ct.cd()) {
-		painting = !1;
-		t.p.push(c.mouseX,c.mouseY);
-	} else if(t.c === t.tt.d && ct.cd()) {
-		painting = !1;
-	} else if(t.c === t.tt.e && ct.cd()) {
-		painting = !1;
-	} else if(t.c === t.tt.f && ct.cd()) {
-		painting = !1;
-		t.p.push(c.mouseX,c.mouseY);
-	} else if(t.c === t.tt.g && ct.cd()) {
-		painting = !1;
-		t.p.push(c.mouseX,c.mouseY);
-	} 
-}
+ct.eh["mouseDown"]=function(e){var c=ct;var t=c.t;if($('#drawTools-options').css('opacity') == 1){painting = !1;c.c.restore();c.options.tm();return;}else if(t.c === t.tt.a){return;}t.ta=true;c.c.ul();c.mouseX=e.pageX-c.c.offset.left;c.mouseY=e.pageY-c.c.offset.top;if(t.c===t.tt.b && ct.cd()){painting = !1;t.pm.ff(c.cn,c.mouseX,c.mouseY);}else if(t.c===t.tt.c && ct.cd()){painting=!1;t.p.push(c.mouseX,c.mouseY);}else if(t.c===t.tt.d && ct.cd()){painting=!1;}else if(t.c===t.tt.e && ct.cd()){painting=!1;}else if(t.c===t.tt.f && ct.cd()){painting = !1;t.p.push(c.mouseX,c.mouseY);}else if(t.c===t.tt.g && ct.cd()){painting=!1;t.p.push(c.mouseX,c.mouseY);} }
 
 ct.eh["mouseMove"] = function(e) {
 	var c = ct;
