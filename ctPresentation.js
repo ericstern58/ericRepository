@@ -184,43 +184,7 @@ ct.ht.init['createToolButtonWithLabel']=function(type, name, label){var b=ct.ht.
 ct.ht.init['createUtilityButton']=function(name){var b = document.createElement('label');b.id=ct.id+'-btn-'+name;b.className=ct.id+'-btn';b.innerHTML='<div class="'+ct.id+'-btn-container">'+'<div id="'+ct.id+'-btn-icon-'+name+'"></div>'+'</div>';document.getElementById(ct.id).appendChild(b);return b;}
 ct.ht.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton){var od=document.createElement('div');od.id=ct.id+'-options';od.innerHTML='<div id="drawTools-options-content">'+'<div id="drawTools-options-leftPanel"></div>'+'<div id="drawTools-options-palette"></div>'+'</div>';drawToolsDiv.insertBefore(od, optionsButton.nextSibling);var lph="";lph+='<label onclick=ct.ht.bh.slto(); class="switch"><input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen"><span class="switch-label" data-on="Loop Line Tools" data-off="Open Line Tools"></span><span class="switch-handle"></span></label>';document.getElementById('drawTools-options-leftPanel').innerHTML = lph;var colorElements=document.getElementsByClassName('colorPicker');var optionsPaletteHtml="";optionsPaletteHtml+='<label onclick=ct.ht.bh.soc(""); style="width:120px;"><input type="radio" name="drawTools-options-palette-radio" checked><div style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div></label>';optionsPaletteHtml+='<label onclick=ct.ht.bh.soc("",1); style="width:120px;"><input type="radio" name="drawTools-options-palette-radio"><div style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div></label>';for(var i=0;i<colorElements.length;i++){var color = colorElements[i].getAttribute("data-color");ct.dcPalette.push(color);optionsPaletteHtml+='<label onclick=ct.ht.bh.soc("'+color+'");><input type="radio" name="drawTools-options-palette-radio"><div style="background:'+color+';"></div></label>';}document.getElementById('drawTools-options-palette').innerHTML=optionsPaletteHtml;}
 ct.ht['DTDestroy']=function(){document.getElementById(ct.id).remove();document.getElementById(ct.id+'StyleSheet').remove();$(document).off('mousedown');$(document).off('mousemove');$(document).off('mouseup');window.DTToolsIsCurrentlyInstalled=false;delete ct.c;delete ct.ht;delete ct;document.getElementById('DTScript').remove();}
-ct.ht.init['setupCssAndHtml'] = function()
-{	
-	if(!ct.cd()){return;}
-	
-	ct.c.ul();
-	/*---- 1. Create Draw Tools Container - DIV in which DrawTools will be placed in ----*/
-	var drawToolsDiv = document.createElement('div');
-	drawToolsDiv.id = ct.id;
-	ct.dcToolbar.appendChild(drawToolsDiv);
-	
-	/*---- 2. Setup necessary CSS for DrawTools ----*/
-	ct.ht.init.setupCSS();
-	
-	/*---- 3. Make Necessary Modifications to Existing Elements ----*/
-	document.getElementById(ct.dcBrushes[0].id).parentNode.onclick = function(){ct.ht.bh.bc(ct.dcBrushes[0].size);};
-	document.getElementById(ct.dcBrushes[1].id).parentNode.onclick = function(){ct.ht.bh.bc(ct.dcBrushes[1].size);};
-	document.getElementById(ct.dcBrushes[2].id).parentNode.onclick = function(){ct.ht.bh.bc(ct.dcBrushes[2].size);};
-	document.getElementById(ct.dcBrushes[3].id).parentNode.onclick = function(){ct.ht.bh.bc(ct.dcBrushes[3].size);};
-	
-	/*---- 4. Create Draw Tools Elements and Interface ----*/
-	// Create Tool Buttons
-	ct.ht.init.createToolButton(ct.t.tt.b,"fill");
-	ct.ht.init.createToolButton(ct.t.tt.c,"line");
-	ct.ht.init.createToolButton(ct.t.tt.d,"linechain");
-	ct.ht.init.createToolButton(ct.t.tt.e,"curve");
-	ct.ht.init.createToolButton(ct.t.tt.f,"rect");
-	ct.ht.init.createToolButton(ct.t.tt.g,"ellipse");
-	
-	var optionsButton = ct.ht.init.createUtilityButton("options");
-	optionsButton.onclick = function(){ct.options.tm();};
-	
-	ct.ht.init.createOptionsMenu(drawToolsDiv, optionsButton);
-	
-	// Exitbutton to remove DrawTools
-	var exitButton = ct.ht.init.createUtilityButton("exit");
-	exitButton.onclick = function(){ct.ht.DTDestroy();};
-}
+ct.ht.init['setupCssAndHtml']=function(){if(!ct.cd()){return;}ct.c.ul();var drawToolsDiv=document.createElement('div');drawToolsDiv.id=ct.id;ct.dcToolbar.appendChild(drawToolsDiv);ct.ht.init.setupCSS();document.getElementById(ct.dcBrushes[0].id).parentNode.onclick = function(){ct.ht.bh.bc(ct.dcBrushes[0].size);};document.getElementById(ct.dcBrushes[1].id).parentNode.onclick = function(){ct.ht.bh.bc(ct.dcBrushes[1].size);};document.getElementById(ct.dcBrushes[2].id).parentNode.onclick = function(){ct.ht.bh.bc(ct.dcBrushes[2].size);};document.getElementById(ct.dcBrushes[3].id).parentNode.onclick = function(){ct.ht.bh.bc(ct.dcBrushes[3].size);};ct.ht.init.createToolButton(ct.t.tt.b,"fill");ct.ht.init.createToolButton(ct.t.tt.c,"line");ct.ht.init.createToolButton(ct.t.tt.d,"linechain");ct.ht.init.createToolButton(ct.t.tt.e,"curve");ct.ht.init.createToolButton(ct.t.tt.f,"rect");ct.ht.init.createToolButton(ct.t.tt.g,"ellipse");var ob=ct.ht.init.createUtilityButton("options");ob.onclick = function(){ct.options.tm();};ct.ht.init.createOptionsMenu(drawToolsDiv, ob);var eb=ct.ht.init.createUtilityButton("exit");eb.onclick=function(){ct.ht.DTDestroy();};}
   /*-----------------------------------------------------------------------------*/
  /*----------------------------------- Main ------------------------------------*/
 /*-----------------------------------------------------------------------------*/
