@@ -179,27 +179,20 @@ ct.eh["keyUp"]=function(e){if(!ct.cd()){return;}var c=ct;var t=c.t;if(e.keyCode=
  /*---------------------- Elements Creation/Manipulation -----------------------*/
 /*-----------------------------------------------------------------------------*/
 //Creates Tool Buttons (no innerHTML)
-ct.ht.init['createToolButton']=function(type,name){var button=document.createElement('label');button.id=ct.id+'-btn-'+name;button.className=ct.id+'-btn';button.innerHTML='<input id="'+ct.id+'-btn-radio-'+name+'" name="'+ct.id+'-btn-radio" type="radio">'+'<div class="'+ct.id+'-btn-container">'+'<div id="'+ct.id+'-btn-icon-'+name+'"></div>'+'</div>';document.getElementById(ct.id).appendChild(button);button.onclick=function(){ct.ht.bh.stt(type);};return button;}
-//Creates Tool Buttons (with a label)
-ct.ht.init['createToolButtonWithLabel'] = function(type, name, label)
-{
-	var button = ct.ht.init.createToolButton(type, name);
-	button.getElementsByTagName('div')[0].innerHTML = label; // Place text inside it
-	return button;
-}
-//Creates Tool Buttons (no innerHTML)
+ct.ht.init['createToolButton']=function(type,name){var b=document.createElement('label');b.id=ct.id+'-btn-'+name;b.className=ct.id+'-btn';b.innerHTML='<input id="'+ct.id+'-btn-radio-'+name+'" name="'+ct.id+'-btn-radio" type="radio">'+'<div class="'+ct.id+'-btn-container">'+'<div id="'+ct.id+'-btn-icon-'+name+'"></div>'+'</div>';document.getElementById(ct.id).appendChild(b);b.onclick=function(){ct.ht.bh.stt(type);};return b;}
+ct.ht.init['createToolButtonWithLabel']=function(type, name, label){var b=ct.ht.init.createToolButton(type,name);b.getElementsByTagName('div')[0].innerHTML = label;return b;}
 ct.ht.init['createUtilityButton'] = function(name)
 {
 	// Ex: <label class="yellowButton" onclick="drawApp.setSize(35);" title="Large Brush (Hotkey: CTRL+4)">
-	var button = document.createElement('label');
-	button.id = ct.id + '-btn-' + name;
-	button.className = ct.id + '-btn';
-	button.innerHTML = 
+	var b = document.createElement('label');
+	b.id = ct.id + '-btn-' + name;
+	b.className = ct.id + '-btn';
+	b.innerHTML = 
 		'<div class="' + ct.id + '-btn-container">' +
 			'<div id="' + ct.id + '-btn-icon-' + name + '"></div>' +
 		'</div>';
-	document.getElementById(ct.id).appendChild(button);
-	return button;
+	document.getElementById(ct.id).appendChild(b);
+	return b;
 }
 
 ct.ht.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton)
