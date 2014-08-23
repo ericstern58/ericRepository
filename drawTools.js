@@ -10,7 +10,8 @@ var DRAWCEPTION_BRUSHES =
 
 var trashVar = 23;
 trashVar = trashVar +234;
-
+var trashtwo = trashVar*2;
+trashtwo = trashVar + 23;
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
 /*-----------------------------------------------------------------------------*/				 
