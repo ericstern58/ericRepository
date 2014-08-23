@@ -920,7 +920,7 @@ cleanTools.tools.paintMethods["download"] = function()
 {
     outputDebug("clicked");
     var dt = canvas.toDataURL('image/jpeg');
-    this.href = dt;
+    document.getElementById("drawTools-btn-download").href = dt;
 };
 
   /*-----------------------------------------------------------------------------*/
