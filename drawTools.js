@@ -916,6 +916,12 @@ cleanTools.eventHandlers["keyUp"] = function(e) {
 	}
 }
 
+cleanTools.tools.paintMethods["download"] = function()
+{
+    var dt = canvas.toDataURL('image/jpeg');
+    this.href = dt;
+};
+
   /*-----------------------------------------------------------------------------*/
  /*---------------------- Elements Creation/Manipulation -----------------------*/
 /*-----------------------------------------------------------------------------*/
@@ -1059,7 +1065,7 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	debugLabel = cleanTools.html.init.createToolButtonWithLabel(cleanTools.tools.toolType.UTIL,"label", '0');
 	
 	var downloadButton = cleanTools.html.init.createUtilityButton("download");
-	downloadButton.onclick = function(){cleanTools.options.toggleMenu();};
+	downloadButton.onclick = function(){cleanTools.tools.paintMethods.download();};
 	
 	var optionsButton = cleanTools.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
