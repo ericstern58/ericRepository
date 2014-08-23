@@ -8,6 +8,7 @@ var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.pare
 var DRAWCEPTION_BRUSHES = 
 	[{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},{id: 'brush-12', size: 12},{id: 'brush-35', size: 35}];
 
+var trashvariable = 345;
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
 /*-----------------------------------------------------------------------------*/				 
