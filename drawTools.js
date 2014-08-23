@@ -1051,17 +1051,9 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	cleanTools.html.init.createToolButton(cleanTools.tools.toolType.ELLIPSE,"ellipse");
 	
 	debugLabel = cleanTools.html.init.createToolButtonWithLabel(cleanTools.tools.toolType.UTIL,"label", '0');
-	try {
-	var downloadButton = cleanTools.html.init.createUtilityButton("download");
-	document.getElementById("drawtools-btn-download").onclick = function(alert("hello");){};
 	
-}
-catch(err) {
-    alert(err);
-}
+	var downloadButton = cleanTools.html.init.createUtilityButton("download");
 
-var helloworld = 24;
-helloworld = 2+3;
 	var optionsButton = cleanTools.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
 	
