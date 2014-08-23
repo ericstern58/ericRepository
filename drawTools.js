@@ -1059,6 +1059,9 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 catch(err) {
     alert(err);
 }
+
+var helloworld = 24;
+helloworld = 2+3;
 	var optionsButton = cleanTools.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
 	
