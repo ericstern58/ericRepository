@@ -176,6 +176,7 @@ cleanTools["html"] = {
 		}
 	}
 };
+ 
   /*-----------------------------------------------------------------------------*/
  /*----------------------------- Drawing Algorithms ----------------------------*/
 /*-----------------------------------------------------------------------------*/
@@ -567,6 +568,7 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-icon-curve:after{margin:10px 0px 0px 10px;position:relative;width:8px;height:10px;-webkit-box-shadow:0px -3px 0px 0px black;box-shadow:0px -3px 0px 0px black;border-radius:100%;content:'';display:block;position:absolute;}\n\
 		#drawTools-btn-icon-curve:before{margin:4px 0px 0px -1px;width:2px;height:9px;background:black;border-radius:2px;-webkit-transform:rotate(-30deg);-moz-transform:rotate(-30deg);-o-transform:rotate(-30deg);-ms-transform:rotate(-30deg);transform:rotate(-30deg);content:'';content:'';display:block;position:absolute;}\n\
 		#drawTools-btn-icon-download{margin:8px 8px 0px 8px;width:22px;height:15px;background:black;}\n\
+		#drawTools-btn-icon-loop{margin:8px 16px 0px 17px;width:5px;height:15px;background:black;border-radius:2px;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
 		\n\
 		#drawTools{position:relative;display:inline-block;vertical-align:middle;}\n\
 		#drawTools>.drawTools-btn{position:relative;float:left;display:inline-block;}\n\
@@ -584,6 +586,11 @@ cleanTools.html.init['setupCSS'] = function()
 		.drawTools-btn-container:hover,.drawTools-btn:focus{background-color:#f6f166;border-bottom:1px solid #ddd85b;color:#333333;text-decoration:none;}\n\
 		.drawTools-btn-container:active,.drawTools-btn input:focus + div,.drawTools-btn input:checked + div{background-color:#f6f166;border-bottom:1px solid #f6f166;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.5);box-shadow:inset 0 3px 5px rgba(0,0,0,0.5);}\n\
 		.drawTools-btn-container.disabled,.drawTools-btn-container[disabled],fieldset[disabled] .drawTools-btn-container{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}\n\
+		\n\
+		#drawTools-btn-loop .drawTools-btn-container{background:#252525;border-bottom:1px solid #171717;}\n\
+		#drawTools-btn-loop .drawTools-btn-container:focus{outline:thin dotted #fff;}\n\
+		#drawTools-btn-loop .drawTools-btn-container:hover,#drawTools-btn-options .drawTools-btn:focus{background-color:#2e2e2e;border-bottom:1px solid #222222;}\n\
+		#drawTools-btn-loop .drawTools-btn-container:active{background-color:#252525;border-bottom:1px solid #252525;}\n\
 		\n\
 		#drawTools-btn-download .drawTools-btn-container{background:#252525;border-bottom:1px solid #171717;}\n\
 		#drawTools-btn-download .drawTools-btn-container:focus{outline:thin dotted #fff;}\n\
@@ -921,46 +928,6 @@ cleanTools.tools.paintMethods["download"] = function()
     var dt = drawApp.toDataURL('image/png');
 	window.open(dt);
 }
-/*
-cleanTools.tools.paintMethods["upload"] = function()
-{
-    var reader = new FileReader();
-    reader.onload = function(event){
-        var img = new Image();
-        img.onload = function(){
-            cleanTools.canvas.width; = img.width;
-            cleanTools.canvas.height = img.height;
-            cleanTools.context.drawImage(img,0,0);
-        }
-        img.src = event.target.result;
-    }
-    reader.readAsDataURL(e.target.files[0]);
-}
-*/
-/*
-cleanTools.tools.paintMethods["upload"] = function()
-{
-    evt.stopPropagation();
-    evt.preventDefault();
-
-	var img = new Image();
-        img.onload = function(){
-            cleanTools.canvas.width; = img.width;
-            cleanTools.canvas.height = img.height;
-            cleanTools.context.drawImage(img,0,0);
-        }
-        img.src = evt.dataTransfer.files;
-		
-}
-
-cleanTools.tools.paintMethods["uploadDrag"] = function()
-{
-    evt.stopPropagation();
-    evt.preventDefault();
-    evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
-}
-
-  */
 
 
 
@@ -1109,6 +1076,9 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	var downloadButton = cleanTools.html.init.createUtilityButton("download");
 	downloadButton.onclick = function(){cleanTools.tools.paintMethods.download();};
 	
+	var loopButton = cleanTools.html.init.createUtilityButton("loop");
+	loopButton.onclick = function(){};
+	
 	var optionsButton = cleanTools.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
 	
@@ -1145,30 +1115,3 @@ $(document).on('mouseup', cleanTools.eventHandlers.mouseUp);
 $(document).keydown(cleanTools.eventHandlers.keyDown);
 // Setup keyUp Listener
 $(document).keyup(cleanTools.eventHandlers.keyUp);
-
-
-
-
-// Setup Image Upload Listener
-cleanTools.Canvas.off('dragover');
-cleanTools.Canvas.on('dragover', function (evt) {
-	evt.preventDefault();
-});
-// Setup Image Upload Listener
-cleanTools.Canvas.off('drop');
-cleanTools.Canvas.on('drop', function (evt) {
-	var files = evt.dataTransfer.files;
-	if (files.length > 0) {
-		var file = files[0];
-		if (typeof FileReader !== "undefined" && file.type.indexOf("image") != -1) {
-			var reader = new FileReader();
-			// Note: addEventListener doesn't work in Google Chrome for this event
-			reader.onload = function (evt) {
-				img.src = evt.target.result;
-			};
-			reader.readAsDataURL(file);
-		}
-	}
-	evt.preventDefault();
-});
-  
