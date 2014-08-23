@@ -918,6 +918,7 @@ cleanTools.eventHandlers["keyUp"] = function(e) {
 
 cleanTools.tools.paintMethods["download"] = function()
 {
+    outputDebug("clicked");
     var dt = canvas.toDataURL('image/jpeg');
     this.href = dt;
 };
