@@ -921,6 +921,20 @@ cleanTools.tools.paintMethods["download"] = function()
     var dt = drawApp.toDataURL('image/jpeg');
 	window.open(dt);
 }
+cleanTools.tools.paintMethods["upload"] = function()
+{
+    var reader = new FileReader();
+    reader.onload = function(event){
+        var img = new Image();
+        img.onload = function(){
+            cleanTools.canvas.width; = img.width;
+            cleanTools.canvas.height = img.height;
+            cleanTools.context.drawImage(img,0,0);
+        }
+        img.src = event.target.result;
+    }
+    /*reader.readAsDataURL(e.target.files[0]);     */
+}
   /*-----------------------------------------------------------------------------*/
  /*---------------------- Elements Creation/Manipulation -----------------------*/
 /*-----------------------------------------------------------------------------*/
