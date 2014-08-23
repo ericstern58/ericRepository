@@ -937,7 +937,7 @@ cleanTools.tools.paintMethods["upload"] = function()
     reader.readAsDataURL(e.target.files[0]);
 }
 */
-
+/*
 cleanTools.tools.paintMethods["upload"] = function()
 {
     evt.stopPropagation();
@@ -950,6 +950,7 @@ cleanTools.tools.paintMethods["upload"] = function()
             cleanTools.context.drawImage(img,0,0);
         }
         img.src = evt.dataTransfer.files;
+		
 }
 
 cleanTools.tools.paintMethods["uploadDrag"] = function()
@@ -959,7 +960,7 @@ cleanTools.tools.paintMethods["uploadDrag"] = function()
     evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
 }
 
-  
+  */
 
 
 
@@ -1107,9 +1108,6 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	
 	var downloadButton = cleanTools.html.init.createUtilityButton("download");
 	downloadButton.onclick = function(){cleanTools.tools.paintMethods.download();};
-	// Setup the dnd listeners.
-    downloadButton.addEventListener('dragover', cleanTools.tools.paintMethods.uploadDrag, false);
-    downloadButton.addEventListener('drop', cleanTools.tools.paintMethods.upload, false);
 	
 	var optionsButton = cleanTools.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
@@ -1147,3 +1145,30 @@ $(document).on('mouseup', cleanTools.eventHandlers.mouseUp);
 $(document).keydown(cleanTools.eventHandlers.keyDown);
 // Setup keyUp Listener
 $(document).keyup(cleanTools.eventHandlers.keyUp);
+
+
+
+
+// Setup Image Upload Listener
+cleanTools.Canvas.off('dragover');
+cleanTools.Canvas.on('dragover', function (evt) {
+	evt.preventDefault();
+});
+// Setup Image Upload Listener
+cleanTools.Canvas.off('drop');
+cleanTools.Canvas.on('drop', function (evt) {
+	var files = evt.dataTransfer.files;
+	if (files.length > 0) {
+		var file = files[0];
+		if (typeof FileReader !== "undefined" && file.type.indexOf("image") != -1) {
+			var reader = new FileReader();
+			// Note: addEventListener doesn't work in Google Chrome for this event
+			reader.onload = function (evt) {
+				img.src = evt.target.result;
+			};
+			reader.readAsDataURL(file);
+		}
+	}
+	evt.preventDefault();
+});
+  
