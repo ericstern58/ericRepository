@@ -923,7 +923,7 @@ cleanTools.tools.paintMethods["download"] = function()
 }
 cleanTools.tools.paintMethods["upload"] = function()
 {
-    var reader = new FileReader();
+    var reader = new FileReader();/*
     reader.onload = function(event){
         var img = new Image();
         img.onload = function(){
@@ -933,7 +933,7 @@ cleanTools.tools.paintMethods["upload"] = function()
         }
         img.src = event.target.result;
     }
-    /*reader.readAsDataURL(e.target.files[0]);     */
+    reader.readAsDataURL(e.target.files[0]);     */
 }
   /*-----------------------------------------------------------------------------*/
  /*---------------------- Elements Creation/Manipulation -----------------------*/
