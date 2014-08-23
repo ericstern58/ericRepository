@@ -8,7 +8,6 @@ var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.pare
 var DRAWCEPTION_BRUSHES = 
 	[{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},{id: 'brush-12', size: 12},{id: 'brush-35', size: 35}];
 
-var trashvariable = 345;
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
 /*-----------------------------------------------------------------------------*/				 
@@ -919,9 +918,10 @@ cleanTools.eventHandlers["keyUp"] = function(e) {
 
 cleanTools.tools.paintMethods["download"] = function()
 {
-    outputDebug("clicked");
     var dt = drawApp.toDataURL('image/jpeg');
-    document.getElementById("drawTools-btn-download").href = dt;
+    outputDebug("clicked");
+	window.open(dt);
+    /*document.getElementById("drawTools-btn-download").href = dt;*/
 };
 
   /*-----------------------------------------------------------------------------*/
