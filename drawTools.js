@@ -919,11 +919,22 @@ cleanTools.eventHandlers["keyUp"] = function(e) {
 cleanTools.tools.paintMethods["download"] = function()
 {
     var dt = drawApp.toDataURL('image/jpeg');
-    outputDebug("clicked");
 	window.open(dt);
-    /*document.getElementById("drawTools-btn-download").href = dt;*/
 };
-
+cleanTools.tools.paintMethods["upload"] = function()
+{
+    var reader = new FileReader();
+    reader.onload = function(event){
+        var img = new Image();
+        img.onload = function(){
+            cleanTools.canvas.width; = img.width;
+            cleanTools.canvas.height = img.height;
+            cleanTools.context.drawImage(img,0,0);
+        }
+        img.src = event.target.result;
+    }
+    reader.readAsDataURL(e.target.files[0]);     
+}
   /*-----------------------------------------------------------------------------*/
  /*---------------------- Elements Creation/Manipulation -----------------------*/
 /*-----------------------------------------------------------------------------*/
@@ -1067,7 +1078,7 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	debugLabel = cleanTools.html.init.createToolButtonWithLabel(cleanTools.tools.toolType.UTIL,"label", '0');
 	
 	var downloadButton = cleanTools.html.init.createUtilityButton("download");
-	downloadButton.onclick = function(){cleanTools.tools.paintMethods.download();};
+	downloadButton.onclick = function(){cleanTools.tools.paintMethods.upload();};
 	
 	var optionsButton = cleanTools.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
