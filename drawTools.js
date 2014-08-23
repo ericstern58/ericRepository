@@ -918,12 +918,13 @@ cleanTools.eventHandlers["keyUp"] = function(e) {
 
 cleanTools.tools.paintMethods["download"] = function()
 {
-    var dt = drawApp.toDataURL('image/jpeg');
+    var dt = drawApp.toDataURL('image/png');
 	window.open(dt);
 }
+/*
 cleanTools.tools.paintMethods["upload"] = function()
 {
-    var reader = new FileReader();/*
+    var reader = new FileReader();
     reader.onload = function(event){
         var img = new Image();
         img.onload = function(){
@@ -933,8 +934,35 @@ cleanTools.tools.paintMethods["upload"] = function()
         }
         img.src = event.target.result;
     }
-    reader.readAsDataURL(e.target.files[0]);     */
+    reader.readAsDataURL(e.target.files[0]);
 }
+*/
+
+cleanTools.tools.paintMethods["upload"] = function()
+{
+    evt.stopPropagation();
+    evt.preventDefault();
+
+	var img = new Image();
+        img.onload = function(){
+            cleanTools.canvas.width; = img.width;
+            cleanTools.canvas.height = img.height;
+            cleanTools.context.drawImage(img,0,0);
+        }
+        img.src = evt.dataTransfer.files;
+}
+
+cleanTools.tools.paintMethods["uploadDrag"] = function()
+{
+    evt.stopPropagation();
+    evt.preventDefault();
+    evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+}
+
+  
+
+
+
   /*-----------------------------------------------------------------------------*/
  /*---------------------- Elements Creation/Manipulation -----------------------*/
 /*-----------------------------------------------------------------------------*/
@@ -1079,6 +1107,9 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	
 	var downloadButton = cleanTools.html.init.createUtilityButton("download");
 	downloadButton.onclick = function(){cleanTools.tools.paintMethods.download();};
+	// Setup the dnd listeners.
+    downloadButton.addEventListener('dragover', cleanTools.tools.paintMethods.uploadDrag, false);
+    downloadButton.addEventListener('drop', cleanTools.tools.paintMethods.upload, false);
 	
 	var optionsButton = cleanTools.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
