@@ -1053,7 +1053,7 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	debugLabel = cleanTools.html.init.createToolButtonWithLabel(cleanTools.tools.toolType.UTIL,"label", '0');
 	
 	var downloadButton = cleanTools.html.init.createUtilityButton("download");
-	$(#drawtools-btn-download).onclick = function(alert("hello");){};
+	document.getElementById("drawtools-btn-download").onclick = function(alert("hello");){};
 	
 	var optionsButton = cleanTools.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
