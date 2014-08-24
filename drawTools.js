@@ -624,9 +624,7 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-options{margin-top:"+optionsMarginTop+"px;margin-left:"+optionsMarginLeft+"px;background:#252525;border-bottom:1px solid #171717;width:420px;height:0px;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
 		#drawTools-options-content{position:absolute;top:8px;left:8px;right:8px;bottom:8px;}\n\
 		\n\
-		#drawTools-options-leftPanel{width:160px;height:100%;position:absolute;left:0px;}\n\
-		\n\\n\
-		#drawTools-menu-palette{width:240px;height:100%;position:absolute;right:0px;}\n\
+		#drawTools-menu-palette{width:240px;height:100%;position:relative;margin:0;}\n\
 		#drawTools-menu-palette label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
 		#drawTools-menu-palette input{display:none;visibility:hidden;margin:0px;padding:0px;}\n\
 		#drawTools-menu-palette input:checked + div{border:2px solid #c2c2c2;}\n\
@@ -980,7 +978,6 @@ cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton
 	optionsDiv.id = cleanTools.id + '-options';
 	optionsDiv.innerHTML = 
 		'<div id="drawTools-options-content">' +
-			'<div id="drawTools-options-leftPanel"></div>' +
 			'<div id="drawTools-menu-palette"></div>' +
 		'</div>';
 	//drawToolsDiv.appendChild(optionsDiv);
