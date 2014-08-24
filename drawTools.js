@@ -568,7 +568,7 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-icon-curve:after{margin:10px 0px 0px 10px;position:relative;width:8px;height:10px;-webkit-box-shadow:0px -3px 0px 0px black;box-shadow:0px -3px 0px 0px black;border-radius:100%;content:'';display:block;position:absolute;}\n\
 		#drawTools-btn-icon-curve:before{margin:4px 0px 0px -1px;width:2px;height:9px;background:black;border-radius:2px;-webkit-transform:rotate(-30deg);-moz-transform:rotate(-30deg);-o-transform:rotate(-30deg);-ms-transform:rotate(-30deg);transform:rotate(-30deg);content:'';content:'';display:block;position:absolute;}\n\
 		#drawTools-btn-icon-download{margin:8px 8px 0px 8px;width:22px;height:15px;background:black;}\n\
-		#drawTools-btn-icon-loop{margin:8px 16px 0px 17px;width:5px;height:15px;background:black;border-radius:2px;-webkit-transform:skew(-50deg);-moz-transform:skew(-50deg);-o-transform:skew(-50deg);transform:skew(-50deg);}\n\
+		#drawTools-btn-icon-loop{margin:8px 8px 0px 8px;width:22px;height:15px;background:black;}\n\
 		\n\
 		#drawTools{position:relative;display:inline-block;vertical-align:middle;}\n\
 		#drawTools>.drawTools-btn{position:relative;float:left;display:inline-block;}\n\
@@ -614,7 +614,7 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-options-leftPanel>.switch{display:block;margin-bottom:20px;}\n\
 		\n\
 		.switch-input{position:absolute;top:0;left:0;opacity:0;}\n\
-		.switch-input:checked ~ div {border:1px solid red;}\n\
+		.switch-input:checked ~ div {border:1px solid red;background:red;}\n\
 		\n\
 		#drawTools-options-palette{width:240px;height:100%;position:absolute;right:0px;}\n\
 		#drawTools-options-palette label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
