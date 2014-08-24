@@ -2,7 +2,6 @@
 window.DTToolsIsCurrentlyInstalled = true;
 
 // Setup Constants
-//cleanTools["PropertyD"] = 4
 var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
 var DRAWCEPTION_BRUSHES = 
