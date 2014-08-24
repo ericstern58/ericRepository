@@ -570,9 +570,9 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-icon-download{margin:8px 8px 0px 8px;width:22px;height:15px;background:black;}\n\
 		#drawTools-btn-icon-loop{display:block;position:relative;margin:8px 13px;width:15px;height:15px;border-radius:100%;border-bottom:3px dotted #c2c2c2;border-top:3px dotted #c2c2c2;border-left:3px dotted #c2c2c2;border-right:3px dotted transparent;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box;}\n\
 		#drawTools-btn-icon-loop:after{content:'';position:absolute;top:-3px;right:-2px;width:0;height:0;border-style:solid;border-width:0 0 6px 6px;border-color:transparent transparent #c2c2c2 transparent;}\n\
-		#drawTools-btn-icon-options1{margin:10px 6px 10px 6px;position:relative;width:24px;height:9px;border:3px solid #c2c2c2;background:transparent;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}\n\
-		#drawTools-btn-icon-options1:before{margin:0 0 0 -5px;position:absolute;top:0;left:0;content:'';content:'';width:15px;height:11px;border-left:3px solid #c2c2c2;border-bottom:3px solid #c2c2c2;background:transparent;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}\n\
-		#drawTools-btn-icon-options1:after{margin:8px 0 0 8px;position:absolute;top:0;left:0;content:'';width:4px;height:14px;background:#c2c2c2;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}\n\
+		#drawTools-btn-icon-fillpalette{margin:0;position:relative;width:24px;height:6px;background:linear-gradient(to right,#c2c2c2,#c2c2c2 6px,transparent 6px,transparent 9px,#c2c2c2 9px,#c2c2c2 15px,transparent 15px,transparent 18px,#c2c2c2 18px,#c2c2c2 24px);}\n\
+		#drawTools-btn-icon-fillpalette:before{margin:0;position:absolute;top:9px;left:0;content:'';width:24px;height:6px;background:linear-gradient(to right,#c2c2c2,#c2c2c2 6px,transparent 6px,transparent 9px,#c2c2c2 9px,#c2c2c2 15px,transparent 15px,transparent 18px,#c2c2c2 18px,#c2c2c2 24px);}\n\
+		#drawTools-btn-icon-fillpalette:after{margin:0;position:absolute;top:18px;left:0;content:'';width:24px;height:6px;background:linear-gradient(to right,#c2c2c2,#c2c2c2 6px,transparent 6px,transparent 9px,#c2c2c2 9px,#c2c2c2 15px,transparent 15px,transparent 18px,#c2c2c2 18px,#c2c2c2 24px);}\n\
 		\n\
 		#drawTools{position:relative;display:inline-block;vertical-align:middle;}\n\
 		#drawTools>.drawTools-btn{position:relative;float:left;display:inline-block;}\n\
@@ -597,6 +597,11 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-loop .drawTools-btn-container:active{background-color:#252525;border-bottom:1px solid #252525;}\n\
 		#drawTools-btn-loop input[type='checkbox']{position:absolute;top:0;left:0;opacity:0;}\n\
 		#drawTools-btn-loop input[type='checkbox']:checked ~ #drawTools-btn-icon-loop {border:3px dotted #c2c2c2;background:#252525;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;}\n\
+		\n\
+		#drawTools-btn-fillpalette .drawTools-btn-container{background:#252525;border-bottom:1px solid #171717;border-right:1px solid #111111;}\n\
+		#drawTools-btn-fillpalette .drawTools-btn-container:focus{outline:thin dotted #fff;}\n\
+		#drawTools-btn-fillpalette .drawTools-btn-container:hover,#drawTools-btn-fillpalette .drawTools-btn:focus{background-color:#2e2e2e;border-bottom:1px solid #222222;}\n\
+		#drawTools-btn-fillpalette .drawTools-btn-container:active{background-color:#252525;border-bottom:1px solid #252525;}\n\
 		\n\
 		#drawTools-btn-download .drawTools-btn-container{background:#252525;border-bottom:1px solid #171717;border-right:1px solid #111111;}\n\
 		#drawTools-btn-download .drawTools-btn-container:focus{outline:thin dotted #fff;}\n\
@@ -1068,6 +1073,9 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
 	
 	cleanTools.html.init.createOptionsMenu(drawToolsDiv, optionsButton);
+	
+	var fillpaletteButton = cleanTools.html.init.createUtilityButton("fillpalette");
+	fillpaletteButton.onclick = function(){cleanTools.options.toggleMenu();};
 	
 	var downloadButton = cleanTools.html.init.createUtilityButton("download");
 	downloadButton.onclick = function(){cleanTools.tools.paintMethods.download();};
