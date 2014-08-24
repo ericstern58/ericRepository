@@ -614,7 +614,7 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-options-leftPanel{width:160px;height:100%;position:absolute;left:0px;}\n\
 		\n\
 		.loop-input{position:absolute;top:0;left:0;opacity:0;}\n\
-		.loop-input:checked ~ #drawTools-btn-icon-loop {border-bottom:3px dotted #fff;border-top:3px dotted #fff;border-left:3px dotted #fff;background:#252525;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;}\n\
+		.loop-input:checked ~ #drawTools-btn-icon-loop {border:3px dotted #fff;background:#252525;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;}\n\
 		.loop-input:checked ~ #drawTools-btn-icon-loop:after {border-color:transparent transparent #fff transparent;}\n\
 		\n\
 		#drawTools-options-palette{width:240px;height:100%;position:absolute;right:0px;}\n\
