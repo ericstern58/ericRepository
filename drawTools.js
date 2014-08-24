@@ -1071,10 +1071,11 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 			'<input type="checkbox" id="drawTools-options-checkbox-lineToolsOpen">' +
 			'<div id="' + cleanTools.id + '-btn-icon-' + 'loop' + '"></div>' +
 		'</div>';
-			
+	
+	/*
 	var optionsButton = cleanTools.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
-	
+	*/
 	var fillpaletteButton = cleanTools.html.init.createUtilityButton("fillpalette");
 	fillpaletteButton.onclick = function(){cleanTools.options.toggleMenu();};
 	
