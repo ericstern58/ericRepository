@@ -1079,7 +1079,7 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	var fillpaletteButton = cleanTools.html.init.createUtilityButton("fillpalette");
 	fillpaletteButton.onclick = function(){cleanTools.options.toggleMenu();};
 	
-	cleanTools.html.init.createOptionsMenu(drawToolsDiv, optionsButton);
+	cleanTools.html.init.createOptionsMenu(drawToolsDiv, fillpaletteButton);
 	
 	var downloadButton = cleanTools.html.init.createUtilityButton("download");
 	downloadButton.onclick = function(){cleanTools.tools.paintMethods.download();};
