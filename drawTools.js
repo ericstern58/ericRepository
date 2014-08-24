@@ -170,7 +170,7 @@ cleanTools["html"] = {
 				this.cleanToolsObject.options.useStrokeAsFill = false;
 				this.cleanToolsObject.options.fillColor = color;
 			}
-			this.cleanToolsObject.options.toggleMenu()
+			this.cleanToolsObject.options.toggleMenu();
 		},
 		'setToolType':function(type) {
 			this.cleanToolsObject.tools.currentToolType=type;
