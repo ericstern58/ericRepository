@@ -1077,14 +1077,7 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	downloadButton.onclick = function(){cleanTools.tools.paintMethods.download();};
 	
 	var loopButton = cleanTools.html.init.createUtilityButton("loop");
-	loopButton.onclick = function(cleanTools.html.buttonHandlers.setLineToolsOpen();){};
-	/*
-	loopButton.innerHTML = 
-		'<div class="' + cleanTools.id + '-btn-container">' +
-			'<div id="' + cleanTools.id + '-btn-icon-' + "loop" + '">' + 
-			    '<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">' +
-			'</div>' +
-		'</div>';*/
+	loopButton.onclick = function(){};
 	
 	var optionsButton = cleanTools.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
