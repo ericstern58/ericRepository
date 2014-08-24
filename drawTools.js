@@ -568,8 +568,8 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-icon-curve:after{margin:10px 0px 0px 10px;position:relative;width:8px;height:10px;-webkit-box-shadow:0px -3px 0px 0px black;box-shadow:0px -3px 0px 0px black;border-radius:100%;content:'';display:block;position:absolute;}\n\
 		#drawTools-btn-icon-curve:before{margin:4px 0px 0px -1px;width:2px;height:9px;background:black;border-radius:2px;-webkit-transform:rotate(-30deg);-moz-transform:rotate(-30deg);-o-transform:rotate(-30deg);-ms-transform:rotate(-30deg);transform:rotate(-30deg);content:'';content:'';display:block;position:absolute;}\n\
 		#drawTools-btn-icon-download{margin:8px 8px 0px 8px;width:22px;height:15px;background:black;}\n\
-		#drawTools-btn-icon-loop{display:block;position:relative;margin:10px 13px;width:15px;height:15px;border-radius:100%;border-bottom:3px dotted #000;border-top:3px dotted #000;border-left:3px dotted #000;border-right:3px dotted transparent;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box;}\n\
-		#drawTools-btn-icon-loop:after{content:'';position:absolute;top:-3px;right:-2px;width:0;height:0;border-style:solid;border-width:0 0 6px 6px;border-color:transparent transparent #000 transparent;}\n\
+		#drawTools-btn-icon-loop{display:block;position:relative;margin:8px 13px;width:15px;height:15px;border-radius:100%;border-bottom:3px dotted #c2c2c2;border-top:3px dotted #c2c2c2;border-left:3px dotted #c2c2c2;border-right:3px dotted transparent;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box;}\n\
+		#drawTools-btn-icon-loop:after{content:'';position:absolute;top:-3px;right:-2px;width:0;height:0;border-style:solid;border-width:0 0 6px 6px;border-color:transparent transparent #c2c2c2 transparent;}\n\
 		\n\
 		#drawTools{position:relative;display:inline-block;vertical-align:middle;}\n\
 		#drawTools>.drawTools-btn{position:relative;float:left;display:inline-block;}\n\
@@ -615,7 +615,8 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-options-leftPanel>.switch{display:block;margin-bottom:20px;}\n\
 		\n\
 		.switch-input{position:absolute;top:0;left:0;opacity:0;}\n\
-		.switch-input:checked ~ #drawTools-btn-icon-loop {background:red;}\n\
+		.switch-input:checked ~ #drawTools-btn-icon-loop {border-bottom:3px dotted #fff;border-top:3px dotted #fff;border-left:3px dotted #fff;}\n\
+		.switch-input:checked ~ #drawTools-btn-icon-loop:after {border-color:transparent transparent #fff transparent;}\n\
 		\n\
 		#drawTools-options-palette{width:240px;height:100%;position:absolute;right:0px;}\n\
 		#drawTools-options-palette label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
