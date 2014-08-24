@@ -613,18 +613,8 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-options-leftPanel{width:160px;height:100%;position:absolute;left:0px;}\n\
 		#drawTools-options-leftPanel>.switch{display:block;margin-bottom:20px;}\n\
 		\n\
-		.switch{font:13px/20px 'Helvetica Neue',Helvetica,Arial,sans-serif;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;width:150px;height:26px;position:relative;display:inline-block;vertical-align:top;padding:3px;border-radius:2px;cursor:pointer;box-shadow:inset 0 -1px #525252,inset 0 1px 1px rgba(0,0,0,0.8);}\n\
 		.switch-input{position:absolute;top:0;left:0;opacity:0;}\n\
-		.switch-label{position:relative;display:block;height:inherit;font-size:12px;text-transform:uppercase;background:#7b0000;border-radius:inherit;box-shadow:inset 0 1px 2px rgba(0,0,0,0.12),inset 0 0 2px rgba(0,0,0,0.15);-webkit-transition:0.15s ease-out;-moz-transition:0.15s ease-out;-o-transition:0.15s ease-out;transition:0.15s ease-out;-webkit-transition-property:opacity background;-moz-transition-property:opacity background;-o-transition-property:opacity background;transition-property:opacity background;}\n\
-		.switch-label:before,.switch-label:after{position:absolute;top:50%;margin-top:-.5em;line-height:1;-webkit-transition:inherit;-moz-transition:inherit;-o-transition:inherit;transition:inherit;}\n\
-		.switch-label:before{content:attr(data-off);right:11px;color:white;text-shadow:0 1px rgba(0,0,0,0.2);}\n\
-		.switch-label:after{content:attr(data-on);left:11px;color:white;text-shadow:0 1px rgba(0,0,0,0.2);opacity:0;}\n\
-		.switch-input:checked ~ .switch-label {background:#117b00;box-shadow:inset 0 1px 2px rgba(0,0,0,0.15),inset 0 0 3px rgba(0,0,0,0.2);}\n\
-		.switch-input:checked~.switch-label:before{opacity:0;}\n\
-		.switch-input:checked~.switch-label:after{opacity: 1;}\n\
-		.switch-handle{position:absolute;top:4px;left:4px;width:24px;height:24px;background:#c2c2c2;border-radius:2px;box-shadow:1px 1px 5px rgba(0,0,0,0.2);background-image:-webkit-linear-gradient(top, #c2c2c2 40%, #a7a7a7);background-image:-moz-linear-gradient(top, #c2c2c2 40%, #a7a7a7);background-image:-o-linear-gradient(top, #c2c2c2 40%, #a7a7a7);background-image:linear-gradient(to bottom, #c2c2c2 40%, #a7a7a7);-webkit-transition:left 0.15s ease-out;-moz-transition:left 0.15s ease-out;-o-transition:left 0.15s ease-out;transition:left 0.15s ease-out;}\n\
-		.switch-input:checked~.switch-handle{left:128px;box-shadow:-1px 1px 5px rgba(0,0,0,0.2);}\n\
-		.switch-green>.switch-input:checked~.switch-label{background:#4fb845;}\n\
+		.switch-input:checked ~ div {background:red;}\n\
 		\n\
 		#drawTools-options-palette{width:240px;height:100%;position:absolute;right:0px;}\n\
 		#drawTools-options-palette label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
@@ -1080,12 +1070,9 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	loopButton.onclick = function(){cleanTools.html.buttonHandlers.setLineToolsOpen();};
 	loopButton.innerHTML = 
 		'<div class="' + cleanTools.id + '-btn-container">' +
-			'<div id="' + cleanTools.id + '-btn-icon-' + 'loop' + '">' + 
-				'<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">' +
-			'</div>' +
+			'<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">' +
+			'<div id="' + cleanTools.id + '-btn-icon-' + 'loop' + '"></div>' +
 		'</div>';
-	
-		//'<label onclick=cleanTools.html.buttonHandlers.setLineToolsOpen(); class="switch">\
 			
 	var optionsButton = cleanTools.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
