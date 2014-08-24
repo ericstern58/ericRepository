@@ -595,6 +595,8 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-loop .drawTools-btn-container:focus{outline:thin dotted #fff;}\n\
 		#drawTools-btn-loop .drawTools-btn-container:hover,#drawTools-btn-loop .drawTools-btn:focus{background-color:#2e2e2e;border-bottom:1px solid #222222;}\n\
 		#drawTools-btn-loop .drawTools-btn-container:active{background-color:#252525;border-bottom:1px solid #252525;}\n\
+		#drawTools-btn-loop input[type='checkbox']{position:absolute;top:0;left:0;opacity:0;}\n\
+		#drawTools-btn-loop input[type='checkbox']:checked ~ #drawTools-btn-icon-loop {border:3px dotted #c2c2c2;background:#252525;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;}\n\
 		\n\
 		#drawTools-btn-download .drawTools-btn-container{background:#252525;border-bottom:1px solid #171717;border-right:1px solid #111111;}\n\
 		#drawTools-btn-download .drawTools-btn-container:focus{outline:thin dotted #fff;}\n\
@@ -615,10 +617,7 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-options-content{position:absolute;top:8px;left:8px;right:8px;bottom:8px;}\n\
 		\n\
 		#drawTools-options-leftPanel{width:160px;height:100%;position:absolute;left:0px;}\n\
-		\n\
-		.loop-input{position:absolute;top:0;left:0;opacity:0;}\n\
-		.loop-input:checked ~ #drawTools-btn-icon-loop {border:3px dotted #c2c2c2;background:#252525;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;}\n\
-		\n\
+		\n\\n\
 		#drawTools-options-palette{width:240px;height:100%;position:absolute;right:0px;}\n\
 		#drawTools-options-palette label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
 		#drawTools-options-palette input{display:none;visibility:hidden;margin:0px;padding:0px;}\n\
@@ -1064,7 +1063,7 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	loopButton.onclick = function(){cleanTools.html.buttonHandlers.setLineToolsOpen();};
 	loopButton.innerHTML = 
 		'<div class="' + cleanTools.id + '-btn-container">' +
-			'<input type="checkbox" class="loop-input" id="drawTools-options-checkbox-lineToolsOpen">' +
+			'<input type="checkbox" id="drawTools-options-checkbox-lineToolsOpen">' +
 			'<div id="' + cleanTools.id + '-btn-icon-' + 'loop' + '"></div>' +
 		'</div>';
 			
