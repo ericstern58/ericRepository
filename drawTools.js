@@ -1077,7 +1077,7 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	downloadButton.onclick = function(){cleanTools.tools.paintMethods.download();};
 	
 	var loopButton = cleanTools.html.init.createUtilityButton("loop");
-	loopButton.onclick = function(){};
+	loopButton.onclick = function(cleanTools.html.buttonHandlers.setLineToolsOpen();){};
 	loopButton.innerHTML = 
 		'<div class="' + cleanTools.id + '-btn-container">' +
 			'<div id="' + cleanTools.id + '-btn-icon-' + 'loop' + '">' + 
