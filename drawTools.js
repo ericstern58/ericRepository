@@ -591,7 +591,7 @@ cleanTools.html.init['setupCSS'] = function()
 		.drawTools-btn-container:active,.drawTools-btn input:focus + div,.drawTools-btn input:checked + div{background-color:#f6f166;border-bottom:1px solid #f6f166;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.5);box-shadow:inset 0 3px 5px rgba(0,0,0,0.5);}\n\
 		.drawTools-btn-container.disabled,.drawTools-btn-container[disabled],fieldset[disabled] .drawTools-btn-container{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}\n\
 		\n\
-		#drawTools-btn-loop .drawTools-btn-container{background:#252525;border-bottom:1px solid #171717;}\n\
+		#drawTools-btn-loop .drawTools-btn-container{background:#252525;border-bottom:1px solid #171717;border-right:1px solid #010101;}\n\
 		#drawTools-btn-loop .drawTools-btn-container:focus{outline:thin dotted #fff;}\n\
 		#drawTools-btn-loop .drawTools-btn-container:hover,#drawTools-btn-loop .drawTools-btn:focus{background-color:#2e2e2e;border-bottom:1px solid #222222;}\n\
 		#drawTools-btn-loop .drawTools-btn-container:active{background-color:#252525;border-bottom:1px solid #252525;}\n\
