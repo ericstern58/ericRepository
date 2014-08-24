@@ -614,7 +614,7 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-options-leftPanel>.switch{display:block;margin-bottom:20px;}\n\
 		\n\
 		.switch-input{position:absolute;top:0;left:0;opacity:0;}\n\
-		.switch-input:checked ~ div {background:red;}\n\
+		.switch-input:checked ~ div {border:1px solid red;}\n\
 		\n\
 		#drawTools-options-palette{width:240px;height:100%;position:absolute;right:0px;}\n\
 		#drawTools-options-palette label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
