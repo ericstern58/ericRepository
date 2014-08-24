@@ -596,12 +596,12 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-loop .drawTools-btn-container:hover,#drawTools-btn-loop .drawTools-btn:focus{background-color:#2e2e2e;border-bottom:1px solid #222222;}\n\
 		#drawTools-btn-loop .drawTools-btn-container:active{background-color:#252525;border-bottom:1px solid #252525;}\n\
 		\n\
-		#drawTools-btn-download .drawTools-btn-container{background:#252525;border-bottom:1px solid #171717;}\n\
+		#drawTools-btn-download .drawTools-btn-container{background:#252525;border-bottom:1px solid #171717;border-right:1px solid #010101;}\n\
 		#drawTools-btn-download .drawTools-btn-container:focus{outline:thin dotted #fff;}\n\
 		#drawTools-btn-download .drawTools-btn-container:hover,#drawTools-btn-download .drawTools-btn:focus{background-color:#2e2e2e;border-bottom:1px solid #222222;}\n\
 		#drawTools-btn-download .drawTools-btn-container:active{background-color:#252525;border-bottom:1px solid #252525;}\n\
 		\n\
-		#drawTools-btn-options .drawTools-btn-container{background:#252525;border-bottom:1px solid #171717;}\n\
+		#drawTools-btn-options .drawTools-btn-container{background:#252525;border-bottom:1px solid #171717;border-right:1px solid #010101;}\n\
 		#drawTools-btn-options .drawTools-btn-container:focus{outline:thin dotted #fff;}\n\
 		#drawTools-btn-options .drawTools-btn-container:hover,#drawTools-btn-options .drawTools-btn:focus{background-color:#2e2e2e;border-bottom:1px solid #222222;}\n\
 		#drawTools-btn-options .drawTools-btn-container:active{background-color:#252525;border-bottom:1px solid #252525;}\n\
