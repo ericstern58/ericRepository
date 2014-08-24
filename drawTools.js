@@ -572,7 +572,7 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-icon-loop:after{content:'';position:absolute;top:-3px;right:-2px;width:0;height:0;border-style:solid;border-width:0 0 6px 6px;border-color:transparent transparent #c2c2c2 transparent;}\n\
 		#drawTools-btn-icon-options{width:24px;height:9px;border:3px solid #c2c2c2;background:transparent;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}\n\
 		#drawTools-btn-icon-options:before{margin:0 0 0 -5px;position:absolute;content:'';width:15px;height:11px;border-left:3px solid #c2c2c2;border-bottom:3px solid #c2c2c2;background:transparent;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}\n\
-		#drawTools-btn-icon-options:after{margin:8px 0 0 8px;position:absolute;content:'';width:4px;height:14px;background:#000;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}\n\
+		#drawTools-btn-icon-options:after{margin:8px 0 0 8px;position:absolute;content:'';width:4px;height:14px;background:#c2c2c2;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}\n\
 		\n\
 		#drawTools{position:relative;display:inline-block;vertical-align:middle;}\n\
 		#drawTools>.drawTools-btn{position:relative;float:left;display:inline-block;}\n\
