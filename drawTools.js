@@ -612,11 +612,10 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-options-content{position:absolute;top:8px;left:8px;right:8px;bottom:8px;}\n\
 		\n\
 		#drawTools-options-leftPanel{width:160px;height:100%;position:absolute;left:0px;}\n\
-		#drawTools-options-leftPanel>.switch{display:block;margin-bottom:20px;}\n\
 		\n\
-		.switch-input{position:absolute;top:0;left:0;opacity:0;}\n\
-		.switch-input:checked ~ #drawTools-btn-icon-loop {border-bottom:3px dotted #fff;border-top:3px dotted #fff;border-left:3px dotted #fff;}\n\
-		.switch-input:checked ~ #drawTools-btn-icon-loop:after {border-color:transparent transparent #fff transparent;}\n\
+		.loop-input{position:absolute;top:0;left:0;opacity:0;}\n\
+		.loop-input:checked ~ #drawTools-btn-icon-loop {border-bottom:3px dotted #fff;border-top:3px dotted #fff;border-left:3px dotted #fff;}\n\
+		.loop-input:checked ~ #drawTools-btn-icon-loop:after {border-color:transparent transparent #fff transparent;}\n\
 		\n\
 		#drawTools-options-palette{width:240px;height:100%;position:absolute;right:0px;}\n\
 		#drawTools-options-palette label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
@@ -978,16 +977,7 @@ cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton
 	//drawToolsDiv.appendChild(optionsDiv);
 	
 	drawToolsDiv.insertBefore(optionsDiv, optionsButton.nextSibling);
-	
-	//----- BEGIN ----- LeftPanel --------------------------------------------------
-	var leftPanelHtml = "";
-	leftPanelHtml += 
-		'<label onclick=cleanTools.html.buttonHandlers.setLineToolsOpen(); class="switch">\
-			<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">\
-			<span class="switch-label" data-on="Loop Line Tools" data-off="Open Line Tools"></span>\
-			<span class="switch-handle"></span>\
-		</label>';
-	document.getElementById('drawTools-options-leftPanel').innerHTML = leftPanelHtml;
+
 	//----- BEGIN ----- ColorPicker --------------------------------------------------
 	var colorElements = document.getElementsByClassName('colorPicker');
 	var optionsPaletteHtml = "";
@@ -1072,7 +1062,7 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	loopButton.onclick = function(){cleanTools.html.buttonHandlers.setLineToolsOpen();};
 	loopButton.innerHTML = 
 		'<div class="' + cleanTools.id + '-btn-container">' +
-			'<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">' +
+			'<input type="checkbox" class="loop-input" id="drawTools-options-checkbox-lineToolsOpen">' +
 			'<div id="' + cleanTools.id + '-btn-icon-' + 'loop' + '"></div>' +
 		'</div>';
 			
