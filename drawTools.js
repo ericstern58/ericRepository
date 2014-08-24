@@ -1080,9 +1080,13 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	loopButton.onclick = function(){};
 	loopButton.innerHTML = 
 		'<div class="' + cleanTools.id + '-btn-container">' +
-			'<div id="' + cleanTools.id + '-btn-icon-' + 'loop' + '">hello</div>' +
+			'<div id="' + cleanTools.id + '-btn-icon-' + 'loop' + '">' + 
+				'<input type="checkbox" class="switch-input" id="drawTools-options-checkbox-lineToolsOpen">' +
+			'</div>' +
 		'</div>';
 	
+		'<label onclick=cleanTools.html.buttonHandlers.setLineToolsOpen(); class="switch">\
+			
 	var optionsButton = cleanTools.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
 	
