@@ -1085,7 +1085,7 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 			'</div>' +
 		'</div>';
 	
-		'<label onclick=cleanTools.html.buttonHandlers.setLineToolsOpen(); class="switch">\
+		//'<label onclick=cleanTools.html.buttonHandlers.setLineToolsOpen(); class="switch">\
 			
 	var optionsButton = cleanTools.html.init.createUtilityButton("options");
 	optionsButton.onclick = function(){cleanTools.options.toggleMenu();};
