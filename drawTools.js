@@ -1078,9 +1078,9 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	
 	var loopButton = cleanTools.html.init.createUtilityButton("loop");
 	loopButton.onclick = function(){};
-	button.innerHTML = 
+	loopButton.innerHTML = 
 		'<div class="' + cleanTools.id + '-btn-container">' +
-			'<div id="' + cleanTools.id + '-btn-icon-' + name + '">hello</div>' +
+			'<div id="' + cleanTools.id + '-btn-icon-' + 'loop' + '">hello</div>' +
 		'</div>';
 	
 	var optionsButton = cleanTools.html.init.createUtilityButton("options");
