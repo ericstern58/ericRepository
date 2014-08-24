@@ -170,7 +170,6 @@ cleanTools["html"] = {
 				this.cleanToolsObject.options.useStrokeAsFill = false;
 				this.cleanToolsObject.options.fillColor = color;
 			}
-			this.cleanToolsObject.options.toggleMenu();
 		},
 		'setToolType':function(type) {
 			this.cleanToolsObject.tools.currentToolType=type;
@@ -986,12 +985,12 @@ cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton
 	var optionsPaletteHtml = "";
 	
 	optionsPaletteHtml += 
-		'<label onclick=cleanTools.html.buttonHandlers.setOptionsColor(""); style="width:120px;">' +
+		'<label onclick="cleanTools.html.buttonHandlers.setOptionsColor("");this.cleanToolsObject.options.toggleMenu();" style="width:120px;">' +
 			'<input type="radio" name="drawTools-options-palette-radio" checked>' +
 			'<div style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div>' +
 		'</label>';
 	optionsPaletteHtml += 
-		'<label onclick=cleanTools.html.buttonHandlers.setOptionsColor("",1); style="width:120px;">' +
+		'<label onclick="cleanTools.html.buttonHandlers.setOptionsColor("",1);this.cleanToolsObject.options.toggleMenu();" style="width:120px;">' +
 			'<input type="radio" name="drawTools-options-palette-radio">' +
 			'<div style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div>' +
 		'</label>';
@@ -1000,7 +999,7 @@ cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton
 		var color = colorElements[i].getAttribute("data-color");
 		cleanTools.dcPalette.push(color);
 		optionsPaletteHtml += 
-			'<label onclick=cleanTools.html.buttonHandlers.setOptionsColor("' + color + '");>' + //
+			'<label onclick="cleanTools.html.buttonHandlers.setOptionsColor("' + color + '");this.cleanToolsObject.options.toggleMenu();">' + //
 				'<input type="radio" name="drawTools-options-palette-radio">' +
 				'<div style="background:' + color + ';"></div>' +
 			'</label>';
