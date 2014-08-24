@@ -626,16 +626,16 @@ cleanTools.html.init['setupCSS'] = function()
 		\n\
 		#drawTools-options-leftPanel{width:160px;height:100%;position:absolute;left:0px;}\n\
 		\n\\n\
-		#drawTools-options-palette{width:240px;height:100%;position:absolute;right:0px;}\n\
-		#drawTools-options-palette label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
-		#drawTools-options-palette input{display:none;visibility:hidden;margin:0px;padding:0px;}\n\
-		#drawTools-options-palette input:checked + div{border:2px solid #c2c2c2;}\n\
-		#drawTools-options-palette div{width:40px;height:40px;border:2px solid #252525;margin=0;padding=0;line-height:2.428571429;}\n\
-		#drawTools-options-palette div:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\
-		#drawTools-options-palette div:hover,#drawTools-options-palette div:focus,#drawTools-options-palette div:active{border:2px solid red;}\n\
+		#drawTools-menu-palette{width:240px;height:100%;position:absolute;right:0px;}\n\
+		#drawTools-menu-palette label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
+		#drawTools-menu-palette input{display:none;visibility:hidden;margin:0px;padding:0px;}\n\
+		#drawTools-menu-palette input:checked + div{border:2px solid #c2c2c2;}\n\
+		#drawTools-menu-palette div{width:40px;height:40px;border:2px solid #252525;margin=0;padding=0;line-height:2.428571429;}\n\
+		#drawTools-menu-palette div:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\
+		#drawTools-menu-palette div:hover,#drawTools-menu-palette div:focus,#drawTools-menu-palette div:active{border:2px solid red;}\n\
 		\n\
-		.drawTools-buttonText,#drawTools-options-palette div{font-size:14px;font-weight:normal;text-align:center;vertical-align:middle;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}\n\
-		\n\
+		#drawTools-menu-palette div{font-size:14px;font-weight:normal;text-align:center;vertical-align:middle;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}\n\
+		/* REMOVED FROM LINE ABOVE, READD IF IT CAUSES BUG: .drawTools-buttonText,*/\n\
 		";
 	document.body.appendChild(DTSheet);
 }
@@ -981,7 +981,7 @@ cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton
 	optionsDiv.innerHTML = 
 		'<div id="drawTools-options-content">' +
 			'<div id="drawTools-options-leftPanel"></div>' +
-			'<div id="drawTools-options-palette"></div>' +
+			'<div id="drawTools-menu-palette"></div>' +
 		'</div>';
 	//drawToolsDiv.appendChild(optionsDiv);
 	
@@ -993,12 +993,12 @@ cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton
 	
 	optionsPaletteHtml += 
 		'<label onclick=cleanTools.html.buttonHandlers.setOptionsColor(""); style="width:120px;">' +
-			'<input type="radio" name="drawTools-options-palette-radio" checked>' +
+			'<input type="radio" name="drawTools-menu-palette-radio" checked>' +
 			'<div style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div>' +
 		'</label>';
 	optionsPaletteHtml += 
 		'<label onclick=cleanTools.html.buttonHandlers.setOptionsColor("",1); style="width:120px;">' +
-			'<input type="radio" name="drawTools-options-palette-radio">' +
+			'<input type="radio" name="drawTools-menu-palette-radio">' +
 			'<div style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div>' +
 		'</label>';
 	
@@ -1007,11 +1007,11 @@ cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton
 		cleanTools.dcPalette.push(color);
 		optionsPaletteHtml += 
 			'<label onclick=cleanTools.html.buttonHandlers.setOptionsColor("' + color + '");>' + //
-				'<input type="radio" name="drawTools-options-palette-radio">' +
+				'<input type="radio" name="drawTools-menu-palette-radio">' +
 				'<div style="background:' + color + ';"></div>' +
 			'</label>';
 	}
-	document.getElementById('drawTools-options-palette').innerHTML = optionsPaletteHtml;
+	document.getElementById('drawTools-menu-palette').innerHTML = optionsPaletteHtml;
 }
 // Destroys all elements, styling and javascript
 cleanTools.html['DTDestroy'] = function() 
