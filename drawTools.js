@@ -179,12 +179,11 @@ cleanTools["html"] = {
 			},100, "swing");
 		}
 	},
-	'isWithinMenuBounds':function (x, y) {
-		var x2 = x - $(this.MENU_PALETTE_ID).offset().top;
-		var y2 = y - $(this.MENU_PALETTE_ID).offset().left;
-		var width = $(this.MENU_PALETTE_ID).width();
-		var height = $(this.MENU_PALETTE_ID).height();
-		//outputDebug("[x:" + x2 + ", y:" + y2 + "] [width:" + width + ", height:" + height + "]");
+	'isWithinMenuBounds':function (menuID, x, y) {
+		var x2 = x - $(menuID).offset().top;
+		var y2 = y - $(menuID).offset().left;
+		var width = $(menuID).width();
+		var height = $(menuID).height();
 		return (x2>=0 && y2>=0 && x2<width && y2<height);
 	}
 };
@@ -772,7 +771,7 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 	
 	if(0 && $('#drawTools-options').css('opacity') == 1){
 		c.canvas.updateLocation();
-		if(!c.html.isWithinMenuBounds(e.pageX, e.pageY)) {
+		if(!c.html.isWithinMenuBounds(c.html.MENU_PALETTE_ID, e.pageX, e.pageY)) {
 			c.html.toggleMenu();
 		}
 		return;
