@@ -113,7 +113,7 @@ cleanTools["data"] = {
 	'curveTension':0.5,
 };
 cleanTools["html"] = {
-	'id':'#' + cleanTools.id + '-options',
+	'MENU_PALETTE_ID':'#' + cleanTools.id + '-options',
 	'parentObject':cleanTools,
 	
 	'init':{}, // HTML initialization methods will be placed here
@@ -147,20 +147,20 @@ cleanTools["html"] = {
 	},
 	
 	'getOffset':function () {
-		return $(this.id).offset();
+		return $(this.MENU_PALETTE_ID).offset();
 	},
 	'toggleMenu':function () {
 		var h = 175;	// Height of the options div
-		var opacity = $(this.id).css('opacity');
+		var opacity = $(this.MENU_PALETTE_ID).css('opacity');
 		
 		if(opacity == 0) {
-			this.openMenu(this.id,h);
+			this.openMenu(this.MENU_PALETTE_ID,h);
 		} else if(opacity == 1) {
-			this.closeMenu(this.id,h);
+			this.closeMenu(this.MENU_PALETTE_ID,h);
 		}
 	},
 	'openMenu':function (menuID, h) { /* private */
-		var opacity = $(this.id).css('opacity');
+		var opacity = $(menuID).css('opacity');
 		if(opacity == 0) {
 			$(menuID).stop(true, true).animate({
 				height: (h + "px"),
@@ -170,7 +170,7 @@ cleanTools["html"] = {
 		}
 	},
 	'closeMenu':function (menuID, h) { /* private */
-		var opacity = $(this.id).css('opacity');
+		var opacity = $(menuID).css('opacity');
 		if(opacity == 1) {
 			$(menuID).stop(true, true).animate({
 				height: "0px",
@@ -180,10 +180,10 @@ cleanTools["html"] = {
 		}
 	},
 	'isWithinMenuBounds':function (x, y) {
-		var x2 = x - $(this.id).offset().top;
-		var y2 = y - $(this.id).offset().left;
-		var width = $(this.id).width();
-		var height = $(this.id).height();
+		var x2 = x - $(this.MENU_PALETTE_ID).offset().top;
+		var y2 = y - $(this.MENU_PALETTE_ID).offset().left;
+		var width = $(this.MENU_PALETTE_ID).width();
+		var height = $(this.MENU_PALETTE_ID).height();
 		//outputDebug("[x:" + x2 + ", y:" + y2 + "] [width:" + width + ", height:" + height + "]");
 		return (x2>=0 && y2>=0 && x2<width && y2<height);
 	}
