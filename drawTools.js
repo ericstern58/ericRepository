@@ -624,7 +624,15 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-options{margin-top:"+optionsMarginTop+"px;margin-left:"+optionsMarginLeft+"px;background:#252525;border-bottom:1px solid #171717;width:420px;height:0px;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
 		#drawTools-options-content{position:absolute;top:8px;left:8px;right:8px;bottom:8px;}\n\
 		\n\
-		#drawTools-menu-palette{width:240px;height:100%;position:relative;margin:0;}\n\
+		#drawTools-menu-palette1{width:240px;height:100%;position:relative;margin:0;}\n\
+		#drawTools-menu-palette1 label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
+		#drawTools-menu-palette1 input{display:none;visibility:hidden;margin:0px;padding:0px;}\n\
+		#drawTools-menu-palette1 input:checked + div{border:2px solid #c2c2c2;}\n\
+		#drawTools-menu-palette1 div{width:40px;height:40px;border:2px solid #252525;margin=0;padding=0;line-height:2.428571429;}\n\
+		#drawTools-menu-palette1 div:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\
+		#drawTools-menu-palette1 div:hover,#drawTools-menu-palette1 div:focus,#drawTools-menu-palette1 div:active{border:2px solid red;}\n\
+		\n\
+		#drawTools-menu-palette{width:240px;height:100%;position:relative;margin:0;border:red;}\n\
 		#drawTools-menu-palette label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
 		#drawTools-menu-palette input{display:none;visibility:hidden;margin:0px;padding:0px;}\n\
 		#drawTools-menu-palette input:checked + div{border:2px solid #c2c2c2;}\n\
