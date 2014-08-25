@@ -113,7 +113,7 @@ cleanTools["data"] = {
 	'curveTension':0.5,
 };
 cleanTools["html"] = {
-	'MENU_PALETTE_ID':'#' + cleanTools.id + '-options',
+	'id':'#' + cleanTools.id + '-options',
 	'parentObject':cleanTools,
 	
 	'init':{}, // HTML initialization methods will be placed here
@@ -146,21 +146,21 @@ cleanTools["html"] = {
 		}
 	},
 	
-	'getMenuOffset':function (menuID) {
-		return $(menuID).offset();
+	'getOffset':function () {
+		return $(this.id).offset();
 	},
-	'toggleMenu':function (menuID) {
+	'toggleMenu':function () {
 		var h = 175;	// Height of the options div
-		var opacity = $(menuID).css('opacity');
+		var opacity = $(this.id).css('opacity');
 		
 		if(opacity == 0) {
-			this.openMenu(menuID,h);
+			this.openMenu(this.id,h);
 		} else if(opacity == 1) {
-			this.closeMenu(menuID,h);
+			this.closeMenu(this.id,h);
 		}
 	},
 	'openMenu':function (menuID, h) { /* private */
-		var opacity = $(menuID).css('opacity');
+		var opacity = $(this.id).css('opacity');
 		if(opacity == 0) {
 			$(menuID).stop(true, true).animate({
 				height: (h + "px"),
@@ -170,7 +170,7 @@ cleanTools["html"] = {
 		}
 	},
 	'closeMenu':function (menuID, h) { /* private */
-		var opacity = $(menuID).css('opacity');
+		var opacity = $(this.id).css('opacity');
 		if(opacity == 1) {
 			$(menuID).stop(true, true).animate({
 				height: "0px",
@@ -179,11 +179,11 @@ cleanTools["html"] = {
 			},100, "swing");
 		}
 	},
-	'isWithinMenuBounds':function (menuID, x, y) {
-		var x2 = x - $(menuID).offset().top;
-		var y2 = y - $(menuID).offset().left;
-		var width = $(menuID).width();
-		var height = $(menuID).height();
+	'isWithinMenuBounds':function (x, y) {
+		var x2 = x - $(this.id).offset().top;
+		var y2 = y - $(this.id).offset().left;
+		var width = $(this.id).width();
+		var height = $(this.id).height();
 		//outputDebug("[x:" + x2 + ", y:" + y2 + "] [width:" + width + ", height:" + height + "]");
 		return (x2>=0 && y2>=0 && x2<width && y2<height);
 	}
@@ -667,7 +667,7 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 	if($('#drawTools-options').css('opacity') == 1){
 		painting = !1;
 		c.canvas.restore();
-		c.html.toggleMenu(c.html.MENU_PALETTE_ID);
+		c.html.toggleMenu();
 		return;
 	} else if(t.currentToolType === t.toolType.BRUSH)
 		return;
@@ -772,8 +772,8 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 	
 	if(0 && $('#drawTools-options').css('opacity') == 1){
 		c.canvas.updateLocation();
-		if(!c.html.isWithinMenuBounds(c.html.MENU_PALETTE_ID, e.pageX, e.pageY)) {
-			c.html.toggleMenu(c.html.MENU_PALETTE_ID);
+		if(!c.html.isWithinMenuBounds(e.pageX, e.pageY)) {
+			c.html.toggleMenu();
 		}
 		return;
 	} else if(t.currentToolType === t.toolType.BRUSH)
@@ -1091,10 +1091,10 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	
 	/*
 	var optionsButton = cleanTools.html.init.createUtilityButton("options");
-	optionsButton.onclick = function(){cleanTools.html.toggleMenu(c.html.MENU_PALETTE_ID);};
+	optionsButton.onclick = function(){cleanTools.html.toggleMenu();};
 	*/
 	var fillpaletteButton = cleanTools.html.init.createUtilityButton("fillpalette");
-	fillpaletteButton.onclick = function(){cleanTools.html.toggleMenu(c.html.MENU_PALETTE_ID);};
+	fillpaletteButton.onclick = function(){cleanTools.html.toggleMenu();};
 	
 	cleanTools.html.init.createOptionsMenu(drawToolsDiv, fillpaletteButton);
 	
