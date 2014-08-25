@@ -632,7 +632,7 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-exit .drawTools-btn-container:hover,#drawTools-btn-exit .drawTools-btn:focus{background-color:#b90c0c;border-bottom:1px solid #980909;}\n\
 		#drawTools-btn-exit .drawTools-btn-container:active{background-color:#a50000;border-bottom:1px solid #a50000;}\n\
 		\n\
-		#drawTools-options{margin-top:"+optionsMarginTop+"px;margin-left:"+optionsMarginLeft+"px;background:#252525;border-bottom:1px solid #171717;width:420px;height:0px;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
+		#drawTools-options{margin-top:"+optionsMarginTop+"px;margin-left:"+optionsMarginLeft+"px;background:transparent;border-bottom:1px solid #171717;width:420px;height:0px;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
 		#drawTools-options-content{position:absolute;top:8px;left:8px;right:8px;bottom:8px;}\n\
 		\n\
 		#drawTools-menu-palette1{width:240px;height:100%;position:relative;margin:0;}\n\
@@ -1051,6 +1051,7 @@ cleanTools.html['DTDestroy'] = function()
 cleanTools.html.init['setupCssAndHtml'] = function()
 {	
     var c = cleanTools;
+	
 	c.canvas.updateLocation();
 	/*---- 1. Create Draw Tools Container - DIV in which DrawTools will be placed in ----*/
 	var drawToolsDiv = document.createElement('div');
