@@ -121,18 +121,25 @@ cleanTools["options"] = {
 		var opacity = $(this.id).css('opacity');
 		
 		if(opacity == 0) {
-			$(this.id).stop(true, true).animate({
-				height: (h + "px"),
-				marginTop: ("-=" + h + "px"),
-				opacity: "1"
-			},200, "swing");
+			
+			this.openMenu(this.id,h);
 		} else if(opacity == 1) {
-			$(this.id).stop(true, true).animate({
-				height: "0px",
-				marginTop: ("+=" + h + "px"),
-				opacity: "0"
-			},200, "swing");
+			this.closeMenu(this.id,h);
 		}
+	},
+	'openMenu':function (menuID, h) { /* private */
+		$(menuID).stop(true, true).animate({
+			height: (h + "px"),
+			marginTop: ("-=" + h + "px"),
+			opacity: "1"
+		},200, "swing");
+	},
+	'closeMenu':function (menuID, h) { /* private */
+		$(menuID).stop(true, true).animate({
+			height: "0px",
+			marginTop: ("+=" + h + "px"),
+			opacity: "0"
+		},200, "swing");
 	},
 	'isWithinBounds':function (x, y) {
 		var x2 = x - $(this.id).offset().top;
