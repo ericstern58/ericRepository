@@ -103,7 +103,6 @@ cleanTools["tools"] = {
 	}
 };
 cleanTools["data"] = {
-	'id':'#' + cleanTools.id + '-options',
 	
 	// Fill Options
 	'useStrokeAsFill':false,
@@ -112,6 +111,40 @@ cleanTools["data"] = {
 	'lineToolsShouldClose':false,
 	
 	'curveTension':0.5,
+};
+cleanTools["html"] = {
+	'id':'#' + cleanTools.id + '-options',
+	'parentObject':cleanTools,
+	
+	'init':{}, // HTML initialization methods will be placed here
+	
+	'buttonHandlers':{
+		'cleanToolsObject':cleanTools,
+		'brushClick':function(brushSize) {
+			drawApp.setSize(brushSize);				// Set default brush size
+			this.cleanToolsObject.tools.currentToolType = cleanTools.tools.toolType.BRUSH;		// Update tool type
+			
+			// Visually unselect any other tools
+			var ele = document.getElementsByName(cleanTools.id + "-btn-radio");
+			for(var i=0;i<ele.length;i++)
+				ele[i].checked = false;
+		},
+		'setLineToolsOpen':function() {
+			this.cleanToolsObject.data.lineToolsShouldClose = document.getElementById('drawTools-menu-loop-checkbox').checked;
+		},
+		'setOptionsColor':function(color,normalfill) {
+			if(normalfill) {
+				this.cleanToolsObject.data.useStrokeAsFill = true;
+				this.cleanToolsObject.data.fillColor = '';
+			} else {
+				this.cleanToolsObject.data.useStrokeAsFill = false;
+				this.cleanToolsObject.data.fillColor = color;
+			}
+		},
+		'setToolType':function(type) {
+			this.cleanToolsObject.tools.currentToolType=type;
+		}
+	},
 	
 	'getOffset':function () {
 		return $(this.id).offset();
@@ -146,46 +179,13 @@ cleanTools["data"] = {
 			},100, "swing");
 		}
 	},
-	'isWithinBounds':function (x, y) {
+	'isWithinMenuBounds':function (x, y) {
 		var x2 = x - $(this.id).offset().top;
 		var y2 = y - $(this.id).offset().left;
 		var width = $(this.id).width();
 		var height = $(this.id).height();
 		//outputDebug("[x:" + x2 + ", y:" + y2 + "] [width:" + width + ", height:" + height + "]");
 		return (x2>=0 && y2>=0 && x2<width && y2<height);
-	}
-};
-cleanTools["html"] = {
-	'parentObject':cleanTools,
-	
-	'init':{}, // HTML initialization methods will be placed here
-	
-	'buttonHandlers':{
-		'cleanToolsObject':cleanTools,
-		'brushClick':function(brushSize) {
-			drawApp.setSize(brushSize);				// Set default brush size
-			this.cleanToolsObject.tools.currentToolType = cleanTools.tools.toolType.BRUSH;		// Update tool type
-			
-			// Visually unselect any other tools
-			var ele = document.getElementsByName(cleanTools.id + "-btn-radio");
-			for(var i=0;i<ele.length;i++)
-				ele[i].checked = false;
-		},
-		'setLineToolsOpen':function() {
-			this.cleanToolsObject.data.lineToolsShouldClose = document.getElementById('drawTools-options-checkbox-lineToolsOpen').checked;
-		},
-		'setOptionsColor':function(color,normalfill) {
-			if(normalfill) {
-				this.cleanToolsObject.data.useStrokeAsFill = true;
-				this.cleanToolsObject.data.fillColor = '';
-			} else {
-				this.cleanToolsObject.data.useStrokeAsFill = false;
-				this.cleanToolsObject.data.fillColor = color;
-			}
-		},
-		'setToolType':function(type) {
-			this.cleanToolsObject.tools.currentToolType=type;
-		}
 	}
 };
  
@@ -667,7 +667,7 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 	if($('#drawTools-options').css('opacity') == 1){
 		painting = !1;
 		c.canvas.restore();
-		c.data.toggleMenu();
+		c.html.toggleMenu();
 		return;
 	} else if(t.currentToolType === t.toolType.BRUSH)
 		return;
@@ -772,8 +772,8 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 	
 	if(0 && $('#drawTools-options').css('opacity') == 1){
 		c.canvas.updateLocation();
-		if(!c.data.isWithinBounds(e.pageX, e.pageY)) {
-			c.data.toggleMenu();
+		if(!c.html.isWithinMenuBounds(e.pageX, e.pageY)) {
+			c.html.toggleMenu();
 		}
 		return;
 	} else if(t.currentToolType === t.toolType.BRUSH)
@@ -1085,16 +1085,16 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	loopButton.onclick = function(){cleanTools.html.buttonHandlers.setLineToolsOpen();};
 	loopButton.innerHTML = 
 		'<div class="' + cleanTools.id + '-btn-container">' +
-			'<input type="checkbox" id="drawTools-options-checkbox-lineToolsOpen">' +
+			'<input type="checkbox" id="drawTools-menu-loop-checkbox">' +
 			'<div id="' + cleanTools.id + '-btn-icon-' + 'loop' + '"></div>' +
 		'</div>';
 	
 	/*
 	var optionsButton = cleanTools.html.init.createUtilityButton("options");
-	optionsButton.onclick = function(){cleanTools.data.toggleMenu();};
+	optionsButton.onclick = function(){cleanTools.html.toggleMenu();};
 	*/
 	var fillpaletteButton = cleanTools.html.init.createUtilityButton("fillpalette");
-	fillpaletteButton.onclick = function(){cleanTools.data.toggleMenu();};
+	fillpaletteButton.onclick = function(){cleanTools.html.toggleMenu();};
 	
 	cleanTools.html.init.createOptionsMenu(drawToolsDiv, fillpaletteButton);
 	
