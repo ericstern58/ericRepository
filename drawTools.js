@@ -559,7 +559,11 @@ cleanTools.html.init['setupCSS'] = function()
 	var cleanToolsObject = $('#' + cleanTools.id);
 	var optionsMarginTop = cleanTools.canvas.offset.top + cleanTools.canvas.height - cleanToolsObject.offset().top;
 	var optionsMarginLeft = (cleanToolsObject.width() - 420)/2;
-	//alert("cleanToolsObject.width(): " + cleanToolsObject.width() + "\noptionsMarginLeft: " + optionsMarginLeft);
+	/*
+		#drawTools-menu{margin-top:"+optionsMarginTop+"px;margin-left:"+optionsMarginLeft+"px;background:#252525;border-bottom:1px solid #171717;width:420px;height:0px;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
+		#drawTools-menu-content{position:absolute;top:8px;left:8px;right:8px;bottom:8px;}\n\
+		\n\
+	*/
 	
 	var DTSheet = document.createElement('style');
 	DTSheet.id = cleanTools.id + 'StyleSheet'; // Give id so destructor can find it if needed
@@ -997,7 +1001,7 @@ cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton
 	optionsDiv.id = cleanTools.id + '-menu';
 	optionsDiv.innerHTML = 
 		'<div id="' + optionsDiv.id + '-content">' +
-			'<div id="drawTools-menu-palette"></div>' +
+			'<div id="' + optionsDiv.id + '-palette"></div>' +
 		'</div>';
 	//drawToolsDiv.appendChild(optionsDiv);
 	
@@ -1005,14 +1009,14 @@ cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton
 
 	//----- BEGIN ----- ColorPicker --------------------------------------------------
 	var colorElements = document.getElementsByClassName('colorPicker');
-	var optionsPaletteHtml = "";
+	var paletteHtml = "";
 	
-	optionsPaletteHtml += 
+	paletteHtml += 
 		'<label onclick=cleanTools.html.buttonHandlers.setOptionsColor(""); style="width:120px;">' +
 			'<input type="radio" name="drawTools-menu-palette-radio" checked>' +
 			'<div style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div>' +
 		'</label>';
-	optionsPaletteHtml += 
+	paletteHtml += 
 		'<label onclick=cleanTools.html.buttonHandlers.setOptionsColor("",1); style="width:120px;">' +
 			'<input type="radio" name="drawTools-menu-palette-radio">' +
 			'<div style="width:120px;background:#333333;color:#c2c2c2;">Brush Color</div>' +
@@ -1021,13 +1025,13 @@ cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton
 	for(var i=0;i<colorElements.length;i++) {
 		var color = colorElements[i].getAttribute("data-color");
 		cleanTools.dcPalette.push(color);
-		optionsPaletteHtml += 
+		paletteHtml += 
 			'<label onclick=cleanTools.html.buttonHandlers.setOptionsColor("' + color + '");>' + //
 				'<input type="radio" name="drawTools-menu-palette-radio">' +
 				'<div style="background:' + color + ';"></div>' +
 			'</label>';
 	}
-	document.getElementById('drawTools-menu-palette').innerHTML = optionsPaletteHtml;
+	document.getElementById('drawTools-menu-palette').innerHTML = paletteHtml;
 }
 // Destroys all elements, styling and javascript
 cleanTools.html['DTDestroy'] = function() 
