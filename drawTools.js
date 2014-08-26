@@ -585,7 +585,8 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-icon-curve{margin:6px 15px 0px 11px;position: relative;width: 12px;height: 12px;-webkit-box-shadow:-0px 3px 0px 0px black;box-shadow:-0px 3px 0px 0px black;border-radius:100%;}\n\
 		#drawTools-btn-icon-curve:after{margin:10px 0px 0px 10px;position:relative;width:8px;height:10px;-webkit-box-shadow:0px -3px 0px 0px black;box-shadow:0px -3px 0px 0px black;border-radius:100%;content:'';display:block;position:absolute;}\n\
 		#drawTools-btn-icon-curve:before{margin:4px 0px 0px -1px;width:2px;height:9px;background:black;border-radius:2px;-webkit-transform:rotate(-30deg);-moz-transform:rotate(-30deg);-o-transform:rotate(-30deg);-ms-transform:rotate(-30deg);transform:rotate(-30deg);content:'';content:'';display:block;position:absolute;}\n\
-		#drawTools-btn-icon-download{margin:8px 8px 0px 8px;width:22px;height:15px;background:black;}\n\
+		#drawTools-btn-icon-download{margin:8px 8px 0px 8px;width:12px;height:12px;background:#c2c2c2;}\n\
+		#drawTools-btn-icon-download:before{margin:0 0 0 0;position:absolute;content:'';width:0;height:0;border-width:8px 9px 0 9px;border-color:red transparent transparent;}\n\
 		#drawTools-btn-icon-loop{display:block;position:relative;margin:8px 13px;width:15px;height:15px;border-radius:100%;border-bottom:3px dotted #c2c2c2;border-top:3px dotted #c2c2c2;border-left:3px dotted #c2c2c2;border-right:3px dotted transparent;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box;}\n\
 		#drawTools-btn-icon-loop:after{content:'';position:absolute;top:-3px;right:-2px;width:0;height:0;border-style:solid;border-width:0 0 6px 6px;border-color:transparent transparent #c2c2c2 transparent;}\n\
 		#drawTools-btn-icon-fillpalette{margin:4px 8px;position:relative;width:24px;height:6px;background:linear-gradient(to right,#c2c2c2,#c2c2c2 6px,transparent 6px,transparent 9px,#c2c2c2 9px,#c2c2c2 15px,transparent 15px,transparent 18px,#c2c2c2 18px,#c2c2c2 24px);}\n\
@@ -639,14 +640,6 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-menu{margin-top:"+optionsMarginTop+"px;margin-left:"+optionsMarginLeft+"px;background:#252525;border-bottom:1px solid #171717;width:420px;height:0px;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
 		#drawTools-menu-content{position:absolute;top:8px;left:8px;right:8px;bottom:8px;}\n\
 		\n\
-		#drawTools-menu-palette1{width:240px;height:100%;position:relative;margin:0;}\n\
-		#drawTools-menu-palette1 label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
-		#drawTools-menu-palette1 input{display:none;visibility:hidden;margin:0px;padding:0px;}\n\
-		#drawTools-menu-palette1 input:checked + div{border:2px solid #c2c2c2;}\n\
-		#drawTools-menu-palette1 div{width:40px;height:40px;border:2px solid #252525;margin=0;padding=0;line-height:2.428571429;}\n\
-		#drawTools-menu-palette1 div:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\
-		#drawTools-menu-palette1 div:hover,#drawTools-menu-palette1 div:focus,#drawTools-menu-palette1 div:active{border:2px solid red;}\n\
-		\n\
 		#drawTools-menu-palette{width:240px;height:100%;position:relative;margin:0;}\n\
 		#drawTools-menu-palette label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
 		#drawTools-menu-palette input{display:none;visibility:hidden;margin:0px;padding:0px;}\n\
@@ -654,6 +647,14 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-menu-palette div{width:40px;height:40px;border:2px solid #252525;margin=0;padding=0;line-height:2.428571429;}\n\
 		#drawTools-menu-palette div:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\
 		#drawTools-menu-palette div:hover,#drawTools-menu-palette div:focus,#drawTools-menu-palette div:active{border:2px solid red;}\n\
+		\n\
+		#drawTools-menu-palette1{width:240px;height:100%;position:relative;margin:0;}\n\
+		#drawTools-menu-palette1 label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
+		#drawTools-menu-palette1 input{display:none;visibility:hidden;margin:0px;padding:0px;}\n\
+		#drawTools-menu-palette1 input:checked + div{border:2px solid #c2c2c2;}\n\
+		#drawTools-menu-palette1 div{width:40px;height:40px;border:2px solid #252525;margin=0;padding=0;line-height:2.428571429;}\n\
+		#drawTools-menu-palette1 div:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\
+		#drawTools-menu-palette1 div:hover,#drawTools-menu-palette1 div:focus,#drawTools-menu-palette1 div:active{border:2px solid red;}\n\
 		\n\
 		#drawTools-menu-palette div{font-size:14px;font-weight:normal;text-align:center;vertical-align:middle;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}\n\
 		/* REMOVED FROM LINE ABOVE, READD IF IT CAUSES BUG: .drawTools-buttonText,*/\n\
