@@ -622,7 +622,7 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-fillpalette .drawTools-btn-container:hover,#drawTools-btn-fillpalette .drawTools-btn:focus{background-color:#2e2e2e;border-bottom:1px solid #222222;}\n\
 		#drawTools-btn-fillpalette .drawTools-btn-container:active{background-color:#252525;border-bottom:1px solid #252525;}\n\
 		\n\
-		#drawTools-btn-download .drawTools-btn-container{background:#252525;border-bottom:1px solid #171717;border-right:1px solid #111111;}\n\
+		#drawTools-btn-download .drawTools-btn-container{position:relative; background:#252525;border-bottom:1px solid #171717;border-right:1px solid #111111;}\n\
 		#drawTools-btn-download .drawTools-btn-container:focus{outline:thin dotted #fff;}\n\
 		#drawTools-btn-download .drawTools-btn-container:hover,#drawTools-btn-download .drawTools-btn:focus{background-color:#2e2e2e;border-bottom:1px solid #222222;}\n\
 		#drawTools-btn-download .drawTools-btn-container:active{background-color:#252525;border-bottom:1px solid #252525;}\n\
@@ -1006,7 +1006,8 @@ cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton
 		'</div>';
 	//drawToolsDiv.appendChild(optionsDiv);
 	
-	drawToolsDiv.insertBefore(optionsDiv, optionsButton.nextSibling);
+	//drawToolsDiv.insertBefore(optionsDiv, optionsButton.nextSibling);
+	optionsButton.appendChild(optionsDiv);
 
 	//----- BEGIN ----- ColorPicker --------------------------------------------------
 	var colorElements = document.getElementsByClassName('colorPicker');
