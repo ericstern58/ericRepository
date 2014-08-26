@@ -113,7 +113,7 @@ cleanTools["data"] = {
 	'curveTension':0.5,
 };
 cleanTools["html"] = {
-	'MENU_PALETTE_ID':'#' + cleanTools.id + '-options',
+	'MENU_PALETTE_ID':'#' + cleanTools.id + '-menu',
 	'parentObject':cleanTools,
 	
 	'init':{}, // HTML initialization methods will be placed here
@@ -584,9 +584,6 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-icon-download{margin:8px 8px 0px 8px;width:22px;height:15px;background:black;}\n\
 		#drawTools-btn-icon-loop{display:block;position:relative;margin:8px 13px;width:15px;height:15px;border-radius:100%;border-bottom:3px dotted #c2c2c2;border-top:3px dotted #c2c2c2;border-left:3px dotted #c2c2c2;border-right:3px dotted transparent;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;-ms-box-sizing:border-box;box-sizing:border-box;}\n\
 		#drawTools-btn-icon-loop:after{content:'';position:absolute;top:-3px;right:-2px;width:0;height:0;border-style:solid;border-width:0 0 6px 6px;border-color:transparent transparent #c2c2c2 transparent;}\n\
-		#drawTools-btn-icon-options1{margin:10px 6px 10px 6px;position:relative;width:24px;height:9px;border:3px solid #c2c2c2;background:transparent;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}\n\
-		#drawTools-btn-icon-options1:before{margin:0 0 0 -5px;position:absolute;top:0;left:0;content:'';content:'';width:15px;height:11px;border-left:3px solid #c2c2c2;border-bottom:3px solid #c2c2c2;background:transparent;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}\n\
-		#drawTools-btn-icon-options1:after{margin:8px 0 0 8px;position:absolute;top:0;left:0;content:'';width:4px;height:14px;background:#c2c2c2;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}\n\
 		#drawTools-btn-icon-fillpalette{margin:4px 8px;position:relative;width:24px;height:6px;background:linear-gradient(to right,#c2c2c2,#c2c2c2 6px,transparent 6px,transparent 9px,#c2c2c2 9px,#c2c2c2 15px,transparent 15px,transparent 18px,#c2c2c2 18px,#c2c2c2 24px);}\n\
 		#drawTools-btn-icon-fillpalette:before{margin:0;position:absolute;top:9px;left:0;content:'';width:24px;height:6px;background:linear-gradient(to right,#c2c2c2,#c2c2c2 6px,transparent 6px,transparent 9px,#c2c2c2 9px,#c2c2c2 15px,transparent 15px,transparent 18px,#c2c2c2 18px,#c2c2c2 24px);}\n\
 		#drawTools-btn-icon-fillpalette:after{margin:0;position:absolute;top:18px;left:0;content:'';width:24px;height:6px;background:linear-gradient(to right,#c2c2c2,#c2c2c2 6px,transparent 6px,transparent 9px,#c2c2c2 9px,#c2c2c2 15px,transparent 15px,transparent 18px,#c2c2c2 18px,#c2c2c2 24px);}\n\
@@ -635,8 +632,8 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-exit .drawTools-btn-container:hover,#drawTools-btn-exit .drawTools-btn:focus{background-color:#b90c0c;border-bottom:1px solid #980909;}\n\
 		#drawTools-btn-exit .drawTools-btn-container:active{background-color:#a50000;border-bottom:1px solid #a50000;}\n\
 		\n\
-		#drawTools-options{margin-top:"+optionsMarginTop+"px;margin-left:"+optionsMarginLeft+"px;background:#252525;border-bottom:1px solid #171717;width:420px;height:0px;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
-		#drawTools-options-content{position:absolute;top:8px;left:8px;right:8px;bottom:8px;}\n\
+		#drawTools-menu{margin-top:"+optionsMarginTop+"px;margin-left:"+optionsMarginLeft+"px;background:#252525;border-bottom:1px solid #171717;width:420px;height:0px;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
+		#drawTools-menu-content{position:absolute;top:8px;left:8px;right:8px;bottom:8px;}\n\
 		\n\
 		#drawTools-menu-palette1{width:240px;height:100%;position:relative;margin:0;}\n\
 		#drawTools-menu-palette1 label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
@@ -995,11 +992,11 @@ cleanTools.html.init['createUtilityButton'] = function(name)
 
 cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton)
 {
-	//Create DIV in which Options will be placed in
+	//Create DIV in which menu items will be placed in
 	var optionsDiv = document.createElement('div');
-	optionsDiv.id = cleanTools.id + '-options';
+	optionsDiv.id = cleanTools.id + '-menu';
 	optionsDiv.innerHTML = 
-		'<div id="drawTools-options-content">' +
+		'<div id="' + optionsDiv.id + '-content">' +
 			'<div id="drawTools-menu-palette"></div>' +
 		'</div>';
 	//drawToolsDiv.appendChild(optionsDiv);
@@ -1094,7 +1091,7 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 		'</div>';
 	
 	/*
-	var optionsButton = c.html.init.createUtilityButton("options");
+	var optionsButton = c.html.init.createUtilityButton("menu");
 	optionsButton.onclick = function(){cleanTools.html.toggleMenu(cleanTools.html.MENU_PALETTE_ID);};
 	*/
 	var fillpaletteButton = c.html.init.createUtilityButton("fillpalette");
