@@ -153,7 +153,7 @@ cleanTools["html"] = {
 		
 	},
 	'toggleMenu':function (menuID) {
-		//var h = 175;	// Height of the menu div
+		var h = 175;	// Height of the menu div
 		var opacity = $(menuID).css('opacity');
 		
 		if(opacity == 0) {
@@ -166,7 +166,7 @@ cleanTools["html"] = {
 		var opacity = $(menuID).css('opacity');
 		if(opacity == 0) {
 			$(menuID).stop(true, true).animate({
-				//height: (h + "px"),
+				height: (h + "px"),
 				marginTop: ("-=" + h + "px"),
 				opacity: "1"
 			},100, "swing");
@@ -176,7 +176,7 @@ cleanTools["html"] = {
 		var opacity = $(menuID).css('opacity');
 		if(opacity == 1) {
 			$(menuID).stop(true, true).animate({
-				//height: "0px",
+				height: "0px",
 				marginTop: ("+=" + h + "px"),
 				opacity: "0"
 			},100, "swing");
@@ -637,7 +637,7 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-exit .drawTools-btn-container:hover,#drawTools-btn-exit .drawTools-btn:focus{background-color:#b90c0c;border-bottom:1px solid #980909;}\n\
 		#drawTools-btn-exit .drawTools-btn-container:active{background-color:#a50000;border-bottom:1px solid #a50000;}\n\
 		\n\
-		#drawTools-menu{top:0;left:0;padding:8px;margin-top:0px;margin-left:0;background:#252525;border-bottom:1px solid #171717;width:auto;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
+		#drawTools-menu{top:0;left:0;padding:8px;margin-top:0px;margin-left:0;background:#252525;border-bottom:1px solid #171717;width:auto;height:175px;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
 		#drawTools-menu-content{position:relative;}\n\
 		\n\
 		#drawTools-menu-palette{width:240px;height:100%;position:relative;margin:0;}\n\
