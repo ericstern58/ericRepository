@@ -637,7 +637,7 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-exit .drawTools-btn-container:hover,#drawTools-btn-exit .drawTools-btn:focus{background-color:#b90c0c;border-bottom:1px solid #980909;}\n\
 		#drawTools-btn-exit .drawTools-btn-container:active{background-color:#a50000;border-bottom:1px solid #a50000;}\n\
 		\n\
-		#drawTools-menu{position:absolute;bottom:45px;left:0;padding:8px;margin-left:auto;margin-right:auto;background:#252525;border-bottom:1px solid #171717;width:auto;height:175px;border-radius:2px 2px 0px 0px;opacity:1;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
+		#drawTools-menu{position:absolute;bottom:45px;left:50%;padding:8px;margin:-50%;background:#252525;border-bottom:1px solid #171717;width:auto;height:175px;border-radius:2px 2px 0px 0px;opacity:1;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
 		#drawTools-menu-content{position:relative;}\n\
 		\n\
 		#drawTools-menu-palette{width:240px;height:100%;position:relative;margin:0;}\n\
