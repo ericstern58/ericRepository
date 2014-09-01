@@ -637,9 +637,10 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-exit .drawTools-btn-container:hover,#drawTools-btn-exit .drawTools-btn:focus{background-color:#b90c0c;border-bottom:1px solid #980909;}\n\
 		#drawTools-btn-exit .drawTools-btn-container:active{background-color:#a50000;border-bottom:1px solid #a50000;}\n\
 		\n\
-		#drawTools-menu{position:absolute;bottom:45px;left:50%;padding:8px;margin-left:-50%;background:#252525;border-bottom:1px solid #171717;width:auto;height:175px;border-radius:2px 2px 0px 0px;opacity:1;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
+		#drawTools-menu{position:absolute;bottom:45px;padding:8px;margin:0;background:#252525;border-bottom:1px solid #171717;width:auto;height:175px;border-radius:2px 2px 0px 0px;opacity:1;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
 		#drawTools-menu-content{position:relative;}\n\
 		\n\
+		.drawTools-menu-palette-parent{margin-left:140px;}\n\
 		#drawTools-menu-palette{width:240px;height:100%;position:relative;margin:0;}\n\
 		#drawTools-menu-palette label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
 		#drawTools-menu-palette input{display:none;visibility:hidden;margin:0px;padding:0px;}\n\
@@ -648,7 +649,7 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-menu-palette div:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\
 		#drawTools-menu-palette div:hover,#drawTools-menu-palette div:focus,#drawTools-menu-palette div:active{border:2px solid red;}\n\
 		\n\
-		#drawTools-menu-palette1{width:240px;height:100%;position:relative;margin:0 0 0 -120px;}\n\
+		#drawTools-menu-palette1{width:240px;height:100%;position:relative;margin:0;}\n\
 		#drawTools-menu-palette1 label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
 		#drawTools-menu-palette1 input{display:none;visibility:hidden;margin:0px;padding:0px;}\n\
 		#drawTools-menu-palette1 input:checked + div{border:2px solid #c2c2c2;}\n\
@@ -995,11 +996,12 @@ cleanTools.html.init['createUtilityButton'] = function(name)
 	return button;
 }
 
-cleanTools.html.init['createOptionsMenu'] = function(drawToolsDiv, optionsButton)
+cleanTools.html.init['createMenuPalette'] = function(drawToolsDiv, optionsButton)
 {
 	//Create DIV in which menu items will be placed in
 	var optionsDiv = document.createElement('div');
 	optionsDiv.id = cleanTools.id + '-menu';
+	optionsDiv.className = optionsDiv.id + '-palette-parent';
 	optionsDiv.innerHTML = 
 		'<div id="' + optionsDiv.id + '-content">' +
 			'<div id="' + optionsDiv.id + '-palette"></div>' +
@@ -1103,7 +1105,7 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	var fillpaletteButton = c.html.init.createUtilityButton("fillpalette");
 	fillpaletteButton.onclick = function(){cleanTools.html.toggleMenu(cleanTools.html.MENU_PALETTE_ID);};
 	
-	c.html.init.createOptionsMenu(drawToolsDiv, fillpaletteButton);
+	c.html.init.createMenuPalette(drawToolsDiv, fillpaletteButton);
 	
 	var downloadButton = c.html.init.createUtilityButton("download");
 	downloadButton.onclick = function(){cleanTools.tools.paintMethods.download();};
