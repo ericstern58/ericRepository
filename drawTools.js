@@ -113,7 +113,7 @@ cleanTools["data"] = {
 	'curveTension':0.5,
 };
 cleanTools["html"] = {
-	'MENU_PALETTE_ID':'#' + cleanTools.id + '-menu',
+	'MENU_PALETTE_ID':'#' + cleanTools.id + '-menu-palette-parent',
 	'parentObject':cleanTools,
 	
 	'init':{}, // HTML initialization methods will be placed here
@@ -559,11 +559,6 @@ cleanTools.html.init['setupCSS'] = function()
 	var cleanToolsObject = $('#' + cleanTools.id);
 	var optionsMarginTop = cleanTools.canvas.offset.top + cleanTools.canvas.height - cleanToolsObject.offset().top;
 	var optionsMarginLeft = (cleanToolsObject.width() - 420)/2;
-	/*
-		#drawTools-menu{margin-top:"+optionsMarginTop+"px;margin-left:"+optionsMarginLeft+"px;background:#252525;border-bottom:1px solid #171717;width:420px;height:0px;position:absolute;border-radius:2px 2px 0px 0px;opacity:0;overflow:hidden;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
-		#drawTools-menu-content{position:absolute;top:8px;left:8px;right:8px;bottom:8px;}\n\
-		\n\
-	*/
 	
 	var DTSheet = document.createElement('style');
 	DTSheet.id = cleanTools.id + 'StyleSheet'; // Give id so destructor can find it if needed
@@ -638,7 +633,7 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-exit .drawTools-btn-container:active{background-color:#a50000;border-bottom:1px solid #a50000;}\n\
 		\n\
 		.drawTools-menu{position:absolute;bottom:45px;padding:8px;margin:0;background:#252525;border-bottom:1px solid #171717;width:auto;height:175px;border-radius:2px 2px 0px 0px;opacity:0;z-index:99;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
-		.drawTools-menu-content{position:relative;}\n\
+		#drawTools-menu-content{position:relative;}\n\
 		\n\
 		.drawTools-menu-palette-parent{margin-left:-105px !important;}\n\
 		#drawTools-menu-palette{width:240px;height:100%;position:relative;margin:0;}\n\
@@ -1035,7 +1030,7 @@ cleanTools.html.init['createMenuPalette'] = function(drawToolsDiv, optionsButton
 				'<div style="background:' + color + ';"></div>' +
 			'</label>';
 	}
-	document.getElementById('drawTools-menu-palette').innerHTML = paletteHtml;
+	document.getElementById('drawTools-menu-palette-parent').innerHTML = paletteHtml;
 }
 // Destroys all elements, styling and javascript
 cleanTools.html['DTDestroy'] = function() 
