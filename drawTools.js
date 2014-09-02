@@ -166,7 +166,7 @@ cleanTools["html"] = {
 		var opacity = $(menuID).css('opacity');
 		if(opacity == 0) {
 			$(menuID).stop(true, true).animate({
-				height: (h + "px"),
+				//height: (h + "px"),
 				//marginTop: ("-=" + h + "px"),
 				opacity: "1"
 			},100, "swing");
@@ -176,7 +176,7 @@ cleanTools["html"] = {
 		var opacity = $(menuID).css('opacity');
 		if(opacity == 1) {
 			$(menuID).stop(true, true).animate({
-				height: "0px",
+				//height: "0px",
 				//marginTop: ("+=" + h + "px"),
 				opacity: "0"
 			},100, "swing");
