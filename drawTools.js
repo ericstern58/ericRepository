@@ -637,8 +637,8 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-exit .drawTools-btn-container:hover,#drawTools-btn-exit .drawTools-btn:focus{background-color:#b90c0c;border-bottom:1px solid #980909;}\n\
 		#drawTools-btn-exit .drawTools-btn-container:active{background-color:#a50000;border-bottom:1px solid #a50000;}\n\
 		\n\
-		#drawTools-menu{position:absolute;bottom:45px;padding:8px;margin:0;background:#252525;border-bottom:1px solid #171717;width:auto;height:175px;border-radius:2px 2px 0px 0px;opacity:0;z-index:99;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
-		#drawTools-menu-content{position:relative;}\n\
+		.drawTools-menu{position:absolute;bottom:45px;padding:8px;margin:0;background:#252525;border-bottom:1px solid #171717;width:auto;height:175px;border-radius:2px 2px 0px 0px;opacity:0;z-index:99;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
+		.drawTools-menu-content{position:relative;}\n\
 		\n\
 		.drawTools-menu-palette-parent{margin-left:-105px !important;}\n\
 		#drawTools-menu-palette{width:240px;height:100%;position:relative;margin:0;}\n\
@@ -1000,11 +1000,11 @@ cleanTools.html.init['createMenuPalette'] = function(drawToolsDiv, optionsButton
 {
 	//Create DIV in which menu items will be placed in
 	var optionsDiv = document.createElement('div');
-	optionsDiv.id = cleanTools.id + '-menu';
-	optionsDiv.className = optionsDiv.id + '-palette-parent';
+	optionsDiv.className = cleanTools.id + '-menu';
+	optionsDiv.id = optionsDiv.className + '-palette-parent';
 	optionsDiv.innerHTML = 
-		'<div id="' + optionsDiv.id + '-content">' +
-			'<div id="' + optionsDiv.id + '-palette"></div>' +
+		'<div id="' + optionsDiv.className + '-content">' +
+			'<div id="' + optionsDiv.className + '-palette"></div>' +
 		'</div>';
 	//drawToolsDiv.appendChild(optionsDiv);
 	
