@@ -638,11 +638,11 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-menu-content{position:relative;}\n\
 		\n\
 		#drawTools-menu-palette-parent{margin-left:-105px !important; width:240px;}\n\
-		#drawTools-menu-palette {width:240px;height:100%;position:relative;margin:0;border:1px dashed green;}\n\
+		#drawTools-menu-palette {width:250px;height:100%;position:relative;margin:0;border:1px dashed green;}\n\
 		#drawTools-menu-palette-parent label{width:40px;height:40px;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
 		#drawTools-menu-palette-parent input{display:none;visibility:hidden;margin:0px;padding:0px;}\n\
 		#drawTools-menu-palette-parent input:checked + div{border:2px solid #c2c2c2;}\n\
-		#drawTools-menu-palette-parent div{width:40px;height:40px;border:2px solid #252525;margin=0;padding=0;line-height:2.428571429;}\n\
+		#drawTools-menu-palette-parent div{width:40px;height:40px;border:2px solid #252525;margin=0;padding=0;}\n\
 		#drawTools-menu-palette-parent div:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\
 		#drawTools-menu-palette-parent div:hover,#drawTools-menu-palette div:focus,#drawTools-menu-palette div:active{border:2px solid red;}\n\
 		\n\
