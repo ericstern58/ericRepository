@@ -156,7 +156,7 @@ cleanTools["html"] = {
 		
 	},
 	'toggleMenu':function (menuID) {
-        $(menuID).toggleClass(menuID + "-toggled");
+        $(menuID).toggleClass(menuID.substring(1) + "-toggled");
 		/*
         var h = 175;	// Height of the menu div
 		var opacity = $(menuID).css('opacity');
