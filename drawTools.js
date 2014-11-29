@@ -641,7 +641,7 @@ cleanTools.html.init['setupCSS'] = function()
 		\n\
         #drawTools-btn-fillpalette:hover #drawTools-menu-palette-parent{height:175px; opacity:1;}\n\
         \n\
-		#drawTools-menu-palette-parent{margin-left:-105px !important; width:258px; height:0;overflow:hidden;box-sizing:border-box;}\n\
+		#drawTools-menu-palette-parent{margin-left:-105px !important;padding:0; width:258px; height:0;overflow:hidden;box-sizing:border-box;}\n\
 		.drawTools-menu-palette-parent-toggled{height:175px !important; opacity:1 !important;}\n\
 		#drawTools-menu-palette {width:260px;height:100%;position:relative;margin:0;border:1px dashed green;}\n\
 		#drawTools-menu-palette-parent label{width:40px;height:40px;overflow:hidden;display:inline-block;float:left;margin:0;padding:0;}\n\
