@@ -637,7 +637,7 @@ cleanTools.html.init['setupCSS'] = function()
 		.drawTools-menu{position:absolute;bottom:45px;padding:8px;margin:0;background:#252525;border-bottom:1px solid #171717;width:auto;height:175px;border-radius:2px 2px 0px 0px;opacity:0;z-index:99;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
 		#drawTools-menu-content{position:relative;}\n\
 		\n\
-		#drawTools-menu-palette-parent{margin-left:-105px !important; width:260px;}\n\
+		#drawTools-menu-palette-parent{margin-left:-105px !important; width:250px;}\n\
 		#drawTools-menu-palette {width:260px;height:100%;position:relative;margin:0;border:1px dashed green;}\n\
 		#drawTools-menu-palette-parent label{width:40px;height:40px;overflow:hidden;display:inline-block;float:left;margin:0;padding:0;}\n\
 		#drawTools-menu-palette-parent input{display:none;visibility:hidden;margin:0px;padding:0px;}\n\
@@ -645,7 +645,6 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-menu-palette-parent div{width:40px;height:40px;border:2px solid #252525;margin:0;padding:0;}\n\
 		#drawTools-menu-palette-parent div:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\
 		#drawTools-menu-palette-parent div:hover,#drawTools-menu-palette div:focus,#drawTools-menu-palette div:active{border:2px solid red;}\n\
-		\n\
 		\n\
 		\n\
 		#drawTools-menu-palette-parent div{font-size:14px;font-weight:normal;text-align:center;vertical-align:middle;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}\n\
