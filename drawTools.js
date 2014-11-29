@@ -1,3 +1,6 @@
+/* Bookmarklet:
+   javascript:(function(){if(!document.getElementById('drawTools')){var%20s=document.createElement('script');s.id='DTScript';s.src='https://raw.github.com/ericstern58/ericRepository/restart/drawTools.js';document.body.appendChild(s);}})();
+*/
 // State variable that helps prevent double installation of script
 window.DTToolsIsCurrentlyInstalled = true;
 
@@ -634,8 +637,8 @@ cleanTools.html.init['setupCSS'] = function()
 		.drawTools-menu{position:absolute;bottom:45px;padding:8px;margin:0;background:#252525;border-bottom:1px solid #171717;width:auto;height:175px;border-radius:2px 2px 0px 0px;opacity:0;z-index:99;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
 		#drawTools-menu-content{position:relative;}\n\
 		\n\
-		#drawTools-menu-palette-parent{margin-left:-105px !important;}\n\
-		#drawTools-menu-palette{width:240px;height:100%;position:relative;margin:0;}\n\
+		#drawTools-menu-palette-parent{margin-left:-105px !important;border:1px dashed red;}\n\
+		#drawTools-menu-palette{width:240px;height:100%;position:relative;margin:0;border:1px dashed green;}\n\
 		#drawTools-menu-palette label{width:40px;height:40px;float:left;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
 		#drawTools-menu-palette input{display:none;visibility:hidden;margin:0px;padding:0px;}\n\
 		#drawTools-menu-palette input:checked + div{border:2px solid #c2c2c2;}\n\
@@ -1127,3 +1130,4 @@ $(document).on('mouseup', cleanTools.eventHandlers.mouseUp);
 $(document).keydown(cleanTools.eventHandlers.keyDown);
 // Setup keyUp Listener
 $(document).keyup(cleanTools.eventHandlers.keyUp);
+
