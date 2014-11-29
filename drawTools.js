@@ -638,7 +638,7 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-menu-content{position:relative;}\n\
 		\n\
 		#drawTools-menu-palette-parent{margin-left:-105px !important;}\n\
-		#drawTools-menu-palette-parent {width:240px;height:100%;position:relative;margin:0;border:1px dashed green;}\n\
+		#drawTools-menu-palette {width:240px;height:100%;position:relative;margin:0;border:1px dashed green;}\n\
 		#drawTools-menu-palette-parent label{width:40px;height:40px;overflow:hidden;display:inline-block;margin:0;padding=0;}\n\
 		#drawTools-menu-palette-parent input{display:none;visibility:hidden;margin:0px;padding:0px;}\n\
 		#drawTools-menu-palette-parent input:checked + div{border:2px solid #c2c2c2;}\n\
