@@ -651,8 +651,6 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-menu-palette-parent div:hover,#drawTools-menu-palette div:focus,#drawTools-menu-palette div:active{border:2px solid red;}\n\
 		\n\
 		\n\
-		\n\
-		\n\
 		#drawTools-menu-palette-parent div{font-size:14px;font-weight:normal;text-align:center;vertical-align:middle;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}\n\
 		/* REMOVED FROM LINE ABOVE, READD IF IT CAUSES BUG: .drawTools-buttonText,*/\n\
 		";
@@ -666,9 +664,9 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 	var t = c.tools;
 	
 	if($(c.html.MENU_PALETTE_ID).css('opacity') == 1){
-		/*painting = !1;
+		painting = !1;
 		c.canvas.restore();
-		c.html.toggleMenu(c.html.MENU_PALETTE_ID);*/
+		c.html.toggleMenu(c.html.MENU_PALETTE_ID);
 		return;
 	} else if(t.currentToolType === t.toolType.BRUSH)
 		return;
@@ -1013,7 +1011,7 @@ cleanTools.html.init['createMenuPalette'] = function(drawToolsDiv, optionsButton
 	var paletteHtml = "";
 	
 	paletteHtml += 
-		'<label onclick=cleanTools.html.buttonHandlers.setOptionsColor(""); style="width:120px;">' +
+		'<label onclick="cleanTools.html.buttonHandlers.setOptionsColor("");cleanTools.html.toggleMenu(cleanTools.html.MENU_PALETTE_ID);" style="width:120px;">' +
 			'<input type="radio" name="drawTools-menu-palette-radio" checked>' +
 			'<div style="width:120px;background:#333333;color:#c2c2c2;">No Fill</div>' +
 		'</label>';
