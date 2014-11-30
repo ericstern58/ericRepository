@@ -143,7 +143,6 @@ cleanTools["html"] = {
 				this.cleanToolsObject.data.useStrokeAsFill = false;
 				this.cleanToolsObject.data.fillColor = color;
 			}
-            cleanTools.html.toggleMenu(cleanTools.html.MENU_PALETTE_ID); // Close menu
 		},
 		'setToolType':function(type) {
 			this.cleanToolsObject.tools.currentToolType=type;
