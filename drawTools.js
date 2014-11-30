@@ -652,7 +652,6 @@ cleanTools.html.init['setupCSS'] = function()
 		\n\
 		\n\
 		\n\
-		\n\
 		#drawTools-menu-palette-parent div{font-size:14px;font-weight:normal;text-align:center;vertical-align:middle;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}\n\
 		/* REMOVED FROM LINE ABOVE, READD IF IT CAUSES BUG: .drawTools-buttonText,*/\n\
 		";
