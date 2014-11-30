@@ -583,8 +583,8 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-icon-linechain{margin:8px 24px 0px 11px;width:3px;height:15px;background:black;border-radius:2px;-webkit-transform:rotate(-25deg);-moz-transform:rotate(-25deg);-o-transform:rotate(-25deg);transform:rotate(-25deg);}\n\
 		#drawTools-btn-icon-linechain:before{margin:5px 5px 2px 5px;width:3px;height:13px;background:black;border-radius:2px;content:'';display:block;position:absolute;-webkit-transform:rotate(65deg);-moz-transform:rotate(65deg);-o-transform:rotate(65deg);transform:rotate(65deg);}\n\
 		#drawTools-btn-icon-linechain:after{margin:8px 1px 0px 12px;width:3px;height:10px;background:black;border-radius:2px;content:'';display:block;position:absolute;-webkit-transform:rotate(-40deg);-moz-transform:rotate(-40deg);-o-transform:rotate(-40deg);transform:rotate(-40deg);}\n\
-		#drawTools-btn-icon-curve{margin:6px 15px 0px 11px;position: relative;width: 12px;height: 12px;-webkit-box-shadow:-0px 3px 0px 0px black;box-shadow:-0px 3px 0px 0px black;border-radius:100%;}\n\
-		#drawTools-btn-icon-curve:after{margin:10px 0px 0px 10px;position:relative;width:8px;height:10px;-webkit-box-shadow:0px -3px 0px 0px black;box-shadow:0px -3px 0px 0px black;border-radius:100%;content:'';display:block;position:absolute;}\n\
+		#drawTools-btn-icon-curve{margin:6px 15px 0px 11px;position: relative;width: 12px;height: 12px;box-shadow:-0px 3px 0px 0px black;border-radius:100%;}\n\
+		#drawTools-btn-icon-curve:after{margin:10px 0px 0px 10px;position:relative;width:8px;height:10px;box-shadow:0px -3px 0px 0px black;border-radius:100%;content:'';display:block;position:absolute;}\n\
 		#drawTools-btn-icon-curve:before{margin:4px 0px 0px -1px;width:2px;height:9px;background:black;border-radius:2px;-webkit-transform:rotate(-30deg);-moz-transform:rotate(-30deg);-o-transform:rotate(-30deg);-ms-transform:rotate(-30deg);transform:rotate(-30deg);content:'';content:'';display:block;position:absolute;}\n\
 		#drawTools-btn-icon-download{position:relative;margin:8px 8px 0px 8px;width:12px;height:8px;background:#c2c2c2;}\n\
 		#drawTools-btn-icon-download:before{top:8px;left:-4px;margin:0;position:absolute;content:'';border-left:10px solid transparent;border-right:10px solid transparent;border-top:9px solid #c2c2c2;}\n\
@@ -607,15 +607,15 @@ cleanTools.html.init['setupCSS'] = function()
 		.drawTools-btn-container{background-color:#fffb8d;border-bottom:1px solid #e5e17e;height:34px;padding:0px;margin:0px;font-size:14px;font-weight:normal;line-height:1.428571429;text-align:center;vertical-align:middle;cursor:pointer;border-radius:inherit;border-top:1px solid transparent;}\n\
 		.drawTools-btn-container:focus	{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px;}\n\
 		.drawTools-btn-container:hover,.drawTools-btn:focus{background-color:#f6f166;border-bottom:1px solid #ddd85b;color:#333333;text-decoration:none;}\n\
-		.drawTools-btn-container:active,.drawTools-btn input:focus + div,.drawTools-btn input:checked + div{background-color:#f6f166;border-bottom:1px solid #f6f166;-webkit-box-shadow:inset 0 3px 5px rgba(0,0,0,0.5);box-shadow:inset 0 3px 5px rgba(0,0,0,0.5);}\n\
-		.drawTools-btn-container.disabled,.drawTools-btn-container[disabled],fieldset[disabled] .drawTools-btn-container{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);-webkit-box-shadow:none;box-shadow:none;}\n\
+		.drawTools-btn-container:active,.drawTools-btn input:focus + div,.drawTools-btn input:checked + div{background-color:#f6f166;border-bottom:1px solid #f6f166;box-shadow:inset 0 3px 5px rgba(0,0,0,0.5);}\n\
+		.drawTools-btn-container.disabled,.drawTools-btn-container[disabled],fieldset[disabled] .drawTools-btn-container{cursor:not-allowed;pointer-events:none;opacity:0.65;filter:alpha(opacity=65);box-shadow:none;}\n\
 		\n\
 		#drawTools-btn-loop > .drawTools-btn-container{background:#252525;border-bottom:1px solid #171717;border-right:1px solid #111111;}\n\
 		#drawTools-btn-loop > .drawTools-btn-container:focus{outline:thin dotted #fff;}\n\
 		#drawTools-btn-loop > .drawTools-btn-container:hover,#drawTools-btn-loop .drawTools-btn:focus{background-color:#2e2e2e;border-bottom:1px solid #222222;}\n\
 		#drawTools-btn-loop > .drawTools-btn-container:active{background-color:#252525;border-bottom:1px solid #252525;}\n\
 		#drawTools-btn-loop input[type='checkbox']{position:absolute;top:0;left:0;opacity:0;}\n\
-		#drawTools-btn-loop input[type='checkbox']:checked ~ #drawTools-btn-icon-loop {border:3px dotted #c2c2c2;background:#252525;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;}\n\
+		#drawTools-btn-loop input[type='checkbox']:checked ~ #drawTools-btn-icon-loop {border:3px dotted #c2c2c2;background:#252525;box-shadow:none;}\n\
 		\n\
 		#drawTools-btn-fillpalette > .drawTools-btn-container{background:#252525;border-bottom:1px solid #171717;border-right:1px solid #111111;}\n\
 		#drawTools-btn-fillpalette > .drawTools-btn-container:focus{outline:thin dotted #fff;}\n\
@@ -637,7 +637,7 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-exit > .drawTools-btn-container:hover,#drawTools-btn-exit .drawTools-btn:focus{background-color:#b90c0c;border-bottom:1px solid #980909;}\n\
 		#drawTools-btn-exit > .drawTools-btn-container:active{background-color:#a50000;border-bottom:1px solid #a50000;}\n\
 		\n\
-		.drawTools-menu{position:absolute;bottom:90px;padding:8px;margin:0;background:#252525;border-bottom:1px solid #171717;width:auto;height:175px;border-radius:2px 2px 0px 0px;opacity:0;z-index:99;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
+		.drawTools-menu{position:absolute;bottom:30px;padding:8px;margin:0;background:#252525;border-bottom:1px solid #171717;width:auto;height:175px;border-radius:2px 2px 0px 0px;opacity:0;z-index:99;box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
 		#drawTools-menu-content{position:relative;}\n\
 		\n\
         #OOOdrawTools-btn-fillpalette:hover #drawTools-menu-palette-parent{height:170px !important; opacity:1 !important;}\n\
@@ -651,7 +651,6 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-menu-palette-parent div{width:40px;height:40px;border:2px solid #252525;margin:0;padding:0;line-height:2.428;}\n\
 		#drawTools-menu-palette-parent div:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\
 		#drawTools-menu-palette-parent div:hover,#drawTools-menu-palette div:focus,#drawTools-menu-palette div:active{border:2px solid red;}\n\
-		\n\
 		\n\
 		\n\
 		\n\
