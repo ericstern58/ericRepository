@@ -644,6 +644,7 @@ cleanTools.html.init['setupCSS'] = function()
 		\n\
         #OOOdrawTools-btn-fillpalette:hover #drawTools-menu-palette-parent, .tempToggleClass{height:170px; opacity:1;}\n\
         \n\
+        \n\
 		#drawTools-menu-palette-parent{margin-left:-105px !important; width:250px; height:0;opacity:0;overflow:hidden;}\n\
 		.drawTools-menu-palette-parent-toggled{height:170px !important; opacity:1 !important;}\n\
 		#drawTools-menu-palette {width:100%;height:100%;position:relative;margin:0;border:1px dashed green;}\n\
@@ -773,10 +774,11 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 	var t = c.tools;
 	
 	if(0 && ($(c.html.MENU_PALETTE_ID).css('opacity') == 1)){
-		c.canvas.updateLocation();
+		/*
+        c.canvas.updateLocation();
 		if(!c.html.isWithinMenuBounds(c.html.MENU_PALETTE_ID, e.pageX, e.pageY)) {
 			c.html.toggleMenu(c.html.MENU_PALETTE_ID);
-		}
+		}*/
 		return;
 	} else if(t.currentToolType === t.toolType.BRUSH)
 		return;
@@ -1100,7 +1102,7 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	optionsButton.onclick = function(){cleanTools.html.toggleMenu(cleanTools.html.MENU_PALETTE_ID);};
 	*/
 	var fillpaletteButton = c.html.init.createUtilityButton("fillpalette");
-	fillpaletteButton.onclick = function(){cleanTools.html.toggleMenu(cleanTools.html.MENU_PALETTE_ID);};
+	fillpaletteButton.onclick = function(){event.stopPropagation();cleanTools.html.toggleMenu(cleanTools.html.MENU_PALETTE_ID);};
 	
 	c.html.init.createMenuPalette(drawToolsDiv, fillpaletteButton);
 	
