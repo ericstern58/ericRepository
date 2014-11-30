@@ -637,12 +637,10 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-btn-exit > .drawTools-btn-container:hover,#drawTools-btn-exit .drawTools-btn:focus{background-color:#b90c0c;border-bottom:1px solid #980909;}\n\
 		#drawTools-btn-exit > .drawTools-btn-container:active{background-color:#a50000;border-bottom:1px solid #a50000;}\n\
 		\n\
-		.drawTools-menu{position:absolute;bottom:30px;padding:8px;margin:0;background:#252525;border-bottom:1px solid #171717;width:auto;height:175px;border-radius:2px 2px 0px 0px;opacity:0;z-index:99;box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
+		.drawTools-menu{position:absolute;bottom:35px;padding:8px;margin:0;background:#252525;border-bottom:1px solid #171717;width:auto;height:175px;border-radius:2px 2px 0px 0px;opacity:0;z-index:99;box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
 		#drawTools-menu-content{position:relative;}\n\
 		\n\
-        #OOOdrawTools-btn-fillpalette:hover #drawTools-menu-palette-parent{height:170px !important; opacity:1 !important;}\n\
-        \n\
-		#drawTools-menu-palette-parent{margin-left:-105px !important; padding:5px; width:250px; height:0;opacity:0;overflow:hidden;transition:all 100ms ease-out;}\n\
+		#drawTools-menu-palette-parent{margin-left:-105px !important; padding:5px; width:250px; height:0;opacity:0;overflow:hidden;transition:all 200ms ease-out;}\n\
 		.drawTools-menu-palette-parent-toggled{height:170px !important; opacity:1 !important;}\n\
 		#drawTools-menu-palette {width:100%;height:100%;position:relative;margin:0;border:1px dashed green;}\n\
 		#drawTools-menu-palette-parent label{width:40px;height:40px;overflow:hidden;display:inline-block;float:left;margin:0;padding:0;}\n\
@@ -651,6 +649,7 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-menu-palette-parent div{width:40px;height:40px;border:2px solid #252525;margin:0;padding:0;line-height:2.428;}\n\
 		#drawTools-menu-palette-parent div:focus{outline:thin dotted #333;outline:5px auto -webkit-focus-ring-color;}\n\
 		#drawTools-menu-palette-parent div:hover,#drawTools-menu-palette div:focus,#drawTools-menu-palette div:active{border:2px solid red;}\n\
+		\n\
 		\n\
 		\n\
 		\n\
