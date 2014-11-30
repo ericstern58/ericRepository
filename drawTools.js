@@ -1101,8 +1101,8 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 		'</div>';
 	
 	var fillpaletteButton = c.html.init.createUtilityButton("fillpalette");
-	//fillpaletteButton.onclick = function(event){cleanTools.html.toggleMenu(cleanTools.html.MENU_PALETTE_ID);};
-	fillpaletteButton.addEventListener("click", function(event){event.stopPropagation();cleanTools.html.toggleMenu(cleanTools.html.MENU_PALETTE_ID);}, false);
+	fillpaletteButton.firstChild.onclick = function(event){cleanTools.html.toggleMenu(cleanTools.html.MENU_PALETTE_ID);};
+	//fillpaletteButton.addEventListener("click", function(event){event.stopPropagation();cleanTools.html.toggleMenu(cleanTools.html.MENU_PALETTE_ID);}, false);
 	
 	c.html.init.createMenuPalette(drawToolsDiv, fillpaletteButton);
 	
