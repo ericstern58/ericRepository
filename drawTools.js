@@ -10,7 +10,7 @@ var DRAW_TOOLS_ID = 'drawTools';
 var DRAWCEPTION_TOOLBAR = document.getElementById('redo-button').parentNode.parentNode;
 var DRAWCEPTION_BRUSHES = 
 	[{id: 'brush-2', size: 2},{id: 'brush-5', size: 5},{id: 'brush-12', size: 12},{id: 'brush-35', size: 35}];
-
+var xyz = 0;
   /*-----------------------------------------------------------------------------*/
  /*--------------------- Custom Objects/Structures/enums -----------------------*/
 /*-----------------------------------------------------------------------------*/				 
@@ -157,8 +157,9 @@ cleanTools["html"] = {
 	},
 	'toggleMenu':function (menuID) {
         //$(menuID).toggleClass(menuID.substring(1) + "-toggled");
-        alert(menuID);
+        alert(menuID + " " + xyz);
         $(menuID).toggleClass("tempToggleClass");
+        xyz = 1;
 		/*
         var h = 175;	// Height of the menu div
 		var opacity = $(menuID).css('opacity');
@@ -643,7 +644,7 @@ cleanTools.html.init['setupCSS'] = function()
 		\n\
         #OOOdrawTools-btn-fillpalette:hover #drawTools-menu-palette-parent, .tempToggleClass{height:170px; opacity:1;}\n\
         \n\
-		#drawTools-menu-palette-parent{margin-left:-105px !important; width:250px; height:0;overflow:hidden;}\n\
+		#drawTools-menu-palette-parent{margin-left:-105px !important; width:250px; height:0;opacity:0;overflow:hidden;}\n\
 		.drawTools-menu-palette-parent-toggled{height:170px !important; opacity:1 !important;}\n\
 		#drawTools-menu-palette {width:100%;height:100%;position:relative;margin:0;border:1px dashed green;}\n\
 		#drawTools-menu-palette-parent label{width:40px;height:40px;overflow:hidden;display:inline-block;float:left;margin:0;padding:0;}\n\
@@ -771,7 +772,7 @@ cleanTools.eventHandlers["mouseUp"] = function(e) {
 	var c = cleanTools;
 	var t = c.tools;
 	
-	if(0 && $(c.html.MENU_PALETTE_ID).css('opacity') == 1){
+	if(0 && ($(c.html.MENU_PALETTE_ID).css('opacity') == 1)){
 		c.canvas.updateLocation();
 		if(!c.html.isWithinMenuBounds(c.html.MENU_PALETTE_ID, e.pageX, e.pageY)) {
 			c.html.toggleMenu(c.html.MENU_PALETTE_ID);
