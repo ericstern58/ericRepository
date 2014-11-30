@@ -157,6 +157,7 @@ cleanTools["html"] = {
 	},
 	'toggleMenu':function (menuID) {
         //$(menuID).toggleClass(menuID.substring(1) + "-toggled");
+        alert(menuID);
         $(menuID).toggleClass("tempToggleClass");
 		/*
         var h = 175;	// Height of the menu div
