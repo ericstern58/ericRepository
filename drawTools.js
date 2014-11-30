@@ -156,9 +156,8 @@ cleanTools["html"] = {
 		
 	},
 	'toggleMenu':function (menuID) {
-        //$(menuID).toggleClass(menuID.substring(1) + "-toggled");
-        alert(menuID + " " + xyz);
-        $(menuID).toggleClass("tempToggleClass");
+        $(menuID).toggleClass(menuID.substring(1) + "-toggled");
+        //$(menuID).toggleClass("tempToggleClass");
 		/*
         var h = 175;	// Height of the menu div
 		var opacity = $(menuID).css('opacity');
@@ -641,7 +640,7 @@ cleanTools.html.init['setupCSS'] = function()
 		.drawTools-menu{position:absolute;bottom:45px;padding:8px;margin:0;background:#252525;border-bottom:1px solid #171717;width:auto;height:175px;border-radius:2px 2px 0px 0px;opacity:0;z-index:99;-webkit-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);-moz-box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);box-shadow:0px 0px 5px 0px rgba(0,0,0,0.75);}\n\
 		#drawTools-menu-content{position:relative;}\n\
 		\n\
-        #OOOdrawTools-btn-fillpalette:hover #drawTools-menu-palette-parent, .tempToggleClass{height:170px !important; opacity:1 !important;}\n\
+        #OOOdrawTools-btn-fillpalette:hover #drawTools-menu-palette-parent{height:170px !important; opacity:1 !important;}\n\
         \n\
 		#drawTools-menu-palette-parent{margin-left:-105px !important; width:250px; height:0;opacity:0;overflow:hidden;}\n\
 		.drawTools-menu-palette-parent-toggled{height:170px !important; opacity:1 !important;}\n\
