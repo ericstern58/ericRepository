@@ -656,6 +656,8 @@ cleanTools.html.init['setupCSS'] = function()
 		\n\
 		\n\
 		\n\
+		\n\
+		\n\
 		#drawTools-menu-palette-parent div{font-size:14px;font-weight:normal;text-align:center;vertical-align:middle;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}\n\
 		/* REMOVED FROM LINE ABOVE, READD IF IT CAUSES BUG: .drawTools-buttonText,*/\n\
 		";
@@ -669,9 +671,9 @@ cleanTools.eventHandlers["mouseDown"] = function(e) {
 	var t = c.tools;
 	
 	if($(c.html.MENU_PALETTE_ID).css('opacity') == 1){
-		painting = !1;
+		/*painting = !1;
 		c.canvas.restore();
-		c.html.toggleMenu(c.html.MENU_PALETTE_ID);
+		c.html.toggleMenu(c.html.MENU_PALETTE_ID);*/
 		return;
 	} else if(t.currentToolType === t.toolType.BRUSH)
 		return;
@@ -1098,12 +1100,8 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 			'<div id="' + c.id + '-btn-icon-' + 'loop' + '"></div>' +
 		'</div>';
 	
-	/*
-	var optionsButton = c.html.init.createUtilityButton("menu");
-	optionsButton.onclick = function(){cleanTools.html.toggleMenu(cleanTools.html.MENU_PALETTE_ID);};
-	*/
 	var fillpaletteButton = c.html.init.createUtilityButton("fillpalette");
-	fillpaletteButton.onclick = function(event){event.stopPropagation();cleanTools.html.toggleMenu(cleanTools.html.MENU_PALETTE_ID);};
+	fillpaletteButton.onclick = function(event){cleanTools.html.toggleMenu(cleanTools.html.MENU_PALETTE_ID);};
 	
 	c.html.init.createMenuPalette(drawToolsDiv, fillpaletteButton);
 	
