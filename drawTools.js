@@ -949,7 +949,9 @@ cleanTools.tools.paintMethods["download"] = function()
     var dt = drawApp.toDataURL('image/png');
 	window.open(dt);
     */
-
+    
+    save();
+    
     var img = new Image();
     img.onload = function()
     {
