@@ -944,8 +944,18 @@ cleanTools.eventHandlers["keyUp"] = function(e) {
 
 cleanTools.tools.paintMethods["download"] = function()
 {
+	var c = cleanTools;
+    /*
     var dt = drawApp.toDataURL('image/png');
 	window.open(dt);
+    */
+
+    var imageObj = new Image();
+
+    imageObj.onload = function() {
+        c.context.drawImage(imageObj, 500, 417);
+    };
+    imageObj.src = 'http://mydevspace.000free.us/scrubs.png';
 }
 
 
