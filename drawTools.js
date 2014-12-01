@@ -651,7 +651,6 @@ cleanTools.html.init['setupCSS'] = function()
 		#drawTools-menu-palette-parent div:hover,#drawTools-menu-palette div:focus,#drawTools-menu-palette div:active{border:2px solid red;}\n\
 		\n\
 		\n\
-		\n\
 		#drawTools-menu-palette-parent div{font-size:14px;font-weight:normal;text-align:center;vertical-align:middle;cursor:pointer;-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}\n\
 		/* REMOVED FROM LINE ABOVE, READD IF IT CAUSES BUG: .drawTools-buttonText,*/\n\
 		";
@@ -1114,7 +1113,7 @@ cleanTools.html.init['setupCssAndHtml'] = function()
 	c.html.init.createMenuPalette(drawToolsDiv, fillpaletteButton);
 	
 	var downloadButton = c.html.init.createUtilityButton("download");
-	downloadButton.onclick = function(){cleanTools.tools.paintMethods.download();};
+	downloadButton.firstChild.onclick = function(){cleanTools.tools.paintMethods.download();};
 	
 	// Exitbutton to remove DrawTools
 	var exitButton = c.html.init.createUtilityButton("exit");
