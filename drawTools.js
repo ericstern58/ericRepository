@@ -949,13 +949,16 @@ cleanTools.tools.paintMethods["download"] = function()
     var dt = drawApp.toDataURL('image/png');
 	window.open(dt);
     */
+    
+    
 
-    var imageObj = new Image();
-
-    imageObj.onload = function() {
-        c.context.drawImage(imageObj, 500, 417);
+    var img = new Image();
+    img.onload = function()
+    {
+        drawApp.context.drawImage(this, 0, 0, drawApp.context.canvas.width, drawApp.context.canvas.height);
+        save();
     };
-    imageObj.src = 'http://mydevspace.000free.us/scrubs.png';
+    img.src = 'http://mydevspace.000free.us/scrubs.png';
 }
 
 
