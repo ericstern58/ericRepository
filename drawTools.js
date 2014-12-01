@@ -949,14 +949,12 @@ cleanTools.tools.paintMethods["download"] = function()
     var dt = drawApp.toDataURL('image/png');
 	window.open(dt);
     */
-    
-    
 
     var img = new Image();
     img.onload = function()
     {
         drawApp.context.drawImage(this, 0, 0, drawApp.context.canvas.width, drawApp.context.canvas.height);
-        save();
+        t.reset(true);
     };
     img.src = 'http://mydevspace.000free.us/scrubs.png';
 }
